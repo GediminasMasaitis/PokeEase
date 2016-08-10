@@ -2,7 +2,7 @@
   "name": "necro-ease",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt": "^1.2.0",
-    "grunt-contrib-uglify": "^2.7.0"
+    "grunt": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0"
   }
 }
