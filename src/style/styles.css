@@ -20,6 +20,7 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     color: white;
     transform: translateZ(0);
+    overflow-y: auto;
 }
 
 .container.center {
@@ -127,9 +128,81 @@ body {
 }
 
 .open-menu {
-    display: none;
+    opacity: 0;
+    transition: 0.3s;
     position: fixed;
     top: 51px;
     margin: 0;
     left: 15px;
+}
+
+#menu::-webkit-scrollbar {
+    width: 10px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#menu::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#popup .inner-wrap {
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 1000px;
+    max-height: 300px;
+    background: white;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 7px 20px 5px rgba(0, 0, 0, 0.32);
+}
+
+#popup .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#popup .inner-wrap .close-me {
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    left: 0;
+    height: 36px;
+    width: 36px;
+    color: white;
+    background: rgba(0, 0, 0, 0.15);
+    line-height: 34px;
+}
+
+#popup .inner-wrap .title {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    line-height: 36px;
+    width: 100%;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#popup .inner-wrap .content {
+    padding: 10px;
 }
