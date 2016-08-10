@@ -23,10 +23,11 @@ var NecroWSClient = (function () {
         this.config = config;
     }
     return NecroWSClient;
-}());
+})();
 $(function () {
     var necroClient = new NecroWSClient({
         serverURL: "ws://127.0.0.1:14252"
     });
     necroClient.connect();
 });
+//# sourceMappingURL=script.js.map
