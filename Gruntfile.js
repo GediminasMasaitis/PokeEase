@@ -9,7 +9,11 @@ module.exports = function(grunt) {
                 options: {
                     target: 'es3',
                     sourceMap: true,
-                    watch: true
+                    watch: true,
+                    references: [
+                      "jquery",
+                      "lodash"
+                    ]
                 }
             }
         },
