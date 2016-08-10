@@ -1,4 +1,4 @@
-﻿class NecroWSClient {
+﻿class NecroWSClient implements INecroClient {
     private url: string;
     private config: INecroClientConfig;
     private webSocket: WebSocket;
@@ -26,9 +26,7 @@
 
         if (_.includes(type, "UpdatePositionEvent")) {
             const positionEvent = message as UpdatePositionEvent;
-            if (this.config.onLocationUpdate) {
-                this.config.onLocationUpdate(positionEvent);
-            }
+            this.config.eventHandler.onLocationUpdate(positionEvent);
         }
     }
 }

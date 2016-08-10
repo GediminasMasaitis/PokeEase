@@ -1,16 +1,15 @@
 ﻿class Runner {
+    private interface: InterfaceHandler;
     private client: INecroClient;
 
-    constructor(client: INecroClient) {
+    constructor(client: INecroClient, interfaceHandler: InterfaceHandler) {
+        this.interface = interfaceHandler;
         this.client = client;
     }
 
-    public start = () => {
-        const config = {
-            onLocationUpdate: (location) => {
-                console.log("location get");
-            }
-        }
-        this.client.start(config);
+    public start = (): void => {
+        this.client.start({
+            eventHandler: this.interface
+        });
     }
 }

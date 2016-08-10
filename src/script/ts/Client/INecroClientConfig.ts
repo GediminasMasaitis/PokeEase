@@ -1,3 +1,3 @@
 ﻿interface INecroClientConfig {
-    onLocationUpdate?: (location: UpdatePositionEvent) => void;
+    eventHandler: IEventHandler;
 }
