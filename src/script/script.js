@@ -1,3 +1,5 @@
+/// <reference path="../../external/typings/jquery/jquery.d.ts" />
+/// <reference path="../../external/typings/lodash/lodash.d.ts" />
 var NecroWSClient = (function () {
     function NecroWSClient(config) {
         var _this = this;
@@ -26,7 +28,10 @@ var NecroWSClient = (function () {
 })();
 $(function () {
     var necroClient = new NecroWSClient({
-        serverURL: "ws://127.0.0.1:14252"
+        serverURL: "ws://127.0.0.1:14252",
+        onLocationUpdate: function (location) {
+            console.log("Updated location: " + location);
+        }
     });
     necroClient.connect();
 });

@@ -1,4 +1,7 @@
-﻿interface ILocation {
+﻿/// <reference path="../../external/typings/jquery/jquery.d.ts" />
+/// <reference path="../../external/typings/lodash/lodash.d.ts" />
+
+interface ILocation {
     Latitude: number;
     Longitude: number;
 }
@@ -44,7 +47,10 @@ class NecroWSClient {
 
 $(() => {
     var necroClient = new NecroWSClient({
-        serverURL: "ws://127.0.0.1:14252"
+        serverURL: "ws://127.0.0.1:14252",
+        onLocationUpdate: (location) => {
+            console.log("Updated location: " + location);
+        }
     });
 
     necroClient.connect();
