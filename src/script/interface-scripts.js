@@ -44,4 +44,15 @@ $(document).ready(function () {
         $("#popup").fadeOut();
     });
 
+    $("#journey .items").css('height', ($(window).height() - $("#journey .title").height()));
+
+    $("#journey #item").each(function() {
+        $(this).children('.event').text($(this).attr('class'));
+        $(this).children('.event').css('color', $(this).children('.category').css("background-color"));
+    });
+
+});
+
+$(window).resize(function() {
+    $("#journey .items").css('height', ($(window).height() - $("#journey .title").height()));
 });

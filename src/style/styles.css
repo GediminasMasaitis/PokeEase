@@ -7,6 +7,11 @@ body {
     background: url(http://i.imgur.com/bZlpljL.jpg); background-size: cover;
 }
 
+::selection {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
 .menu {
     background: rgba(52, 66, 79, 0.9);
 }
@@ -136,12 +141,12 @@ body {
     left: 15px;
 }
 
-#menu::-webkit-scrollbar {
+.menu::-webkit-scrollbar {
     width: 10px;
     background: rgba(0, 0, 0, 0.1);
 }
 
-#menu::-webkit-scrollbar-thumb {
+.menu::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.5);
 }
 
@@ -205,4 +210,155 @@ body {
 
 #popup .inner-wrap .content {
     padding: 10px;
+}
+
+
+/* JOURNEY */
+
+#journey {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    color: white;
+    transform: translateZ(0);
+    overflow-y: auto;
+}
+
+#journey .title {
+    height: 80px;
+    width: 100%;
+    background: #34424f;
+    text-transform: uppercase;
+    display: table;
+}
+
+#journey .title span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+#journey .items {
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    direction: rtl;
+}
+
+#journey .items #item {
+    direction: ltr;
+    margin: 0;
+    min-height: 100px;
+    background: rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    position: relative;
+    display: table;
+    width: 100%;
+}
+
+#journey .items #item .category {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+}
+
+#journey .items #item + #item {
+    margin-top: 10px;
+}
+
+#journey .items::-webkit-scrollbar {
+    width: 10px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#journey .items::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#journey .items:before {
+    content: "";
+    position: fixed;
+    top: 80px;
+    z-index: 1;
+    pointer-events: none;
+    left: 0;
+    right: 0;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(43,56,67,1) 0%,rgba(43,56,67,0) 100%);
+    display: block;
+}
+
+#journey #item.transfer .category {background: #1d7157;}
+#journey #item.pokestop .category {background: #33b5e5;}
+#journey #item.recycle .category {background: #cb92f1;}
+#journey #item.catch .category {background: #7db620;}
+#journey #item.evolve .category {background: #ebac28;}
+
+#journey #item .event {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 4px 6px;
+}
+
+#journey #item .image {
+    display: table-cell;
+    width: 64px;
+    padding-left: 1em;
+    vertical-align: middle;
+}
+
+#journey #item .info {
+    display: table-cell;
+    padding-left: 1em;
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+#journey #item .info .stats {
+    font-size: 14px;
+    color: #8198af;
+}
+
+#journey #item .timestamp {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 6px;
+    color: #5d6c7a;
+}
+
+#journey #item img {
+    max-width: 64px;
+    max-height: 64px;
+}
+
+#journey #item .info .item {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+#journey #item .info .item + .item {
+    margin-left: .7em;
+}
+
+#journey #item .info .item img {
+    max-width: 32px;
+    max-height: 32px;
+    vertical-align: middle;
+    margin-right: 7px;
 }
