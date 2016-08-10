@@ -3,12 +3,17 @@
     <title> NecroEase </title>
     <link rel="stylesheet" type="text/css" href="style/styles.css">
 	<meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="script/interface-scripts.js"></script>
+    <link rel="icon" sizes="16x16" href="images/favicon.png">
 </head>
 <body>
     <div id="wrap">
+        <div class="open-menu"><i class="fa fa-angle-right fa-lg"></i></div>
         <div id="menu" class="menu">
             <div class="container center">
                 <div>
+                    <div class="close-button"><i class="fa fa-angle-left fa-lg"></i></div>
                     <div class="item" id="pokemons">
                         <div class="counter">
                             <span>125</span>/250
@@ -31,8 +36,24 @@
                     </div>
                     <div class="item" id="settings">
                     </div>
+                    <div class="help"><i class="fa fa-info"></i></div>
                 </div>
             </div>
+        </div>
+
+        <div id="popup">
+            <div class="container center">
+                <div>
+                    <div class="inner-wrap">
+                        <div class="title">
+                            <i class="fa fa-times close-me"></i>
+                            <span> who is it? </span>
+                        </div>
+                        <div class="content">hello world!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="overlay">
         </div>
     </div>
     <script src="external/jquery-3.1.0.js"></script>

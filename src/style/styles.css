@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,900,300,100);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css);
 
 * {font-family: Lato;}
 
@@ -18,6 +19,8 @@ body {
     width: 200px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     color: white;
+    transform: translateZ(0);
+    overflow-y: auto;
 }
 
 .container.center {
@@ -42,6 +45,12 @@ body {
     margin: 1em 0;
     background-position: center center;
     background-repeat: no-repeat;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+#menu .item:hover {
+    transform: scale(0.9);
 }
 
 #menu .item .counter {
@@ -83,4 +92,117 @@ body {
 #menu .item#settings {
     background-color: #7f8c8d;
     background-image: url("../images/settings.png");
+}
+
+#menu .close-button, .open-menu {
+    width: 50px;
+    height: 50px;
+    transition: 0.3s;
+    border-radius: 100%;
+    margin: auto;
+    margin-bottom: 2.5em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+#menu .close-button i, .open-menu i {
+    line-height: 48px;
+    color: white;
+    transition: 0.3s;
+}
+
+#menu .help {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin: auto;
+    margin-top: 2.5em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+#menu .help i {
+    line-height: 48px;
+}
+
+.open-menu {
+    opacity: 0;
+    transition: 0.3s;
+    position: fixed;
+    top: 51px;
+    margin: 0;
+    left: 15px;
+}
+
+#menu::-webkit-scrollbar {
+    width: 10px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#menu::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#popup .inner-wrap {
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 1000px;
+    max-height: 300px;
+    background: white;
+    margin: auto;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 7px 20px 5px rgba(0, 0, 0, 0.32);
+}
+
+#popup .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#popup .inner-wrap .close-me {
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    left: 0;
+    height: 36px;
+    width: 36px;
+    color: white;
+    background: rgba(0, 0, 0, 0.15);
+    line-height: 34px;
+}
+
+#popup .inner-wrap .title {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    line-height: 36px;
+    width: 100%;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#popup .inner-wrap .content {
+    padding: 10px;
 }
