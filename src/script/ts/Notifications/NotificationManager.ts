@@ -32,7 +32,7 @@
         });
     }
 
-    public addNotificationCapture = (pokemonCatch: IPokemonCapture): void => {
+    public addNotificationPokemonCapture = (pokemonCatch: IPokemonCapture): void => {
         const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
         const html = `<div class="event catch">
                         <i class="fa fa-times dismiss"></i>
@@ -79,6 +79,30 @@
         });
     }
 
+    public addNotificationPokemonTransfer = (pokemonTransfer: IPokemonTransfer): void => {
+        const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonTransfer.Id];
+        const roundedPerfection = Math.round(pokemonTransfer.Perfection * 100) / 100;
+        const html = `<div class="event transfer">
+                        <i class="fa fa-times dismiss"></i>
+                        <div class="image">
+                            <img src="images/pokemon/${pokemonTransfer.Id}.png"/>
+                        </div>
+                        <div class="info">
+                            ${pokemonName}
+                            <div class="stats">CP ${pokemonTransfer.Cp} | IV ${roundedPerfection}%</div>
+                        </div>
+                        <span class="event-type">transfer</span>
+                        <span class="timestamp">0 seconds ago</span>
+                        <div class="category"></div>
+                    </div>`;
+
+        const element = $(html);
+        this.addNotificationFinal({
+            element: element,
+            event: pokemonTransfer
+        });
+    }
+
     private addNotificationFinal = (notification: INotification): void => {
         notification.element.wrapInner('<div class="item-container"></div>');
         notification.element.click(this.closeNotification);
@@ -99,6 +123,7 @@
 }
 
 interface INotificationManager {
-    addNotificationCapture(pokemonCatch: IPokemonCapture);
+    addNotificationPokemonCapture(pokemonCatch: IPokemonCapture);
     addNotificationPokeStopUsed(fortUsed: IFortUsed);
+    addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransfer);
 }

@@ -69,7 +69,7 @@
     public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
         if (pokemonCapture.Status == PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
-            this.config.notificationManager.addNotificationCapture(pokemonCapture);
+            this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
         }
     }
 
@@ -94,6 +94,6 @@
     }
 
     public onPokemonTransfer(pokemonTransfer: IPokemonTransfer): void {
-        
+        this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
     }
 }

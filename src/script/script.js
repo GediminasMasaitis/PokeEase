@@ -160,7 +160,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onPokemonCapture = function (pokemonCapture) {
         if (pokemonCapture.Status == PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
-            this.config.notificationManager.addNotificationCapture(pokemonCapture);
+            this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
         }
     };
     InterfaceHandler.prototype.onUpdate = function (update) {
@@ -174,6 +174,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
     };
     InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
+        this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
     };
     return InterfaceHandler;
 }());
@@ -331,7 +332,7 @@ var NotificationManager = (function () {
                 timestampElement.text(diffStr + " ago");
             });
         };
-        this.addNotificationCapture = function (pokemonCatch) {
+        this.addNotificationPokemonCapture = function (pokemonCatch) {
             var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
             var html = "<div class=\"event catch\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + pokemonCatch.Perfection + "%</div>\n                        </div>\n                        <span class=\"event-type\">catch</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
             var element = $(html);
@@ -350,6 +351,16 @@ var NotificationManager = (function () {
             _this.addNotificationFinal({
                 element: element,
                 event: fortUsed
+            });
+        };
+        this.addNotificationPokemonTransfer = function (pokemonTransfer) {
+            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonTransfer.Id];
+            var roundedPerfection = Math.round(pokemonTransfer.Perfection * 100) / 100;
+            var html = "<div class=\"event transfer\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonTransfer.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonTransfer.Cp + " | IV " + roundedPerfection + "%</div>\n                        </div>\n                        <span class=\"event-type\">transfer</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
+            var element = $(html);
+            _this.addNotificationFinal({
+                element: element,
+                event: pokemonTransfer
             });
         };
         this.addNotificationFinal = function (notification) {
