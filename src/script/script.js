@@ -241,16 +241,32 @@ var LeafletMap = (function () {
         pokeStop.LMarker.setIcon(icon);
     };
     LeafletMap.prototype.onPokemonCapture = function (pokemonCapture) {
+        var _this = this;
         var posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
-        var marker = new L.Marker(posArr, {
-            icon: new L.Icon({
-                iconUrl: "images/pokemon/" + pokemonCapture.Id + ".png",
-                iconSize: [42, 42]
-            })
-        });
-        this.map.addLayer(marker);
-        pokemonCapture.LMarker = marker;
-        this.pokemons.push(pokemonCapture);
+        var img = new Image();
+        var imgUrl = "images/pokemon/" + pokemonCapture.Id + ".png";
+        var maxWidth = 42;
+        var maxHeight = 38;
+        img.onload = function () {
+            var widthScaleFactor = maxWidth / img.width;
+            var heightScaleFactor = maxHeight / img.height;
+            var scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
+            if (scaleFactor > 1) {
+                scaleFactor = 1;
+            }
+            var width = img.width * scaleFactor;
+            var height = img.height * scaleFactor;
+            var marker = new L.Marker(posArr, {
+                icon: new L.Icon({
+                    iconUrl: imgUrl,
+                    iconSize: [width, height]
+                })
+            });
+            _this.map.addLayer(marker);
+            pokemonCapture.LMarker = marker;
+            _this.pokemons.push(pokemonCapture);
+        };
+        img.src = imgUrl;
     };
     return LeafletMap;
 }());

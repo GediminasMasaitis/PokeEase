@@ -109,15 +109,31 @@
 
     public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
         const posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
-        const marker = new L.Marker(posArr,
-        {
-            icon: new L.Icon({
-                iconUrl: `images/pokemon/${pokemonCapture.Id}.png`,
-                iconSize: [42,42]
-            })
-        });
-        this.map.addLayer(marker);
-        pokemonCapture.LMarker = marker;
-        this.pokemons.push(pokemonCapture);
+        const img = new Image();
+        const imgUrl = `images/pokemon/${pokemonCapture.Id}.png`;
+        const maxWidth = 42;
+        const maxHeight = 38;
+        img.onload = () => {
+
+            const widthScaleFactor = maxWidth / img.width;
+            const heightScaleFactor = maxHeight / img.height;
+            let scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
+            if (scaleFactor > 1) {
+                scaleFactor = 1;
+            }
+            const width = img.width * scaleFactor;
+            const height = img.height * scaleFactor;
+            const marker = new L.Marker(posArr,
+                {
+                    icon: new L.Icon({
+                        iconUrl: imgUrl,
+                        iconSize: [width, height]
+                    })
+                });
+            this.map.addLayer(marker);
+            pokemonCapture.LMarker = marker;
+            this.pokemons.push(pokemonCapture);
+        };
+        img.src = imgUrl;
     }
 }
