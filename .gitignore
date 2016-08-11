@@ -260,3 +260,5 @@ dist/
 .tmp/
 
 node_modules/
+
+.tscache

@@ -22,7 +22,7 @@ var NecroWSClient = (function () {
         this.url = url;
     }
     return NecroWSClient;
-})();
+}());
 var InterfaceHandler = (function () {
     function InterfaceHandler(map) {
         var _this = this;
@@ -32,27 +32,28 @@ var InterfaceHandler = (function () {
         this.map = map;
     }
     return InterfaceHandler;
-})();
-var OpenLayersMap = (function () {
-    function OpenLayersMap(divId) {
-        this.map = new ol.Map({
-            view: new ol.View({
-                center: [0, 0],
-                zoom: 1
-            }),
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            target: divId
+}());
+var LeafletMap = (function () {
+    function LeafletMap() {
+        this.map = L.map("map").setView([0, 0], 13);
+        var osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
+        this.playerMarker = L.marker([0, 0], {});
+        this.playerMarker.addTo(this.map);
+        this.playerPath = L.polyline([], {
+            color: "cyan"
         });
+        this.playerPath.addTo(this.map);
     }
-    OpenLayersMap.prototype.movePlayer = function (position) {
-        this.map.getView().setCenter([position.Latitude, position.Longitude]);
+    LeafletMap.prototype.movePlayer = function (position) {
+        var posArr = [position.Latitude, position.Longitude];
+        this.playerMarker.setLatLng(posArr);
+        this.playerPath.addLatLng(posArr);
+        if (this.followPlayer) {
+            this.map.setView(posArr);
+        }
     };
-    return OpenLayersMap;
-})();
+    return LeafletMap;
+}());
 var Runner = (function () {
     function Runner(client, interfaceHandler) {
         var _this = this;
@@ -65,14 +66,10 @@ var Runner = (function () {
         this.client = client;
     }
     return Runner;
-})();
-/// <reference path="../../external/typings/jquery/jquery.d.ts" />
-/// <reference path="../../external/typings/lodash/lodash.d.ts" />
-/// <reference path="../../external/typings/openlayers.d.ts" />
+}());
 $(function () {
-    //var gmap = new GoogleMap($());
-    var ol = new OpenLayersMap("map");
-    var interfaceHandler = new InterfaceHandler(ol);
+    var lMap = new LeafletMap();
+    var interfaceHandler = new InterfaceHandler(lMap);
     var necroClient = new NecroWSClient("ws://127.0.0.1:14252");
     var runner = new Runner(necroClient, interfaceHandler);
     runner.start();
