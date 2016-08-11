@@ -13,9 +13,16 @@ $(document).ready(function () {
     });
 
     $("#menu .item").click(function() {
+        var PopupTitle = $(this).attr('id');
         $("#popup").fadeIn();
         $("#popup .title span").text($(this).attr('id'));
         $("#popup .title").css('background-color', $(this).css('background-color'));
+        $("#popup .content").each(function() {
+            $(this).hide();
+            if ($($this).attr('data-category') == PopupTitle) {
+                $(this).show();
+            }
+        });
     });
 
     $("#popup .overlay").click(function() {
