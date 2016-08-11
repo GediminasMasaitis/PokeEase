@@ -51,7 +51,20 @@
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
 
+        else if (_.includes(type, "PokemonCaptureEvent")) {
+            const pokemonCapture = message as IPokemonCapture;
+            _.each(this.config.eventHandlers, eh => eh.onPokemonCapture(pokemonCapture));
+        }
 
+        else if (_.includes(type, "UpdateEvent")) {
+            const updateEvent = message as IUpdateEvent;
+            _.each(this.config.eventHandlers, eh => eh.onUpdate(updateEvent));
+        }
+
+        else if (_.includes(type, "WarnEvent")) {
+            const warnEvent = message as IWarnEvent;
+            _.each(this.config.eventHandlers, eh => eh.onWarn(warnEvent));
+        }
 
         else if (_.includes(type, "EggHatchedEvent")) {
             const eggHatched = message as IEggHatched;

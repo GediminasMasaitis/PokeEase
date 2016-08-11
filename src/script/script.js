@@ -36,6 +36,18 @@ var NecroWSClient = (function () {
                 profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
             }
+            else if (_.includes(type, "PokemonCaptureEvent")) {
+                var pokemonCapture_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonCapture(pokemonCapture_1); });
+            }
+            else if (_.includes(type, "UpdateEvent")) {
+                var updateEvent_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdate(updateEvent_1); });
+            }
+            else if (_.includes(type, "WarnEvent")) {
+                var warnEvent_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onWarn(warnEvent_1); });
+            }
             else if (_.includes(type, "EggHatchedEvent")) {
                 var eggHatched_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onEggHatched(eggHatched_1); });
@@ -106,6 +118,12 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
     };
+    InterfaceHandler.prototype.onPokemonCapture = function (pokemonCapture) {
+    };
+    InterfaceHandler.prototype.onUpdate = function (update) {
+    };
+    InterfaceHandler.prototype.onWarn = function (warn) {
+    };
     InterfaceHandler.prototype.onEggHatched = function (eggHatched) {
     };
     InterfaceHandler.prototype.onIncubatorStatus = function (incubatorStatus) {
@@ -170,6 +188,12 @@ var PlayerTeam;
     PlayerTeam[PlayerTeam["Mystic"] = 1] = "Mystic";
     PlayerTeam[PlayerTeam["Valor"] = 2] = "Valor";
 })(PlayerTeam || (PlayerTeam = {}));
+var PokemonCatchStatus;
+(function (PokemonCatchStatus) {
+    PokemonCatchStatus[PokemonCatchStatus["Success"] = 1] = "Success";
+    PokemonCatchStatus[PokemonCatchStatus["Escape"] = 2] = "Escape";
+    PokemonCatchStatus[PokemonCatchStatus["Flee"] = 3] = "Flee";
+})(PokemonCatchStatus || (PokemonCatchStatus = {}));
 var Runner = (function () {
     function Runner(client, interfaceHandler) {
         var _this = this;

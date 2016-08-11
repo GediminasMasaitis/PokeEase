@@ -54,6 +54,18 @@
         
     }
 
+    public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
+
+    }
+
+    public onUpdate(update: IUpdateEvent): void {
+
+    }
+
+    public onWarn(warn: IWarnEvent): void {
+
+    }
+
     public onEggHatched(eggHatched: IEggHatched): void {
         
     }

@@ -1,0 +1,3 @@
+interface IMessageEvent {
+    Message: string;
+}

@@ -4,6 +4,9 @@ interface IEventHandler {
     onFortTarget: (fortTarget: IFortTarget) => void;
     onFortUsed: (fortUsed: IFortUsed) => void;
     onProfile: (profile: IProfile) => void;
+    onPokemonCapture: (pokemonCapture: IPokemonCapture) => void;
+    onUpdate: (update: IUpdateEvent) => void;
+    onWarn: (warn: IWarnEvent) => void;
     onEggHatched: (eggHatched: IEggHatched) => void;
     onIncubatorStatus: (incubatorStatus: IIncubatorStatus) => void;
     onUnknownEvent?: (message: any) => void;
