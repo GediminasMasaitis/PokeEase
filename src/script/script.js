@@ -192,7 +192,9 @@ var LeafletMap = (function () {
             });
         };
         this.config = config;
-        this.map = L.map("map").setView([0, 0], 16);
+        this.map = L.map("map", {
+            zoomControl: false
+        }).setView([0, 0], 16);
         var osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
         this.pokeStops = [];
         this.gyms = [];
