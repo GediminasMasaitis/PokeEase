@@ -7,9 +7,21 @@ module.exports = function(grunt) {
                 src: ["src/script/ts/**/*.ts", "!node_modules/**"],
                 dest: "src/script/script.js"
             }
+        },
+
+        sass: {
+            options: {
+                sourceMap: true
+            },
+            dist: {
+                files: {
+                    'src/style/style.css': 'src/style/style.scss'
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-ts');
-    grunt.registerTask('default', ['ts']);
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.registerTask('default', ['ts', 'sass']);
 };
