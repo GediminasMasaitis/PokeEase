@@ -4,7 +4,8 @@
 * {font-family: Lato;}
 
 body {
-    background: url(http://i.imgur.com/bZlpljL.jpg); background-size: cover; background-position: center center;
+    /*background: url(http://i.imgur.com/bZlpljL.jpg); background-size: cover; background-position: center center;*/
+    margin: 0;
 }
 
 ::selection {
@@ -505,4 +506,9 @@ body {
     padding: 5px;
     font-size: 12px;
     color: #a8bcd1;
+}
+
+.leaflet-overlay-pane svg {
+    background: #000;
+    opacity: 0.6;
 }

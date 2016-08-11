@@ -1,17 +1,4 @@
-﻿//class MarkerWithID extends L.Marker {
-//    public Id: string;
-    
-//    constructor(id: string, latlng: L.LatLngExpression, options?: L.MarkerOptions) {
-//        super(latlng, options);
-//        this.Id = id;
-//    }
-//}
-
-//interface IFortWithMarker extends IFort {
-//    marker : L.Marker;
-//}
-
-class LeafletMap implements IMap {
+﻿class LeafletMap implements IMap {
 
     public config: IMapConfig;
 
@@ -27,7 +14,10 @@ class LeafletMap implements IMap {
 
     constructor(config: IMapConfig) {
         this.config = config;
-        this.map = L.map("map").setView([0,0], 16);
+        this.map = L.map("map",
+        {
+            zoomControl: false
+        }).setView([0,0], 16);
         const osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
         this.pokeStops = [];
         this.gyms = [];
