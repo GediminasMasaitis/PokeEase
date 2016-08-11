@@ -1,8 +1,6 @@
 ﻿class NotificationManager implements INotificationManager {
     private config: INotificationManagerConfig;
-
     private notifications: INotification[];
-
     private timeUpdaterInterval: number;
 
     constructor(config: INotificationManagerConfig) {
@@ -57,6 +55,30 @@
         });
     }
 
+    public addNotificationPokeStopUsed = (fortUsed: IFortUsed): void => {
+        let itemsHtml = "";
+        _.each(fortUsed.ItemsList, item => {
+            itemsHtml += `<div class="item"><img src="images/items/${item.Name}.png"/>x${item.Count}</div>`;
+        });
+        
+        const html = `<div class="event pokestop">
+                        <i class="fa fa-times dismiss"></i>
+                        <div class="info">
+                            ${itemsHtml}
+                            <div class="stats">+${fortUsed.Exp}XP</div>
+                        </div>
+                        <span class="event-type">pokestop</span>
+                        <span class="timestamp">0 seconds ago</span>
+                        <div class="category"></div>
+                    </div>`;
+
+        const element = $(html);
+        this.addNotificationFinal({
+            element: element,
+            event: fortUsed
+        });
+    }
+
     private addNotificationFinal = (notification: INotification): void => {
         notification.element.wrapInner('<div class="item-container"></div>');
         notification.element.click(this.closeNotification);
@@ -78,4 +100,5 @@
 
 interface INotificationManager {
     addNotificationCapture(pokemonCatch: IPokemonCapture);
+    addNotificationPokeStopUsed(fortUsed: IFortUsed);
 }

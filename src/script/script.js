@@ -13,7 +13,6 @@ var NecroWSClient = (function () {
         this.clientOnMessage = function (event) {
             var message = JSON.parse(event.data);
             message.Timestamp = Date.now();
-            console.log(message);
             var type = message.$type;
             if (_.includes(type, "UpdatePositionEvent")) {
                 var mapLocation_1 = message;
@@ -31,6 +30,7 @@ var NecroWSClient = (function () {
             }
             else if (_.includes(type, "FortUsedEvent")) {
                 var fortUsed_1 = message;
+                fortUsed_1.ItemsList = _this.parseItemString(fortUsed_1.Items);
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onFortUsed(fortUsed_1); });
             }
             else if (_.includes(type, "ProfileEvent")) {
@@ -74,6 +74,22 @@ var NecroWSClient = (function () {
                     }
                 });
             }
+            console.log(message);
+        };
+        this.parseItemString = function (itemStr) {
+            var itemParseRegex = /(\d+) x (.+?)(?:,|$)/g;
+            var itemsList = [];
+            while (true) {
+                var regexResults = itemParseRegex.exec(itemStr);
+                if (regexResults === null) {
+                    break;
+                }
+                itemsList.push({
+                    Count: parseInt(regexResults[1]),
+                    Name: regexResults[2]
+                });
+            }
+            return itemsList;
         };
         this.getCurrency = function (message, currencyName) {
             var currencies = message.Profile.PlayerData.Currencies.$values;
@@ -137,6 +153,7 @@ var InterfaceHandler = (function () {
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === fortUsed.Id; });
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
+        this.config.notificationManager.addNotificationPokeStopUsed(fortUsed);
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
     };
@@ -321,6 +338,18 @@ var NotificationManager = (function () {
             _this.addNotificationFinal({
                 element: element,
                 event: pokemonCatch
+            });
+        };
+        this.addNotificationPokeStopUsed = function (fortUsed) {
+            var itemsHtml = "";
+            _.each(fortUsed.ItemsList, function (item) {
+                itemsHtml += "<div class=\"item\"><img src=\"images/items/" + item.Name + ".png\"/>x" + item.Count + "</div>";
+            });
+            var html = "<div class=\"event pokestop\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"info\">\n                            " + itemsHtml + "\n                            <div class=\"stats\">+" + fortUsed.Exp + "XP</div>\n                        </div>\n                        <span class=\"event-type\">pokestop</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
+            var element = $(html);
+            _this.addNotificationFinal({
+                element: element,
+                event: fortUsed
             });
         };
         this.addNotificationFinal = function (notification) {

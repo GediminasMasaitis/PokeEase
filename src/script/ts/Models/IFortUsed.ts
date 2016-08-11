@@ -5,4 +5,11 @@ interface IFortUsed extends IMapLocation {
     InventoryFull: boolean;
     Items: string;
     Name: string;
+
+    ItemsList?: IFortItem[];
+}
+
+interface IFortItem {
+    Name: string;
+    Count: number;
 }

@@ -21,7 +21,6 @@
     private clientOnMessage = (event: MessageEvent): void => {
         const message = JSON.parse(event.data);
         message.Timestamp = Date.now();
-        console.log(message);
 
         const type = message.$type as string;
 
@@ -44,6 +43,7 @@
 
         else if (_.includes(type, "FortUsedEvent")) {
             const fortUsed = message as IFortUsed;
+            fortUsed.ItemsList = this.parseItemString(fortUsed.Items);
             _.each(this.config.eventHandlers, eh => eh.onFortUsed(fortUsed));
         }
 
@@ -96,6 +96,23 @@
                 }
             });
         }
+        console.log(message);
+    }
+
+    private parseItemString = (itemStr: string): IFortItem[] => {
+        const itemParseRegex = /(\d+) x (.+?)(?:,|$)/g;
+        const itemsList: IFortItem[] = [];
+        while (true) {
+            const regexResults = itemParseRegex.exec(itemStr);
+            if (regexResults === null) {
+                break;
+            }
+            itemsList.push({
+                Count: parseInt(regexResults[1]),
+                Name: regexResults[2]
+            });
+        }
+        return itemsList;
     }
 
     private getCurrency = (message: any, currencyName: string): number => {

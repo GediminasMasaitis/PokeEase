@@ -59,6 +59,7 @@
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === fortUsed.Id);
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
+        this.config.notificationManager.addNotificationPokeStopUsed(fortUsed);
     }
 
     public onProfile(profile: IProfile): void {
