@@ -1,25 +1,7 @@
 $(document).ready(function () {
 
-    /*
-    $("#menu .close-button").click(function() {
-        $(".open-menu").css('transform', 'translateX(0)');
-        $(".open-menu").children('i').css('transform', 'rotate(0)');
-        $(this).css('transform', 'translateX(-60px)');
-        $(this).children('i').css('transform', 'rotate(180deg)');
-        $("#menu").delay(300).fadeOut(300);
-        $(".open-menu").delay(300).fadeIn(300);
-    });
 
-    $(".open-menu").click(function() {
-        $(this).css('transform', 'translateX(60px)');
-        $(this).children('i').css('transform', 'rotate(180deg)');
-        $("#menu .close-button").css('transform', 'translateX(0)');
-        $("#menu .close-button").children('i').css('transform', 'rotate(0)');
-        $("#menu").delay(300).fadeIn(300);
-        $(this).delay(300).fadeOut(300);
-    });
-    */
-
+    // MENU EVENTS
     $("#menu .close-button").click(function() {
         $("#menu").animate({"left": "-200px"}, 300);
         $(".open-menu").delay(300).animate({"opacity": "1"}, 300);
@@ -44,6 +26,8 @@ $(document).ready(function () {
         $("#popup").fadeOut();
     });
 
+
+    // JOURNAL EVENTS
     $("#journal .event").each(function() {
         $(this).children('.event-type').text($(this).attr('class').split(' ')[1]);
         $(this).children('.event-type').css('color', $(this).children('.category').css("background-color"));
@@ -91,14 +75,14 @@ $(document).ready(function () {
 				$(tooltip).append('<br/>');
 				var title = $('<h3/>', {
 					text: $(this).find('.info').contents().get(0).nodeValue.trim(),
-					style: 'display: inline-block;' 
+					style: 'display: inline-block;'
 				})
 				$(tooltip).append(title);
 				$(tooltip).append('<br/>');
 				var stats = $('<span/>', {
 					text: $(this).find('.stats').text(),
-					style: 'display: inline-block;' 
-				});			
+					style: 'display: inline-block;'
+				});
 				$(tooltip).append(stats);
 				return tooltip;
 			}
@@ -114,7 +98,12 @@ $(document).ready(function () {
 			classes: 'qtip-tipsy qtip-shadow qtip-rounded'
 		}
 	});
+
+    // FIX A PROBLEM WE HAD WITH DISPLAY:TABLE AND ANIMATING
     $("#journal .event").wrapInner('<div class="item-container"></div>');
+
+    // SCROLL TO THE BOTTOM OF THE JOURNAL LIST
+    $("#journal .items").animate({ scrollTop: $("#journal .items").prop("scrollHeight") - $("#journal .items").height() }, 0);
 
 });
 
