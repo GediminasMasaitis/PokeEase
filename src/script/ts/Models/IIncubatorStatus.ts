@@ -1,4 +1,4 @@
-interface IIncubatorStatus {
+interface IIncubatorStatus extends IEvent {
     IncubatorId: string;
     KmRemaining: number;
     KmToWalk: number;

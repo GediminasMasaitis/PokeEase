@@ -1,4 +1,4 @@
-interface IFortTarget {
+interface IFortTarget extends IEvent {
     Distance: number;
     Name: string;
 }

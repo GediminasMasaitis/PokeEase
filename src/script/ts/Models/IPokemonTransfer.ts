@@ -1,4 +1,4 @@
-interface IPokemonTransfer {
+interface IPokemonTransfer extends IEvent {
     Id: number;
     Cp: number;
     Perfection: number;

@@ -12,6 +12,7 @@ var NecroWSClient = (function () {
         };
         this.clientOnMessage = function (event) {
             var message = JSON.parse(event.data);
+            message.Timestamp = Date.now();
             console.log(message);
             var type = message.$type;
             if (_.includes(type, "UpdatePositionEvent")) {
@@ -141,8 +142,7 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onPokemonCapture = function (pokemonCapture) {
         this.config.map.onPokemonCapture(pokemonCapture);
-        var pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCapture.Id];
-        console.log("Caught a " + pokemonName);
+        this.config.notificationManager.addNotificationCapture(pokemonCapture);
     };
     InterfaceHandler.prototype.onUpdate = function (update) {
     };
@@ -270,12 +270,6 @@ var LeafletMap = (function () {
     };
     return LeafletMap;
 }());
-var PlayerTeam;
-(function (PlayerTeam) {
-    PlayerTeam[PlayerTeam["Instinct"] = 0] = "Instinct";
-    PlayerTeam[PlayerTeam["Mystic"] = 1] = "Mystic";
-    PlayerTeam[PlayerTeam["Valor"] = 2] = "Valor";
-})(PlayerTeam || (PlayerTeam = {}));
 var PokeStopStatus;
 (function (PokeStopStatus) {
     PokeStopStatus[PokeStopStatus["Normal"] = 0] = "Normal";
@@ -289,6 +283,46 @@ var PokemonCatchStatus;
     PokemonCatchStatus[PokemonCatchStatus["Escape"] = 2] = "Escape";
     PokemonCatchStatus[PokemonCatchStatus["Flee"] = 3] = "Flee";
 })(PokemonCatchStatus || (PokemonCatchStatus = {}));
+var PlayerTeam;
+(function (PlayerTeam) {
+    PlayerTeam[PlayerTeam["Instinct"] = 0] = "Instinct";
+    PlayerTeam[PlayerTeam["Mystic"] = 1] = "Mystic";
+    PlayerTeam[PlayerTeam["Valor"] = 2] = "Valor";
+})(PlayerTeam || (PlayerTeam = {}));
+var NotificationManager = (function () {
+    function NotificationManager(config) {
+        var _this = this;
+        this.onUpdateTimerElapsed = function () {
+            var currentTime = Date.now();
+            _.each(_this.notifications, function (notification) {
+                var diff = currentTime - notification.event.Timestamp;
+                var diffStr = TimeUtils.timestampToDateStr(diff);
+                var timestampElement = notification.element.find(".timestamp");
+                timestampElement.text(diffStr + " ago");
+            });
+        };
+        this.addNotificationCapture = function (pokemonCatch) {
+            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
+            var html = "<div class=\"event catch\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + pokemonCatch.Perfection + "%</div>\n                        </div>\n                        <span class=\"event-type\">catch</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
+            var element = $(html);
+            _this.addNotificationFinal({
+                element: element,
+                event: pokemonCatch
+            });
+        };
+        this.config = config;
+        this.notifications = [];
+        this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
+    }
+    NotificationManager.prototype.addNotificationFinal = function (notification) {
+        var color = notification.element.children(".category").css("background-color");
+        notification.element.children(".event-type").css("color", color);
+        notification.element.wrapInner('<div class="item-container"></div>');
+        this.config.container.append(notification.element);
+        this.notifications.push(notification);
+    };
+    return NotificationManager;
+}());
 var Runner = (function () {
     function Runner(client, interfaceHandler) {
         var _this = this;
@@ -338,17 +372,45 @@ var TimeUtils = (function () {
         var timeStamp = Date.now();
         return timeStamp.toString();
     };
+    TimeUtils.timestampToDateStr = function (timestamp) {
+        var totalSeconds = Math.floor(timestamp / 1000);
+        var totalMinutes = Math.floor(totalSeconds / 60);
+        var totalHours = Math.floor(totalMinutes / 60);
+        var totalDays = Math.floor(totalHours / 24);
+        var hours = totalHours - totalDays * 24;
+        var minutes = totalMinutes - totalHours * 60;
+        var seconds = totalSeconds - totalMinutes * 60;
+        var dateStr = "";
+        if (totalDays > 0) {
+            dateStr += totalDays + " days ";
+        }
+        if (hours > 0) {
+            dateStr += hours + " hours ";
+        }
+        if (minutes > 0) {
+            dateStr += minutes + " minutes ";
+        }
+        if (seconds > 0) {
+            dateStr += seconds + " seconds";
+        }
+        return dateStr;
+    };
     return TimeUtils;
 }());
 $(function () {
     var translationManager = new TranslationManager();
+    var notificationManager = new NotificationManager({
+        container: $(".items"),
+        translationManager: translationManager
+    });
     var lMap = new LeafletMap({
         followPlayer: true,
         translationManager: translationManager
     });
     var interfaceHandler = new InterfaceHandler({
         map: lMap,
-        translationManager: translationManager
+        translationManager: translationManager,
+        notificationManager: notificationManager
     });
     var necroClient = new NecroWSClient("ws://127.0.0.1:14252");
     var runner = new Runner(necroClient, interfaceHandler);

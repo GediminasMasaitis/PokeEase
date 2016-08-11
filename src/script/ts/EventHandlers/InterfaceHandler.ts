@@ -67,8 +67,7 @@
 
     public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
         this.config.map.onPokemonCapture(pokemonCapture);
-        const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCapture.Id];
-        console.log(`Caught a ${pokemonName}`);
+        this.config.notificationManager.addNotificationCapture(pokemonCapture);
     }
 
     public onUpdate(update: IUpdateEvent): void {

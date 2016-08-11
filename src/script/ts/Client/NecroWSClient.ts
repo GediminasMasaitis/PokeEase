@@ -20,6 +20,7 @@
 
     private clientOnMessage = (event: MessageEvent): void => {
         const message = JSON.parse(event.data);
+        message.Timestamp = Date.now();
         console.log(message);
 
         const type = message.$type as string;

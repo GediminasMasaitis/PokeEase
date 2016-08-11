@@ -15,5 +15,12 @@ interface IPokemonCapture extends IMapLocation {
     PokemonId: number;
     Status: PokemonCatchStatus;
 
+    Timestamp: number;
     LMarker?: L.Marker;
+}
+
+enum PokemonCatchStatus {
+    Success = 1,
+    Escape = 2,
+    Flee = 3
 }

@@ -1,4 +1,4 @@
-interface IEggHatched {
+interface IEggHatched extends IEvent {
     Id: string;
     Cp: number;
     Level: number;

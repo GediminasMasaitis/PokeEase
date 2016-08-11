@@ -1,4 +1,4 @@
-﻿interface IProfile {
+﻿interface IProfile extends IEvent {
     PlayerData: IPlayerData;
     Success: boolean;
 }

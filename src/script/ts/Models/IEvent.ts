@@ -1,0 +1,3 @@
+interface IEvent {
+    Timestamp: number;
+}
