@@ -45,4 +45,8 @@
         pokeStop.Name = pokeStopUsed.Name;
         this.map.usePokeStop(pokeStopUsed);
     }
+
+    public onProfile(profile: IProfile): void {
+        
+    }
 }

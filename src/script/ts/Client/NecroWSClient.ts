@@ -33,7 +33,17 @@
         } else if (_.includes(type, "FortUsedEvent")) {
             const fortUsed = message as IPokeStopUsed;
             this.config.eventHandler.onFortUsed(fortUsed);
+        } else if (_.includes(type, "ProfileEvent")) {
+            const profile = message.Profile as IProfile;
+            profile.PlayerData.PokeCoin = this.getCurrency(message, "POKECOIN");
+            profile.PlayerData.StarDust = this.getCurrency(message, "STARDUST");
+            this.config.eventHandler.onProfile(profile);
         }
+    }
 
+    private getCurrency = (message: any, currencyName: string): number => {
+        const currencies = message.Profile.PlayerData.Currencies.$values as any[];
+        const currency = _.find(currencies, x => x.Name === currencyName);
+        return currency.Amount;
     }
 }
