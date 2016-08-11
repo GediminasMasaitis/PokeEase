@@ -9,5 +9,7 @@ interface IEventHandler {
     onWarn: (warn: IWarnEvent) => void;
     onEggHatched: (eggHatched: IEggHatched) => void;
     onIncubatorStatus: (incubatorStatus: IIncubatorStatus) => void;
+    onItemRecycle: (itemRecycle: IItemRecycle) => void;
+    onPokemonTransfer: (pokemonTransfer: IPokemonTransfer) => void;
     onUnknownEvent?: (message: any) => void;
 }

@@ -76,6 +76,16 @@
             _.each(this.config.eventHandlers, eh => eh.onIncubatorStatus(incubatorStatus));
         }
 
+        else if (_.includes(type, "ItemRecycledEvent")) {
+            const itemRecycle = message as IItemRecycle;
+            _.each(this.config.eventHandlers, eh => eh.onItemRecycle(itemRecycle));
+        }
+
+        else if (_.includes(type, "TransferPokemonEvent")) {
+            const pokemonTransfer = message as IPokemonTransfer;
+            _.each(this.config.eventHandlers, eh => eh.onPokemonTransfer(pokemonTransfer));
+        }
+
         else {
             _.each(this.config.eventHandlers, eh => {
                 if (eh.onUnknownEvent) {
