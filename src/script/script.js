@@ -119,6 +119,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onProfile = function (profile) {
     };
     InterfaceHandler.prototype.onPokemonCapture = function (pokemonCapture) {
+        this.map.onPokemonCapture(pokemonCapture);
     };
     InterfaceHandler.prototype.onUpdate = function (update) {
     };
@@ -168,7 +169,7 @@ var LeafletMap = (function () {
         var osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
         this.pokeStops = [];
         this.gyms = [];
-        this.pokemonMarkers = [];
+        this.pokemons = [];
         this.playerPath = L.polyline([], {
             color: "cyan",
             opacity: 1
@@ -179,6 +180,13 @@ var LeafletMap = (function () {
     }
     LeafletMap.prototype.usePokeStop = function (pokeStopUsed) {
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
+    };
+    LeafletMap.prototype.onPokemonCapture = function (pokemonCapture) {
+        var posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
+        var marker = new L.Marker(posArr, {});
+        this.map.addLayer(marker);
+        pokemonCapture.LMarker = marker;
+        this.pokemons.push(pokemonCapture);
     };
     return LeafletMap;
 }());

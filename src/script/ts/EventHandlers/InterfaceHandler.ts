@@ -55,7 +55,7 @@
     }
 
     public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
-
+        this.map.onPokemonCapture(pokemonCapture);
     }
 
     public onUpdate(update: IUpdateEvent): void {

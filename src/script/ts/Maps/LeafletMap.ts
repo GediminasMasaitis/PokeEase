@@ -19,7 +19,7 @@ class LeafletMap implements IMap {
 
     private pokeStops: IFort[];
     private gyms: IFort[];
-    private pokemonMarkers: L.Marker[];
+    private pokemons: IPokemonCapture[];
 
     private playerMarker: L.Marker;
     private playerPath: L.Polyline;
@@ -30,7 +30,7 @@ class LeafletMap implements IMap {
         const osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
         this.pokeStops = [];
         this.gyms = [];
-        this.pokemonMarkers = [];
+        this.pokemons = [];
         this.playerPath = L.polyline([], {
             color: "cyan",
             opacity: 1
@@ -84,5 +84,16 @@ class LeafletMap implements IMap {
     public usePokeStop(pokeStopUsed: IFortUsed): void {
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === pokeStopUsed.Id);
         // TODO: change marker icon
+    }
+
+    public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
+        const posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
+        const marker = new L.Marker(posArr,
+        {
+
+        });
+        this.map.addLayer(marker);
+        pokemonCapture.LMarker = marker;
+        this.pokemons.push(pokemonCapture);
     }
 }
