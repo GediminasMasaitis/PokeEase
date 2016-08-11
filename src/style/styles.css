@@ -14,7 +14,7 @@ body {
 }
 
 .menu {
-    background: rgba(52, 66, 79, 0.9);
+    background: rgba(38, 48, 58, 0.9);
     z-index: 5;
 }
 
@@ -24,7 +24,6 @@ body {
     top: 0;
     bottom: 0;
     width: 200px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     color: white;
     transform: translateZ(0);
     overflow-y: auto;
@@ -109,7 +108,7 @@ body {
     margin: auto;
     margin-bottom: 2.5em;
     text-align: center;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     cursor: pointer;
 }
 
@@ -126,8 +125,9 @@ body {
     margin: auto;
     margin-top: 2.5em;
     text-align: center;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     cursor: pointer;
+    transition: 0.3s;
 }
 
 #menu .help i {
@@ -146,7 +146,7 @@ body {
     margin: auto;
     margin-bottom: 2.5em;
     text-align: center;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     cursor: pointer;
     padding: .75em 1em .9em;
     text-transform: uppercase;
@@ -167,11 +167,13 @@ body {
 
 .open-menu:hover,
 .open-menu:focus,
+.help:hover,
+.help:focus,
 .open-journal:hover,
 .open-journal:focus,
 .close-button:hover,
 .close-button:focus {
-    background: rgba(0, 0, 0, 0.5) !important;
+    background: rgba(0, 0, 0, 0.7) !important;
 }
 
 .menu::-webkit-scrollbar {
@@ -255,7 +257,6 @@ body {
     top: 0;
     bottom: 0;
     width: 300px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     color: white;
     transform: translateZ(0);
     overflow-y: auto;
@@ -286,23 +287,23 @@ body {
     direction: rtl;
 }
 
-#journal .items #item {
+#journal .items .event {
     direction: ltr;
     margin: 0;
-    background: rgba(40, 51, 62, 0.8);
+    background: rgba(32, 41, 49, 0.8);
     cursor: pointer;
     position: relative;
     width: 100%;
     overflow: hidden;
 }
 
-#journal .items #item .item-container {
+#journal .items .event .item-container {
     display: table;
     width: 100%;
     min-height: 100px;
 }
 
-#journal .items #item .category {
+#journal .items .event .category {
     position: absolute;
     top: 0;
     right: 0;
@@ -310,7 +311,7 @@ body {
     width: 10px;
 }
 
-#journal .items #item + #item {
+#journal .items .event + .event {
     margin-top: 10px;
 }
 
@@ -332,9 +333,10 @@ body {
     left: 0;
     right: 0;
     height: 160px;
-    background: linear-gradient(to bottom, rgba(43,56,67,1) 0%,rgba(43,56,67,0) 100%);
+    background: linear-gradient(to bottom, rgba(35,45,53,1) 0%,rgba(35,45,53,0) 100%);
     display: block;
     transition: 0.2s;
+    opacity: 0.7;
 }
 
 #journal .items:after {
@@ -346,22 +348,23 @@ body {
     left: 0;
     right: 0;
     height: 160px;
-    background: linear-gradient(to bottom, rgba(43,56,67,0) 0%,rgba(43,56,67,1) 100%);
+    background: linear-gradient(to top, rgba(35,45,53,1) 0%,rgba(35,45,53,0) 100%);
     display: block;
     transition: 0.2s;
+    opacity: 0.7;
 }
 
 #journal:hover .items:before, #journal:hover .items:after {
     opacity: 0;
 }
 
-#journal #item.transfer .category {background: #1d7157;}
-#journal #item.pokestop .category {background: #33b5e5;}
-#journal #item.recycle .category {background: #cb92f1;}
-#journal #item.catch .category {background: #7db620;}
-#journal #item.evolve .category {background: #ebac28;}
+#journal .event.transfer .category {background: #1d7157;}
+#journal .event.pokestop .category {background: #33b5e5;}
+#journal .event.recycle .category {background: #cb92f1;}
+#journal .event.catch .category {background: #7db620;}
+#journal .event.evolve .category {background: #ebac28;}
 
-#journal #item .event {
+#journal .event .event-type {
     position: absolute;
     top: 0;
     right: 10px;
@@ -372,7 +375,7 @@ body {
     padding: 4px 6px;
 }
 
-#journal #item .image {
+#journal .event .image {
     display: table-cell;
     width: 64px;
     padding-left: 1em;
@@ -380,19 +383,19 @@ body {
     vertical-align: middle;
 }
 
-#journal #item .info {
+#journal .event .info {
     display: table-cell;
     padding-left: 1em;
     vertical-align: middle;
     font-size: 18px;
 }
 
-#journal #item .info .stats {
+#journal .event .info .stats {
     font-size: 14px;
     color: #8198af;
 }
 
-#journal #item .timestamp {
+#journal .event .timestamp {
     position: absolute;
     bottom: 0;
     right: 10px;
@@ -402,21 +405,21 @@ body {
     color: #5d6c7a;
 }
 
-#journal #item img {
+#journal .event img {
     max-width: 64px;
     max-height: 64px;
 }
 
-#journal #item .info .item {
+#journal .event .info .item {
     display: inline-block;
     margin-bottom: 5px;
 }
 
-#journal #item .info .item + .item {
+#journal .event .info .item + .item {
     margin-left: .7em;
 }
 
-#journal #item .info .item img {
+#journal .event .info .item img {
     max-width: 32px;
     max-height: 32px;
     vertical-align: middle;
@@ -431,7 +434,7 @@ body {
     margin: 15px;
     margin-bottom: 2.5em;
     text-align: center;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     cursor: pointer;
     position: absolute;
     right: 0;
@@ -451,7 +454,7 @@ body {
     margin: auto;
     margin-bottom: 2.5em;
     text-align: center;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     cursor: pointer;
     padding: .75em 1em .9em;
     text-transform: uppercase;
@@ -499,7 +502,7 @@ body {
     transform: translateX(-3px);
 }
 
-#journal .items #item .dismiss {
+#journal .items .event .dismiss {
     position: absolute;
     left: 0;
     top: 0;
@@ -509,6 +512,11 @@ body {
 }
 
 .leaflet-overlay-pane svg {
-    background: #000;
-    opacity: 0.6;
+    background: #000e23;
+    opacity: 0.7;
+}
+
+.leaflet-top, .leaflet-bottom {
+    z-index: 1;
+    opacity: 0.25;
 }
