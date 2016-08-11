@@ -489,6 +489,7 @@ body {
     height: 2px;
     width: 16px;
     margin: 2px 0;
+    transition: 0.3s;
 }
 
 .delete-icon div.bar1 {
@@ -506,6 +507,10 @@ body {
     padding: 5px;
     font-size: 12px;
     color: #a8bcd1;
+}
+
+#journal .clear-all:hover .delete-icon div {
+    transform: translateX(0);
 }
 
 .leaflet-overlay-pane svg {
