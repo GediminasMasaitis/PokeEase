@@ -112,7 +112,7 @@ body {
     cursor: pointer;
 }
 
-.close-button i, .open-menu i, .open-journey i {
+.close-button i, .open-menu i, .open-journal i {
     line-height: 48px;
     color: white;
     transition: 0.3s;
@@ -158,7 +158,7 @@ body {
     margin-right: 0 !important;
 }
 
-.open-menu i, .open-journey i {
+.open-menu i, .open-journal i {
     vertical-align: -5%;
     line-height: 1;
     margin-right: .5em;
@@ -166,8 +166,8 @@ body {
 
 .open-menu:hover,
 .open-menu:focus,
-.open-journey:hover,
-.open-journey:focus,
+.open-journal:hover,
+.open-journal:focus,
 .close-button:hover,
 .close-button:focus {
     background: rgba(0, 0, 0, 0.5) !important;
@@ -246,9 +246,9 @@ body {
 }
 
 
-/* JOURNEY */
+/* journal */
 
-#journey {
+#journal {
     position: fixed;
     right: -300px;
     top: 0;
@@ -260,7 +260,7 @@ body {
     overflow-y: auto;
 }
 
-#journey .title {
+#journal .title {
     height: 80px;
     width: 100%;
     background: #34424f;
@@ -269,7 +269,7 @@ body {
     position: relative;
 }
 
-#journey .title span {
+#journal .title span {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -278,14 +278,14 @@ body {
     letter-spacing: 1px;
 }
 
-#journey .items {
+#journal .items {
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
     direction: rtl;
 }
 
-#journey .items #item {
+#journal .items #item {
     direction: ltr;
     margin: 0;
     background: rgba(40, 51, 62, 0.8);
@@ -295,13 +295,13 @@ body {
     overflow: hidden;
 }
 
-#journey .items #item .item-container {
+#journal .items #item .item-container {
     display: table;
     width: 100%;
     min-height: 100px;
 }
 
-#journey .items #item .category {
+#journal .items #item .category {
     position: absolute;
     top: 0;
     right: 0;
@@ -309,20 +309,20 @@ body {
     width: 10px;
 }
 
-#journey .items #item + #item {
+#journal .items #item + #item {
     margin-top: 10px;
 }
 
-#journey .items::-webkit-scrollbar {
+#journal .items::-webkit-scrollbar {
     width: 10px;
     background: rgba(0, 0, 0, 0.1);
 }
 
-#journey .items::-webkit-scrollbar-thumb {
+#journal .items::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.5);
 }
 
-#journey .items:before {
+#journal .items:before {
     content: "";
     position: fixed;
     top: 80px;
@@ -333,15 +333,34 @@ body {
     height: 160px;
     background: linear-gradient(to bottom, rgba(43,56,67,1) 0%,rgba(43,56,67,0) 100%);
     display: block;
+    transition: 0.2s;
 }
 
-#journey #item.transfer .category {background: #1d7157;}
-#journey #item.pokestop .category {background: #33b5e5;}
-#journey #item.recycle .category {background: #cb92f1;}
-#journey #item.catch .category {background: #7db620;}
-#journey #item.evolve .category {background: #ebac28;}
+#journal .items:after {
+    content: "";
+    position: fixed;
+    bottom: 60px;
+    z-index: 1;
+    pointer-events: none;
+    left: 0;
+    right: 0;
+    height: 160px;
+    background: linear-gradient(to bottom, rgba(43,56,67,0) 0%,rgba(43,56,67,1) 100%);
+    display: block;
+    transition: 0.2s;
+}
 
-#journey #item .event {
+#journal:hover .items:before, #journal:hover .items:after {
+    opacity: 0;
+}
+
+#journal #item.transfer .category {background: #1d7157;}
+#journal #item.pokestop .category {background: #33b5e5;}
+#journal #item.recycle .category {background: #cb92f1;}
+#journal #item.catch .category {background: #7db620;}
+#journal #item.evolve .category {background: #ebac28;}
+
+#journal #item .event {
     position: absolute;
     top: 0;
     right: 10px;
@@ -352,7 +371,7 @@ body {
     padding: 4px 6px;
 }
 
-#journey #item .image {
+#journal #item .image {
     display: table-cell;
     width: 64px;
     padding-left: 1em;
@@ -360,19 +379,19 @@ body {
     vertical-align: middle;
 }
 
-#journey #item .info {
+#journal #item .info {
     display: table-cell;
     padding-left: 1em;
     vertical-align: middle;
     font-size: 18px;
 }
 
-#journey #item .info .stats {
+#journal #item .info .stats {
     font-size: 14px;
     color: #8198af;
 }
 
-#journey #item .timestamp {
+#journal #item .timestamp {
     position: absolute;
     bottom: 0;
     right: 10px;
@@ -382,28 +401,28 @@ body {
     color: #5d6c7a;
 }
 
-#journey #item img {
+#journal #item img {
     max-width: 64px;
     max-height: 64px;
 }
 
-#journey #item .info .item {
+#journal #item .info .item {
     display: inline-block;
     margin-bottom: 5px;
 }
 
-#journey #item .info .item + .item {
+#journal #item .info .item + .item {
     margin-left: .7em;
 }
 
-#journey #item .info .item img {
+#journal #item .info .item img {
     max-width: 32px;
     max-height: 32px;
     vertical-align: middle;
     margin-right: 7px;
 }
 
-#journey .close-button {
+#journal .close-button {
     width: 50px;
     height: 50px;
     transition: 0.3s;
@@ -419,7 +438,7 @@ body {
     display: table-cell;
 }
 
-.open-journey {
+.open-journal {
     transition: 0.3s;
     position: fixed;
     top: 15px;
@@ -439,7 +458,7 @@ body {
     font-size: 12px;
 }
 
-#journey .clear-all {
+#journal .clear-all {
     height: 60px;
     width: 100%;
     background: #34424f;
@@ -450,7 +469,7 @@ body {
     position: relative;
 }
 
-#journey .clear-all span {
+#journal .clear-all span {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -479,7 +498,7 @@ body {
     transform: translateX(-3px);
 }
 
-#journey .items #item .dismiss {
+#journal .items #item .dismiss {
     position: absolute;
     left: 0;
     top: 0;

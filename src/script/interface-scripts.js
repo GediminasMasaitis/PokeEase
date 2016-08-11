@@ -44,39 +44,39 @@ $(document).ready(function () {
         $("#popup").fadeOut();
     });
 
-    $("#journey #item").each(function() {
+    $("#journal #item").each(function() {
         $(this).children('.event').text($(this).attr('class'));
         $(this).children('.event').css('color', $(this).children('.category').css("background-color"));
     });
 
-    $("#journey .close-button").click(function() {
-        $("#journey").animate({"right": "-300px"}, 300);
-        $(".open-journey").delay(300).animate({"opacity": "1"}, 300);
+    $("#journal .close-button").click(function() {
+        $("#journal").animate({"right": "-300px"}, 300);
+        $(".open-journal").delay(300).animate({"opacity": "1"}, 300);
     });
 
-    $(".open-journey").click(function() {
+    $(".open-journal").click(function() {
         $(this).css("opacity", "0");
-        $("#journey").delay(300).animate({"right": "0"}, 300);
+        $("#journal").delay(300).animate({"right": "0"}, 300);
     });
 
     resizeItemContainer();
 
-    $("#journey .clear-all").click(function() {
+    $("#journal .clear-all").click(function() {
         var delay = 0;
-        $($("#journey .items #item").get().reverse()).each(function() {
+        $($("#journal .items #item").get().reverse()).each(function() {
             $(this).delay(delay).slideUp(300);
             delay += 50;
         });
-        /* $($("#journey .items #item").get().reverse()).first().children('*').slideUp();
-        $($("#journey .items #item").get().reverse()).first().slideUp(); */
+        /* $($("#journal .items #item").get().reverse()).first().children('*').slideUp();
+        $($("#journal .items #item").get().reverse()).first().slideUp(); */
     });
 
-    $("#journey #item .dismiss").click(function() {
+    $("#journal #item .dismiss").click(function() {
         $(this).closest("#item").slideUp(300);
         /* $(this).parent("#item").animate({opacity: "0", "min-height": "0"}); */
     });
 
-    $("#journey #item").wrapInner('<div class="item-container"></div>');
+    $("#journal #item").wrapInner('<div class="item-container"></div>');
 
 });
 
@@ -85,5 +85,5 @@ $(window).resize(function() {
 });
 
 function resizeItemContainer() {
-    $("#journey .items").css('height', ($(window).height() - $("#journey .title").height() - $("#journey .clear-all").height()));
+    $("#journal .items").css('height', ($(window).height() - $("#journal .title").height() - $("#journal .clear-all").height()));
 }
