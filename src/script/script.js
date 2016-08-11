@@ -15,8 +15,16 @@ var NecroWSClient = (function () {
             console.log(message);
             var type = message.$type;
             if (_.includes(type, "UpdatePositionEvent")) {
-                var positionEvent = message;
-                _this.config.eventHandler.onLocationUpdate(positionEvent);
+                var mapLocation = message;
+                _this.config.eventHandler.onLocationUpdate(mapLocation);
+            }
+            else if (_.includes(type, "PokeStopListEvent")) {
+                var forts = message.Forts.$values;
+                _this.config.eventHandler.onPokeStopList(forts);
+            }
+            else if (_.includes(type, "FortUsedEvent")) {
+                var fortUsed = message;
+                _this.config.eventHandler.onFortUsed(fortUsed);
             }
         };
         this.url = url;
@@ -29,28 +37,92 @@ var InterfaceHandler = (function () {
         this.onLocationUpdate = function (location) {
             _this.map.movePlayer(location);
         };
+        this.onPokeStopList = function (forts) {
+            if (!_this.pokeStops) {
+                _this.pokeStops = [];
+            }
+            if (_this.gyms) {
+                _this.gyms = [];
+            }
+            for (var i = 0; i < forts.length; i++) {
+                if (forts[i].Type === 1) {
+                    _this.addFortToList(forts[i], _this.pokeStops);
+                }
+                else {
+                    _this.addFortToList(forts[i], _this.gyms);
+                }
+            }
+            _this.map.setPokeStops(_this.pokeStops);
+            _this.map.setGyms(_this.gyms);
+        };
+        this.addFortToList = function (fort, fortList) {
+            var index = _.findIndex(fortList, function (f) { return f.Id === fort.Id; });
+            if (index === -1) {
+                fortList.push(fort);
+            }
+            else {
+                fort.Name = fortList[index].Name;
+                fortList[index] = fort;
+            }
+        };
         this.map = map;
     }
+    InterfaceHandler.prototype.onFortUsed = function (pokeStopUsed) {
+        var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
+        pokeStop.Name = pokeStopUsed.Name;
+        this.map.usePokeStop(pokeStopUsed);
+    };
     return InterfaceHandler;
 }());
 var LeafletMap = (function () {
-    function LeafletMap() {
+    function LeafletMap(config) {
+        var _this = this;
+        this.movePlayer = function (position) {
+            var posArr = [position.Latitude, position.Longitude];
+            _this.playerMarker.setLatLng(posArr);
+            _this.playerPath.addLatLng(posArr);
+            if (_this.config.followPlayer) {
+                _this.map.setView(posArr);
+            }
+        };
+        this.setPokeStops = function (pokeStops) {
+            _.each(_this.pokeStops, function (m) { return _this.map.removeLayer(m.LMarker); });
+            _this.pokeStops = [];
+            _.each(pokeStops, function (pokeStop) {
+                var posArr = [pokeStop.Latitude, pokeStop.Longitude];
+                var marker = new L.Marker(posArr, {});
+                _this.map.addLayer(marker);
+                pokeStop.LMarker = marker;
+                _this.pokeStops.push(pokeStop);
+            });
+        };
+        this.setGyms = function (gyms) {
+            _.each(_this.gyms, function (gym) { return _this.map.removeLayer(gym.LMarker); });
+            _this.gyms = [];
+            _.each(gyms, function (gym) {
+                var posArr = [gym.Latitude, gym.Longitude];
+                var marker = new L.Marker(posArr, {});
+                _this.map.addLayer(marker);
+                gym.LMarker = marker;
+                _this.gyms.push(gym);
+            });
+        };
+        this.config = config;
         this.map = L.map("map").setView([0, 0], 13);
         var osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
-        this.playerMarker = L.marker([0, 0], {});
-        this.playerMarker.addTo(this.map);
+        this.pokeStops = [];
+        this.gyms = [];
+        this.pokemonMarkers = [];
         this.playerPath = L.polyline([], {
-            color: "cyan"
+            color: "cyan",
+            opacity: 1
         });
         this.playerPath.addTo(this.map);
+        this.playerMarker = L.marker([0, 0], {});
+        this.playerMarker.addTo(this.map);
     }
-    LeafletMap.prototype.movePlayer = function (position) {
-        var posArr = [position.Latitude, position.Longitude];
-        this.playerMarker.setLatLng(posArr);
-        this.playerPath.addLatLng(posArr);
-        if (this.followPlayer) {
-            this.map.setView(posArr);
-        }
+    LeafletMap.prototype.usePokeStop = function (pokeStopUsed) {
+        var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
     };
     return LeafletMap;
 }());
@@ -68,7 +140,9 @@ var Runner = (function () {
     return Runner;
 }());
 $(function () {
-    var lMap = new LeafletMap();
+    var lMap = new LeafletMap({
+        followPlayer: true
+    });
     var interfaceHandler = new InterfaceHandler(lMap);
     var necroClient = new NecroWSClient("ws://127.0.0.1:14252");
     var runner = new Runner(necroClient, interfaceHandler);

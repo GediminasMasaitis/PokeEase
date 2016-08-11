@@ -25,8 +25,15 @@
         const type = message.$type as string;
 
         if (_.includes(type, "UpdatePositionEvent")) {
-            const positionEvent = message as UpdatePositionEvent;
-            this.config.eventHandler.onLocationUpdate(positionEvent);
+            const mapLocation = message as IMapLocation;
+            this.config.eventHandler.onLocationUpdate(mapLocation);
+        } else if (_.includes(type, "PokeStopListEvent")) {
+            const forts = message.Forts.$values as IFort[];
+            this.config.eventHandler.onPokeStopList(forts);
+        } else if (_.includes(type, "FortUsedEvent")) {
+            const fortUsed = message as IPokeStopUsed;
+            this.config.eventHandler.onFortUsed(fortUsed);
         }
+
     }
 }

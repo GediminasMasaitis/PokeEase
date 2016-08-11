@@ -4,7 +4,9 @@
 
 $(() => {
     //var gmap = new GoogleMap($());
-    var lMap = new LeafletMap();
+    var lMap = new LeafletMap({
+        followPlayer: true
+    });
     var interfaceHandler = new InterfaceHandler(lMap);
     var necroClient = new NecroWSClient("ws://127.0.0.1:14252");
     var runner = new Runner(necroClient, interfaceHandler);

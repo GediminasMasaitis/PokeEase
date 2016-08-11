@@ -1,4 +1,4 @@
-interface UpdatePositionEvent {
+interface IMapLocation {
     Latitude: number;
     Longitude: number;
 }
