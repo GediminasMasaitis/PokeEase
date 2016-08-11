@@ -112,7 +112,7 @@ body {
     cursor: pointer;
 }
 
-.close-button i, .open-menu i {
+.close-button i, .open-menu i, .open-journey i {
     line-height: 48px;
     color: white;
     transition: 0.3s;
@@ -154,13 +154,23 @@ body {
 }
 
 .open-menu i {
+    margin-left: .5em;
+    margin-right: 0 !important;
+}
+
+.open-menu i, .open-journey i {
     vertical-align: -5%;
     line-height: 1;
     margin-right: .5em;
 }
 
-.open-menu:hover {
-    background: rgba(0, 0, 0, 0.5);
+.open-menu:hover,
+.open-menu:focus,
+.open-journey:hover,
+.open-journey:focus,
+.close-button:hover,
+.close-button:focus {
+    background: rgba(0, 0, 0, 0.5) !important;
 }
 
 .menu::-webkit-scrollbar {
@@ -240,7 +250,7 @@ body {
 
 #journey {
     position: fixed;
-    right: 0;
+    right: -300px;
     top: 0;
     bottom: 0;
     width: 300px;
@@ -278,12 +288,17 @@ body {
 #journey .items #item {
     direction: ltr;
     margin: 0;
-    min-height: 100px;
     background: rgba(40, 51, 62, 0.8);
     cursor: pointer;
     position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+#journey .items #item .item-container {
     display: table;
     width: 100%;
+    min-height: 100px;
 }
 
 #journey .items #item .category {
@@ -341,6 +356,7 @@ body {
     display: table-cell;
     width: 64px;
     padding-left: 1em;
+    text-align: center;
     vertical-align: middle;
 }
 
@@ -401,4 +417,73 @@ body {
     right: 0;
     top: 0;
     display: table-cell;
+}
+
+.open-journey {
+    transition: 0.3s;
+    position: fixed;
+    top: 15px;
+    margin: 0;
+    color: white;
+    right: 15px;
+    transition: 0.3s;
+    border-radius: 100px;
+    margin: auto;
+    margin-bottom: 2.5em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    padding: .75em 1em .9em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+#journey .clear-all {
+    height: 60px;
+    width: 100%;
+    background: #34424f;
+    text-transform: uppercase;
+    display: table;
+    color: #a8bcd1;
+    cursor: pointer;
+    position: relative;
+}
+
+#journey .clear-all span {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.delete-icon {
+    display: inline-block;
+    margin-right: .7em;
+    vertical-align: -10%;
+}
+
+.delete-icon div {
+    background: #a8bcd1;
+    height: 2px;
+    width: 16px;
+    margin: 2px 0;
+}
+
+.delete-icon div.bar1 {
+    transform: translateX(3px);
+}
+
+.delete-icon div.bar3 {
+    transform: translateX(-3px);
+}
+
+#journey .items #item .dismiss {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 5px;
+    font-size: 12px;
+    color: #a8bcd1;
 }
