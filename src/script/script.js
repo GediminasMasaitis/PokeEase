@@ -294,6 +294,17 @@ var PlayerTeam;
 var NotificationManager = (function () {
     function NotificationManager(config) {
         var _this = this;
+        this.clearAll = function (ev) {
+            var element = $(ev.target);
+            var delay = 0;
+            _.each(_this.notifications.reverse(), function (notification) {
+                notification.element.delay(delay).slideUp(300), function () {
+                    element.remove();
+                    _this.notifications = _.remove(_this.notifications, function (n) { return n.element === element; });
+                };
+                delay += 50;
+            });
+        };
         this.onUpdateTimerElapsed = function () {
             var currentTime = Date.now();
             _.each(_this.notifications, function (notification) {
@@ -331,6 +342,7 @@ var NotificationManager = (function () {
         this.config = config;
         this.notifications = [];
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
+        this.config.clearAllButton.click(this.clearAll);
     }
     return NotificationManager;
 }());
@@ -421,6 +433,7 @@ $(function () {
     var translationManager = new TranslationManager();
     var notificationManager = new NotificationManager({
         container: $(".items"),
+        clearAllButton: $(".clear-all"),
         translationManager: translationManager
     });
     var lMap = new LeafletMap({

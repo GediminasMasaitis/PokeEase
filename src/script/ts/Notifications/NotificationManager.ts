@@ -9,6 +9,19 @@
         this.config = config;
         this.notifications = [];
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
+        this.config.clearAllButton.click(this.clearAll);
+    }
+
+    private clearAll = (ev: JQueryEventObject): void => {
+        const element = $(ev.target);
+        var delay = 0;
+        _.each(this.notifications.reverse(), notification => {
+            notification.element.delay(delay).slideUp(300), () => {
+                element.remove();
+                this.notifications = _.remove(this.notifications, n => n.element === element);
+            };
+            delay += 50;
+        });
     }
 
     private onUpdateTimerElapsed = () => {

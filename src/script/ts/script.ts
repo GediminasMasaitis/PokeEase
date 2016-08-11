@@ -6,6 +6,7 @@ $(() => {
     const translationManager = new TranslationManager();
     const notificationManager = new NotificationManager({
         container: $(".items"),
+        clearAllButton: $(".clear-all"),
         translationManager: translationManager
     });
     const lMap = new LeafletMap({
