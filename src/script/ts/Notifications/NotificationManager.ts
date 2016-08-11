@@ -45,8 +45,6 @@
     }
 
     private addNotificationFinal(notification: INotification) {
-        const color = notification.element.children(".category").css("background-color");
-        notification.element.children(".event-type").css("color", color);
         notification.element.wrapInner('<div class="item-container"></div>');
         this.config.container.append(notification.element);
         this.notifications.push(notification);

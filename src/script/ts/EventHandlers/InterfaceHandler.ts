@@ -66,8 +66,10 @@
     }
 
     public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
-        this.config.map.onPokemonCapture(pokemonCapture);
-        this.config.notificationManager.addNotificationCapture(pokemonCapture);
+        if (pokemonCapture.Status == PokemonCatchStatus.Success) {
+            this.config.map.onPokemonCapture(pokemonCapture);
+            this.config.notificationManager.addNotificationCapture(pokemonCapture);
+        }
     }
 
     public onUpdate(update: IUpdateEvent): void {

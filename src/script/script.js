@@ -315,8 +315,6 @@ var NotificationManager = (function () {
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
     }
     NotificationManager.prototype.addNotificationFinal = function (notification) {
-        var color = notification.element.children(".category").css("background-color");
-        notification.element.children(".event-type").css("color", color);
         notification.element.wrapInner('<div class="item-container"></div>');
         this.config.container.append(notification.element);
         this.notifications.push(notification);

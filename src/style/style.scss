@@ -4,7 +4,7 @@
 * {font-family: Lato;}
 
 body {
-    //background: url(http://i.imgur.com/bZlpljL.jpg); background-size: cover; background-position: center center;
+    /*background: url(http://i.imgur.com/bZlpljL.jpg); background-size: cover; background-position: center center;*/
     margin: 0;
 }
 
@@ -358,11 +358,17 @@ body {
     opacity: 0;
 }
 
-#journal .event.transfer .category {background: #1d7157;}
-#journal .event.pokestop .category {background: #33b5e5;}
-#journal .event.recycle .category {background: #cb92f1;}
-#journal .event.catch .category {background: #7db620;}
-#journal .event.evolve .category {background: #ebac28;}
+$event-transfer-color: #1d7157;
+$event-pokestop-color: #33b5e5;
+$event-recycle-color: #cb92f1;
+$event-catch-color: #7db620;
+$event-evolve-color: #ebac28;
+
+#journal .event.transfer .category {background: $event-transfer-color}
+#journal .event.pokestop .category {background: $event-transfer-color}
+#journal .event.recycle .category {background: $event-recycle-color;}
+#journal .event.catch .category {background: $event-catch-color;}
+#journal .event.evolve .category {background: $event-evolve-color;}
 
 #journal .event .event-type {
     position: absolute;
@@ -374,6 +380,12 @@ body {
     letter-spacing: 1px;
     padding: 4px 6px;
 }
+
+#journal .event.transfer .event-type {color: $event-transfer-color}
+#journal .event.pokestop .event-type {color: $event-transfer-color}
+#journal .event.recycle .event-type {color: $event-recycle-color;}
+#journal .event.catch .event-type {color: $event-catch-color;}
+#journal .event.evolve .event-type {color: $event-evolve-color;}
 
 #journal .event .image {
     display: table-cell;

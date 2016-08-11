@@ -37,7 +37,6 @@ $(document).ready(function () {
     // JOURNAL EVENTS
     $("#journal .event").each(function() {
         $(this).children('.event-type').text($(this).attr('class').split(' ')[1]);
-        $(this).children('.event-type').css('color', $(this).children('.category').css("background-color"));
     });
 
     $("#journal .close-button").click(function() {

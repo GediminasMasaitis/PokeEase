@@ -4,6 +4,7 @@
   font-family: Lato; }
 
 body {
+  /*background: url(http://i.imgur.com/bZlpljL.jpg); background-size: cover; background-position: center center;*/
   margin: 0; }
 
 ::selection {
@@ -315,7 +316,7 @@ body {
   background: #1d7157; }
 
 #journal .event.pokestop .category {
-  background: #33b5e5; }
+  background: #1d7157; }
 
 #journal .event.recycle .category {
   background: #cb92f1; }
@@ -335,6 +336,21 @@ body {
   font-weight: 600;
   letter-spacing: 1px;
   padding: 4px 6px; }
+
+#journal .event.transfer .event-type {
+  color: #1d7157; }
+
+#journal .event.pokestop .event-type {
+  color: #1d7157; }
+
+#journal .event.recycle .event-type {
+  color: #cb92f1; }
+
+#journal .event.catch .event-type {
+  color: #7db620; }
+
+#journal .event.evolve .event-type {
+  color: #ebac28; }
 
 #journal .event .image {
   display: table-cell;
