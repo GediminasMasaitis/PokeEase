@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+	
     /*
     $("#menu .close-button").click(function() {
         $(".open-menu").css('transform', 'translateX(0)');
@@ -76,6 +76,26 @@ $(document).ready(function () {
         /* $(this).parent("#item").animate({opacity: "0", "min-height": "0"}); */
     });
 
+	$('#journal #item').qtip({
+		content: {
+			title: function(event, api) {
+				return $(this).find('.info').contents().get(0).nodeValue.trim();
+			},
+			text: function(event, api) {
+				return $(this).find('.stats').text();
+			}
+		},
+		position: {
+			my: 'right center',
+			at: 'center left',
+			adjust: {
+				x: -18
+			}
+		},
+		style: {
+			classes: 'qtip-tipsy qtip-shadow qtip-rounded'
+		}
+	});
     $("#journal #item").wrapInner('<div class="item-container"></div>');
 
 });
