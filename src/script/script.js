@@ -15,17 +15,43 @@ var NecroWSClient = (function () {
             console.log(message);
             var type = message.$type;
             if (_.includes(type, "UpdatePositionEvent")) {
-                var mapLocation = message;
-                _this.config.eventHandler.onLocationUpdate(mapLocation);
+                var mapLocation_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onLocationUpdate(mapLocation_1); });
             }
             else if (_.includes(type, "PokeStopListEvent")) {
-                var forts = message.Forts.$values;
-                _this.config.eventHandler.onPokeStopList(forts);
+                var forts_1 = message.Forts.$values;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokeStopList(forts_1); });
             }
             else if (_.includes(type, "FortUsedEvent")) {
-                var fortUsed = message;
-                _this.config.eventHandler.onFortUsed(fortUsed);
+                var fortUsed_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onFortUsed(fortUsed_1); });
             }
+            else if (_.includes(type, "ProfileEvent")) {
+                var profile_1 = message.Profile;
+                profile_1.PlayerData.PokeCoin = _this.getCurrency(message, "POKECOIN");
+                profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
+            }
+            else if (_.includes(type, "EggHatchedEvent")) {
+                var eggHatched_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onEggHatched(eggHatched_1); });
+            }
+            else if (_.includes(type, "EggIncubatorStatusEvent")) {
+                var incubatorStatus_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onIncubatorStatus(incubatorStatus_1); });
+            }
+            else {
+                _.each(_this.config.eventHandlers, function (eh) {
+                    if (eh.onUnknownEvent) {
+                        eh.onUnknownEvent(message);
+                    }
+                });
+            }
+        };
+        this.getCurrency = function (message, currencyName) {
+            var currencies = message.Profile.PlayerData.Currencies.$values;
+            var currency = _.find(currencies, function (x) { return x.Name === currencyName; });
+            return currency.Amount;
         };
         this.url = url;
     }
@@ -71,6 +97,12 @@ var InterfaceHandler = (function () {
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
         pokeStop.Name = pokeStopUsed.Name;
         this.map.usePokeStop(pokeStopUsed);
+    };
+    InterfaceHandler.prototype.onProfile = function (profile) {
+    };
+    InterfaceHandler.prototype.onEggHatched = function (eggHatched) {
+    };
+    InterfaceHandler.prototype.onIncubatorStatus = function (incubatorStatus) {
     };
     return InterfaceHandler;
 }());
@@ -126,12 +158,18 @@ var LeafletMap = (function () {
     };
     return LeafletMap;
 }());
+var PlayerTeam;
+(function (PlayerTeam) {
+    PlayerTeam[PlayerTeam["Instinct"] = 0] = "Instinct";
+    PlayerTeam[PlayerTeam["Mystic"] = 1] = "Mystic";
+    PlayerTeam[PlayerTeam["Valor"] = 2] = "Valor";
+})(PlayerTeam || (PlayerTeam = {}));
 var Runner = (function () {
     function Runner(client, interfaceHandler) {
         var _this = this;
         this.start = function () {
             _this.client.start({
-                eventHandler: _this.interface
+                eventHandlers: [_this.interface]
             });
         };
         this.interface = interfaceHandler;

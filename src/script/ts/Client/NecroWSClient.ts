@@ -27,18 +27,36 @@
         if (_.includes(type, "UpdatePositionEvent")) {
             const mapLocation = message as IMapLocation;
             _.each(this.config.eventHandlers, eh => eh.onLocationUpdate(mapLocation));
-        } else if (_.includes(type, "PokeStopListEvent")) {
+        }
+
+        else if (_.includes(type, "PokeStopListEvent")) {
             const forts = message.Forts.$values as IFort[];
             _.each(this.config.eventHandlers, eh => eh.onPokeStopList(forts));
-        } else if (_.includes(type, "FortUsedEvent")) {
+        }
+
+        else if (_.includes(type, "FortUsedEvent")) {
             const fortUsed = message as IPokeStopUsed;
             _.each(this.config.eventHandlers, eh => eh.onFortUsed(fortUsed));
-        } else if (_.includes(type, "ProfileEvent")) {
+        }
+
+        else if (_.includes(type, "ProfileEvent")) {
             const profile = message.Profile as IProfile;
             profile.PlayerData.PokeCoin = this.getCurrency(message, "POKECOIN");
             profile.PlayerData.StarDust = this.getCurrency(message, "STARDUST");
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
-        } else {
+        }
+
+        else if (_.includes(type, "EggHatchedEvent")) {
+            const eggHatched = message as IEggHatched;
+            _.each(this.config.eventHandlers, eh => eh.onEggHatched(eggHatched));
+        }
+
+        else if (_.includes(type, "EggIncubatorStatusEvent")) {
+            const incubatorStatus = message as IIncubatorStatus;
+            _.each(this.config.eventHandlers, eh => eh.onIncubatorStatus(incubatorStatus));
+        }
+
+        else {
             _.each(this.config.eventHandlers, eh => {
                 if (eh.onUnknownEvent) {
                     eh.onUnknownEvent(message);

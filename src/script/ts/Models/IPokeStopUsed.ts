@@ -1,7 +1,7 @@
 interface IPokeStopUsed extends IMapLocation {
+    Id: string;
     Exp: number;
     Gems: number;
-    Id: string;
     InventoryFull: boolean;
     Items: string;
     Name: string;

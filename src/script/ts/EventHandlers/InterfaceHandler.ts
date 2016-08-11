@@ -49,4 +49,12 @@
     public onProfile(profile: IProfile): void {
         
     }
+
+    public onEggHatched(eggHatched: IEggHatched): void {
+        
+    }
+
+    public onIncubatorStatus(incubatorStatus: IIncubatorStatus): void {
+        
+    }
 }
