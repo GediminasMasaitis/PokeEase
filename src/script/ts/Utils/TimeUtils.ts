@@ -9,22 +9,31 @@
         const totalMinutes = Math.floor(totalSeconds / 60);
         const totalHours = Math.floor(totalMinutes / 60);
         const totalDays = Math.floor(totalHours / 24);
-        const hours = totalHours - totalDays * 24;
-        const minutes = totalMinutes - totalHours * 60;
-        const seconds = totalSeconds - totalMinutes * 60;
 
-        let dateStr = "";
+        let dateStr: string;
         if (totalDays > 0) {
-            dateStr += `${totalDays} days `;
+            dateStr = `${totalDays} day`;
+            if (totalDays > 1) {
+                dateStr += "s";
+            }
         }
-        if (hours > 0) {
-            dateStr += `${hours} hours `;
+        else if (totalHours > 0) {
+            dateStr = `${totalHours} hour`;
+            if (totalHours > 1) {
+                dateStr += "s";
+            }
         }
-        if (minutes > 0) {
-            dateStr += `${minutes} minutes `;
+        else if (totalMinutes > 0) {
+            dateStr = `${totalMinutes} minute`;
+            if (totalMinutes > 1) {
+                dateStr += "s";
+            }
         }
-        if (seconds > 0) {
-            dateStr += `${seconds} seconds`;
+        else {
+            dateStr = `${totalSeconds} second`;
+            if (totalSeconds > 1) {
+                dateStr += "s";
+            }
         }
         return dateStr;
     }

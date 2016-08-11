@@ -141,8 +141,10 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onProfile = function (profile) {
     };
     InterfaceHandler.prototype.onPokemonCapture = function (pokemonCapture) {
-        this.config.map.onPokemonCapture(pokemonCapture);
-        this.config.notificationManager.addNotificationCapture(pokemonCapture);
+        if (pokemonCapture.Status == PokemonCatchStatus.Success) {
+            this.config.map.onPokemonCapture(pokemonCapture);
+            this.config.notificationManager.addNotificationCapture(pokemonCapture);
+        }
     };
     InterfaceHandler.prototype.onUpdate = function (update) {
     };
@@ -310,15 +312,26 @@ var NotificationManager = (function () {
                 event: pokemonCatch
             });
         };
+        this.addNotificationFinal = function (notification) {
+            notification.element.wrapInner('<div class="item-container"></div>');
+            notification.element.click(_this.closeNotification);
+            _this.config.container.append(notification.element);
+            _this.notifications.push(notification);
+            _this.config.container.animate({
+                scrollTop: _this.config.container.prop("scrollHeight") - _this.config.container.height()
+            }, 100);
+        };
+        this.closeNotification = function (ev) {
+            var element = $(ev.target);
+            element.closest(".event").slideUp(300, function () {
+                element.remove();
+                _this.notifications = _.remove(_this.notifications, function (n) { return n.element === element; });
+            });
+        };
         this.config = config;
         this.notifications = [];
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
     }
-    NotificationManager.prototype.addNotificationFinal = function (notification) {
-        notification.element.wrapInner('<div class="item-container"></div>');
-        this.config.container.append(notification.element);
-        this.notifications.push(notification);
-    };
     return NotificationManager;
 }());
 var Runner = (function () {
@@ -375,21 +388,30 @@ var TimeUtils = (function () {
         var totalMinutes = Math.floor(totalSeconds / 60);
         var totalHours = Math.floor(totalMinutes / 60);
         var totalDays = Math.floor(totalHours / 24);
-        var hours = totalHours - totalDays * 24;
-        var minutes = totalMinutes - totalHours * 60;
-        var seconds = totalSeconds - totalMinutes * 60;
-        var dateStr = "";
+        var dateStr;
         if (totalDays > 0) {
-            dateStr += totalDays + " days ";
+            dateStr = totalDays + " day";
+            if (totalDays > 1) {
+                dateStr += "s";
+            }
         }
-        if (hours > 0) {
-            dateStr += hours + " hours ";
+        else if (totalHours > 0) {
+            dateStr = totalHours + " hour";
+            if (totalHours > 1) {
+                dateStr += "s";
+            }
         }
-        if (minutes > 0) {
-            dateStr += minutes + " minutes ";
+        else if (totalMinutes > 0) {
+            dateStr = totalMinutes + " minute";
+            if (totalMinutes > 1) {
+                dateStr += "s";
+            }
         }
-        if (seconds > 0) {
-            dateStr += seconds + " seconds";
+        else {
+            dateStr = totalSeconds + " second";
+            if (totalSeconds > 1) {
+                dateStr += "s";
+            }
         }
         return dateStr;
     };

@@ -44,10 +44,22 @@
         });
     }
 
-    private addNotificationFinal(notification: INotification) {
+    private addNotificationFinal = (notification: INotification): void => {
         notification.element.wrapInner('<div class="item-container"></div>');
+        notification.element.click(this.closeNotification);
         this.config.container.append(notification.element);
         this.notifications.push(notification);
+        this.config.container.animate({
+            scrollTop: this.config.container.prop("scrollHeight") - this.config.container.height()
+        }, 100);
+    }
+
+    private closeNotification = (ev: JQueryEventObject): void => {
+        const element = $(ev.target);
+        element.closest(".event").slideUp(300, () => {
+            element.remove();
+            this.notifications = _.remove(this.notifications, n => n.element === element);
+        });
     }
 }
 
