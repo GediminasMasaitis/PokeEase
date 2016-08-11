@@ -1,0 +1,3 @@
+﻿interface ITranslation {
+    pokemonNames: string[];
+}

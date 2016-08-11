@@ -112,8 +112,8 @@
         const marker = new L.Marker(posArr,
         {
             icon: new L.Icon({
-                iconUrl: "images/pokemon/pikachu.png",
-                iconSize: [64, 64]
+                iconUrl: `images/pokemon/${pokemonCapture.Id}.png`,
+                iconSize: [42,42]
             })
         });
         this.map.addLayer(marker);

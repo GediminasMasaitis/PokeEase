@@ -3,13 +3,17 @@
 /// <reference path="../../external/typings/leaflet/leaflet.d.ts" />
 
 $(() => {
-    //var gmap = new GoogleMap($());
-    var lMap = new LeafletMap({
-        followPlayer: true
+    const translationManager = new TranslationManager();
+    const lMap = new LeafletMap({
+        followPlayer: true,
+        translationManager: translationManager
     });
-    var interfaceHandler = new InterfaceHandler(lMap);
-    var necroClient = new NecroWSClient("ws://127.0.0.1:14252");
-    var runner = new Runner(necroClient, interfaceHandler);
+    const interfaceHandler = new InterfaceHandler({
+        map: lMap,
+        translationManager: translationManager
+    });
+    const necroClient = new NecroWSClient("ws://127.0.0.1:14252");
+    const runner = new Runner(necroClient, interfaceHandler);
     runner.start();
 });
 

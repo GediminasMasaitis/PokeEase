@@ -1,15 +1,15 @@
 ﻿class InterfaceHandler implements IEventHandler {
-    private map: IMap;
+    private config: IInterfaceHandlerConfig;
 
     private pokeStops: IPokeStop[];
     private gyms: IGym[];
 
-    constructor(map: IMap) {
-        this.map = map;
+    constructor(config: IInterfaceHandlerConfig) {
+        this.config = config;
     }
 
     public onLocationUpdate = (location: IMapLocation): void => {
-        this.map.movePlayer(location);
+        this.config.map.movePlayer(location);
     }
 
     public onPokeStopList = (forts: IFort[]): void => {
@@ -37,8 +37,8 @@
                 this.addFortToList(forts[i], this.gyms);
             }
         }
-        this.map.setPokeStops(this.pokeStops);
-        this.map.setGyms(this.gyms);
+        this.config.map.setPokeStops(this.pokeStops);
+        this.config.map.setGyms(this.gyms);
     }
 
     private addFortToList = (fort: IFort, fortList: IFort[]): void => {
@@ -58,7 +58,7 @@
     public onFortUsed(fortUsed: IFortUsed): void {
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === fortUsed.Id);
         pokeStop.Name = fortUsed.Name;
-        this.map.usePokeStop(fortUsed);
+        this.config.map.usePokeStop(fortUsed);
     }
 
     public onProfile(profile: IProfile): void {
@@ -66,7 +66,9 @@
     }
 
     public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
-        this.map.onPokemonCapture(pokemonCapture);
+        this.config.map.onPokemonCapture(pokemonCapture);
+        const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCapture.Id];
+        console.log(`Caught a ${pokemonName}`);
     }
 
     public onUpdate(update: IUpdateEvent): void {
