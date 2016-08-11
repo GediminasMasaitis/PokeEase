@@ -18,7 +18,12 @@
         {
             zoomControl: false
         }).setView([0,0], 16);
-        const osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
+        const mainLayer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png");
+        //const mainLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+        //{
+        //    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        //});
+        mainLayer.addTo(this.map);
         this.pokeStops = [];
         this.gyms = [];
         this.pokemons = [];

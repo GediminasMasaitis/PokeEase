@@ -195,7 +195,8 @@ var LeafletMap = (function () {
         this.map = L.map("map", {
             zoomControl: false
         }).setView([0, 0], 16);
-        var osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
+        var mainLayer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png");
+        mainLayer.addTo(this.map);
         this.pokeStops = [];
         this.gyms = [];
         this.pokemons = [];
