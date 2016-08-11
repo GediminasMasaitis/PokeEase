@@ -1,3 +1,5 @@
+![logo](http://i.imgur.com/7QCjVxg.jpg)
+
 # NecroEase
 The Perfect GUI for NecroBot --Work In Progress
 
