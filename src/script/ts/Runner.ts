@@ -9,7 +9,7 @@
 
     public start = (): void => {
         this.client.start({
-            eventHandler: this.interface
+            eventHandlers: [this.interface]
         });
     }
 }

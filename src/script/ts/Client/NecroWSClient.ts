@@ -26,18 +26,24 @@
 
         if (_.includes(type, "UpdatePositionEvent")) {
             const mapLocation = message as IMapLocation;
-            this.config.eventHandler.onLocationUpdate(mapLocation);
+            _.each(this.config.eventHandlers, eh => eh.onLocationUpdate(mapLocation));
         } else if (_.includes(type, "PokeStopListEvent")) {
             const forts = message.Forts.$values as IFort[];
-            this.config.eventHandler.onPokeStopList(forts);
+            _.each(this.config.eventHandlers, eh => eh.onPokeStopList(forts));
         } else if (_.includes(type, "FortUsedEvent")) {
             const fortUsed = message as IPokeStopUsed;
-            this.config.eventHandler.onFortUsed(fortUsed);
+            _.each(this.config.eventHandlers, eh => eh.onFortUsed(fortUsed));
         } else if (_.includes(type, "ProfileEvent")) {
             const profile = message.Profile as IProfile;
             profile.PlayerData.PokeCoin = this.getCurrency(message, "POKECOIN");
             profile.PlayerData.StarDust = this.getCurrency(message, "STARDUST");
-            this.config.eventHandler.onProfile(profile);
+            _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
+        } else {
+            _.each(this.config.eventHandlers, eh => {
+                if (eh.onUnknownEvent) {
+                    eh.onUnknownEvent(message);
+                }
+            });
         }
     }
 

@@ -1,3 +1,3 @@
 ﻿interface INecroClientConfig {
-    eventHandler: IEventHandler;
+    eventHandlers: IEventHandler[];
 }
