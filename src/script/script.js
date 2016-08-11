@@ -20,7 +20,9 @@ var NecroWSClient = (function () {
             }
             else if (_.includes(type, "PokeStopListEvent")) {
                 var forts_1 = message.Forts.$values;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokeStopList(forts_1); });
+                _.each(_this.config.eventHandlers, function (eh) {
+                    eh.onPokeStopList(forts_1);
+                });
             }
             else if (_.includes(type, "FortTargetEvent")) {
                 var fortTarget_1 = message;
@@ -96,7 +98,18 @@ var InterfaceHandler = (function () {
             }
             for (var i = 0; i < forts.length; i++) {
                 if (forts[i].Type === 1) {
-                    _this.addFortToList(forts[i], _this.pokeStops);
+                    var pokeStop = forts[i];
+                    pokeStop.Status = PokeStopStatus.Normal;
+                    if (pokeStop.CooldownCompleteTimestampMs) {
+                        var currentMs = TimeUtils.getCurrentTimestampMs();
+                        if (pokeStop.CooldownCompleteTimestampMs > currentMs) {
+                            pokeStop.Status |= PokeStopStatus.Visited;
+                        }
+                    }
+                    if (pokeStop.LureInfo !== null) {
+                        pokeStop.Status |= PokeStopStatus.Lure;
+                    }
+                    _this.addFortToList(pokeStop, _this.pokeStops);
                 }
                 else {
                     _this.addFortToList(forts[i], _this.gyms);
@@ -159,7 +172,9 @@ var LeafletMap = (function () {
             _this.pokeStops = [];
             _.each(pokeStops, function (pokeStop) {
                 var posArr = [pokeStop.Latitude, pokeStop.Longitude];
-                var marker = new L.Marker(posArr, {});
+                var marker = new L.Marker(posArr, {
+                    icon: _this.pokeStopIcons[pokeStop.Status]
+                });
                 _this.map.addLayer(marker);
                 pokeStop.LMarker = marker;
                 _this.pokeStops.push(pokeStop);
@@ -177,7 +192,7 @@ var LeafletMap = (function () {
             });
         };
         this.config = config;
-        this.map = L.map("map").setView([0, 0], 13);
+        this.map = L.map("map").setView([0, 0], 16);
         var osm = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.map);
         this.pokeStops = [];
         this.gyms = [];
@@ -187,15 +202,47 @@ var LeafletMap = (function () {
             opacity: 1
         });
         this.playerPath.addTo(this.map);
-        this.playerMarker = L.marker([0, 0], {});
+        this.playerMarker = L.marker([0, 0], {
+            icon: new L.Icon({
+                iconUrl: "images/markers/location.png",
+                iconSize: [50, 55],
+                iconAnchor: [25, 45]
+            })
+        });
         this.playerMarker.addTo(this.map);
+        this.pokeStopIcons = [];
+        this.pokeStopIcons[PokeStopStatus.Normal] = new L.Icon({
+            iconUrl: "images/markers/Normal.png",
+            iconSize: [48, 48]
+        });
+        this.pokeStopIcons[PokeStopStatus.Visited] = new L.Icon({
+            iconUrl: "images/markers/Visited.png",
+            iconSize: [48, 48]
+        });
+        this.pokeStopIcons[PokeStopStatus.Lure] = new L.Icon({
+            iconUrl: "images/markers/Lured.png",
+            iconSize: [48, 48]
+        });
+        this.pokeStopIcons[PokeStopStatus.VisitedLure] = new L.Icon({
+            iconUrl: "images/markers/VisitedLure.png",
+            iconSize: [48, 48]
+        });
     }
     LeafletMap.prototype.usePokeStop = function (pokeStopUsed) {
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
+        var icon = pokeStop.LureInfo === null
+            ? this.pokeStopIcons[PokeStopStatus.Visited]
+            : this.pokeStopIcons[PokeStopStatus.VisitedLure];
+        pokeStop.LMarker.setIcon(icon);
     };
     LeafletMap.prototype.onPokemonCapture = function (pokemonCapture) {
         var posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
-        var marker = new L.Marker(posArr, {});
+        var marker = new L.Marker(posArr, {
+            icon: new L.Icon({
+                iconUrl: "images/pokemon/pikachu.png",
+                iconSize: [64, 64]
+            })
+        });
         this.map.addLayer(marker);
         pokemonCapture.LMarker = marker;
         this.pokemons.push(pokemonCapture);
@@ -208,6 +255,13 @@ var PlayerTeam;
     PlayerTeam[PlayerTeam["Mystic"] = 1] = "Mystic";
     PlayerTeam[PlayerTeam["Valor"] = 2] = "Valor";
 })(PlayerTeam || (PlayerTeam = {}));
+var PokeStopStatus;
+(function (PokeStopStatus) {
+    PokeStopStatus[PokeStopStatus["Normal"] = 0] = "Normal";
+    PokeStopStatus[PokeStopStatus["Visited"] = 1] = "Visited";
+    PokeStopStatus[PokeStopStatus["Lure"] = 2] = "Lure";
+    PokeStopStatus[PokeStopStatus["VisitedLure"] = 3] = "VisitedLure";
+})(PokeStopStatus || (PokeStopStatus = {}));
 var PokemonCatchStatus;
 (function (PokemonCatchStatus) {
     PokemonCatchStatus[PokemonCatchStatus["Success"] = 1] = "Success";
@@ -226,6 +280,15 @@ var Runner = (function () {
         this.client = client;
     }
     return Runner;
+}());
+var TimeUtils = (function () {
+    function TimeUtils() {
+    }
+    TimeUtils.getCurrentTimestampMs = function () {
+        var timeStamp = Date.now();
+        return timeStamp.toString();
+    };
+    return TimeUtils;
 }());
 $(function () {
     var lMap = new LeafletMap({

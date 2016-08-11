@@ -21,7 +21,18 @@
         }
         for (let i = 0; i < forts.length; i++) {
             if (forts[i].Type === 1) {
-                this.addFortToList(forts[i], this.pokeStops);
+                const pokeStop = forts[i] as IPokeStop;
+                pokeStop.Status = PokeStopStatus.Normal;
+                if (pokeStop.CooldownCompleteTimestampMs) {
+                    const currentMs = TimeUtils.getCurrentTimestampMs();
+                    if (pokeStop.CooldownCompleteTimestampMs > currentMs) {
+                        pokeStop.Status |= PokeStopStatus.Visited;
+                    }
+                }
+                if (pokeStop.LureInfo !== null) {
+                    pokeStop.Status |= PokeStopStatus.Lure;
+                }
+                this.addFortToList(pokeStop, this.pokeStops);
             } else {
                 this.addFortToList(forts[i], this.gyms);
             }

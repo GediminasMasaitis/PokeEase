@@ -31,7 +31,9 @@
 
         else if (_.includes(type, "PokeStopListEvent")) {
             const forts = message.Forts.$values as IFort[];
-            _.each(this.config.eventHandlers, eh => eh.onPokeStopList(forts));
+            _.each(this.config.eventHandlers, eh => {
+                eh.onPokeStopList(forts);
+            });
         }
 
         else if (_.includes(type, "FortTargetEvent")) {
