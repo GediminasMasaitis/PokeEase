@@ -73,4 +73,12 @@
     public onIncubatorStatus(incubatorStatus: IIncubatorStatus): void {
         
     }
+
+    public onItemRecycle(itemRecycle: IItemRecycle): void {
+        
+    }
+
+    public onPokemonTransfer(pokemonTransfer: IPokemonTransfer): void {
+        
+    }
 }

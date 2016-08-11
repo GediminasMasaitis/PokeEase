@@ -56,6 +56,14 @@ var NecroWSClient = (function () {
                 var incubatorStatus_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onIncubatorStatus(incubatorStatus_1); });
             }
+            else if (_.includes(type, "ItemRecycledEvent")) {
+                var itemRecycle_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onItemRecycle(itemRecycle_1); });
+            }
+            else if (_.includes(type, "TransferPokemonEvent")) {
+                var pokemonTransfer_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
+            }
             else {
                 _.each(_this.config.eventHandlers, function (eh) {
                     if (eh.onUnknownEvent) {
@@ -128,6 +136,10 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onEggHatched = function (eggHatched) {
     };
     InterfaceHandler.prototype.onIncubatorStatus = function (incubatorStatus) {
+    };
+    InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
+    };
+    InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
     };
     return InterfaceHandler;
 }());
