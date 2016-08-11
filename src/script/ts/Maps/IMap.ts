@@ -2,5 +2,5 @@
     movePlayer: (position: IMapLocation) => void;
     setPokeStops: (pokeStops: IPokeStop[]) => void;
     setGyms: (gyms: IGym[]) => void;
-    usePokeStop: (pokeStopUsed: IPokeStopUsed) => void;
+    usePokeStop: (pokeStopUsed: IFortUsed) => void;
 }

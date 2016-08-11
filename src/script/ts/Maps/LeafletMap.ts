@@ -81,7 +81,7 @@ class LeafletMap implements IMap {
         });
     }
 
-    public usePokeStop(pokeStopUsed: IPokeStopUsed): void {
+    public usePokeStop(pokeStopUsed: IFortUsed): void {
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === pokeStopUsed.Id);
         // TODO: change marker icon
     }

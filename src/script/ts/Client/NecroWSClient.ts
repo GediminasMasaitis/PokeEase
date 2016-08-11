@@ -34,8 +34,13 @@
             _.each(this.config.eventHandlers, eh => eh.onPokeStopList(forts));
         }
 
+        else if (_.includes(type, "FortTargetEvent")) {
+            const fortTarget = message as IFortTarget;
+            _.each(this.config.eventHandlers, eh => eh.onFortTarget(fortTarget));
+        }
+
         else if (_.includes(type, "FortUsedEvent")) {
-            const fortUsed = message as IPokeStopUsed;
+            const fortUsed = message as IFortUsed;
             _.each(this.config.eventHandlers, eh => eh.onFortUsed(fortUsed));
         }
 
@@ -45,6 +50,8 @@
             profile.PlayerData.StarDust = this.getCurrency(message, "STARDUST");
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
+
+
 
         else if (_.includes(type, "EggHatchedEvent")) {
             const eggHatched = message as IEggHatched;

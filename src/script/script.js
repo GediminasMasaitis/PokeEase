@@ -22,6 +22,10 @@ var NecroWSClient = (function () {
                 var forts_1 = message.Forts.$values;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokeStopList(forts_1); });
             }
+            else if (_.includes(type, "FortTargetEvent")) {
+                var fortTarget_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onFortTarget(fortTarget_1); });
+            }
             else if (_.includes(type, "FortUsedEvent")) {
                 var fortUsed_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onFortUsed(fortUsed_1); });
@@ -93,10 +97,12 @@ var InterfaceHandler = (function () {
         };
         this.map = map;
     }
-    InterfaceHandler.prototype.onFortUsed = function (pokeStopUsed) {
-        var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
-        pokeStop.Name = pokeStopUsed.Name;
-        this.map.usePokeStop(pokeStopUsed);
+    InterfaceHandler.prototype.onFortTarget = function (fortTarget) {
+    };
+    InterfaceHandler.prototype.onFortUsed = function (fortUsed) {
+        var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === fortUsed.Id; });
+        pokeStop.Name = fortUsed.Name;
+        this.map.usePokeStop(fortUsed);
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
     };

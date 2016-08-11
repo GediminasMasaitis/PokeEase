@@ -1,4 +1,4 @@
-interface IPokeStopUsed extends IMapLocation {
+interface IFortUsed extends IMapLocation {
     Id: string;
     Exp: number;
     Gems: number;

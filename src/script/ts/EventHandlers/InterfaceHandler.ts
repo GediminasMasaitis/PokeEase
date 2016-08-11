@@ -40,10 +40,14 @@
         }
     }
 
-    public onFortUsed(pokeStopUsed: IPokeStopUsed): void {
-        const pokeStop = _.find(this.pokeStops, ps => ps.Id === pokeStopUsed.Id);
-        pokeStop.Name = pokeStopUsed.Name;
-        this.map.usePokeStop(pokeStopUsed);
+    public onFortTarget(fortTarget: IFortTarget): void {
+        
+    }
+
+    public onFortUsed(fortUsed: IFortUsed): void {
+        const pokeStop = _.find(this.pokeStops, ps => ps.Id === fortUsed.Id);
+        pokeStop.Name = fortUsed.Name;
+        this.map.usePokeStop(fortUsed);
     }
 
     public onProfile(profile: IProfile): void {
