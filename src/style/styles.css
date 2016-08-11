@@ -19,7 +19,7 @@ body {
 
 #menu {
     position: fixed;
-    left: 0;
+    left: -200px;
     top: 0;
     bottom: 0;
     width: 200px;
@@ -100,7 +100,7 @@ body {
     background-image: url("../images/settings.png");
 }
 
-#menu .close-button, .open-menu {
+#menu .close-button {
     width: 50px;
     height: 50px;
     transition: 0.3s;
@@ -112,7 +112,7 @@ body {
     cursor: pointer;
 }
 
-#menu .close-button i, .open-menu i {
+.close-button i, .open-menu i {
     line-height: 48px;
     color: white;
     transition: 0.3s;
@@ -134,12 +134,33 @@ body {
 }
 
 .open-menu {
-    opacity: 0;
     transition: 0.3s;
     position: fixed;
-    top: 51px;
+    top: 15px;
     margin: 0;
+    color: white;
     left: 15px;
+    transition: 0.3s;
+    border-radius: 100px;
+    margin: auto;
+    margin-bottom: 2.5em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    padding: .75em 1em .9em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.open-menu i {
+    vertical-align: -5%;
+    line-height: 1;
+    margin-right: .5em;
+}
+
+.open-menu:hover {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .menu::-webkit-scrollbar {
@@ -235,6 +256,7 @@ body {
     background: #34424f;
     text-transform: uppercase;
     display: table;
+    position: relative;
 }
 
 #journey .title span {
@@ -257,7 +279,7 @@ body {
     direction: ltr;
     margin: 0;
     min-height: 100px;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(40, 51, 62, 0.8);
     cursor: pointer;
     position: relative;
     display: table;
@@ -363,4 +385,20 @@ body {
     max-height: 32px;
     vertical-align: middle;
     margin-right: 7px;
+}
+
+#journey .close-button {
+    width: 50px;
+    height: 50px;
+    transition: 0.3s;
+    border-radius: 100%;
+    margin: 15px;
+    margin-bottom: 2.5em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: table-cell;
 }

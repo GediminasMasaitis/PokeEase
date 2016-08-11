@@ -22,7 +22,7 @@ $(document).ready(function () {
 
     $("#menu .close-button").click(function() {
         $("#menu").animate({"left": "-200px"}, 300);
-        $(".open-menu").delay(600).css("opacity", "1");
+        $(".open-menu").delay(300).animate({"opacity": "1"}, 300);
     });
 
     $(".open-menu").click(function() {
