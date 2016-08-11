@@ -86,7 +86,7 @@ body {
     background-image: url("../images/pokedex.png");
 }
 
-#menu .item#items {
+#menu .item.events {
     background-color: #fe7676;
     background-image: url("../images/items.png");
 }
@@ -286,7 +286,7 @@ body {
     direction: rtl;
 }
 
-#journal .items #item {
+#journal .items .event {
     direction: ltr;
     margin: 0;
     background: rgba(40, 51, 62, 0.8);
@@ -296,13 +296,13 @@ body {
     overflow: hidden;
 }
 
-#journal .items #item .item-container {
+#journal .items .event .item-container {
     display: table;
     width: 100%;
     min-height: 100px;
 }
 
-#journal .items #item .category {
+#journal .items .event .category {
     position: absolute;
     top: 0;
     right: 0;
@@ -310,7 +310,7 @@ body {
     width: 10px;
 }
 
-#journal .items #item + #item {
+#journal .items .event + .event {
     margin-top: 10px;
 }
 
@@ -355,13 +355,13 @@ body {
     opacity: 0;
 }
 
-#journal #item.transfer .category {background: #1d7157;}
-#journal #item.pokestop .category {background: #33b5e5;}
-#journal #item.recycle .category {background: #cb92f1;}
-#journal #item.catch .category {background: #7db620;}
-#journal #item.evolve .category {background: #ebac28;}
+#journal .event.transfer .category {background: #1d7157;}
+#journal .event.pokestop .category {background: #33b5e5;}
+#journal .event.recycle .category {background: #cb92f1;}
+#journal .event.catch .category {background: #7db620;}
+#journal .event.evolve .category {background: #ebac28;}
 
-#journal #item .event {
+#journal .event .event-type {
     position: absolute;
     top: 0;
     right: 10px;
@@ -372,7 +372,7 @@ body {
     padding: 4px 6px;
 }
 
-#journal #item .image {
+#journal .event .image {
     display: table-cell;
     width: 64px;
     padding-left: 1em;
@@ -380,19 +380,19 @@ body {
     vertical-align: middle;
 }
 
-#journal #item .info {
+#journal .event .info {
     display: table-cell;
     padding-left: 1em;
     vertical-align: middle;
     font-size: 18px;
 }
 
-#journal #item .info .stats {
+#journal .event .info .stats {
     font-size: 14px;
     color: #8198af;
 }
 
-#journal #item .timestamp {
+#journal .event .timestamp {
     position: absolute;
     bottom: 0;
     right: 10px;
@@ -402,21 +402,21 @@ body {
     color: #5d6c7a;
 }
 
-#journal #item img {
+#journal .event img {
     max-width: 64px;
     max-height: 64px;
 }
 
-#journal #item .info .item {
+#journal .event .info .item {
     display: inline-block;
     margin-bottom: 5px;
 }
 
-#journal #item .info .item + .item {
+#journal .event .info .item + .item {
     margin-left: .7em;
 }
 
-#journal #item .info .item img {
+#journal .event .info .item img {
     max-width: 32px;
     max-height: 32px;
     vertical-align: middle;
@@ -499,7 +499,7 @@ body {
     transform: translateX(-3px);
 }
 
-#journal .items #item .dismiss {
+#journal .items .event .dismiss {
     position: absolute;
     left: 0;
     top: 0;
@@ -509,6 +509,32 @@ body {
 }
 
 .leaflet-overlay-pane svg {
-    background: #000;
-    opacity: 0.6;
+    background: #040d1b;
+    opacity: 0.7;
+}
+
+.leaflet-top, .leaflet-bottom {
+    z-index: 1 !important;
+}
+
+.leaflet-container .leaflet-control-attribution {
+    background: rgba(0, 0, 0, 0);
+}
+
+.leaflet-container a {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.leaflet-tile-pane {
+    position: relative;
+}
+
+.leaflet-tile-pane:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: red;
 }

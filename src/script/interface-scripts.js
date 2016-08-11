@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	
+
     /*
     $("#menu .close-button").click(function() {
         $(".open-menu").css('transform', 'translateX(0)');
@@ -44,9 +44,9 @@ $(document).ready(function () {
         $("#popup").fadeOut();
     });
 
-    $("#journal #item").each(function() {
-        $(this).children('.event').text($(this).attr('class'));
-        $(this).children('.event').css('color', $(this).children('.category').css("background-color"));
+    $("#journal .event").each(function() {
+        $(this).children('.event-type').text($(this).attr('class').split(' ')[1]);
+        $(this).children('.event-type').css('color', $(this).children('.category').css("background-color"));
     });
 
     $("#journal .close-button").click(function() {
@@ -63,20 +63,20 @@ $(document).ready(function () {
 
     $("#journal .clear-all").click(function() {
         var delay = 0;
-        $($("#journal .items #item").get().reverse()).each(function() {
+        $($("#journal .items .event").get().reverse()).each(function() {
             $(this).delay(delay).slideUp(300);
             delay += 50;
         });
-        /* $($("#journal .items #item").get().reverse()).first().children('*').slideUp();
-        $($("#journal .items #item").get().reverse()).first().slideUp(); */
+        /* $($("#journal .items .event").get().reverse()).first().children('*').slideUp();
+        $($("#journal .items .event").get().reverse()).first().slideUp(); */
     });
 
-    $("#journal #item .dismiss").click(function() {
-        $(this).closest("#item").slideUp(300);
-        /* $(this).parent("#item").animate({opacity: "0", "min-height": "0"}); */
+    $("#journal .event .dismiss").click(function() {
+        $(this).closest(".event").slideUp(300);
+        /* $(this).parent(".event").animate({opacity: "0", "min-height": "0"}); */
     });
 
-	$('#journal #item').qtip({
+	$('#journal .event').qtip({
 		content: {
 			/*title: function(event, api) {
 				return $(this).find('.info').contents().get(0).nodeValue.trim();
@@ -114,7 +114,7 @@ $(document).ready(function () {
 			classes: 'qtip-tipsy qtip-shadow qtip-rounded'
 		}
 	});
-    $("#journal #item").wrapInner('<div class="item-container"></div>');
+    $("#journal .event").wrapInner('<div class="item-container"></div>');
 
 });
 
