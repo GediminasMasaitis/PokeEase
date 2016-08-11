@@ -4,7 +4,7 @@
 * {font-family: Lato;}
 
 body {
-    background: url(http://i.imgur.com/bZlpljL.jpg); background-size: cover;
+    background: url(http://i.imgur.com/bZlpljL.jpg); background-size: cover; background-position: center center;
 }
 
 ::selection {
