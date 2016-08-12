@@ -340,7 +340,7 @@ var NotificationManager = (function () {
             _.each(_this.notifications.reverse(), function (notification) {
                 notification.element.delay(delay).slideUp(300), function () {
                     element.remove();
-                    _this.notifications = _.remove(_this.notifications, function (n) { return n.element === element; });
+                    _.remove(_this.notifications, function (n) { return n.element.is(element); });
                 };
                 delay += 50;
             });
@@ -399,7 +399,7 @@ var NotificationManager = (function () {
             var element = $(ev.target);
             element.closest(".event").slideUp(300, function () {
                 element.remove();
-                _this.notifications = _.remove(_this.notifications, function (n) { return n.element === element; });
+                _.remove(_this.notifications, function (n) { return n.element.is(element); });
             });
         };
         this.config = config;

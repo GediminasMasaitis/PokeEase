@@ -16,7 +16,7 @@
         _.each(this.notifications.reverse(), notification => {
             notification.element.delay(delay).slideUp(300), () => {
                 element.remove();
-                this.notifications = _.remove(this.notifications, n => n.element === element);
+                _.remove(this.notifications, n => n.element.is(element));
             };
             delay += 50;
         });
@@ -118,7 +118,7 @@
         const element = $(ev.target);
         element.closest(".event").slideUp(300, () => {
             element.remove();
-            this.notifications = _.remove(this.notifications, n => n.element === element);
+            _.remove(this.notifications, n => n.element.is(element));
         });
     }
 }
