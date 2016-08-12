@@ -378,15 +378,16 @@ var NotificationManager = (function () {
     function NotificationManager(config) {
         var _this = this;
         this.clearAll = function (ev) {
-            var element = $(ev.target);
+            var allNotificationElements = _this.config.container.children(".event").get().reverse();
             var delay = 0;
-            _.each(_this.notifications.reverse(), function (notification) {
-                notification.element.delay(delay).slideUp(300), function () {
-                    element.remove();
-                    _.remove(_this.notifications, function (n) { return n.element.is(element); });
+            allNotificationElements.forEach(function (notification) {
+                var notificationElement = $(notification);
+                notificationElement.delay(delay).slideUp(300), function () {
+                    notificationElement.remove();
                 };
                 delay += 50;
             });
+            _this.notifications = [];
         };
         this.onUpdateTimerElapsed = function () {
             var currentTime = Date.now();

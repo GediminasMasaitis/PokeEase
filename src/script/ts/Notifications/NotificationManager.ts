@@ -11,15 +11,16 @@
     }
 
     private clearAll = (ev: JQueryEventObject): void => {
-        const element = $(ev.target);
+        const allNotificationElements = this.config.container.children(".event").get().reverse();
         var delay = 0;
-        _.each(this.notifications.reverse(), notification => {
-            notification.element.delay(delay).slideUp(300), () => {
-                element.remove();
-                _.remove(this.notifications, n => n.element.is(element));
+        allNotificationElements.forEach(notification => {
+            const notificationElement = $(notification);
+            notificationElement.delay(delay).slideUp(300), () => {
+                notificationElement.remove();
             };
             delay += 50;
         });
+        this.notifications = [];
     }
 
     private onUpdateTimerElapsed = () => {
