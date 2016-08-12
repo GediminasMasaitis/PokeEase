@@ -187,9 +187,10 @@ var InterfaceHandler = (function () {
             this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
         }
     };
-    InterfaceHandler.prototype.onEvolveCount = function (pokemonCapture) {
+    InterfaceHandler.prototype.onEvolveCount = function (evolveCount) {
     };
-    InterfaceHandler.prototype.onPokemonEvolve = function (pokemonCapture) {
+    InterfaceHandler.prototype.onPokemonEvolve = function (pokemonEvolve) {
+        this.config.notificationManager.addNotificationPokemonEvolved(pokemonEvolve);
     };
     InterfaceHandler.prototype.onSnipeScan = function (snipeScan) {
     };
@@ -396,16 +397,6 @@ var NotificationManager = (function () {
                 timestampElement.text(diffStr + " ago");
             });
         };
-        this.addNotificationPokemonCapture = function (pokemonCatch) {
-            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
-            var snipestr = pokemonCatch.IsSnipe ? "snipe" : "catch";
-            var html = "<div class=\"event " + snipestr + "\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + pokemonCatch.Perfection + "%</div>\n                        </div>\n                        <span class=\"event-type\">" + snipestr + "</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
-            var element = $(html);
-            _this.addNotificationFinal({
-                element: element,
-                event: pokemonCatch
-            });
-        };
         this.addNotificationPokeStopUsed = function (fortUsed) {
             var itemsHtml = "";
             _.each(fortUsed.ItemsList, function (item) {
@@ -416,6 +407,25 @@ var NotificationManager = (function () {
             _this.addNotificationFinal({
                 element: element,
                 event: fortUsed
+            });
+        };
+        this.addNotificationPokemonCapture = function (pokemonCatch) {
+            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
+            var snipestr = pokemonCatch.IsSnipe ? "snipe" : "catch";
+            var html = "<div class=\"event " + snipestr + "\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + pokemonCatch.Perfection + "%</div>\n                        </div>\n                        <span class=\"event-type\">" + snipestr + "</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
+            var element = $(html);
+            _this.addNotificationFinal({
+                element: element,
+                event: pokemonCatch
+            });
+        };
+        this.addNotificationPokemonEvolved = function (pokemonEvolve) {
+            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonEvolve.Id];
+            var html = "<div class=\"event evolve\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonEvolve.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">+" + pokemonEvolve.Exp + "XP</div>\n                        </div>\n                        <span class=\"event-type\">evolve</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
+            var element = $(html);
+            _this.addNotificationFinal({
+                element: element,
+                event: pokemonEvolve
             });
         };
         this.addNotificationItemRecycle = function (itemRecycle) {

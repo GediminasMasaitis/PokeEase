@@ -32,6 +32,30 @@
         });
     }
 
+    public addNotificationPokeStopUsed = (fortUsed: IFortUsedEvent): void => {
+        let itemsHtml = "";
+        _.each(fortUsed.ItemsList, item => {
+            itemsHtml += `<div class="item"><img src="images/items/${item.Name}.png"/>x${item.Count}</div>`;
+        });
+
+        const html = `<div class="event pokestop">
+                        <i class="fa fa-times dismiss"></i>
+                        <div class="info">
+                            ${itemsHtml}
+                            <div class="stats">+${fortUsed.Exp}XP</div>
+                        </div>
+                        <span class="event-type">pokestop</span>
+                        <span class="timestamp">0 seconds ago</span>
+                        <div class="category"></div>
+                    </div>`;
+
+        const element = $(html);
+        this.addNotificationFinal({
+            element: element,
+            event: fortUsed
+        });
+    }
+
     public addNotificationPokemonCapture = (pokemonCatch: IPokemonCaptureEvent): void => {
         const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
         const snipestr = pokemonCatch.IsSnipe ? "snipe" : "catch";
@@ -56,19 +80,18 @@
         });
     }
 
-    public addNotificationPokeStopUsed = (fortUsed: IFortUsedEvent): void => {
-        let itemsHtml = "";
-        _.each(fortUsed.ItemsList, item => {
-            itemsHtml += `<div class="item"><img src="images/items/${item.Name}.png"/>x${item.Count}</div>`;
-        });
-        
-        const html = `<div class="event pokestop">
+    public addNotificationPokemonEvolved = (pokemonEvolve: IPokemonEvolveEvent): void => {
+        const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonEvolve.Id];
+        const html = `<div class="event evolve">
                         <i class="fa fa-times dismiss"></i>
-                        <div class="info">
-                            ${itemsHtml}
-                            <div class="stats">+${fortUsed.Exp}XP</div>
+                        <div class="image">
+                            <img src="images/pokemon/${pokemonEvolve.Id}.png"/>
                         </div>
-                        <span class="event-type">pokestop</span>
+                        <div class="info">
+                            ${pokemonName}
+                            <div class="stats">+${pokemonEvolve.Exp}XP</div>
+                        </div>
+                        <span class="event-type">evolve</span>
                         <span class="timestamp">0 seconds ago</span>
                         <div class="category"></div>
                     </div>`;
@@ -76,7 +99,7 @@
         const element = $(html);
         this.addNotificationFinal({
             element: element,
-            event: fortUsed
+            event: pokemonEvolve
         });
     }
 
@@ -144,8 +167,9 @@
 }
 
 interface INotificationManager {
-    addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent);
     addNotificationPokeStopUsed(fortUsed: IFortUsedEvent);
+    addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent);
+    addNotificationPokemonEvolved(pokemonEvolve: IPokemonEvolveEvent);
     addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransferEvent);
     addNotificationItemRecycle(itemRecycle: IItemRecycleEvent);
 }
