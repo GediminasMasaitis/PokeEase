@@ -1,0 +1,3 @@
+interface ISnipeMessageEvent extends IMessageEvent {
+    
+}

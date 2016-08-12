@@ -12,7 +12,8 @@ var NecroWSClient = (function () {
         };
         this.clientOnMessage = function (event) {
             var message = JSON.parse(event.data);
-            message.Timestamp = Date.now();
+            var timestamp = Date.now();
+            message.Timestamp = timestamp;
             var type = message.$type;
             if (_.includes(type, "UpdatePositionEvent")) {
                 var mapLocation_1 = message;
@@ -20,9 +21,8 @@ var NecroWSClient = (function () {
             }
             else if (_.includes(type, "PokeStopListEvent")) {
                 var forts_1 = message.Forts.$values;
-                _.each(_this.config.eventHandlers, function (eh) {
-                    eh.onPokeStopList(forts_1);
-                });
+                _.each(forts_1, function (fort) { return fort.Timestamp = timestamp; });
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokeStopList(forts_1); });
             }
             else if (_.includes(type, "FortTargetEvent")) {
                 var fortTarget_1 = message;
@@ -35,6 +35,7 @@ var NecroWSClient = (function () {
             }
             else if (_.includes(type, "ProfileEvent")) {
                 var profile_1 = message.Profile;
+                profile_1.Timestamp = timestamp;
                 profile_1.PlayerData.PokeCoin = _this.getCurrency(message, "POKECOIN");
                 profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
@@ -42,6 +43,18 @@ var NecroWSClient = (function () {
             else if (_.includes(type, "PokemonCaptureEvent")) {
                 var pokemonCapture_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonCapture(pokemonCapture_1); });
+            }
+            else if (_.includes(type, "SnipeScanEvent")) {
+                var snipeScan_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeScan(snipeScan_1); });
+            }
+            else if (_.includes(type, "SnipeModeEvent")) {
+                var snipeMode_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMode(snipeMode_1); });
+            }
+            else if (_.includes(type, "SnipeEvent")) {
+                var snipeMessage_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMessage(snipeMessage_1); });
             }
             else if (_.includes(type, "UpdateEvent")) {
                 var updateEvent_1 = message;
@@ -162,6 +175,12 @@ var InterfaceHandler = (function () {
             this.config.map.onPokemonCapture(pokemonCapture);
             this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
         }
+    };
+    InterfaceHandler.prototype.onSnipeScan = function (snipeScan) {
+    };
+    InterfaceHandler.prototype.onSnipeMode = function (snipeMode) {
+    };
+    InterfaceHandler.prototype.onSnipeMessage = function (snipeMessage) {
     };
     InterfaceHandler.prototype.onUpdate = function (update) {
     };

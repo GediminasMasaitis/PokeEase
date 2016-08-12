@@ -4,9 +4,9 @@
 
     private map: L.Map;
 
-    private pokeStops: IPokeStop[];
-    private gyms: IGym[];
-    private pokemons: IPokemonCapture[];
+    private pokeStops: IPokeStopEvent[];
+    private gyms: IGymEvent[];
+    private pokemons: IPokemonCaptureEvent[];
     private pokeStopIcons: L.Icon[];
 
     private playerMarker: L.Marker;
@@ -60,7 +60,7 @@
         });
     }
 
-    public movePlayer = (position: IMapLocation): void => {
+    public movePlayer = (position: IMapLocationEvent): void => {
         const posArr = [position.Latitude, position.Longitude];
         this.playerMarker.setLatLng(posArr);
         this.playerPath.addLatLng(posArr);
@@ -69,7 +69,7 @@
         }
     }
 
-    public setPokeStops = (pokeStops: IPokeStop[]): void => {
+    public setPokeStops = (pokeStops: IPokeStopEvent[]): void => {
         _.each(this.pokeStops, m => this.map.removeLayer(m.LMarker));
         this.pokeStops = [];
         _.each(pokeStops, pokeStop => {
@@ -84,7 +84,7 @@
         });
     }
 
-    public setGyms = (gyms: IGym[]) => {
+    public setGyms = (gyms: IGymEvent[]) => {
         _.each(this.gyms, gym => this.map.removeLayer(gym.LMarker));
         this.gyms = [];
         _.each(gyms, gym => {
@@ -99,7 +99,7 @@
         });
     }
 
-    public usePokeStop(pokeStopUsed: IFortUsed): void {
+    public usePokeStop(pokeStopUsed: IFortUsedEvent): void {
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === pokeStopUsed.Id);
         const icon = pokeStop.LureInfo === null
             ? this.pokeStopIcons[PokeStopStatus.Visited]
@@ -107,7 +107,7 @@
         pokeStop.LMarker.setIcon(icon);
     }
 
-    public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
+    public onPokemonCapture(pokemonCapture: IPokemonCaptureEvent): void {
         const posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
         const img = new Image();
         const imgUrl = `images/pokemon/${pokemonCapture.Id}.png`;

@@ -1,4 +1,4 @@
-interface ILureInfo extends IEvent {
+interface ILureInfoEvent extends IEvent {
     ActivePokemonId: number;
     EncounterId: string;
     FortId: string;

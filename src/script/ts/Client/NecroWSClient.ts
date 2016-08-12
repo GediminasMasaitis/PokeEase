@@ -20,43 +20,59 @@
 
     private clientOnMessage = (event: MessageEvent): void => {
         const message = JSON.parse(event.data);
-        message.Timestamp = Date.now();
+        const timestamp = Date.now();
+        message.Timestamp = timestamp;
 
         const type = message.$type as string;
 
         if (_.includes(type, "UpdatePositionEvent")) {
-            const mapLocation = message as IMapLocation;
+            const mapLocation = message as IMapLocationEvent;
             _.each(this.config.eventHandlers, eh => eh.onLocationUpdate(mapLocation));
         }
 
         else if (_.includes(type, "PokeStopListEvent")) {
-            const forts = message.Forts.$values as IFort[];
-            _.each(this.config.eventHandlers, eh => {
-                eh.onPokeStopList(forts);
-            });
+            const forts = message.Forts.$values as IFortEvent[];
+            _.each(forts, fort => fort.Timestamp = timestamp);
+            _.each(this.config.eventHandlers, eh => eh.onPokeStopList(forts));
         }
 
         else if (_.includes(type, "FortTargetEvent")) {
-            const fortTarget = message as IFortTarget;
+            const fortTarget = message as IFortTargetEvent;
             _.each(this.config.eventHandlers, eh => eh.onFortTarget(fortTarget));
         }
 
         else if (_.includes(type, "FortUsedEvent")) {
-            const fortUsed = message as IFortUsed;
+            const fortUsed = message as IFortUsedEvent;
             fortUsed.ItemsList = this.parseItemString(fortUsed.Items);
             _.each(this.config.eventHandlers, eh => eh.onFortUsed(fortUsed));
         }
 
         else if (_.includes(type, "ProfileEvent")) {
-            const profile = message.Profile as IProfile;
+            const profile = message.Profile as IProfileEvent;
+            profile.Timestamp = timestamp;
             profile.PlayerData.PokeCoin = this.getCurrency(message, "POKECOIN");
             profile.PlayerData.StarDust = this.getCurrency(message, "STARDUST");
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
 
         else if (_.includes(type, "PokemonCaptureEvent")) {
-            const pokemonCapture = message as IPokemonCapture;
+            const pokemonCapture = message as IPokemonCaptureEvent;
             _.each(this.config.eventHandlers, eh => eh.onPokemonCapture(pokemonCapture));
+        }
+
+        else if (_.includes(type, "SnipeScanEvent")) {
+            const snipeScan = message as ISnipeScanEvent;
+            _.each(this.config.eventHandlers, eh => eh.onSnipeScan(snipeScan));
+        }
+
+        else if (_.includes(type, "SnipeModeEvent")) {
+            const snipeMode = message as ISnipeModeEvent;
+            _.each(this.config.eventHandlers, eh => eh.onSnipeMode(snipeMode));
+        }
+
+        else if (_.includes(type, "SnipeEvent")) {
+            const snipeMessage = message as ISnipeMessageEvent;
+            _.each(this.config.eventHandlers, eh => eh.onSnipeMessage(snipeMessage));
         }
 
         else if (_.includes(type, "UpdateEvent")) {
@@ -70,22 +86,22 @@
         }
 
         else if (_.includes(type, "EggHatchedEvent")) {
-            const eggHatched = message as IEggHatched;
+            const eggHatched = message as IEggHatchedEvent;
             _.each(this.config.eventHandlers, eh => eh.onEggHatched(eggHatched));
         }
 
         else if (_.includes(type, "EggIncubatorStatusEvent")) {
-            const incubatorStatus = message as IIncubatorStatus;
+            const incubatorStatus = message as IIncubatorStatusEvent;
             _.each(this.config.eventHandlers, eh => eh.onIncubatorStatus(incubatorStatus));
         }
 
         else if (_.includes(type, "ItemRecycledEvent")) {
-            const itemRecycle = message as IItemRecycle;
+            const itemRecycle = message as IItemRecycleEvent;
             _.each(this.config.eventHandlers, eh => eh.onItemRecycle(itemRecycle));
         }
 
         else if (_.includes(type, "TransferPokemonEvent")) {
-            const pokemonTransfer = message as IPokemonTransfer;
+            const pokemonTransfer = message as IPokemonTransferEvent;
             _.each(this.config.eventHandlers, eh => eh.onPokemonTransfer(pokemonTransfer));
         }
 

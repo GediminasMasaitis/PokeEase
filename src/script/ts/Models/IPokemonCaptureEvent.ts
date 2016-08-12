@@ -1,4 +1,4 @@
-interface IPokemonCapture extends IMapLocation {
+interface IPokemonCaptureEvent extends IMapLocationEvent {
     Id: string;
     Attempt: number;
     BallAmount: number;
@@ -15,7 +15,6 @@ interface IPokemonCapture extends IMapLocation {
     PokemonId: number;
     Status: PokemonCatchStatus;
 
-    Timestamp: number;
     LMarker?: L.Marker;
 }
 

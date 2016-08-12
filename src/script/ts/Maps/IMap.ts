@@ -1,7 +1,7 @@
 ﻿interface IMap {
-    movePlayer: (position: IMapLocation) => void;
-    setPokeStops: (pokeStops: IPokeStop[]) => void;
-    setGyms: (gyms: IGym[]) => void;
-    usePokeStop: (pokeStopUsed: IFortUsed) => void;
-    onPokemonCapture: (pokemonCapture: IPokemonCapture) => void;
+    movePlayer: (position: IMapLocationEvent) => void;
+    setPokeStops: (pokeStops: IPokeStopEvent[]) => void;
+    setGyms: (gyms: IGymEvent[]) => void;
+    usePokeStop: (pokeStopUsed: IFortUsedEvent) => void;
+    onPokemonCapture: (pokemonCapture: IPokemonCaptureEvent) => void;
 }

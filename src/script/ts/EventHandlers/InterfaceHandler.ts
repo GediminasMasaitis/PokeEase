@@ -1,18 +1,18 @@
 ﻿class InterfaceHandler implements IEventHandler {
     private config: IInterfaceHandlerConfig;
 
-    private pokeStops: IPokeStop[];
-    private gyms: IGym[];
+    private pokeStops: IPokeStopEvent[];
+    private gyms: IGymEvent[];
 
     constructor(config: IInterfaceHandlerConfig) {
         this.config = config;
     }
 
-    public onLocationUpdate = (location: IMapLocation): void => {
+    public onLocationUpdate = (location: IMapLocationEvent): void => {
         this.config.map.movePlayer(location);
     }
 
-    public onPokeStopList = (forts: IFort[]): void => {
+    public onPokeStopList = (forts: IFortEvent[]): void => {
         if (!this.pokeStops) {
             this.pokeStops = [];
         }
@@ -21,7 +21,7 @@
         }
         for (let i = 0; i < forts.length; i++) {
             if (forts[i].Type === 1) {
-                const pokeStop = forts[i] as IPokeStop;
+                const pokeStop = forts[i] as IPokeStopEvent;
                 pokeStop.Status = PokeStopStatus.Normal;
                 if (pokeStop.CooldownCompleteTimestampMs) {
                     const currentMs = TimeUtils.getCurrentTimestampMs();
@@ -41,7 +41,7 @@
         this.config.map.setGyms(this.gyms);
     }
 
-    private addFortToList = (fort: IFort, fortList: IFort[]): void => {
+    private addFortToList = (fort: IFortEvent, fortList: IFortEvent[]): void => {
         const index = _.findIndex(fortList, f => f.Id === fort.Id);
         if (index === -1) {
             fortList.push(fort);
@@ -51,26 +51,38 @@
         }
     }
 
-    public onFortTarget(fortTarget: IFortTarget): void {
+    public onFortTarget(fortTarget: IFortTargetEvent): void {
         
     }
 
-    public onFortUsed(fortUsed: IFortUsed): void {
+    public onFortUsed(fortUsed: IFortUsedEvent): void {
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === fortUsed.Id);
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
         this.config.notificationManager.addNotificationPokeStopUsed(fortUsed);
     }
 
-    public onProfile(profile: IProfile): void {
+    public onProfile(profile: IProfileEvent): void {
         
     }
 
-    public onPokemonCapture(pokemonCapture: IPokemonCapture): void {
+    public onPokemonCapture(pokemonCapture: IPokemonCaptureEvent): void {
         if (pokemonCapture.Status == PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
             this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
         }
+    }
+
+    public onSnipeScan(snipeScan: ISnipeScanEvent): void {
+        
+    }
+
+    public onSnipeMode(snipeMode: ISnipeModeEvent): void {
+        
+    }
+
+    public onSnipeMessage(snipeMessage: ISnipeMessageEvent): void {
+        
     }
 
     public onUpdate(update: IUpdateEvent): void {
@@ -81,19 +93,19 @@
 
     }
 
-    public onEggHatched(eggHatched: IEggHatched): void {
+    public onEggHatched(eggHatched: IEggHatchedEvent): void {
         
     }
 
-    public onIncubatorStatus(incubatorStatus: IIncubatorStatus): void {
+    public onIncubatorStatus(incubatorStatus: IIncubatorStatusEvent): void {
         
     }
 
-    public onItemRecycle(itemRecycle: IItemRecycle): void {
+    public onItemRecycle(itemRecycle: IItemRecycleEvent): void {
         
     }
 
-    public onPokemonTransfer(pokemonTransfer: IPokemonTransfer): void {
+    public onPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void {
         this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
     }
 }

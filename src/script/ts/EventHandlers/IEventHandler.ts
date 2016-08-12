@@ -1,15 +1,18 @@
 interface IEventHandler {
-    onLocationUpdate: (location: IMapLocation) => void;
-    onPokeStopList: (forts: IFort[]) => void;
-    onFortTarget: (fortTarget: IFortTarget) => void;
-    onFortUsed: (fortUsed: IFortUsed) => void;
-    onProfile: (profile: IProfile) => void;
-    onPokemonCapture: (pokemonCapture: IPokemonCapture) => void;
+    onLocationUpdate: (location: IMapLocationEvent) => void;
+    onPokeStopList: (forts: IFortEvent[]) => void;
+    onFortTarget: (fortTarget: IFortTargetEvent) => void;
+    onFortUsed: (fortUsed: IFortUsedEvent) => void;
+    onProfile: (profile: IProfileEvent) => void;
+    onPokemonCapture: (pokemonCapture: IPokemonCaptureEvent) => void;
+    onSnipeScan: (snipeScan: ISnipeScanEvent) => void;
+    onSnipeMode: (snipeMode: ISnipeModeEvent) => void;
+    onSnipeMessage: (snipeMessage: ISnipeMessageEvent) => void;
     onUpdate: (update: IUpdateEvent) => void;
     onWarn: (warn: IWarnEvent) => void;
-    onEggHatched: (eggHatched: IEggHatched) => void;
-    onIncubatorStatus: (incubatorStatus: IIncubatorStatus) => void;
-    onItemRecycle: (itemRecycle: IItemRecycle) => void;
-    onPokemonTransfer: (pokemonTransfer: IPokemonTransfer) => void;
+    onEggHatched: (eggHatched: IEggHatchedEvent) => void;
+    onIncubatorStatus: (incubatorStatus: IIncubatorStatusEvent) => void;
+    onItemRecycle: (itemRecycle: IItemRecycleEvent) => void;
+    onPokemonTransfer: (pokemonTransfer: IPokemonTransferEvent) => void;
     onUnknownEvent?: (message: any) => void;
 }

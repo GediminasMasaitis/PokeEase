@@ -32,7 +32,7 @@
         });
     }
 
-    public addNotificationPokemonCapture = (pokemonCatch: IPokemonCapture): void => {
+    public addNotificationPokemonCapture = (pokemonCatch: IPokemonCaptureEvent): void => {
         const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
         const html = `<div class="event catch">
                         <i class="fa fa-times dismiss"></i>
@@ -55,7 +55,7 @@
         });
     }
 
-    public addNotificationPokeStopUsed = (fortUsed: IFortUsed): void => {
+    public addNotificationPokeStopUsed = (fortUsed: IFortUsedEvent): void => {
         let itemsHtml = "";
         _.each(fortUsed.ItemsList, item => {
             itemsHtml += `<div class="item"><img src="images/items/${item.Name}.png"/>x${item.Count}</div>`;
@@ -79,7 +79,7 @@
         });
     }
 
-    public addNotificationPokemonTransfer = (pokemonTransfer: IPokemonTransfer): void => {
+    public addNotificationPokemonTransfer = (pokemonTransfer: IPokemonTransferEvent): void => {
         const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonTransfer.Id];
         const roundedPerfection = Math.round(pokemonTransfer.Perfection * 100) / 100;
         const html = `<div class="event transfer">
@@ -123,7 +123,7 @@
 }
 
 interface INotificationManager {
-    addNotificationPokemonCapture(pokemonCatch: IPokemonCapture);
-    addNotificationPokeStopUsed(fortUsed: IFortUsed);
-    addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransfer);
+    addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent);
+    addNotificationPokeStopUsed(fortUsed: IFortUsedEvent);
+    addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransferEvent);
 }

@@ -1,4 +1,4 @@
-interface IFort extends IMapLocation {
+interface IFortEvent extends IMapLocationEvent {
     Type: number;
     Id: string;
     Name?: string;

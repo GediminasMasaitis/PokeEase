@@ -1,7 +1,7 @@
-interface IPokeStop extends IFort {
+interface IPokeStopEvent extends IFortEvent {
     CooldownCompleteTimestampMs: string;
     LastModifiedTimestampMs: string;
-    LureInfo: ILureInfo;
+    LureInfo: ILureInfoEvent;
     Status?: PokeStopStatus;
 }
 
