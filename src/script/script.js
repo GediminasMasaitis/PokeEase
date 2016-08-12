@@ -194,11 +194,32 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onIncubatorStatus = function (incubatorStatus) {
     };
     InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
+        this.config.notificationManager.addNotificationItemRecycle(itemRecycle);
     };
     InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
         this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
     };
     return InterfaceHandler;
+}());
+var InventoryInfo = (function () {
+    function InventoryInfo() {
+    }
+    InventoryInfo.__ctor = (function () {
+        var itemNames = [];
+        itemNames[1] = "ItemPokeBall";
+        itemNames[2] = "ItemGreatBall";
+        itemNames[3] = "ItemUltraBall";
+        itemNames[4] = "ItemMasterBall";
+        itemNames[101] = "ItemPotion";
+        itemNames[102] = "ItemSuperPotion";
+        itemNames[103] = "ItemHyperPotion";
+        itemNames[104] = "ItemMaxPotion";
+        itemNames[201] = "ItemRevive";
+        itemNames[202] = "ItemMaxRevive";
+        itemNames[701] = "ItemRazzBerry";
+        InventoryInfo.itemNames = itemNames;
+    })();
+    return InventoryInfo;
 }());
 var LeafletMap = (function () {
     function LeafletMap(config) {
@@ -374,6 +395,15 @@ var NotificationManager = (function () {
             _this.addNotificationFinal({
                 element: element,
                 event: fortUsed
+            });
+        };
+        this.addNotificationItemRecycle = function (itemRecycle) {
+            var itemName = InventoryInfo.itemNames[itemRecycle.Id];
+            var html = "<div class=\"event recycle\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"info\">\n                            <div class=\"item\"><img src=\"images/items/" + itemName + ".png\"/>x" + itemRecycle.Count + "</div>\n                            <div class=\"stats\">+" + itemRecycle.Count + " free space</div>\n                        </div>\n                        <span class=\"event-type\">recycle</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
+            var element = $(html);
+            _this.addNotificationFinal({
+                element: element,
+                event: itemRecycle
             });
         };
         this.addNotificationPokemonTransfer = function (pokemonTransfer) {

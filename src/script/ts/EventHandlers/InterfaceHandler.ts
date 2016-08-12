@@ -102,7 +102,7 @@
     }
 
     public onItemRecycle(itemRecycle: IItemRecycleEvent): void {
-        
+        this.config.notificationManager.addNotificationItemRecycle(itemRecycle);
     }
 
     public onPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void {

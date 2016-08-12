@@ -80,6 +80,26 @@
         });
     }
 
+    public addNotificationItemRecycle = (itemRecycle: IItemRecycleEvent): void => {
+        const itemName = InventoryInfo.itemNames[itemRecycle.Id];
+        const html = `<div class="event recycle">
+                        <i class="fa fa-times dismiss"></i>
+                        <div class="info">
+                            <div class="item"><img src="images/items/${itemName}.png"/>x${itemRecycle.Count}</div>
+                            <div class="stats">+${itemRecycle.Count} free space</div>
+                        </div>
+                        <span class="event-type">recycle</span>
+                        <span class="timestamp">0 seconds ago</span>
+                        <div class="category"></div>
+                    </div>`;
+
+        const element = $(html);
+        this.addNotificationFinal({
+            element: element,
+            event: itemRecycle
+        });
+    }
+
     public addNotificationPokemonTransfer = (pokemonTransfer: IPokemonTransferEvent): void => {
         const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonTransfer.Id];
         const roundedPerfection = Math.round(pokemonTransfer.Perfection * 100) / 100;
@@ -127,4 +147,5 @@ interface INotificationManager {
     addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent);
     addNotificationPokeStopUsed(fortUsed: IFortUsedEvent);
     addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransferEvent);
+    addNotificationItemRecycle(itemRecycle: IItemRecycleEvent);
 }
