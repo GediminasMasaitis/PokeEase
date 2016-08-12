@@ -63,6 +63,16 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonCapture(pokemonCapture));
         }
 
+        else if (_.includes(type, "EvolveCountEvent")) {
+            const evolveCount = message as IEvolveCountEvent;
+            _.each(this.config.eventHandlers, eh => eh.onEvolveCount(evolveCount));
+        }
+
+        else if (_.includes(type, "PokemonEvolveEvent")) {
+            const pokemonEvolve = message as IPokemonEvolveEvent;
+            _.each(this.config.eventHandlers, eh => eh.onPokemonEvolve(pokemonEvolve));
+        }
+
         else if (_.includes(type, "SnipeScanEvent")) {
             const snipeScan = message as ISnipeScanEvent;
             _.each(this.config.eventHandlers, eh => eh.onSnipeScan(snipeScan));

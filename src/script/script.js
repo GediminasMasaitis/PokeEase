@@ -45,6 +45,14 @@ var NecroWSClient = (function () {
                 pokemonCapture_1.IsSnipe = _this.currentlySniping;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonCapture(pokemonCapture_1); });
             }
+            else if (_.includes(type, "EvolveCountEvent")) {
+                var evolveCount_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onEvolveCount(evolveCount_1); });
+            }
+            else if (_.includes(type, "PokemonEvolveEvent")) {
+                var pokemonEvolve_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonEvolve(pokemonEvolve_1); });
+            }
             else if (_.includes(type, "SnipeScanEvent")) {
                 var snipeScan_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeScan(snipeScan_1); });
@@ -178,6 +186,10 @@ var InterfaceHandler = (function () {
             this.config.map.onPokemonCapture(pokemonCapture);
             this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
         }
+    };
+    InterfaceHandler.prototype.onEvolveCount = function (pokemonCapture) {
+    };
+    InterfaceHandler.prototype.onPokemonEvolve = function (pokemonCapture) {
     };
     InterfaceHandler.prototype.onSnipeScan = function (snipeScan) {
     };
@@ -346,6 +358,15 @@ var PokemonCatchStatus;
     PokemonCatchStatus[PokemonCatchStatus["Escape"] = 2] = "Escape";
     PokemonCatchStatus[PokemonCatchStatus["Flee"] = 3] = "Flee";
 })(PokemonCatchStatus || (PokemonCatchStatus = {}));
+var PokemonEvolveResult;
+(function (PokemonEvolveResult) {
+    PokemonEvolveResult[PokemonEvolveResult["Unset"] = 0] = "Unset";
+    PokemonEvolveResult[PokemonEvolveResult["Success"] = 1] = "Success";
+    PokemonEvolveResult[PokemonEvolveResult["FailedPokemonMissing"] = 2] = "FailedPokemonMissing";
+    PokemonEvolveResult[PokemonEvolveResult["FailedInsufficientResources"] = 3] = "FailedInsufficientResources";
+    PokemonEvolveResult[PokemonEvolveResult["FailedPokemonCannotEvolve"] = 4] = "FailedPokemonCannotEvolve";
+    PokemonEvolveResult[PokemonEvolveResult["FailedPokemonIsDeployed"] = 5] = "FailedPokemonIsDeployed";
+})(PokemonEvolveResult || (PokemonEvolveResult = {}));
 var PlayerTeam;
 (function (PlayerTeam) {
     PlayerTeam[PlayerTeam["Instinct"] = 0] = "Instinct";

@@ -73,6 +73,14 @@
         }
     }
 
+    public onEvolveCount(pokemonCapture: IEvolveCountEvent): void {
+        
+    }
+
+    public onPokemonEvolve(pokemonCapture: IPokemonEvolveEvent): void {
+        
+    }
+
     public onSnipeScan(snipeScan: ISnipeScanEvent): void {
         
     }

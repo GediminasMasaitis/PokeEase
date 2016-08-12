@@ -5,6 +5,8 @@ interface IEventHandler {
     onFortUsed: (fortUsed: IFortUsedEvent) => void;
     onProfile: (profile: IProfileEvent) => void;
     onPokemonCapture: (pokemonCapture: IPokemonCaptureEvent) => void;
+    onEvolveCount: (pokemonCapture: IEvolveCountEvent) => void;
+    onPokemonEvolve: (pokemonCapture: IPokemonEvolveEvent) => void;
     onSnipeScan: (snipeScan: ISnipeScanEvent) => void;
     onSnipeMode: (snipeMode: ISnipeModeEvent) => void;
     onSnipeMessage: (snipeMessage: ISnipeMessageEvent) => void;
