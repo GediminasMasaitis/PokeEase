@@ -155,6 +155,49 @@
             event: pokemonTransfer
         });
     }
+	
+    public addNotificationEggHatched = (eggHatched: IEggHatchedEvent): void => {
+        const html = `<div class="event eggHatched">
+                        <i class="fa fa-times dismiss"></i>
+                        <div class="image">
+                            <img src="images/pokemon/${eggHatched.PokemonId}.png"/>
+                        </div>
+                        <div class="info">Egg
+                            <div class="stats">CP ${eggHatched.Cp} | IV ${eggHatched.Perfection}% | LvL ${eggHatched.Level}</div>
+                        </div>
+                        <span class="event-type">${this.config.translationManager.translation.eventTypes["eggHatched"]}</span>
+                        <span class="timestamp">0 seconds ago</span>
+                        <div class="category"></div>
+                    </div>`;
+
+        const element = $(html);
+        this.addNotificationFinal({
+            element: element,
+            event: eggHatched
+        });
+    }
+    public addNotificationIncubatorStatus = (incubatorStatus: IIncubatorStatusEvent): void => {
+
+		var km =  Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining)*100)/100;
+        const html = `<div class="event incubatorStatus">
+                        <i class="fa fa-times dismiss"></i>
+                        <div class="image">
+                            <img src="images/items/ItemEgg.png"/>
+                        </div>
+                        <div class="info">Egg
+                            <div class="stats">${km} of ${incubatorStatus.KmToWalk}km</div>
+                        </div>
+                        <span class="event-type">${this.config.translationManager.translation.eventTypes["incubatorStatus"]}</span>
+                        <span class="timestamp">0 seconds ago</span>
+                        <div class="category"></div>
+                    </div>`;
+
+        const element = $(html);
+        this.addNotificationFinal({
+            element: element,
+            event: incubatorStatus
+        });
+    }
 
     private addNotificationFinal = (notification: INotification): void => {
         notification.element.wrapInner('<div class="item-container"></div>');
@@ -181,4 +224,6 @@ interface INotificationManager {
     addNotificationPokemonEvolved(pokemonEvolve: IPokemonEvolveEvent);
     addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransferEvent);
     addNotificationItemRecycle(itemRecycle: IItemRecycleEvent);
+	addNotificationEggHatched(eggHatched: IEggHatchedEvent);
+	addNotificationIncubatorStatus(incubatorStatus: IIncubatorStatusEvent);
 }

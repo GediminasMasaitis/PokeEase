@@ -105,11 +105,11 @@
     }
 
     public onEggHatched(eggHatched: IEggHatchedEvent): void {
-        
+        this.config.notificationManager.addNotificationEggHatched(eggHatched);
     }
 
     public onIncubatorStatus(incubatorStatus: IIncubatorStatusEvent): void {
-        
+        this.config.notificationManager.addNotificationIncubatorStatus(incubatorStatus);
     }
 
     public onItemRecycle(itemRecycle: IItemRecycleEvent): void {
