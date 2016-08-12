@@ -128,7 +128,9 @@ var InterfaceHandler = (function () {
     function InterfaceHandler(config) {
         var _this = this;
         this.onLocationUpdate = function (location) {
-            _this.config.map.movePlayer(location);
+            if (!_this.currentlySniping) {
+                _this.config.map.movePlayer(location);
+            }
         };
         this.onPokeStopList = function (forts) {
             if (!_this.pokeStops) {
@@ -170,6 +172,7 @@ var InterfaceHandler = (function () {
             }
         };
         this.config = config;
+        this.currentlySniping = false;
     }
     InterfaceHandler.prototype.onFortTarget = function (fortTarget) {
     };
@@ -195,6 +198,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onSnipeScan = function (snipeScan) {
     };
     InterfaceHandler.prototype.onSnipeMode = function (snipeMode) {
+        this.currentlySniping = snipeMode.Active;
     };
     InterfaceHandler.prototype.onSnipeMessage = function (snipeMessage) {
     };
