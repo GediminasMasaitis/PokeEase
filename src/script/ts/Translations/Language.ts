@@ -1,3 +1,4 @@
 enum Language {
-    English
+    English,
+	German
 }
