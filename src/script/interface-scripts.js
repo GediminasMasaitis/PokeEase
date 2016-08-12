@@ -3,13 +3,13 @@ $(document).ready(function () {
 
     // MENU EVENTS
     $("#menu .close-button").click(function() {
-        $("#menu").animate({"left": "-200px"}, 300);
-        $(".open-menu").delay(300).animate({"opacity": "1"}, 300);
+        $("#menu").animate({"left": "-200px"}, 200);
+        $(".open-menu").delay(100).animate({"opacity": "1"}, 200);
     });
 
     $(".open-menu").click(function() {
         $(this).css("opacity", "0");
-        $("#menu").delay(300).animate({"left": "0"}, 300);
+        $("#menu").delay(0).animate({"left": "0"}, 200);
     });
 
     $("#menu .item").click(function() {
@@ -40,13 +40,13 @@ $(document).ready(function () {
     });
 
     $("#journal .close-button").click(function() {
-        $("#journal").animate({"right": "-300px"}, 300);
-        $(".open-journal").delay(300).animate({"opacity": "1"}, 300);
+        $("#journal").animate({"right": "-300px"}, 200);
+        $(".open-journal").delay(100).animate({"opacity": "1"}, 200);
     });
 
     $(".open-journal").click(function() {
         $(this).css("opacity", "0");
-        $("#journal").delay(300).animate({"right": "0"}, 300);
+        $("#journal").delay(0).animate({"right": "0"}, 200);
     });
 
     resizeItemContainer();
