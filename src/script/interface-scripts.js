@@ -51,15 +51,15 @@ $(document).ready(function () {
 
     resizeItemContainer();
 
-    //$("#journal .clear-all").click(function() {
-    //    var delay = 0;
-    //    $($("#journal .items .event").get().reverse()).each(function() {
-    //        $(this).delay(delay).slideUp(300);
-    //        delay += 50;
-    //    });
-    //    /* $($("#journal .items .event").get().reverse()).first().children('*').slideUp();
-    //    $($("#journal .items .event").get().reverse()).first().slideUp(); */
-    //});
+    $("#journal .clear-all").click(function() {
+        var delay = 0;
+        $($("#journal .items .event").get().reverse()).each(function() {
+            $(this).delay(delay).slideUp(300);
+            delay += 50;
+        });
+        /* $($("#journal .items .event").get().reverse()).first().children('*').slideUp();
+        $($("#journal .items .event").get().reverse()).first().slideUp(); */
+    });
 
     $("#journal .event .dismiss").click(function() {
         $(this).closest(".event").slideUp(300);
