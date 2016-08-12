@@ -14,6 +14,9 @@
             case Language.English:
                 this.translation = new EnglishTranslation();
             break;
+            case Language.German:
+                this.translation = new GermanTranslation();
+            break;
             default:
                 throw "Unknown language";
         }

@@ -36,7 +36,10 @@
     public addNotificationPokeStopUsed = (fortUsed: IFortUsedEvent): void => {
         let itemsHtml = "";
         _.each(fortUsed.ItemsList, item => {
-            itemsHtml += `<div class="item"><img src="images/items/${item.Name}.png"/>x${item.Count}</div>`;
+           const itemId = InventoryInfo.itemIds[item.Name];
+           const itemName = this.config.translationManager.translation.itemNames[itemId];
+			
+           itemsHtml += `<div class="item" title="${itemName}"><img src="images/items/${itemId}.png"/>x${item.Count}</div>`;
         });
 
         const html = `<div class="event pokestop">
@@ -105,11 +108,11 @@
     }
 
     public addNotificationItemRecycle = (itemRecycle: IItemRecycleEvent): void => {
-        const itemName = InventoryInfo.itemNames[itemRecycle.Id];
+        const itemName = this.config.translationManager.translation.itemNames[itemRecycle.Id];
         const html = `<div class="event recycle">
                         <i class="fa fa-times dismiss"></i>
-                        <div class="info">
-                            <div class="item"><img src="images/items/${itemName}.png"/>x${itemRecycle.Count}</div>
+                        <div class="info" title="${itemName}">
+                            <div class="item"><img src="images/items/${itemRecycle.Id}.png"/>x${itemRecycle.Count}</div>
                             <div class="stats">+${itemRecycle.Count} free space</div>
                         </div>
                         <span class="event-type">recycle</span>
