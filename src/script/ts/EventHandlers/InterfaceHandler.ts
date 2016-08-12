@@ -1,15 +1,18 @@
 ﻿class InterfaceHandler implements IEventHandler {
     private config: IInterfaceHandlerConfig;
-
+    private currentlySniping: boolean;
     private pokeStops: IPokeStopEvent[];
     private gyms: IGymEvent[];
 
     constructor(config: IInterfaceHandlerConfig) {
         this.config = config;
+        this.currentlySniping = false;
     }
 
     public onLocationUpdate = (location: IMapLocationEvent): void => {
-        this.config.map.movePlayer(location);
+        if (!this.currentlySniping) {
+            this.config.map.movePlayer(location);
+        }
     }
 
     public onPokeStopList = (forts: IFortEvent[]): void => {
@@ -86,7 +89,7 @@
     }
 
     public onSnipeMode(snipeMode: ISnipeModeEvent): void {
-        
+        this.currentlySniping = snipeMode.Active;
     }
 
     public onSnipeMessage(snipeMessage: ISnipeMessageEvent): void {
