@@ -2,9 +2,11 @@
     private url: string;
     private config: INecroClientConfig;
     private webSocket: WebSocket;
+    private currentlySniping: boolean;
 
     constructor(url: string) {
         this.url = url;
+        this.currentlySniping = false;
     }
 
     public start = (config: INecroClientConfig): void => {
@@ -57,6 +59,7 @@
 
         else if (_.includes(type, "PokemonCaptureEvent")) {
             const pokemonCapture = message as IPokemonCaptureEvent;
+            pokemonCapture.IsSnipe = this.currentlySniping;
             _.each(this.config.eventHandlers, eh => eh.onPokemonCapture(pokemonCapture));
         }
 
@@ -67,6 +70,7 @@
 
         else if (_.includes(type, "SnipeModeEvent")) {
             const snipeMode = message as ISnipeModeEvent;
+            this.currentlySniping = snipeMode.Active;
             _.each(this.config.eventHandlers, eh => eh.onSnipeMode(snipeMode));
         }
 

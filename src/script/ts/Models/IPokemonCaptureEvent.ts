@@ -15,6 +15,7 @@ interface IPokemonCaptureEvent extends IMapLocationEvent {
     PokemonId: number;
     Status: PokemonCatchStatus;
 
+    IsSnipe?: boolean;
     LMarker?: L.Marker;
 }
 

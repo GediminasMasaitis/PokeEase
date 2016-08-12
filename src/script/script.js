@@ -42,6 +42,7 @@ var NecroWSClient = (function () {
             }
             else if (_.includes(type, "PokemonCaptureEvent")) {
                 var pokemonCapture_1 = message;
+                pokemonCapture_1.IsSnipe = _this.currentlySniping;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonCapture(pokemonCapture_1); });
             }
             else if (_.includes(type, "SnipeScanEvent")) {
@@ -50,6 +51,7 @@ var NecroWSClient = (function () {
             }
             else if (_.includes(type, "SnipeModeEvent")) {
                 var snipeMode_1 = message;
+                _this.currentlySniping = snipeMode_1.Active;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMode(snipeMode_1); });
             }
             else if (_.includes(type, "SnipeEvent")) {
@@ -110,6 +112,7 @@ var NecroWSClient = (function () {
             return currency.Amount;
         };
         this.url = url;
+        this.currentlySniping = false;
     }
     return NecroWSClient;
 }());
@@ -353,7 +356,8 @@ var NotificationManager = (function () {
         };
         this.addNotificationPokemonCapture = function (pokemonCatch) {
             var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
-            var html = "<div class=\"event catch\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + pokemonCatch.Perfection + "%</div>\n                        </div>\n                        <span class=\"event-type\">catch</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
+            var snipestr = pokemonCatch.IsSnipe ? "snipe" : "catch";
+            var html = "<div class=\"event " + snipestr + "\">\n                        <i class=\"fa fa-times dismiss\"></i>\n                        <div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + pokemonCatch.Perfection + "%</div>\n                        </div>\n                        <span class=\"event-type\">" + snipestr + "</span>\n                        <span class=\"timestamp\">0 seconds ago</span>\n                        <div class=\"category\"></div>\n                    </div>";
             var element = $(html);
             _this.addNotificationFinal({
                 element: element,

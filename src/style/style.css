@@ -324,6 +324,9 @@ body {
 #journal .event.catch .category {
   background: #7db620; }
 
+#journal .event.snipe .category {
+  background: #7db620; }
+
 #journal .event.evolve .category {
   background: #ebac28; }
 
@@ -347,6 +350,9 @@ body {
   color: #cb92f1; }
 
 #journal .event.catch .event-type {
+  color: #7db620; }
+
+#journal .event.snipe .event-type {
   color: #7db620; }
 
 #journal .event.evolve .event-type {

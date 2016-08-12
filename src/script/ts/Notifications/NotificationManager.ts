@@ -34,7 +34,8 @@
 
     public addNotificationPokemonCapture = (pokemonCatch: IPokemonCaptureEvent): void => {
         const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
-        const html = `<div class="event catch">
+        const snipestr = pokemonCatch.IsSnipe ? "snipe" : "catch";
+        const html = `<div class="event ${snipestr}">
                         <i class="fa fa-times dismiss"></i>
                         <div class="image">
                             <img src="images/pokemon/${pokemonCatch.Id}.png"/>
@@ -43,7 +44,7 @@
                             ${pokemonName}
                             <div class="stats">CP ${pokemonCatch.Cp} | IV ${pokemonCatch.Perfection}%</div>
                         </div>
-                        <span class="event-type">catch</span>
+                        <span class="event-type">${snipestr}</span>
                         <span class="timestamp">0 seconds ago</span>
                         <div class="category"></div>
                     </div>`;

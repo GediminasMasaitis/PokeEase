@@ -362,12 +362,14 @@ $event-transfer-color: #1d7157;
 $event-pokestop-color: #33b5e5;
 $event-recycle-color: #cb92f1;
 $event-catch-color: #7db620;
+$event-snipe-color: #7db620;
 $event-evolve-color: #ebac28;
 
 #journal .event.transfer .category {background: $event-transfer-color}
 #journal .event.pokestop .category {background: $event-pokestop-color}
 #journal .event.recycle .category {background: $event-recycle-color;}
 #journal .event.catch .category {background: $event-catch-color;}
+#journal .event.snipe .category {background: $event-snipe-color;}
 #journal .event.evolve .category {background: $event-evolve-color;}
 
 #journal .event .event-type {
@@ -385,6 +387,7 @@ $event-evolve-color: #ebac28;
 #journal .event.pokestop .event-type {color: $event-pokestop-color}
 #journal .event.recycle .event-type {color: $event-recycle-color;}
 #journal .event.catch .event-type {color: $event-catch-color;}
+#journal .event.snipe .event-type {color: $event-snipe-color;}
 #journal .event.evolve .event-type {color: $event-evolve-color;}
 
 #journal .event .image {
