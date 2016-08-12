@@ -73,12 +73,12 @@
         }
     }
 
-    public onEvolveCount(pokemonCapture: IEvolveCountEvent): void {
+    public onEvolveCount(evolveCount: IEvolveCountEvent): void {
         
     }
 
-    public onPokemonEvolve(pokemonCapture: IPokemonEvolveEvent): void {
-        
+    public onPokemonEvolve(pokemonEvolve: IPokemonEvolveEvent): void {
+        this.config.notificationManager.addNotificationPokemonEvolved(pokemonEvolve);
     }
 
     public onSnipeScan(snipeScan: ISnipeScanEvent): void {
