@@ -19,7 +19,7 @@ $(document).ready(function () {
         $("#popup .title").css('background-color', $(this).css('background-color'));
         $("#popup .content").each(function() {
             $(this).hide();
-            if ($($this).attr('data-category') == PopupTitle) {
+            if ($(this).attr('data-category') == PopupTitle) {
                 $(this).show();
             }
         });
