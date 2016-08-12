@@ -62,6 +62,7 @@
 
     public addNotificationPokemonCapture = (pokemonCatch: IPokemonCaptureEvent): void => {
         const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
+        const roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
         const snipestr = pokemonCatch.IsSnipe ? "snipe" : "catch";
         const html = `<div class="event ${snipestr}">
                         <i class="fa fa-times dismiss"></i>
@@ -70,7 +71,7 @@
                         </div>
                         <div class="info">
                             ${pokemonName}
-                            <div class="stats">CP ${pokemonCatch.Cp} | IV ${pokemonCatch.Perfection}%</div>
+                            <div class="stats">CP ${pokemonCatch.Cp} | IV ${roundedPerfection}%</div>
                         </div>
                         <span class="event-type">${snipestr}</span>
                         <span class="timestamp">0 seconds ago</span>
