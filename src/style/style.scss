@@ -364,6 +364,10 @@ $event-recycle-color: #cb92f1;
 $event-catch-color: #7db620;
 $event-snipe-color: #7db620;
 $event-evolve-color: #ebac28;
+$event-incubatorStatus-color: #e9e1b5;
+$event-eggHatched-color: #afc785;
+
+
 
 #journal .event.transfer .category {background: $event-transfer-color}
 #journal .event.pokestop .category {background: $event-pokestop-color}
@@ -371,6 +375,8 @@ $event-evolve-color: #ebac28;
 #journal .event.catch .category {background: $event-catch-color;}
 #journal .event.snipe .category {background: $event-snipe-color;}
 #journal .event.evolve .category {background: $event-evolve-color;}
+#journal .event.incubatorStatus .category {background: $event-incubatorStatus-color;}
+#journal .event.eggHatched .category {background: $event-eggHatched-color;}
 
 #journal .event .event-type {
     position: absolute;
@@ -389,6 +395,8 @@ $event-evolve-color: #ebac28;
 #journal .event.catch .event-type {color: $event-catch-color;}
 #journal .event.snipe .event-type {color: $event-snipe-color;}
 #journal .event.evolve .event-type {color: $event-evolve-color;}
+#journal .event.incubatorStatus .event-type {color: $event-incubatorStatus-color;}
+#journal .event.eggHatched .event-type {color: $event-eggHatched-color;}
 
 #journal .event .image {
     display: table-cell;
