@@ -330,11 +330,11 @@ body {
 #journal .event.evolve .category {
   background: #ebac28; }
 
-#journal .event.incubatorStatus .category {
-  background: #e9e1b5; }
-
-#journal .event.eggHatched .category {
+#journal .event.egg-hatched .category {
   background: #afc785; }
+
+#journal .event.incubator-status .category {
+  background: #e9e1b5; }
 
 #journal .event .event-type {
   position: absolute;
@@ -364,11 +364,11 @@ body {
 #journal .event.evolve .event-type {
   color: #ebac28; }
 
-#journal .event.incubatorStatus .event-type {
-  color: #e9e1b5; }
-
-#journal .event.eggHatched .event-type {
+#journal .event.egg-hatched .event-type {
   color: #afc785; }
+
+#journal .event.incubator-status .event-type {
+  color: #e9e1b5; }
 
 #journal .event .image {
   display: table-cell;

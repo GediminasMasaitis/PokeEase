@@ -364,8 +364,8 @@ $event-recycle-color: #cb92f1;
 $event-catch-color: #7db620;
 $event-snipe-color: #7db620;
 $event-evolve-color: #ebac28;
-$event-incubatorStatus-color: #e9e1b5;
-$event-eggHatched-color: #afc785;
+$event-egg-hatched-color: #afc785;
+$event-incubator-status-color: #e9e1b5;
 
 
 
@@ -375,8 +375,8 @@ $event-eggHatched-color: #afc785;
 #journal .event.catch .category {background: $event-catch-color;}
 #journal .event.snipe .category {background: $event-snipe-color;}
 #journal .event.evolve .category {background: $event-evolve-color;}
-#journal .event.incubatorStatus .category {background: $event-incubatorStatus-color;}
-#journal .event.eggHatched .category {background: $event-eggHatched-color;}
+#journal .event.egg-hatched .category {background: $event-egg-hatched-color;}
+#journal .event.incubator-status .category {background: $event-incubator-status-color;}
 
 #journal .event .event-type {
     position: absolute;
@@ -395,8 +395,8 @@ $event-eggHatched-color: #afc785;
 #journal .event.catch .event-type {color: $event-catch-color;}
 #journal .event.snipe .event-type {color: $event-snipe-color;}
 #journal .event.evolve .event-type {color: $event-evolve-color;}
-#journal .event.incubatorStatus .event-type {color: $event-incubatorStatus-color;}
-#journal .event.eggHatched .event-type {color: $event-eggHatched-color;}
+#journal .event.egg-hatched .event-type {color: $event-egg-hatched-color;}
+#journal .event.incubator-status .event-type {color: $event-incubator-status-color;}
 
 #journal .event .image {
     display: table-cell;
