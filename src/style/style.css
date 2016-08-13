@@ -177,8 +177,8 @@ body {
   bottom: 0;
   left: 0;
   max-width: 1000px;
-  max-height: 300px;
-  background: white;
+  max-height: 800px;
+  background: #ededed;
   margin: auto;
   overflow: hidden;
   border-radius: 5px;
@@ -498,3 +498,97 @@ body {
   opacity: 0.25; }
 
 /*# sourceMappingURL=style.css.map */
+
+#content-wrap::-webkit-scrollbar {
+    width: 10px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#content-wrap::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.inner-wrap .pokemon {
+    display: inline-block;
+    margin: 0.5em;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.1);
+    width: 175px;
+    vertical-align: top;
+    background: white;
+    transition: 0.3s;
+}
+
+.inner-wrap .pokemon:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+}
+
+.inner-wrap .pokemon img {
+    max-height: 100px;
+    max-width: 100px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.inner-wrap .pokemon .image-container {
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+}
+
+.inner-wrap .pokemon .image-container:before {
+    content: "";
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.inner-wrap .pokemon h1 {
+    font-size: 18px;
+}
+
+.inner-wrap .pokemon h3 {
+    font-size: 14px;
+}
+
+.inner-wrap .pokemon .cp:before {
+    content: "CP";
+    margin-right: .5em;
+    opacity: 0.5;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    padding-right: .5em;
+}
+
+.inner-wrap .pokemon .iv:before {
+    content: "IV";
+    margin-right: .5em;
+    opacity: 0.5;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    padding-right: .5em;
+}
+
+.inner-wrap .pokemon .iv:after {
+    content: "%";
+}
+
+#content-wrap {overflow-y: auto; height: calc(100% - 36px); position: relative;}
+
+#popup .inner-wrap .content[data-category="pokemons"] {
+    margin: .5em 0;
+}
+
+.inner-wrap .pokemon .caught:before {
+    content: "Caught";
+    margin-right: .5em;
+    opacity: 0.5;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    padding-right: .5em;
+}
+
+.inner-wrap .pokemon .seen:before {
+    content: "Seen";
+    margin-right: .5em;
+    opacity: 0.5;
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    padding-right: .5em;
+}
