@@ -5,10 +5,14 @@
     private gyms: IGymEvent[];
     private exp: number;
     private stardust: number;
+    private previousCaptureAttempts: IPokemonCaptureEvent[];
+    private itemsUsedForCapture: number[];
 
     constructor(config: IInterfaceHandlerConfig) {
         this.config = config;
         this.currentlySniping = false;
+        this.previousCaptureAttempts = [];
+        this.itemsUsedForCapture = [];
     }
 
     public onLocationUpdate = (location: IMapLocationEvent): void => {
@@ -74,10 +78,21 @@
         this.config.profileInfoManager.setProfileData(profile);
     }
 
+    public onUseBerry(berry: IUseBerryEvent): void {
+        const berryId = berry.BerryType || berry.BerryType;
+        this.itemsUsedForCapture.push(berryId);
+    }
+
     public onPokemonCapture = (pokemonCapture: IPokemonCaptureEvent): void => {
+        if (this.previousCaptureAttempts.length > 0 && this.previousCaptureAttempts[0].Id != pokemonCapture.Id) {
+            this.previousCaptureAttempts = [];
+            this.itemsUsedForCapture = [];
+        }
+        this.previousCaptureAttempts.push(pokemonCapture);
+        this.itemsUsedForCapture.push(pokemonCapture.Pokeball);
         if (pokemonCapture.Status === PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
-            this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
+            this.config.notificationManager.addNotificationPokemonCapture(this.previousCaptureAttempts, this.itemsUsedForCapture);
             this.exp += pokemonCapture.Exp;
             this.config.profileInfoManager.addExp(this.exp, pokemonCapture.Exp);
         }

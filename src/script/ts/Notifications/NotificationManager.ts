@@ -49,7 +49,8 @@
         this.addNotification(fortUsed, html, "pokestop");
     }
 
-    public addNotificationPokemonCapture = (pokemonCatch: IPokemonCaptureEvent): void => {
+    public addNotificationPokemonCapture = (pokemonCatches: IPokemonCaptureEvent[], itemsUsedForCapture: number[]): void => {
+        const pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
         const pokemonName = this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
         const roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
         const eventType = pokemonCatch.IsSnipe ? "snipe" : "catch";
@@ -61,9 +62,10 @@
                             ${pokemonName}
                             <div class="stats">CP ${pokemonCatch.Cp} | IV ${roundedPerfection}%</div>
                         </div>`;
-
+        let itemsHtml = "";
+        _.each(itemsUsedForCapture, i => itemsHtml += `<img src="images/items/${i}.png">`);
         const extendedInfoHtml = `
-Attempts        <span class="attempts"><img src="images/items/1.png"><img src="images/items/4.png"></span><br/>
+Attempts        <span class="attempts">${itemsHtml}</span><br/>
 Probability     <span class="probability"> ${pokemonCatch.Probability}% </span><br/>
 XP              <span class="xp"> ${pokemonCatch.Exp} </span><br/>
 Candies         <span class="candies"> ${pokemonCatch.FamilyCandies} </span><br/>
@@ -186,7 +188,7 @@ CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp
 
 interface INotificationManager {
     addNotificationPokeStopUsed(fortUsed: IFortUsedEvent);
-    addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent);
+    addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent[], itemsUsedForCapture: number[]);
     addNotificationPokemonEvolved(pokemonEvolve: IPokemonEvolveEvent);
     addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransferEvent);
     addNotificationItemRecycle(itemRecycle: IItemRecycleEvent);

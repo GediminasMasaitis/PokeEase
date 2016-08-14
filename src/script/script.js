@@ -257,15 +257,23 @@ var InterfaceHandler = (function () {
             }
         };
         this.onPokemonCapture = function (pokemonCapture) {
+            if (_this.previousCaptureAttempts.length > 0 && _this.previousCaptureAttempts[0].Id != pokemonCapture.Id) {
+                _this.previousCaptureAttempts = [];
+                _this.itemsUsedForCapture = [];
+            }
+            _this.previousCaptureAttempts.push(pokemonCapture);
+            _this.itemsUsedForCapture.push(pokemonCapture.Pokeball);
             if (pokemonCapture.Status === PokemonCatchStatus.Success) {
                 _this.config.map.onPokemonCapture(pokemonCapture);
-                _this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
+                _this.config.notificationManager.addNotificationPokemonCapture(_this.previousCaptureAttempts, _this.itemsUsedForCapture);
                 _this.exp += pokemonCapture.Exp;
                 _this.config.profileInfoManager.addExp(_this.exp, pokemonCapture.Exp);
             }
         };
         this.config = config;
         this.currentlySniping = false;
+        this.previousCaptureAttempts = [];
+        this.itemsUsedForCapture = [];
     }
     InterfaceHandler.prototype.onFortTarget = function (fortTarget) {
     };
@@ -280,6 +288,10 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onProfile = function (profile) {
         this.config.mainMenuManager.updateProfileData(profile);
         this.config.profileInfoManager.setProfileData(profile);
+    };
+    InterfaceHandler.prototype.onUseBerry = function (berry) {
+        var berryId = berry.BerryType || berry.BerryType;
+        this.itemsUsedForCapture.push(berryId);
     };
     InterfaceHandler.prototype.onEvolveCount = function (evolveCount) {
     };
@@ -861,12 +873,15 @@ var NotificationManager = (function () {
             var html = "<div class=\"info\">\n                          " + itemsHtml + "\n                          <div class=\"stats\">+" + fortUsed.Exp + "XP</div>\n                      </div>";
             _this.addNotification(fortUsed, html, "pokestop");
         };
-        this.addNotificationPokemonCapture = function (pokemonCatch) {
+        this.addNotificationPokemonCapture = function (pokemonCatches, itemsUsedForCapture) {
+            var pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
             var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
             var roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
             var eventType = pokemonCatch.IsSnipe ? "snipe" : "catch";
             var html = "<div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + roundedPerfection + "%</div>\n                        </div>";
-            var extendedInfoHtml = "\nAttempts        <span class=\"attempts\"><img src=\"images/items/1.png\"><img src=\"images/items/4.png\"></span><br/>\nProbability     <span class=\"probability\"> " + pokemonCatch.Probability + "% </span><br/>\nXP              <span class=\"xp\"> " + pokemonCatch.Exp + " </span><br/>\nCandies         <span class=\"candies\"> " + pokemonCatch.FamilyCandies + " </span><br/>\nCatch Type      <span class=\"catch-type\"> " + pokemonCatch.CatchType + " </span><br/>\nLevel           <span class=\"level\"> " + pokemonCatch.Level + " </span><br/>\nCP              <span class=\"cp\"> " + pokemonCatch.Cp + " </span>/<span class=\"max-cp\"> " + pokemonCatch.MaxCp + " </span><br/>\n";
+            var itemsHtml = "";
+            _.each(itemsUsedForCapture, function (i) { return itemsHtml += "<img src=\"images/items/" + i + ".png\">"; });
+            var extendedInfoHtml = "\nAttempts        <span class=\"attempts\">" + itemsHtml + "</span><br/>\nProbability     <span class=\"probability\"> " + pokemonCatch.Probability + "% </span><br/>\nXP              <span class=\"xp\"> " + pokemonCatch.Exp + " </span><br/>\nCandies         <span class=\"candies\"> " + pokemonCatch.FamilyCandies + " </span><br/>\nCatch Type      <span class=\"catch-type\"> " + pokemonCatch.CatchType + " </span><br/>\nLevel           <span class=\"level\"> " + pokemonCatch.Level + " </span><br/>\nCP              <span class=\"cp\"> " + pokemonCatch.Cp + " </span>/<span class=\"max-cp\"> " + pokemonCatch.MaxCp + " </span><br/>\n";
             _this.addNotification(pokemonCatch, html, eventType, extendedInfoHtml);
         };
         this.addNotificationPokemonEvolved = function (pokemonEvolve) {
