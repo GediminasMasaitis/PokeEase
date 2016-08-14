@@ -20,6 +20,12 @@ interface IEventHandler {
     onPokemonList: (pokemonList: IPokemonListEvent) => void;
 
     onSendPokemonListRequest: (request: IRequest) => void;
+    onSendEggsListRequest: (request: IRequest) => void;
+    onSendInventoryListRequest: (request: IRequest) => void;
+    onSendPlayerStatsRequest: (request: IRequest) => void;
+    onSendGetPokemonSettingsRequest: (request: IRequest) => void;
+    onSendTransferPokemonRequest: (request: IRequest) => void;
+    onSendEvolvePokemonRequest: (request: IRequest) => void;
 
     onUnknownEvent?: (message: any) => void;
 }

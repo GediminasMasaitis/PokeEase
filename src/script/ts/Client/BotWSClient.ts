@@ -23,6 +23,56 @@
         _.each(this.config.eventHandlers, eh => eh.onSendPokemonListRequest(request));
         this.sendRequest(request);
     };
+
+    public sendEggsListRequest = (): void => {
+        const request: IRequest = {
+             Command: "EggsList"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendEggsListRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendInventoryListRequest = (): void => {
+        const request: IRequest = {
+             Command: "InventoryList"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendInventoryListRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendPlayerStatsRequest = (): void => {
+        const request: IRequest = {
+             Command: "PlayerStats"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendPlayerStatsRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendGetPokemonSettingsRequest = (): void => {
+        const request: IRequest = {
+             Command: "GetPokemonSettings"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendGetPokemonSettingsRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendTransferPokemonRequest = (pokemonId: number): void => {
+        const request: IRequest = {
+             Command: "TransferPokemon",
+             Data: pokemonId.toString()
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendTransferPokemonRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendEvolvePokemonRequest = (pokemonId: number): void => {
+        const request: IRequest = {
+             Command: "EvolvePokemon",
+             Data: pokemonId.toString()
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendEvolvePokemonRequest(request));
+        this.sendRequest(request);
+    };
     
     public sendRequest = (request: IRequest): void => {
         console.log("%c>>> OUTGOING:", "color: red", request);

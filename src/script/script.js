@@ -14,6 +14,50 @@ var BotWSClient = (function () {
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(request); });
             _this.sendRequest(request);
         };
+        this.sendEggsListRequest = function () {
+            var request = {
+                Command: "EggsList"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEggsListRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendInventoryListRequest = function () {
+            var request = {
+                Command: "InventoryList"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendInventoryListRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendPlayerStatsRequest = function () {
+            var request = {
+                Command: "PlayerStats"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendGetPokemonSettingsRequest = function () {
+            var request = {
+                Command: "GetPokemonSettings"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendGetPokemonSettingsRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendTransferPokemonRequest = function (pokemonId) {
+            var request = {
+                Command: "TransferPokemon",
+                Data: pokemonId.toString()
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendTransferPokemonRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendEvolvePokemonRequest = function (pokemonId) {
+            var request = {
+                Command: "EvolvePokemon",
+                Data: pokemonId.toString()
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEvolvePokemonRequest(request); });
+            _this.sendRequest(request);
+        };
         this.sendRequest = function (request) {
             console.log("%c>>> OUTGOING:", "color: red", request);
             var requestStr = JSON.stringify(request);
@@ -209,6 +253,7 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
         this.config.mainMenuManager.updateProfileData(profile);
+        this.config.profileInfoManager.setProfileData(profile);
     };
     InterfaceHandler.prototype.onPokemonCapture = function (pokemonCapture) {
         if (pokemonCapture.Status === PokemonCatchStatus.Success) {
@@ -249,6 +294,18 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
         this.config.pokemonMenuManager.pokemonListRequested(request);
+    };
+    InterfaceHandler.prototype.onSendEggsListRequest = function (request) {
+    };
+    InterfaceHandler.prototype.onSendInventoryListRequest = function (request) {
+    };
+    InterfaceHandler.prototype.onSendPlayerStatsRequest = function (request) {
+    };
+    InterfaceHandler.prototype.onSendGetPokemonSettingsRequest = function (request) {
+    };
+    InterfaceHandler.prototype.onSendTransferPokemonRequest = function (request) {
+    };
+    InterfaceHandler.prototype.onSendEvolvePokemonRequest = function (request) {
     };
     return InterfaceHandler;
 }());
@@ -362,19 +419,19 @@ var LeafletMap = (function () {
             iconSize: [48, 48]
         });
         this.gymIcons = [];
-        this.gymIcons[GymTeam.Neutral] = new L.Icon({
+        this.gymIcons[PlayerTeam.Neutral] = new L.Icon({
             iconUrl: "images/markers/unoccupied.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[GymTeam.Mystic] = new L.Icon({
+        this.gymIcons[PlayerTeam.Mystic] = new L.Icon({
             iconUrl: "images/markers/mystic.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[GymTeam.Valor] = new L.Icon({
+        this.gymIcons[PlayerTeam.Valor] = new L.Icon({
             iconUrl: "images/markers/valor.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[GymTeam.Instinct] = new L.Icon({
+        this.gymIcons[PlayerTeam.Instinct] = new L.Icon({
             iconUrl: "images/markers/instinct.png",
             iconSize: [48, 48]
         });
@@ -437,7 +494,6 @@ var PokemonMenuManager = (function () {
         };
         this.updatePokemonList = function (pokemonList) {
             _this.config.pokemonMenuElement.find(".pokemon").remove();
-            _this.config.pokemonMenuElement.find(".spinner-overlay").hide();
             _.each(pokemonList.Pokemons, function (pokemon) {
                 var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemon.PokemonId];
                 var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
@@ -445,18 +501,12 @@ var PokemonMenuManager = (function () {
                 var pokemonElement = $(html);
                 _this.config.pokemonMenuElement.append(pokemonElement);
             });
+            _this.config.pokemonMenuElement.find(".spinner-overlay").hide();
         };
         this.config = config;
     }
     return PokemonMenuManager;
 }());
-var GymTeam;
-(function (GymTeam) {
-    GymTeam[GymTeam["Neutral"] = 0] = "Neutral";
-    GymTeam[GymTeam["Mystic"] = 1] = "Mystic";
-    GymTeam[GymTeam["Valor"] = 2] = "Valor";
-    GymTeam[GymTeam["Instinct"] = 3] = "Instinct";
-})(GymTeam || (GymTeam = {}));
 var PokeStopStatus;
 (function (PokeStopStatus) {
     PokeStopStatus[PokeStopStatus["Normal"] = 0] = "Normal";
@@ -481,9 +531,10 @@ var PokemonEvolveResult;
 })(PokemonEvolveResult || (PokemonEvolveResult = {}));
 var PlayerTeam;
 (function (PlayerTeam) {
-    PlayerTeam[PlayerTeam["Instinct"] = 0] = "Instinct";
+    PlayerTeam[PlayerTeam["Neutral"] = 0] = "Neutral";
     PlayerTeam[PlayerTeam["Mystic"] = 1] = "Mystic";
     PlayerTeam[PlayerTeam["Valor"] = 2] = "Valor";
+    PlayerTeam[PlayerTeam["Instinct"] = 3] = "Instinct";
 })(PlayerTeam || (PlayerTeam = {}));
 var NotificationManager = (function () {
     function NotificationManager(config) {
@@ -581,6 +632,16 @@ var NotificationManager = (function () {
         this.config.clearAllButton.click(this.clearAll);
     }
     return NotificationManager;
+}());
+var ProfileInfoManager = (function () {
+    function ProfileInfoManager(config) {
+        var _this = this;
+        this.setProfileData = function (profile) {
+            _this.config.profileInfoElement.find(".profile-username").text(" " + profile.PlayerData.Username + " ");
+        };
+        this.config = config;
+    }
+    return ProfileInfoManager;
 }());
 var EnglishTranslation = (function () {
     function EnglishTranslation() {
@@ -725,6 +786,9 @@ $(function () {
         translationManager: translationManager,
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]')
     });
+    var profileInfoManager = new ProfileInfoManager({
+        profileInfoElement: $("#profile")
+    });
     var lMap = new LeafletMap({
         followPlayer: true,
         translationManager: translationManager
@@ -734,6 +798,7 @@ $(function () {
         notificationManager: notificationManager,
         mainMenuManager: mainMenuManager,
         pokemonMenuManager: pokemonMenuManager,
+        profileInfoManager: profileInfoManager,
         map: lMap
     });
     client.start({

@@ -61,19 +61,19 @@
         });
 
         this.gymIcons = [];
-        this.gymIcons[GymTeam.Neutral] = new L.Icon({
+        this.gymIcons[PlayerTeam.Neutral] = new L.Icon({
             iconUrl: "images/markers/unoccupied.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[GymTeam.Mystic] = new L.Icon({
+        this.gymIcons[PlayerTeam.Mystic] = new L.Icon({
             iconUrl: "images/markers/mystic.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[GymTeam.Valor] = new L.Icon({
+        this.gymIcons[PlayerTeam.Valor] = new L.Icon({
             iconUrl: "images/markers/valor.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[GymTeam.Instinct] = new L.Icon({
+        this.gymIcons[PlayerTeam.Instinct] = new L.Icon({
             iconUrl: "images/markers/instinct.png",
             iconSize: [48, 48]
         });

@@ -3,5 +3,6 @@
     translationManager: ITranslationManager;
     mainMenuManager: IMainMenuManager;
     pokemonMenuManager: IPokemonMenuManager;
+    profileInfoManager: IProfileInfoManager;
     map: IMap;
 }

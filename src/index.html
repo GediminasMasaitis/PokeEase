@@ -7,112 +7,133 @@
         <meta charset="utf-8"/>
         <link rel="icon" sizes="16x16" href="images/favicon.png">
     </head>
-    <body class="live-version">
-        <div id="map" style="width: 100%; height: 100%"></div>
-        <div id="wrap">
-            <div class="open-menu">
-                Menu
-                <i class="fa fa-angle-right fa-lg"></i>
-            </div>
+<body class="live-version">
+    <div id="map" style="width: 100%; height: 100%"></div>
+    <div id="wrap">
+        <div class="open-menu">
+            Menu
+            <i class="fa fa-angle-right fa-lg"></i>
+        </div>
 
-            <div id="menu" class="menu">
-                <div class="container center">
-                    <div>
-                        <div class="close-button"><i class="fa fa-angle-left fa-lg"></i>
-                        </div>
-                        <div class="item" id="pokemons">
-                            <div class="counter">
-                                <span>125</span>/250
-                            </div>
-                        </div>
-                        <div class="item" id="pokedex">
-                            <div class="counter">
-                                <span>142</span>/151
-                            </div>
-                        </div>
-                        <div class="item" id="items">
-                            <div class="counter">
-                                <span>342</span>/400
-                            </div>
-                        </div>
-                        <div class="item" id="eggs">
-                            <div class="counter">
-                                <span>8</span>/9
-                            </div>
-                        </div>
-                        <div class="item" id="settings">
-                        </div>
-                        <div class="help"><i class="fa fa-info"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-            <div class="open-journal"><i class="fa fa-angle-left fa-lg"></i>
-                Journal
-            </div>
-
-            <div id="journal" class="menu">
-                <div class="title">
-                    <span>journal</span>
+        <div id="menu" class="menu">
+            <div class="container center">
+                <div>
                     <div class="close-button">
-                        <i class="fa fa-angle-right fa-lg"></i>
+                        <i class="fa fa-angle-left fa-lg"></i>
+                    </div>
+                    <div class="item" id="pokemons">
+                        <div class="counter">
+                            <span>125</span>/250
+                        </div>
+                    </div>
+                    <div class="item" id="pokedex">
+                        <div class="counter">
+                            <span>142</span>/151
+                        </div>
+                    </div>
+                    <div class="item" id="items">
+                        <div class="counter">
+                            <span>342</span>/400
+                        </div>
+                    </div>
+                    <div class="item" id="eggs">
+                        <div class="counter">
+                            <span>8</span>/9
+                        </div>
+                    </div>
+                    <div class="item" id="settings">
+                    </div>
+                    <div class="help">
+                        <i class="fa fa-info"></i>
                     </div>
                 </div>
-                <div class="items">
+            </div>
+        </div>
 
-                </div>
-                <div class="clear-all">
-                    <span>
-                            <div class="delete-icon">
-                                <div class="bar1"></div>
-                                <div class="bar2"></div>
-                                <div class="bar3"></div>
-                            </div>
-                            Clear All
-                        </span>
+
+
+
+        <div class="open-journal">
+            <i class="fa fa-angle-left fa-lg"></i>
+            Journal
+        </div>
+
+        <div id="journal" class="menu">
+            <div class="title">
+                <span>journal</span>
+                <div class="close-button">
+                    <i class="fa fa-angle-right fa-lg"></i>
                 </div>
             </div>
+            <div class="items">
+
+            </div>
+            <div class="clear-all">
+                <span>
+                    <div class="delete-icon">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
+                    Clear All
+                </span>
+            </div>
+        </div>
 
 
 
-            <div id="popup">
-                <div class="container center">
-                    <div>
-                        <div class="inner-wrap">
-                            <div class="title">
-                                <i class="fa fa-times close-me"></i>
-                                <span> who is it? </span>
-                            </div>
-                            <div id="content-wrap">
-                                <div class="content" data-category="pokemons">
-                                    <div class="container center spinner-overlay" style="background-color: rgba(255, 255, 255, 0.5)">
-                                        <div>
-                                            <i class="fa fa-circle-o-notch fa-3x fa-spin"></i>
-                                        </div>
+        <div id="popup">
+            <div class="container center">
+                <div>
+                    <div class="inner-wrap">
+                        <div class="title">
+                            <i class="fa fa-times close-me"></i>
+                            <span> who is it? </span>
+                        </div>
+                        <div id="content-wrap">
+                            <div class="content" data-category="pokemons">
+                                <div class="container center spinner-overlay" style="background-color: rgba(255, 255, 255, 0.5)">
+                                    <div>
+                                        <i class="fa fa-circle-o-notch fa-3x fa-spin"></i>
                                     </div>
                                 </div>
-                                <div class="content" data-category="pokedex">Pokedex</div>
-                                <div class="content" data-category="items">Items</div>
-                                <div class="content" data-category="eggs">Eggs</div>
-                                <div class="content" data-category="settings">Settings</div>
                             </div>
+                            <div class="content" data-category="pokedex">Pokedex</div>
+                            <div class="content" data-category="items">Items</div>
+                            <div class="content" data-category="eggs">Eggs</div>
+                            <div class="content" data-category="settings">Settings</div>
                         </div>
                     </div>
                 </div>
-                <div class="overlay"></div>
             </div>
-
-
+            <div class="overlay"></div>
         </div>
-        <script src="external/jquery-3.1.0.js"></script>
-        <script src="external/lodash.js"></script>
-        <script src="external/leaflet.js"></script>
-        <script src="external/jquery.qtip.min.js"></script>
-        <script src="script/interface-scripts.js"></script>
-        <script src="script/script.js"></script>
-    </body>
+
+        <div id="profile" class="menu">
+            <i class="fa fa-angle-down hide"></i>
+            <div class="user-info">
+                <h1 class="profile-username"> iTayGNR </h1>
+                <h6 class="profile-lvl"> lvl 21 </h6>
+                <p class="profile-exp"> 21,243 / 150,000 </p>
+            </div>
+            <div class="user-items">
+                <div>
+                    <img src="images/items/Stardust.png" />
+                    <span class="profile-stardust">43,281,392</span>
+                </div>
+                <div>
+                    <img src="images/items/PokeCoin.png"/>
+                    <span class="profile-pokecoin">70</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="external/jquery-3.1.0.js"></script>
+    <script src="external/lodash.js"></script>
+    <script src="external/leaflet.js"></script>
+    <script src="external/jquery.qtip.min.js"></script>
+    <script src="script/interface-scripts.js"></script>
+    <script src="script/script.js"></script>
+</body>
 </html>

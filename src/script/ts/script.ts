@@ -21,6 +21,10 @@ $(() => {
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]')
     });
 
+    const profileInfoManager = new ProfileInfoManager({
+        profileInfoElement: $("#profile")
+    });
+
     const lMap = new LeafletMap({
         followPlayer: true,
         translationManager: translationManager
@@ -31,6 +35,7 @@ $(() => {
         notificationManager: notificationManager,
         mainMenuManager: mainMenuManager,
         pokemonMenuManager: pokemonMenuManager,
+        profileInfoManager: profileInfoManager,
         map: lMap
     });
 

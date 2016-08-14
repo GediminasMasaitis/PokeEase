@@ -1,0 +1,3 @@
+﻿interface IProfileInfoManagerConfig {
+    profileInfoElement: JQuery;
+}

@@ -67,6 +67,7 @@
 
     public onProfile(profile: IProfileEvent): void {
         this.config.mainMenuManager.updateProfileData(profile);
+        this.config.profileInfoManager.setProfileData(profile);
     }
 
     public onPokemonCapture(pokemonCapture: IPokemonCaptureEvent): void {
@@ -126,5 +127,29 @@
 
     public onSendPokemonListRequest(request: IRequest): void {
         this.config.pokemonMenuManager.pokemonListRequested(request);
+    }
+
+    public onSendEggsListRequest(request: IRequest): void {
+        
+    }
+
+    public onSendInventoryListRequest(request: IRequest): void {
+        
+    }
+
+    public onSendPlayerStatsRequest(request: IRequest): void {
+        
+    }
+
+    public onSendGetPokemonSettingsRequest(request: IRequest): void {
+        
+    }
+
+    public onSendTransferPokemonRequest(request: IRequest): void {
+        
+    }
+
+    public onSendEvolvePokemonRequest(request: IRequest): void {
+        
     }
 }
