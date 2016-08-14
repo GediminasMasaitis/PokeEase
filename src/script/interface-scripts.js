@@ -150,7 +150,7 @@ $(window).ready(function() {
 
     setInterval(function() {
         $("#xp-bubble").remove();
-        $("#profile .profile-exp").append('<div id="xp-bubble">+50 XP</div>');
+        $("#profile .profile-exp").append('<div class="xp-bubble">+50 XP</div>');
     }, 5000);
 });
 
