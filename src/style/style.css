@@ -631,7 +631,9 @@ body {
   background: transparent;
   margin: 0 auto;
   padding: 10px 0;
-  width: 36px; }
+  width: 36px;
+  top: -18px;
+  background: #3a4b58; }
 
 #profile.hidden {
   transform: translateY(100%);
