@@ -721,6 +721,15 @@ var ProfileInfoManager = (function () {
             _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + currentLevel + " ");
             _this.config.profileInfoElement.find(".profile-exp").text(" " + exp + " / " + expForNextLvl + " ");
             _this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
+            if (expAdded) {
+                _this.expBubble(expAdded);
+            }
+        };
+        this.expBubble = function (expAdded) {
+            var bubbleHtml = "<div class=\"xp-bubble\">+" + expAdded + " XP</div>";
+            var bubble = $(bubbleHtml);
+            $("#profile .profile-exp").append(bubble);
+            setTimeout(function () { bubble.remove(); }, 1000);
         };
         this.calculateCurrentLevel = function (totalExp) {
             for (var i = 0; i < StaticInfo.totalExpForLevel.length; i++) {

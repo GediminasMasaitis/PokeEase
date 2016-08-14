@@ -23,6 +23,17 @@
         this.config.profileInfoElement.find(".profile-lvl").text(` lvl ${currentLevel} `);
         this.config.profileInfoElement.find(".profile-exp").text(` ${exp} / ${expForNextLvl} `);
         this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
+        if (expAdded) {
+            this.expBubble(expAdded);
+        }
+    }
+
+    private expBubble = (expAdded: number): void => {
+        //$(".xp-bubble").remove();
+        const bubbleHtml = `<div class="xp-bubble">+${expAdded} XP</div>`;
+        const bubble = $(bubbleHtml);
+        $("#profile .profile-exp").append(bubble);
+        setTimeout(() => { bubble.remove(); }, 1000);
     }
 
     private calculateCurrentLevel = (totalExp: number) => {

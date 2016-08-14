@@ -148,10 +148,10 @@ $(window).ready(function() {
     */
     //$('.content[data-category="pokemons"]').html('<i class="fa fa-circle-o-notch fa-3x fa-spin"></i>');
 
-    setInterval(function() {
-        $("#xp-bubble").remove();
-        $("#profile .profile-exp").append('<div class="xp-bubble">+50 XP</div>');
-    }, 5000);
+    //setInterval(function() {
+    //    $("#xp-bubble").remove();
+    //    $("#profile .profile-exp").append('<div class="xp-bubble">+50 XP</div>');
+    //}, 5000);
 });
 
 
