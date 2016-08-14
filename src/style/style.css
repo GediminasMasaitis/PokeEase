@@ -263,7 +263,7 @@ body {
 #journal .items .event .extended-info {
   display: none;
   padding: 0 2em 2em 2em;
-  color: rgba(255, 255, 255, 0.5);
+  color: #8198af;
   font-size: 12px;
   line-height: 2;
   text-transform: uppercase; }
