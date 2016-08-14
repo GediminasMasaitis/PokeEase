@@ -5,6 +5,10 @@
         this.config = config;
     }
 
+    public pokemonListRequested(request: IRequest) {
+        
+    }
+
     updatePokemonList = (pokemonList: IPokemonListEvent): void => {
         this.config.pokemonMenuElement.find(".pokemon").remove();
         _.each(pokemonList.Pokemons, pokemon => {

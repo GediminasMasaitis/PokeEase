@@ -123,4 +123,8 @@
     public onPokemonList(pokemonList: IPokemonListEvent): void {
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
     }
+
+    public onSendPokemonListRequest(request: IRequest): void {
+        this.config.pokemonMenuManager.pokemonListRequested(request);
+    }
 }

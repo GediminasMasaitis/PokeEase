@@ -16,7 +16,13 @@
         this.webSocket.onmessage = this.clientOnMessage;
     }
 
-    public sendPokemonListRequest = (): void => this.sendRequest({ Command: "PokemonList" });
+    public sendPokemonListRequest = (): void => {
+        const request: IRequest = {
+             Command: "PokemonList"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendPokemonListRequest(request));
+        this.sendRequest(request);
+    };
     
     public sendRequest = (request: IRequest): void => {
         console.log("%c>>> OUTGOING:", "color: red", request);

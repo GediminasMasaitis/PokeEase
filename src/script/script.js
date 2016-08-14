@@ -7,7 +7,13 @@ var BotWSClient = (function () {
             _this.webSocket.onopen = _this.clientOnOpen;
             _this.webSocket.onmessage = _this.clientOnMessage;
         };
-        this.sendPokemonListRequest = function () { return _this.sendRequest({ Command: "PokemonList" }); };
+        this.sendPokemonListRequest = function () {
+            var request = {
+                Command: "PokemonList"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(request); });
+            _this.sendRequest(request);
+        };
         this.sendRequest = function (request) {
             console.log("%c>>> OUTGOING:", "color: red", request);
             var requestStr = JSON.stringify(request);
@@ -241,6 +247,9 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
     };
+    InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
+        this.config.pokemonMenuManager.pokemonListRequested(request);
+    };
     return InterfaceHandler;
 }());
 var InventoryInfo = (function () {
@@ -435,6 +444,8 @@ var PokemonMenuManager = (function () {
         };
         this.config = config;
     }
+    PokemonMenuManager.prototype.pokemonListRequested = function (request) {
+    };
     return PokemonMenuManager;
 }());
 var GymTeam;
