@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../external/typings/jquery/jquery.d.ts" />
 /// <reference path="../../external/typings/lodash/lodash.d.ts" />
 /// <reference path="../../external/typings/leaflet/leaflet.d.ts" />
+/// <reference path="../../external/typings/googlemaps/google.maps.d.ts" />
 
 $(() => {
     const client = new BotWSClient("ws://127.0.0.1:14252");
@@ -25,7 +26,7 @@ $(() => {
         profileInfoElement: $("#profile")
     });
 
-    const lMap = new LeafletMap({
+    const lMap = new GoogleMap({
         followPlayer: true,
         translationManager: translationManager
     });
