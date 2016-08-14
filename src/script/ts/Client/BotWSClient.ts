@@ -1,6 +1,6 @@
-﻿class NecroWSClient implements INecroClient {
+﻿class BotWSClient implements IBotClient, IRequestSender {
     private url: string;
-    private config: INecroClientConfig;
+    private config: IBotClientConfig;
     private webSocket: WebSocket;
     private currentlySniping: boolean;
 
@@ -9,11 +9,19 @@
         this.currentlySniping = false;
     }
 
-    public start = (config: INecroClientConfig): void => {
+    public start = (config: IBotClientConfig): void => {
         this.config = config;
         this.webSocket = new WebSocket(this.url);
         this.webSocket.onopen = this.clientOnOpen;
         this.webSocket.onmessage = this.clientOnMessage;
+    }
+
+    public sendPokemonListRequest = (): void => this.sendRequest({ Command: "PokemonList" });
+    
+    public sendRequest = (request: IRequest): void => {
+        console.log("%c>>> OUTGOING:", "color: red", request);
+        const requestStr = JSON.stringify(request);
+        this.webSocket.send(requestStr);
     }
 
     private clientOnOpen = (): void => {
@@ -25,7 +33,7 @@
         const timestamp = Date.now();
         message.Timestamp = timestamp;
 
-        console.log(message);
+        console.log("%c<<< INCOMING", "color: green", message);
 
         const type = message.$type as string;
 

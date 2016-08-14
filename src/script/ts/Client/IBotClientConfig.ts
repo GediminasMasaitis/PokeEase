@@ -1,3 +1,3 @@
-﻿interface INecroClientConfig {
+﻿interface IBotClientConfig {
     eventHandlers: IEventHandler[];
 }
