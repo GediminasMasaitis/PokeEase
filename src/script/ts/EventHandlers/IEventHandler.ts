@@ -16,5 +16,6 @@ interface IEventHandler {
     onIncubatorStatus: (incubatorStatus: IIncubatorStatusEvent) => void;
     onItemRecycle: (itemRecycle: IItemRecycleEvent) => void;
     onPokemonTransfer: (pokemonTransfer: IPokemonTransferEvent) => void;
+    onPokemonList: (pokemonList: IPokemonListEvent) => void;
     onUnknownEvent?: (message: any) => void;
 }

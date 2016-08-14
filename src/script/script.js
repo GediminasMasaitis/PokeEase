@@ -97,6 +97,19 @@ var BotWSClient = (function () {
                 var pokemonTransfer_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
             }
+            else if (_.includes(type, "PokemonListEvent")) {
+                var pokemonList_1 = {
+                    Pokemons: [],
+                    Timestamp: timestamp
+                };
+                _.each(message.PokemonList.$values, function (val) {
+                    var pokemon = val.Item1;
+                    pokemon.Perfection = val.Item2;
+                    pokemon.FamilyCandies = val.Item3;
+                    pokemonList_1.Pokemons.push(pokemon);
+                });
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
+            }
             else {
                 _.each(_this.config.eventHandlers, function (eh) {
                     if (eh.onUnknownEvent) {
@@ -220,6 +233,8 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
         this.config.notificationManager.addNotificationItemRecycle(itemRecycle);
+    };
+    InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
     };
     InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
         this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);

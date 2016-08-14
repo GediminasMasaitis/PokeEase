@@ -129,6 +129,22 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonTransfer(pokemonTransfer));
         }
 
+        else if (_.includes(type, "PokemonListEvent")) {
+            const pokemonList: IPokemonListEvent = {
+                Pokemons: [],
+                Timestamp: timestamp
+            };
+
+            _.each(message.PokemonList.$values, val => {
+                const pokemon = val.Item1 as IPokemonListEntry;
+                pokemon.Perfection = val.Item2;
+                pokemon.FamilyCandies = val.Item3;
+                pokemonList.Pokemons.push(pokemon);
+            });
+
+            _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
+        }
+
         else {
             _.each(this.config.eventHandlers, eh => {
                 if (eh.onUnknownEvent) {

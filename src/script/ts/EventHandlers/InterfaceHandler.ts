@@ -116,7 +116,12 @@
         this.config.notificationManager.addNotificationItemRecycle(itemRecycle);
     }
 
+    public onPokemonList(pokemonList: IPokemonListEvent): void {
+        
+    }
+
     public onPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void {
         this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
     }
+
 }
