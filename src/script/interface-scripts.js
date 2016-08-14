@@ -49,6 +49,10 @@ $(document).ready(function () {
         $("#journal").delay(0).animate({"right": "0"}, 200);
     });
 
+    $("#journal .items .event").click(function() {
+        $(this).find('.extended-info').slideToggle(300);
+    });
+
     resizeItemContainer();
 
     //$("#journal .clear-all").click(function() {
@@ -106,7 +110,7 @@ $(document).ready(function () {
 	});
 
     // FIX A PROBLEM WE HAD WITH DISPLAY:TABLE AND ANIMATING
-    $("#journal .event").wrapInner('<div class="item-container"></div>');
+    // $("#journal .event").wrapInner('<div class="item-container"></div>');
 
     // SCROLL TO THE BOTTOM OF THE JOURNAL LIST
     $("#journal .items").animate({ scrollTop: $("#journal .items").prop("scrollHeight") - $("#journal .items").height() }, 0);

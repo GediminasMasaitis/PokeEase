@@ -260,6 +260,9 @@ body {
   overflow: hidden;
   animation: fadeIn .5s 1 ease-out; }
 
+#journal .items .event .extended-info {
+  display: none; }
+
 @keyframes fadeIn {
   0% {
     opacity: 0; }

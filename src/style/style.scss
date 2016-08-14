@@ -298,6 +298,10 @@ body {
     animation: fadeIn .5s 1 ease-out;
 }
 
+#journal .items .event .extended-info {
+    display: none;
+}
+
 @keyframes fadeIn {
     0% {opacity: 0;}
     100% {opacity: 1;}
