@@ -668,17 +668,19 @@ $event-incubator-status-color: #e9e1b5;
     vertical-align: middle;
 }
 
-#profile h1, #profile h6, #profile p {
+#profile h1, #profile h6, #profile .profile-exp {
     font-size: 14px;
     margin: 0.2em;
 }
 
 #profile h6 {
-    opacity: 0.75;
+    color: rgba(255, 255, 255, 0.75);
 }
 
-#profile p {
-    opacity: 0.5;
+#profile .profile-exp {
+    color: rgba(255, 255, 255, 0.5);
+    display: inline-block;
+    position: relative;
 }
 
 /* #profile .user-items div {
@@ -760,4 +762,21 @@ $event-incubator-status-color: #e9e1b5;
     width: 50px;
     background: #4faed4;
     height: 100%;
+}
+
+#xp-bubble {
+    position: absolute;
+    top: 0;
+    left: -3.5em;
+    animation: XpBubble 2s 1 linear;
+    animation-fill-mode: forwards;
+    font-size: 12px;
+    color: #4faed4;
+}
+
+@keyframes XpBubble {
+    0% {opacity: 0; top: 0;}
+    25% {opacity: 1; top: -15px;}
+    75% {opacity: 1; top: -45px;}
+    100% {opacity: 0; top: -60px;}
 }
