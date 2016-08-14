@@ -111,6 +111,9 @@ $(document).ready(function () {
     // SCROLL TO THE BOTTOM OF THE JOURNAL LIST
     $("#journal .items").animate({ scrollTop: $("#journal .items").prop("scrollHeight") - $("#journal .items").height() }, 0);
 
+    // HIDE PROFILE MENU
+    $("#profile .hide").click(function() {$("#profile").toggleClass('hidden');});
+
 });
 
 $(window).resize(function() {
