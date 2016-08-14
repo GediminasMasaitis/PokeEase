@@ -1,4 +1,4 @@
-![logo](http://i.imgur.com/7QCjVxg.jpg)
+![logo](http://i.imgur.com/rKuTwCM.jpg)
 
 # NecroEase
 The Perfect GUI for Pokemon GO botting -- Work In Progress
