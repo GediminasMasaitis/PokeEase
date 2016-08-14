@@ -36,7 +36,7 @@ $(document).ready(function () {
 
     // JOURNAL EVENTS
     $("#journal .event").each(function() {
-        $(this).children('.event-type').text($(this).attr('class').split(' ')[1]);
+        $(this).find('.event-type').text($(this).attr('class').split(' ')[1]);
     });
 
     $("#journal .close-button").click(function() {
