@@ -529,7 +529,6 @@ body {
 
 .inner-wrap .pokemon .image-container {
   height: 100px;
-  width: 100px;
   margin: 0 auto; }
 
 .inner-wrap .pokemon .image-container:before {
