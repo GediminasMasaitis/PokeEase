@@ -712,3 +712,12 @@ $event-incubator-status-color: #e9e1b5;
     background: rgba(38, 48, 58, 0.9);
     border-radius: 100%;
 }
+
+.spinner-overlay {
+    background-color: rgba(237, 237, 237, 0.8);
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
