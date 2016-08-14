@@ -270,7 +270,7 @@ body {
 
 #journal .items .event .extended-info span {
   color: white;
-  margin-left: 0.5em; }
+  margin: 0 0.5em; }
 
 #journal .items .event .extended-info span img {
   max-height: 16px;
