@@ -251,6 +251,14 @@ var InterfaceHandler = (function () {
                 fortList[index] = fort;
             }
         };
+        this.onPokemonCapture = function (pokemonCapture) {
+            if (pokemonCapture.Status === PokemonCatchStatus.Success) {
+                _this.config.map.onPokemonCapture(pokemonCapture);
+                _this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
+                _this.exp += pokemonCapture.Exp;
+                _this.config.profileInfoManager.addExp(_this.exp, pokemonCapture.Exp);
+            }
+        };
         this.config = config;
         this.currentlySniping = false;
     }
@@ -260,22 +268,20 @@ var InterfaceHandler = (function () {
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === fortUsed.Id; });
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
+        this.exp += fortUsed.Exp;
         this.config.notificationManager.addNotificationPokeStopUsed(fortUsed);
+        this.config.profileInfoManager.addExp(this.exp, fortUsed.Exp);
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
         this.config.mainMenuManager.updateProfileData(profile);
         this.config.profileInfoManager.setProfileData(profile);
     };
-    InterfaceHandler.prototype.onPokemonCapture = function (pokemonCapture) {
-        if (pokemonCapture.Status === PokemonCatchStatus.Success) {
-            this.config.map.onPokemonCapture(pokemonCapture);
-            this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
-        }
-    };
     InterfaceHandler.prototype.onEvolveCount = function (evolveCount) {
     };
     InterfaceHandler.prototype.onPokemonEvolve = function (pokemonEvolve) {
         this.config.notificationManager.addNotificationPokemonEvolved(pokemonEvolve);
+        this.exp += pokemonEvolve.Exp;
+        this.config.profileInfoManager.addExp(this.exp, pokemonEvolve.Exp);
     };
     InterfaceHandler.prototype.onSnipeScan = function (snipeScan) {
     };
@@ -304,6 +310,7 @@ var InterfaceHandler = (function () {
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
     };
     InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
+        this.exp = playerStats.Experience;
         this.config.profileInfoManager.setPlayerStats(playerStats);
     };
     InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
@@ -704,12 +711,24 @@ var ProfileInfoManager = (function () {
             _this.config.profileInfoElement.find(".profile-stardust").text(profile.PlayerData.StarDust);
         };
         this.setPlayerStats = function (playerStats) {
-            var exp = playerStats.Experience - StaticInfo.totalExpForLevel[playerStats.Level];
-            var expForNextLvl = StaticInfo.expForLevel[playerStats.Level + 1];
+            _this.addExp(playerStats.Experience);
+        };
+        this.addExp = function (totalExp, expAdded) {
+            var currentLevel = _this.calculateCurrentLevel(totalExp);
+            var exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
+            var expForNextLvl = StaticInfo.totalExpForLevel[currentLevel + 1];
             var expPercent = 100 * exp / expForNextLvl;
-            _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + playerStats.Level + " ");
+            _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + currentLevel + " ");
             _this.config.profileInfoElement.find(".profile-exp").text(" " + exp + " / " + expForNextLvl + " ");
             _this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
+        };
+        this.calculateCurrentLevel = function (totalExp) {
+            for (var i = 0; i < StaticInfo.totalExpForLevel.length; i++) {
+                if (StaticInfo.totalExpForLevel[i + 1] >= totalExp) {
+                    return i;
+                }
+            }
+            throw "Unable to determine level";
         };
         this.config = config;
     }

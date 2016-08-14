@@ -3,6 +3,8 @@
     private currentlySniping: boolean;
     private pokeStops: IPokeStopEvent[];
     private gyms: IGymEvent[];
+    private exp: number;
+    private stardust: number;
 
     constructor(config: IInterfaceHandlerConfig) {
         this.config = config;
@@ -62,7 +64,9 @@
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === fortUsed.Id);
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
+        this.exp += fortUsed.Exp;
         this.config.notificationManager.addNotificationPokeStopUsed(fortUsed);
+        this.config.profileInfoManager.addExp(this.exp, fortUsed.Exp);
     }
 
     public onProfile(profile: IProfileEvent): void {
@@ -70,10 +74,12 @@
         this.config.profileInfoManager.setProfileData(profile);
     }
 
-    public onPokemonCapture(pokemonCapture: IPokemonCaptureEvent): void {
+    public onPokemonCapture = (pokemonCapture: IPokemonCaptureEvent): void => {
         if (pokemonCapture.Status === PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
             this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
+            this.exp += pokemonCapture.Exp;
+            this.config.profileInfoManager.addExp(this.exp, pokemonCapture.Exp);
         }
     }
 
@@ -83,6 +89,8 @@
 
     public onPokemonEvolve(pokemonEvolve: IPokemonEvolveEvent): void {
         this.config.notificationManager.addNotificationPokemonEvolved(pokemonEvolve);
+        this.exp += pokemonEvolve.Exp;
+        this.config.profileInfoManager.addExp(this.exp, pokemonEvolve.Exp);
     }
 
     public onSnipeScan(snipeScan: ISnipeScanEvent): void {
@@ -128,6 +136,7 @@
     }
 
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {
+        this.exp = playerStats.Experience;
         this.config.profileInfoManager.setPlayerStats(playerStats);
     }
 

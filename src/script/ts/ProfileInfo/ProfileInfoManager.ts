@@ -12,11 +12,25 @@
     }
 
     public setPlayerStats = (playerStats: IPlayerStatsEvent):void => {
-        const exp = playerStats.Experience - StaticInfo.totalExpForLevel[playerStats.Level];
-        const expForNextLvl = StaticInfo.expForLevel[playerStats.Level+1];
+        this.addExp(playerStats.Experience);
+    }
+
+    public addExp = (totalExp: number, expAdded?: number): void => {
+        const currentLevel = this.calculateCurrentLevel(totalExp);
+        const exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
+        const expForNextLvl = StaticInfo.totalExpForLevel[currentLevel + 1];
         const expPercent = 100 * exp / expForNextLvl;
-        this.config.profileInfoElement.find(".profile-lvl").text(` lvl ${playerStats.Level} `);
+        this.config.profileInfoElement.find(".profile-lvl").text(` lvl ${currentLevel} `);
         this.config.profileInfoElement.find(".profile-exp").text(` ${exp} / ${expForNextLvl} `);
         this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
+    }
+
+    private calculateCurrentLevel = (totalExp: number) => {
+        for (let i = 0; i < StaticInfo.totalExpForLevel.length; i++) {
+            if (StaticInfo.totalExpForLevel[i + 1] >= totalExp) {
+                return i;
+            }
+        }
+        throw "Unable to determine level";
     }
 }
