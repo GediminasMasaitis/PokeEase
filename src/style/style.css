@@ -339,7 +339,7 @@ body {
   background: #ebac28; }
 
 #journal .event.egg-hatched .category {
-  background: #afc785; }
+  background: #fe7676; }
 
 #journal .event.incubator-status .category {
   background: #e9e1b5; }
@@ -373,7 +373,7 @@ body {
   color: #ebac28; }
 
 #journal .event.egg-hatched .event-type {
-  color: #afc785; }
+  color: #fe7676; }
 
 #journal .event.incubator-status .event-type {
   color: #e9e1b5; }
