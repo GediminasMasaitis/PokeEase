@@ -132,7 +132,7 @@ var pokemonNames = ["MissingNo", "Bulbasaur", "Ivysaur", "Venusaur", "Charmander
 
 $(window).ready(function() {
     $('.content[data-category="pokemons"]').html('');
-    var currentRandomPokemon = 0;
+    /* var currentRandomPokemon = 0;
     var currentRandomCP = 0;
     var currentRandomIV = 0;
     for (var i = 0; i < 30; i++) {
@@ -141,6 +141,8 @@ $(window).ready(function() {
         currentRandomIV = ((Math.random() * 100) + 1).toFixed(2);
         $('.content[data-category="pokemons"]').append('<div class="pokemon"><h1 class="name">'+pokemonNames[currentRandomPokemon]+'</h1><div class="image-container"><img src="images/pokemon/' +currentRandomPokemon+ '.png"/></div><h3 class="cp">'+currentRandomCP+'</h3><h3 class="iv">'+currentRandomIV+'</h3></div>');
     }
+    */
+    $('.content[data-category="pokemons"]').html('<i class="fa fa-circle-o-notch fa-3x fa-spin"></i>');
 });
 
 
