@@ -121,9 +121,17 @@
         this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
     }
 
+
+
     public onPokemonList(pokemonList: IPokemonListEvent): void {
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
     }
+
+    public onPlayerStats(playerStats: IPlayerStatsEvent): void {
+        
+    }
+
+
 
     public onSendPokemonListRequest(request: IRequest): void {
         this.config.pokemonMenuManager.pokemonListRequested(request);

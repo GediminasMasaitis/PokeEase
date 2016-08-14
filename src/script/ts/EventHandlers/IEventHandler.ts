@@ -18,6 +18,7 @@ interface IEventHandler {
     onPokemonTransfer: (pokemonTransfer: IPokemonTransferEvent) => void;
 
     onPokemonList: (pokemonList: IPokemonListEvent) => void;
+    onPlayerStats: (playerStats: IPlayerStatsEvent) => void;
 
     onSendPokemonListRequest: (request: IRequest) => void;
     onSendEggsListRequest: (request: IRequest) => void;

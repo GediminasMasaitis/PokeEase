@@ -7,64 +7,9 @@ var BotWSClient = (function () {
             _this.webSocket.onopen = _this.clientOnOpen;
             _this.webSocket.onmessage = _this.clientOnMessage;
         };
-        this.sendPokemonListRequest = function () {
-            var request = {
-                Command: "PokemonList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendEggsListRequest = function () {
-            var request = {
-                Command: "EggsList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEggsListRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendInventoryListRequest = function () {
-            var request = {
-                Command: "InventoryList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendInventoryListRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendPlayerStatsRequest = function () {
-            var request = {
-                Command: "PlayerStats"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendGetPokemonSettingsRequest = function () {
-            var request = {
-                Command: "GetPokemonSettings"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendGetPokemonSettingsRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendTransferPokemonRequest = function (pokemonId) {
-            var request = {
-                Command: "TransferPokemon",
-                Data: pokemonId.toString()
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendTransferPokemonRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendEvolvePokemonRequest = function (pokemonId) {
-            var request = {
-                Command: "EvolvePokemon",
-                Data: pokemonId.toString()
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEvolvePokemonRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendRequest = function (request) {
-            console.log("%c>>> OUTGOING:", "color: red", request);
-            var requestStr = JSON.stringify(request);
-            _this.webSocket.send(requestStr);
-        };
         this.clientOnOpen = function () {
             console.log("Connected to " + _this.webSocket.url);
+            _this.sendPlayerStatsRequest();
         };
         this.clientOnMessage = function (event) {
             var message = JSON.parse(event.data);
@@ -160,6 +105,16 @@ var BotWSClient = (function () {
                 });
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
             }
+            else if (_.includes(type, "PlayerStatsEvent")) {
+                var originalStats = message.PlayerStats.$values[0];
+                var playerStats_1 = originalStats;
+                playerStats_1.Experience = parseInt(originalStats.Experience);
+                playerStats_1.NextLevelXp = parseInt(originalStats.NextLevelXp);
+                playerStats_1.PrevLevelXp = parseInt(originalStats.PrevLevelXp);
+                playerStats_1.PokemonCaughtByType = originalStats.PokemonCaughtByType.$values;
+                playerStats_1.Timestamp = timestamp;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPlayerStats(playerStats_1); });
+            }
             else {
                 _.each(_this.config.eventHandlers, function (eh) {
                     if (eh.onUnknownEvent) {
@@ -167,6 +122,62 @@ var BotWSClient = (function () {
                     }
                 });
             }
+        };
+        this.sendPokemonListRequest = function () {
+            var request = {
+                Command: "PokemonList"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendEggsListRequest = function () {
+            var request = {
+                Command: "EggsList"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEggsListRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendInventoryListRequest = function () {
+            var request = {
+                Command: "InventoryList"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendInventoryListRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendPlayerStatsRequest = function () {
+            var request = {
+                Command: "PlayerStats"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendGetPokemonSettingsRequest = function () {
+            var request = {
+                Command: "GetPokemonSettings"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendGetPokemonSettingsRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendTransferPokemonRequest = function (pokemonId) {
+            var request = {
+                Command: "TransferPokemon",
+                Data: pokemonId.toString()
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendTransferPokemonRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendEvolvePokemonRequest = function (pokemonId) {
+            var request = {
+                Command: "EvolvePokemon",
+                Data: pokemonId.toString()
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEvolvePokemonRequest(request); });
+            _this.sendRequest(request);
+        };
+        this.sendRequest = function (request) {
+            console.log("%c>>> OUTGOING:", "color: red", request);
+            var requestStr = JSON.stringify(request);
+            _this.webSocket.send(requestStr);
         };
         this.parseItemString = function (itemStr) {
             var itemParseRegex = /(\d+) x (.+?)(?:,|$)/g;
@@ -291,6 +302,8 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
+    };
+    InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
     };
     InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
         this.config.pokemonMenuManager.pokemonListRequested(request);

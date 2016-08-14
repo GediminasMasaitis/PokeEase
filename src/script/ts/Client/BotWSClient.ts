@@ -16,72 +16,9 @@
         this.webSocket.onmessage = this.clientOnMessage;
     }
 
-    public sendPokemonListRequest = (): void => {
-        const request: IRequest = {
-             Command: "PokemonList"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendPokemonListRequest(request));
-        this.sendRequest(request);
-    };
-
-    public sendEggsListRequest = (): void => {
-        const request: IRequest = {
-             Command: "EggsList"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendEggsListRequest(request));
-        this.sendRequest(request);
-    };
-
-    public sendInventoryListRequest = (): void => {
-        const request: IRequest = {
-             Command: "InventoryList"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendInventoryListRequest(request));
-        this.sendRequest(request);
-    };
-
-    public sendPlayerStatsRequest = (): void => {
-        const request: IRequest = {
-             Command: "PlayerStats"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendPlayerStatsRequest(request));
-        this.sendRequest(request);
-    };
-
-    public sendGetPokemonSettingsRequest = (): void => {
-        const request: IRequest = {
-             Command: "GetPokemonSettings"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendGetPokemonSettingsRequest(request));
-        this.sendRequest(request);
-    };
-
-    public sendTransferPokemonRequest = (pokemonId: number): void => {
-        const request: IRequest = {
-             Command: "TransferPokemon",
-             Data: pokemonId.toString()
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendTransferPokemonRequest(request));
-        this.sendRequest(request);
-    };
-
-    public sendEvolvePokemonRequest = (pokemonId: number): void => {
-        const request: IRequest = {
-             Command: "EvolvePokemon",
-             Data: pokemonId.toString()
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendEvolvePokemonRequest(request));
-        this.sendRequest(request);
-    };
-    
-    public sendRequest = (request: IRequest): void => {
-        console.log("%c>>> OUTGOING:", "color: red", request);
-        const requestStr = JSON.stringify(request);
-        this.webSocket.send(requestStr);
-    }
-
     private clientOnOpen = (): void => {
         console.log(`Connected to ${this.webSocket.url}`);
+        this.sendPlayerStatsRequest();
     }
 
     private clientOnMessage = (event: MessageEvent): void => {
@@ -201,6 +138,17 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
         }
 
+        else if (_.includes(type, "PlayerStatsEvent")) {
+            const originalStats = message.PlayerStats.$values[0];
+            const playerStats = originalStats as IPlayerStatsEvent;
+            playerStats.Experience = parseInt(originalStats.Experience);
+            playerStats.NextLevelXp = parseInt(originalStats.NextLevelXp);
+            playerStats.PrevLevelXp = parseInt(originalStats.PrevLevelXp);
+            playerStats.PokemonCaughtByType = originalStats.PokemonCaughtByType.$values;
+            playerStats.Timestamp = timestamp;
+            _.each(this.config.eventHandlers, eh => eh.onPlayerStats(playerStats));
+        }
+
         else {
             _.each(this.config.eventHandlers, eh => {
                 if (eh.onUnknownEvent) {
@@ -209,6 +157,70 @@
             });
         }
         
+    }
+
+    public sendPokemonListRequest = (): void => {
+        const request: IRequest = {
+             Command: "PokemonList"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendPokemonListRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendEggsListRequest = (): void => {
+        const request: IRequest = {
+             Command: "EggsList"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendEggsListRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendInventoryListRequest = (): void => {
+        const request: IRequest = {
+             Command: "InventoryList"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendInventoryListRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendPlayerStatsRequest = (): void => {
+        const request: IRequest = {
+             Command: "PlayerStats"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendPlayerStatsRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendGetPokemonSettingsRequest = (): void => {
+        const request: IRequest = {
+             Command: "GetPokemonSettings"
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendGetPokemonSettingsRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendTransferPokemonRequest = (pokemonId: number): void => {
+        const request: IRequest = {
+             Command: "TransferPokemon",
+             Data: pokemonId.toString()
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendTransferPokemonRequest(request));
+        this.sendRequest(request);
+    };
+
+    public sendEvolvePokemonRequest = (pokemonId: number): void => {
+        const request: IRequest = {
+             Command: "EvolvePokemon",
+             Data: pokemonId.toString()
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendEvolvePokemonRequest(request));
+        this.sendRequest(request);
+    };
+    
+    public sendRequest = (request: IRequest): void => {
+        console.log("%c>>> OUTGOING:", "color: red", request);
+        const requestStr = JSON.stringify(request);
+        this.webSocket.send(requestStr);
     }
 
     private parseItemString = (itemStr: string): IFortItem[] => {
