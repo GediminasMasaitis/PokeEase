@@ -19,7 +19,7 @@
         if (!this.pokeStops) {
             this.pokeStops = [];
         }
-        if (this.gyms) {
+        if (!this.gyms) {
             this.gyms = [];
         }
         for (let i = 0; i < forts.length; i++) {

@@ -25,6 +25,8 @@
         const timestamp = Date.now();
         message.Timestamp = timestamp;
 
+        console.log(message);
+
         const type = message.$type as string;
 
         if (_.includes(type, "UpdatePositionEvent")) {
@@ -126,7 +128,7 @@
                 }
             });
         }
-        console.log(message);
+        
     }
 
     private parseItemString = (itemStr: string): IFortItem[] => {

@@ -14,6 +14,7 @@ var NecroWSClient = (function () {
             var message = JSON.parse(event.data);
             var timestamp = Date.now();
             message.Timestamp = timestamp;
+            console.log(message);
             var type = message.$type;
             if (_.includes(type, "UpdatePositionEvent")) {
                 var mapLocation_1 = message;
@@ -97,7 +98,6 @@ var NecroWSClient = (function () {
                     }
                 });
             }
-            console.log(message);
         };
         this.parseItemString = function (itemStr) {
             var itemParseRegex = /(\d+) x (.+?)(?:,|$)/g;
@@ -136,7 +136,7 @@ var InterfaceHandler = (function () {
             if (!_this.pokeStops) {
                 _this.pokeStops = [];
             }
-            if (_this.gyms) {
+            if (!_this.gyms) {
                 _this.gyms = [];
             }
             for (var i = 0; i < forts.length; i++) {
@@ -282,7 +282,9 @@ var LeafletMap = (function () {
             _this.gyms = [];
             _.each(gyms, function (gym) {
                 var posArr = [gym.Latitude, gym.Longitude];
-                var marker = new L.Marker(posArr, {});
+                var marker = new L.Marker(posArr, {
+                    icon: _this.gymIcons[gym.OwnedByTeam]
+                });
                 _this.map.addLayer(marker);
                 gym.LMarker = marker;
                 _this.gyms.push(gym);
@@ -327,6 +329,23 @@ var LeafletMap = (function () {
             iconUrl: "images/markers/VisitedLure.png",
             iconSize: [48, 48]
         });
+        this.gymIcons = [];
+        this.gymIcons[GymTeam.Neutral] = new L.Icon({
+            iconUrl: "images/markers/unoccupied.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[GymTeam.Mystic] = new L.Icon({
+            iconUrl: "images/markers/mystic.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[GymTeam.Valor] = new L.Icon({
+            iconUrl: "images/markers/valor.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[GymTeam.Instinct] = new L.Icon({
+            iconUrl: "images/markers/instinct.png",
+            iconSize: [48, 48]
+        });
     }
     LeafletMap.prototype.usePokeStop = function (pokeStopUsed) {
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
@@ -365,6 +384,13 @@ var LeafletMap = (function () {
     };
     return LeafletMap;
 }());
+var GymTeam;
+(function (GymTeam) {
+    GymTeam[GymTeam["Neutral"] = 0] = "Neutral";
+    GymTeam[GymTeam["Mystic"] = 1] = "Mystic";
+    GymTeam[GymTeam["Valor"] = 2] = "Valor";
+    GymTeam[GymTeam["Instinct"] = 3] = "Instinct";
+})(GymTeam || (GymTeam = {}));
 var PokeStopStatus;
 (function (PokeStopStatus) {
     PokeStopStatus[PokeStopStatus["Normal"] = 0] = "Normal";

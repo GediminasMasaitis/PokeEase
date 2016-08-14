@@ -8,6 +8,7 @@
     private gyms: IGymEvent[];
     private pokemons: IPokemonCaptureEvent[];
     private pokeStopIcons: L.Icon[];
+    private gymIcons: L.Icon[];
 
     private playerMarker: L.Marker;
     private playerPath: L.Polyline;
@@ -58,6 +59,24 @@
             iconUrl: "images/markers/VisitedLure.png",
             iconSize: [48, 48]
         });
+
+        this.gymIcons = [];
+        this.gymIcons[GymTeam.Neutral] = new L.Icon({
+            iconUrl: "images/markers/unoccupied.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[GymTeam.Mystic] = new L.Icon({
+            iconUrl: "images/markers/mystic.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[GymTeam.Valor] = new L.Icon({
+            iconUrl: "images/markers/valor.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[GymTeam.Instinct] = new L.Icon({
+            iconUrl: "images/markers/instinct.png",
+            iconSize: [48, 48]
+        });
     }
 
     public movePlayer = (position: IMapLocationEvent): void => {
@@ -91,7 +110,7 @@
             const posArr = [gym.Latitude, gym.Longitude];
             const marker = new L.Marker(posArr,
             {
-
+                icon: this.gymIcons[gym.OwnedByTeam]
             });
             this.map.addLayer(marker);
             gym.LMarker = marker;
