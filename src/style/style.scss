@@ -295,6 +295,12 @@ body {
     position: relative;
     width: 100%;
     overflow: hidden;
+    animation: fadeIn .5s 1 ease-out;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 
 #journal .items .event .item-container {
