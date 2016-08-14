@@ -202,9 +202,10 @@ var InterfaceHandler = (function () {
         this.config.notificationManager.addNotificationPokeStopUsed(fortUsed);
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
+        this.config.mainMenuManager.updateProfileData(profile);
     };
     InterfaceHandler.prototype.onPokemonCapture = function (pokemonCapture) {
-        if (pokemonCapture.Status == PokemonCatchStatus.Success) {
+        if (pokemonCapture.Status === PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
             this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
         }
@@ -234,10 +235,11 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
         this.config.notificationManager.addNotificationItemRecycle(itemRecycle);
     };
-    InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
-    };
     InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
         this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
+    };
+    InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
+        this.config.pokemonMenuManager.updatePokemonList(pokemonList);
     };
     return InterfaceHandler;
 }());
@@ -405,8 +407,8 @@ var LeafletMap = (function () {
     };
     return LeafletMap;
 }());
-var MenuManager = (function () {
-    function MenuManager(config) {
+var MainMenuManager = (function () {
+    function MainMenuManager(config) {
         var _this = this;
         this.onPokemonMenuClick = function (ev) {
             _this.config.requestSender.sendPokemonListRequest();
@@ -414,7 +416,26 @@ var MenuManager = (function () {
         this.config = config;
         this.config.mainMenuElement.find("#pokemons").click(this.onPokemonMenuClick);
     }
-    return MenuManager;
+    MainMenuManager.prototype.updateProfileData = function (profile) {
+    };
+    return MainMenuManager;
+}());
+var PokemonMenuManager = (function () {
+    function PokemonMenuManager(config) {
+        var _this = this;
+        this.updatePokemonList = function (pokemonList) {
+            _this.config.pokemonMenuElement.find(".pokemon").remove();
+            _.each(pokemonList.Pokemons, function (pokemon) {
+                var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemon.PokemonId];
+                var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
+                var html = "<div class=\"pokemon\">\n    <h1 class=\"name\">" + pokemonName + "</h1>\n    <div class=\"image-container\">\n        <img src=\"images/pokemon/" + pokemon.PokemonId + ".png\"/>\n    </div>\n    <h3 class=\"cp\">" + pokemon.Cp + "</h3>\n    <h3 class=\"iv\">" + roundedIv + "</h3>\n</div>";
+                var pokemonElement = $(html);
+                _this.config.pokemonMenuElement.append(pokemonElement);
+            });
+        };
+        this.config = config;
+    }
+    return PokemonMenuManager;
 }());
 var GymTeam;
 (function (GymTeam) {
@@ -683,19 +704,24 @@ $(function () {
         clearAllButton: $(".clear-all"),
         translationManager: translationManager
     });
-    var menuManager = new MenuManager({
+    var mainMenuManager = new MainMenuManager({
         requestSender: client,
         mainMenuElement: $("#menu")
+    });
+    var pokemonMenuManager = new PokemonMenuManager({
+        translationManager: translationManager,
+        pokemonMenuElement: $('.content[data-category="pokemons"]')
     });
     var lMap = new LeafletMap({
         followPlayer: true,
         translationManager: translationManager
     });
     var interfaceHandler = new InterfaceHandler({
-        map: lMap,
         translationManager: translationManager,
         notificationManager: notificationManager,
-        menuManager: menuManager
+        mainMenuManager: mainMenuManager,
+        pokemonMenuManager: pokemonMenuManager,
+        map: lMap
     });
     client.start({
         eventHandlers: [interfaceHandler]

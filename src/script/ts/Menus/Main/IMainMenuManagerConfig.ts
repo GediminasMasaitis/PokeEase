@@ -1,4 +1,4 @@
-﻿interface IMenuManagerConfig {
+﻿interface IMainMenuManagerConfig {
     requestSender: IRequestSender;
     mainMenuElement: JQuery;
 }

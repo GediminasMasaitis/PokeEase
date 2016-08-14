@@ -1,6 +1,7 @@
 ﻿interface IInterfaceHandlerConfig {
     notificationManager: INotificationManager;
     translationManager: ITranslationManager;
-    menuManager: IMenuManager;
+    mainMenuManager: IMainMenuManager;
+    pokemonMenuManager: IPokemonMenuManager;
     map: IMap;
 }

@@ -10,20 +10,30 @@ $(() => {
         clearAllButton: $(".clear-all"),
         translationManager: translationManager
     });
-    const menuManager = new MenuManager({
+
+    const mainMenuManager = new MainMenuManager({
         requestSender: client,
         mainMenuElement: $("#menu")
-});
+    });
+
+    const pokemonMenuManager = new PokemonMenuManager({
+        translationManager: translationManager,
+        pokemonMenuElement: $('.content[data-category="pokemons"]')
+    });
+
     const lMap = new LeafletMap({
         followPlayer: true,
         translationManager: translationManager
     });
+
     const interfaceHandler = new InterfaceHandler({
-        map: lMap,
         translationManager: translationManager,
         notificationManager: notificationManager,
-        menuManager: menuManager
+        mainMenuManager: mainMenuManager,
+        pokemonMenuManager: pokemonMenuManager,
+        map: lMap
     });
+
     client.start({
         eventHandlers: [interfaceHandler]
     });

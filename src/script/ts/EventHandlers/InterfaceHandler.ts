@@ -66,11 +66,11 @@
     }
 
     public onProfile(profile: IProfileEvent): void {
-        
+        this.config.mainMenuManager.updateProfileData(profile);
     }
 
     public onPokemonCapture(pokemonCapture: IPokemonCaptureEvent): void {
-        if (pokemonCapture.Status == PokemonCatchStatus.Success) {
+        if (pokemonCapture.Status === PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
             this.config.notificationManager.addNotificationPokemonCapture(pokemonCapture);
         }
@@ -116,12 +116,11 @@
         this.config.notificationManager.addNotificationItemRecycle(itemRecycle);
     }
 
-    public onPokemonList(pokemonList: IPokemonListEvent): void {
-        
-    }
-
     public onPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void {
         this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
     }
 
+    public onPokemonList(pokemonList: IPokemonListEvent): void {
+        this.config.pokemonMenuManager.updatePokemonList(pokemonList);
+    }
 }
