@@ -381,6 +381,7 @@ body {
 
 #journal .event .info {
   display: table-cell;
+  padding: .3em 0;
   padding-left: 1em;
   vertical-align: middle;
   font-size: 18px; }
