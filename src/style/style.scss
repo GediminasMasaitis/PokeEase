@@ -300,7 +300,8 @@ body {
 #journal .items .event .item-container {
     display: table;
     width: 100%;
-    min-height: 100px;
+    /* min-height: 100px; */
+    padding: 1em 0;
 }
 
 #journal .items .event .category {
@@ -401,6 +402,7 @@ $event-incubator-status-color: #e9e1b5;
 #journal .event .image {
     display: table-cell;
     width: 64px;
+    height: 64px;
     padding-left: 1em;
     text-align: center;
     vertical-align: middle;
