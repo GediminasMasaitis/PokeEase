@@ -591,7 +591,7 @@ body {
   text-align: center;
   display: table;
   color: white;
-  padding: 1em;
+  padding: .75em;
   border-radius: 5px;
   transition: 0.5s cubic-bezier(0.3, 0, 0, 1); }
 
@@ -609,8 +609,11 @@ body {
 #profile p {
   opacity: 0.5; }
 
-#profile .user-items div {
-  margin: 0.5em 0; }
+/* #profile .user-items div {
+    margin: 0.5em 0;
+} */
+#profile .user-items div + div {
+  margin-top: .75em; }
 
 #profile .user-items img {
   max-height: 16px;
@@ -633,7 +636,11 @@ body {
   padding: 10px 0;
   width: 36px;
   top: -18px;
-  background: #3a4b58; }
+  background: #3a4b58;
+  box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.1); }
+
+#profile > .hide:hover {
+  box-shadow: inset 0 0 0 18px rgba(255, 255, 255, 0.1); }
 
 #profile.hidden {
   transform: translateY(100%);
@@ -643,7 +650,11 @@ body {
   transform: rotate(-180deg);
   top: -51px;
   background: rgba(38, 48, 58, 0.9);
-  border-radius: 100%; }
+  border-radius: 100%;
+  box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.3); }
+
+#profile.hidden > .hide:hover {
+  box-shadow: inset 0 0 0 18px rgba(0, 0, 0, 0.3); }
 
 .spinner-overlay {
   background-color: rgba(237, 237, 237, 0.8);
@@ -652,5 +663,17 @@ body {
   left: 0;
   top: 0;
   bottom: 0; }
+
+#profile .xp-progress {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  width: 100px;
+  margin: 0.2em auto;
+  margin-bottom: .5em; }
+
+#profile .current-xp {
+  width: 50px;
+  background: #4faed4;
+  height: 100%; }
 
 /*# sourceMappingURL=style.css.map */
