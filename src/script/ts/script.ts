@@ -18,7 +18,7 @@ $(() => {
 
     const pokemonMenuManager = new PokemonMenuManager({
         translationManager: translationManager,
-        pokemonMenuElement: $('.content[data-category="pokemons"]')
+        pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]')
     });
 
     const lMap = new LeafletMap({

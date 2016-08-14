@@ -710,7 +710,7 @@ $(function () {
     });
     var pokemonMenuManager = new PokemonMenuManager({
         translationManager: translationManager,
-        pokemonMenuElement: $('.content[data-category="pokemons"]')
+        pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]')
     });
     var lMap = new LeafletMap({
         followPlayer: true,
