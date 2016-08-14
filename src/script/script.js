@@ -304,6 +304,7 @@ var InterfaceHandler = (function () {
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
     };
     InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
+        this.config.profileInfoManager.setPlayerStats(playerStats);
     };
     InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
         this.config.pokemonMenuManager.pokemonListRequested(request);
@@ -651,6 +652,14 @@ var ProfileInfoManager = (function () {
         var _this = this;
         this.setProfileData = function (profile) {
             _this.config.profileInfoElement.find(".profile-username").text(" " + profile.PlayerData.Username + " ");
+            _this.config.profileInfoElement.find(".profile-pokecoin").text(profile.PlayerData.PokeCoin);
+            _this.config.profileInfoElement.find(".profile-stardust").text(profile.PlayerData.StarDust);
+        };
+        this.setPlayerStats = function (playerStats) {
+            var exp = playerStats.Experience - playerStats.PrevLevelXp;
+            var expNeeded = playerStats.NextLevelXp - playerStats.PrevLevelXp;
+            _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + playerStats.Level + " ");
+            _this.config.profileInfoElement.find(".profile-exp").text(" " + exp + " / " + expNeeded + " ");
         };
         this.config = config;
     }

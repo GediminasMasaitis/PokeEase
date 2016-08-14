@@ -128,10 +128,8 @@
     }
 
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {
-        
+        this.config.profileInfoManager.setPlayerStats(playerStats);
     }
-
-
 
     public onSendPokemonListRequest(request: IRequest): void {
         this.config.pokemonMenuManager.pokemonListRequested(request);
