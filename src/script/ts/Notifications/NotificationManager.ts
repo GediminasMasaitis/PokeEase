@@ -62,7 +62,17 @@
                             <div class="stats">CP ${pokemonCatch.Cp} | IV ${roundedPerfection}%</div>
                         </div>`;
 
-        this.addNotification(pokemonCatch, html, eventType);
+        const extendedInfoHtml = `
+Attempts        <span class="attempts"><img src="images/items/1.png"><img src="images/items/4.png"></span><br/>
+Probability     <span class="probability"> ${pokemonCatch.Probability}% </span><br/>
+XP              <span class="xp"> ${pokemonCatch.Exp} </span><br/>
+Candies         <span class="candies"> ${pokemonCatch.FamilyCandies} </span><br/>
+Catch Type      <span class="catch-type"> ${pokemonCatch.CatchType} </span><br/>
+Level           <span class="level"> ${pokemonCatch.Level} </span><br/>
+CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp"> ${pokemonCatch.MaxCp} </span><br/>
+`;
+
+        this.addNotification(pokemonCatch, html, eventType, extendedInfoHtml);
     }
 
     public addNotificationPokemonEvolved = (pokemonEvolve: IPokemonEvolveEvent): void => {
@@ -133,9 +143,9 @@
        this.addNotification(pokemonTransfer, html, "transfer");
     }
 
-    private addNotification = (event: IEvent, innerHtml: string, eventType: string): void => {
+    private addNotification = (event: IEvent, innerHtml: string, eventType: string, extendedInfoHtml?: string): void => {
         const eventTypeName = this.config.translationManager.translation.eventTypes[eventType];
-
+        const wrappedExtendedInfoHtml = extendedInfoHtml ? `<div class="extended-info">${extendedInfoHtml}</div>` : "";
         const html=`<div class="event ${eventType}">
                         <div class="item-container">
                             <i class="fa fa-times dismiss"></i>
@@ -144,9 +154,11 @@
                             <span class="timestamp">0 seconds ago</span>
                             <div class="category"></div>
                         </div>
+                        ${wrappedExtendedInfoHtml}
                     </div>`;
 
         const element = $(html);
+        element.click(this.toggleExtendedInfo);
         element.find(".dismiss").click(this.closeNotification);
         this.config.container.append(element);
         this.notifications.push({
@@ -158,6 +170,10 @@
         }, 100);
     }
 
+    private toggleExtendedInfo = (ev: JQueryEventObject): void => {
+        const notificationElement =  $(ev.target).closest(".event");
+        notificationElement.find(".extended-info").slideToggle(300);
+    }
     private closeNotification = (ev: JQueryEventObject): void => {
         const closeButton = $(ev.target);
         const element = closeButton.closest(".event");

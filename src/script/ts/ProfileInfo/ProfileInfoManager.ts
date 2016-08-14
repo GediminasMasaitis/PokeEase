@@ -32,7 +32,7 @@
         //$(".xp-bubble").remove();
         const bubbleHtml = `<div class="xp-bubble">+${expAdded} XP</div>`;
         const bubble = $(bubbleHtml);
-        $("#profile .profile-exp").append(bubble);
+        this.config.profileInfoElement.find(".profile-exp").append(bubble);
         setTimeout(() => { bubble.remove(); }, 1000);
     }
 

@@ -1,3 +1,8 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var BotWSClient = (function () {
     function BotWSClient(url) {
         var _this = this;
@@ -411,6 +416,223 @@ var StaticInfo = (function () {
     })();
     return StaticInfo;
 }());
+var CaptureMarker = (function (_super) {
+    __extends(CaptureMarker, _super);
+    function CaptureMarker(latlng, map, args) {
+        _super.call(this);
+        this.latlng = latlng;
+        this.args = args;
+        this.setMap(map);
+    }
+    CaptureMarker.prototype.draw = function () {
+        var div = this.div;
+        if (!div) {
+            div = this.div = document.createElement('div');
+            var innerdiv = document.createElement('div');
+            var d = $(div);
+            var i = $(innerdiv);
+            d.addClass('marker');
+            d.css({
+                'position': "absolute",
+                'width': "60px",
+                'height': "60px",
+                'z-index': "99999"
+            });
+            if (this.args.PokemonId !== 'undefined')
+                i.css({ 'background-image': "url(images/pokemon/" + this.args.PokemonId + ".png)" });
+            i.css({
+                'background-size': "contain",
+                'background-position': "center center",
+                'background-repeat': 'no-repeat',
+                'width': "40px",
+                'height': "40px",
+                'border-radius': '20px',
+                'margin': "5px"
+            });
+            d.append(i);
+            var panes = this.getPanes();
+            panes.overlayLayer.appendChild(div);
+        }
+        var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
+        if (point) {
+            div.style.left = (point.x - 10) + 'px';
+            div.style.top = (point.y - 20) + 'px';
+        }
+    };
+    CaptureMarker.prototype.getPosition = function () {
+        return this.latlng;
+    };
+    return CaptureMarker;
+}(google.maps.OverlayView));
+var GoogleMap = (function () {
+    function GoogleMap(config) {
+        var _this = this;
+        this.locationHistory = [];
+        this.pokestopMarkers = {};
+        this.pokestopEvents = {};
+        this.gymMarkers = {};
+        this.gymEvents = {};
+        this.capMarkers = [];
+        this.movePlayer = function (position) {
+            var posArr = [position.Latitude, position.Longitude];
+            var pos = new google.maps.LatLng(posArr[0], posArr[1]);
+            _this.playerMarker.setPosition(pos);
+            if (_this.config.followPlayer)
+                _this.map.setCenter(pos);
+            _this.locationHistory.push({ lat: posArr[0], lng: posArr[1] });
+            _this.locationLine = new google.maps.Polyline({
+                path: _this.locationHistory,
+                geodesic: true,
+                strokeColor: '#00FFFF',
+                strokeOpacity: 0.7,
+                strokeWeight: 4
+            });
+            _this.locationLine.setMap(_this.map);
+        };
+        this.setPokeStops = function (pokeStops) {
+            var incomingPokestops = {};
+            _.each(pokeStops, function (stop) { incomingPokestops[stop.Id] = stop; });
+            _.each(_this.pokestopEvents, function (stop) {
+                if (!(stop.Id in incomingPokestops)) {
+                    _this.pokestopMarkers[stop.Id].setMap(null);
+                    delete _this.pokestopMarkers[stop.Id];
+                    delete _this.pokestopEvents[stop.Id];
+                }
+            });
+            _.each(incomingPokestops, function (stop) {
+                if (!(stop.Id in _this.pokestopEvents)) {
+                    _this.pokestopEvents[stop.Id] = stop;
+                    _this.pokestopMarkers[stop.Id] = _this.createStopMarker(stop);
+                }
+            });
+            _.each(pokeStops, function (pstop) {
+                if (pstop.LastModifiedTimestampMs > _this.pokestopEvents[pstop.Id].LastModifiedTimestampMs) {
+                    _this.pokestopMarkers[pstop.Id].setIcon(_this.getStopIconData(pstop.Status));
+                    _this.pokestopEvents[pstop.Id] = pstop;
+                }
+            });
+        };
+        this.setGyms = function (gyms) {
+            var incomingGyms = {};
+            _.each(gyms, function (g) { incomingGyms[g.Id] = g; });
+            _.each(_this.gymEvents, function (g) {
+                if (!(g.Id in incomingGyms)) {
+                    _this.pokestopMarkers[g.Id].setMap(null);
+                    delete _this.gymMarkers[g.Id];
+                    delete _this.gymEvents[g.Id];
+                }
+            });
+            _.each(incomingGyms, function (g) {
+                if (!(g.Id in _this.gymEvents)) {
+                    _this.gymEvents[g.Id] = g;
+                    _this.gymMarkers[g.Id] = _this.createGymMarker(g);
+                }
+            });
+        };
+        this.config = config;
+        var mapStyle = [{ "featureType": "all", "elementType": "geometry", "stylers": [{ "color": "#262c33" }] }, { "featureType": "all", "elementType": "labels.text.fill", "stylers": [{ "gamma": 0.01 }, { "lightness": 20 }, { "color": "#949aa6" }] }, { "featureType": "all", "elementType": "labels.text.stroke", "stylers": [{ "saturation": -31 }, { "lightness": -33 }, { "weight": 2 }, { "gamma": "0.00" }, { "visibility": "off" }] }, { "featureType": "all", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.province", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.locality", "elementType": "all", "stylers": [{ "visibility": "simplified" }] }, { "featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.neighborhood", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.land_parcel", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "lightness": 30 }, { "saturation": 30 }, { "color": "#323e4b" }, { "visibility": "on" }] }, { "featureType": "poi", "elementType": "geometry", "stylers": [{ "saturation": "0" }, { "lightness": "0" }, { "gamma": "0.30" }, { "weight": "0.01" }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "lightness": "100" }, { "saturation": -20 }, { "visibility": "simplified" }, { "color": "#293139" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 10 }, { "saturation": -30 }, { "color": "#282e36" }] }, { "featureType": "road", "elementType": "geometry.stroke", "stylers": [{ "saturation": "-100" }, { "lightness": "-100" }, { "gamma": "0.00" }, { "color": "#2a3037" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "on" }] }, { "featureType": "road", "elementType": "labels.text", "stylers": [{ "visibility": "on" }, { "color": "#575e6b" }] }, { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "road.highway", "elementType": "geometry.fill", "stylers": [{ "color": "#424f61" }, { "visibility": "on" }] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "geometry", "stylers": [{ "visibility": "simplified" }, { "color": "#2c3440" }] }, { "featureType": "transit.station.airport", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "lightness": -20 }, { "color": "#252a31" }] }];
+        var mapOptions = {
+            zoom: 18,
+            center: new google.maps.LatLng(51.5073509, -0.12775829999998223),
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            styles: mapStyle,
+            mapTypeControl: false,
+            scaleControl: false,
+            zoomControl: false,
+        };
+        this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        this.playerMarker = new google.maps.Marker({
+            map: this.map,
+            position: new google.maps.LatLng(51.5073509, -0.12775829999998223),
+            icon: {
+                url: "images/markers/location.png",
+                scaledSize: new google.maps.Size(50, 55)
+            },
+            zIndex: 300
+        });
+    }
+    GoogleMap.prototype.usePokeStop = function (pokeStopUsed) {
+        var setStatus = PokeStopStatus.Visited;
+        if (this.pokestopEvents[pokeStopUsed.Id].Status === PokeStopStatus.Lure)
+            setStatus = PokeStopStatus.VisitedLure;
+        this.pokestopMarkers[pokeStopUsed.Id].setIcon(this.getStopIconData(setStatus));
+        this.pokestopEvents[pokeStopUsed.Id].Status = setStatus;
+    };
+    GoogleMap.prototype.onPokemonCapture = function (pokemonCapture) {
+        console.log(pokemonCapture);
+        var captureMarker = new CaptureMarker(new google.maps.LatLng(pokemonCapture.Latitude, pokemonCapture.Longitude), this.map, {
+            PokemonId: pokemonCapture.Id
+        });
+        this.capMarkers.push(captureMarker);
+    };
+    GoogleMap.prototype.createStopMarker = function (pstop) {
+        var psMarker = new google.maps.Marker({
+            map: this.map,
+            position: new google.maps.LatLng(pstop.Latitude, pstop.Longitude),
+            icon: this.getStopIconData(pstop.Status),
+            zIndex: 100
+        });
+        return psMarker;
+    };
+    GoogleMap.prototype.getStopIconData = function (status) {
+        var stopImage = "images/markers/";
+        switch (status) {
+            case PokeStopStatus.Normal:
+                stopImage += "Normal.png";
+                break;
+            case PokeStopStatus.Lure:
+                stopImage += "Lured.png";
+                break;
+            case PokeStopStatus.Visited:
+                stopImage += "Visited.png";
+                break;
+            case PokeStopStatus.VisitedLure:
+                stopImage += "VisitedLure.png";
+                break;
+            default:
+                stopImage += "Normal.png";
+                break;
+        }
+        return {
+            url: stopImage,
+            scaledSize: new google.maps.Size(50, 50)
+        };
+    };
+    GoogleMap.prototype.createGymMarker = function (gym) {
+        var gMarker = new google.maps.Marker({
+            map: this.map,
+            position: new google.maps.LatLng(gym.Latitude, gym.Longitude),
+            icon: this.getGymIconData(gym),
+            zIndex: 100
+        });
+        return gMarker;
+    };
+    GoogleMap.prototype.getGymIconData = function (gym) {
+        var stopImage = "images/markers/";
+        switch (gym.OwnedByTeam) {
+            case PlayerTeam.Instinct:
+                stopImage += "instinct.png";
+                break;
+            case PlayerTeam.Mystic:
+                stopImage += "mystic.png";
+                break;
+            case PlayerTeam.Valor:
+                stopImage += "valor.png";
+                break;
+            case PlayerTeam.Neutral:
+                stopImage += "unoccupied.png";
+                break;
+            default:
+                stopImage += "unoccupied.png";
+                break;
+        }
+        return {
+            url: stopImage,
+            scaledSize: new google.maps.Size(50, 50)
+        };
+    };
+    return GoogleMap;
+}());
 var LeafletMap = (function () {
     function LeafletMap(config) {
         var _this = this;
@@ -644,7 +866,8 @@ var NotificationManager = (function () {
             var roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
             var eventType = pokemonCatch.IsSnipe ? "snipe" : "catch";
             var html = "<div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + roundedPerfection + "%</div>\n                        </div>";
-            _this.addNotification(pokemonCatch, html, eventType);
+            var extendedInfoHtml = "\nAttempts        <span class=\"attempts\"><img src=\"images/items/1.png\"><img src=\"images/items/4.png\"></span><br/>\nProbability     <span class=\"probability\"> " + pokemonCatch.Probability + "% </span><br/>\nXP              <span class=\"xp\"> " + pokemonCatch.Exp + " </span><br/>\nCandies         <span class=\"candies\"> " + pokemonCatch.FamilyCandies + " </span><br/>\nCatch Type      <span class=\"catch-type\"> " + pokemonCatch.CatchType + " </span><br/>\nLevel           <span class=\"level\"> " + pokemonCatch.Level + " </span><br/>\nCP              <span class=\"cp\"> " + pokemonCatch.Cp + " </span>/<span class=\"max-cp\"> " + pokemonCatch.MaxCp + " </span><br/>\n";
+            _this.addNotification(pokemonCatch, html, eventType, extendedInfoHtml);
         };
         this.addNotificationPokemonEvolved = function (pokemonEvolve) {
             var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonEvolve.Id];
@@ -673,10 +896,12 @@ var NotificationManager = (function () {
             var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + pokemonTransfer.Id + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">CP " + pokemonTransfer.Cp + " | IV " + roundedPerfection + "%</div>\n                      </div>";
             _this.addNotification(pokemonTransfer, html, "transfer");
         };
-        this.addNotification = function (event, innerHtml, eventType) {
+        this.addNotification = function (event, innerHtml, eventType, extendedInfoHtml) {
             var eventTypeName = _this.config.translationManager.translation.eventTypes[eventType];
-            var html = "<div class=\"event " + eventType + "\">\n                        <div class=\"item-container\">\n                            <i class=\"fa fa-times dismiss\"></i>\n                            " + innerHtml + "\n                            <span class=\"event-type\">" + eventTypeName + "</span>\n                            <span class=\"timestamp\">0 seconds ago</span>\n                            <div class=\"category\"></div>\n                        </div>\n                    </div>";
+            var wrappedExtendedInfoHtml = extendedInfoHtml ? "<div class=\"extended-info\">" + extendedInfoHtml + "</div>" : "";
+            var html = "<div class=\"event " + eventType + "\">\n                        <div class=\"item-container\">\n                            <i class=\"fa fa-times dismiss\"></i>\n                            " + innerHtml + "\n                            <span class=\"event-type\">" + eventTypeName + "</span>\n                            <span class=\"timestamp\">0 seconds ago</span>\n                            <div class=\"category\"></div>\n                        </div>\n                        " + wrappedExtendedInfoHtml + "\n                    </div>";
             var element = $(html);
+            element.click(_this.toggleExtendedInfo);
             element.find(".dismiss").click(_this.closeNotification);
             _this.config.container.append(element);
             _this.notifications.push({
@@ -686,6 +911,10 @@ var NotificationManager = (function () {
             _this.config.container.animate({
                 scrollTop: _this.config.container.prop("scrollHeight") - _this.config.container.height()
             }, 100);
+        };
+        this.toggleExtendedInfo = function (ev) {
+            var notificationElement = $(ev.target).closest(".event");
+            notificationElement.find(".extended-info").slideToggle(300);
         };
         this.closeNotification = function (ev) {
             var closeButton = $(ev.target);
@@ -728,7 +957,7 @@ var ProfileInfoManager = (function () {
         this.expBubble = function (expAdded) {
             var bubbleHtml = "<div class=\"xp-bubble\">+" + expAdded + " XP</div>";
             var bubble = $(bubbleHtml);
-            $("#profile .profile-exp").append(bubble);
+            _this.config.profileInfoElement.find(".profile-exp").append(bubble);
             setTimeout(function () { bubble.remove(); }, 1000);
         };
         this.calculateCurrentLevel = function (totalExp) {

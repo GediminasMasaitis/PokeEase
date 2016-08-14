@@ -26,7 +26,7 @@ $(() => {
         profileInfoElement: $("#profile")
     });
 
-    const lMap = new GoogleMap({
+    const lMap = new LeafletMap({
         followPlayer: true,
         translationManager: translationManager
     });
