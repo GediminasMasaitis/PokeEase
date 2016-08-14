@@ -459,9 +459,9 @@ var NotificationManager = (function () {
             var delay = 0;
             allNotificationElements.forEach(function (notification) {
                 var notificationElement = $(notification);
-                notificationElement.delay(delay).slideUp(300), function () {
+                notificationElement.delay(delay).slideUp(300, function () {
                     notificationElement.remove();
-                };
+                });
                 delay += 50;
             });
             _this.notifications = [];
@@ -523,7 +523,7 @@ var NotificationManager = (function () {
             var eventTypeName = _this.config.translationManager.translation.eventTypes[eventType];
             var html = "<div class=\"event " + eventType + "\">\n                        <div class=\"item-container\">\n                            <i class=\"fa fa-times dismiss\"></i>\n                            " + innerHtml + "\n                            <span class=\"event-type\">" + eventTypeName + "</span>\n                            <span class=\"timestamp\">0 seconds ago</span>\n                            <div class=\"category\"></div>\n                        </div>\n                    </div>";
             var element = $(html);
-            element.click(_this.closeNotification);
+            element.find(".dismiss").click(_this.closeNotification);
             _this.config.container.append(element);
             _this.notifications.push({
                 event: event,
@@ -534,8 +534,9 @@ var NotificationManager = (function () {
             }, 100);
         };
         this.closeNotification = function (ev) {
-            var element = $(ev.target);
-            element.closest(".event").slideUp(300, function () {
+            var closeButton = $(ev.target);
+            var element = closeButton.closest(".event");
+            element.slideUp(300, function () {
                 element.remove();
                 _.remove(_this.notifications, function (n) { return n.element.is(element); });
             });

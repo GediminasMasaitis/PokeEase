@@ -15,9 +15,9 @@
         var delay = 0;
         allNotificationElements.forEach(notification => {
             const notificationElement = $(notification);
-            notificationElement.delay(delay).slideUp(300), () => {
+            notificationElement.delay(delay).slideUp(300, () => {
                 notificationElement.remove();
-            };
+            });
             delay += 50;
         });
         this.notifications = [];
@@ -147,7 +147,7 @@
                     </div>`;
 
         const element = $(html);
-        element.click(this.closeNotification);
+        element.find(".dismiss").click(this.closeNotification);
         this.config.container.append(element);
         this.notifications.push({
             event: event,
@@ -159,8 +159,9 @@
     }
 
     private closeNotification = (ev: JQueryEventObject): void => {
-        const element = $(ev.target);
-        element.closest(".event").slideUp(300, () => {
+        const closeButton = $(ev.target);
+        const element = closeButton.closest(".event");
+        element.slideUp(300, () => {
             element.remove();
             _.remove(this.notifications, n => n.element.is(element));
         });
