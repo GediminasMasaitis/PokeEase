@@ -513,6 +513,7 @@ $event-incubator-status-color: #e9e1b5;
 .delete-icon div {
     background: #a8bcd1;
     height: 2px;
+    transition: 0.3s;
     width: 16px;
     margin: 2px 0;
 }
@@ -523,6 +524,10 @@ $event-incubator-status-color: #e9e1b5;
 
 .delete-icon div.bar3 {
     transform: translateX(-3px);
+}
+
+#journal .clear-all:hover .delete-icon div {
+    transform: translateX(0);
 }
 
 #journal .items .event .dismiss {
@@ -600,16 +605,12 @@ $event-incubator-status-color: #e9e1b5;
     content: "CP";
     margin-right: .5em;
     opacity: 0.5;
-    border-right: 1px solid rgba(0, 0, 0, 0.3);
-    padding-right: .5em;
 }
 
 .inner-wrap .pokemon .iv:before {
     content: "IV";
     margin-right: .5em;
     opacity: 0.5;
-    border-right: 1px solid rgba(0, 0, 0, 0.3);
-    padding-right: .5em;
 }
 
 .inner-wrap .pokemon .iv:after {
@@ -636,4 +637,37 @@ $event-incubator-status-color: #e9e1b5;
     opacity: 0.5;
     border-right: 1px solid rgba(0, 0, 0, 0.3);
     padding-right: .5em;
+}
+
+
+#profile {
+    position: fixed;
+    width: 400px;
+    right: 0;
+    left: 0;
+    bottom: 10px;
+    margin: 0 auto;
+    text-align: center;
+    display: table;
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+#profile div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#profile h1, #profile h6, #profile p {
+    font-size: 14px;
+    margin: 0.2em;
+}
+
+#profile h6 {
+    opacity: 0.75;
+}
+
+#profile p {
+    opacity: 0.5;
 }
