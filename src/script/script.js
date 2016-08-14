@@ -658,8 +658,10 @@ var ProfileInfoManager = (function () {
         this.setPlayerStats = function (playerStats) {
             var exp = playerStats.Experience - playerStats.PrevLevelXp;
             var expNeeded = playerStats.NextLevelXp - playerStats.PrevLevelXp;
+            var expPercent = 100 * exp / expNeeded;
             _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + playerStats.Level + " ");
             _this.config.profileInfoElement.find(".profile-exp").text(" " + exp + " / " + expNeeded + " ");
+            _this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
         };
         this.config = config;
     }
