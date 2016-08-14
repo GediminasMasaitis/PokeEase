@@ -36,7 +36,7 @@
     public addNotificationPokeStopUsed = (fortUsed: IFortUsedEvent): void => {
         let itemsHtml = "";
         _.each(fortUsed.ItemsList, item => {
-           const itemId = InventoryInfo.itemIds[item.Name];
+           const itemId = StaticInfo.itemIds[item.Name];
            const itemName = this.config.translationManager.translation.itemNames[itemId];
            itemsHtml += `<div class="item" title="${itemName}"><img src="images/items/${itemId}.png"/>x${item.Count}</div>`;
         });

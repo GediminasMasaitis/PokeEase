@@ -12,11 +12,11 @@
     }
 
     public setPlayerStats = (playerStats: IPlayerStatsEvent):void => {
-        const exp = playerStats.Experience - playerStats.PrevLevelXp;
-        const expNeeded = playerStats.NextLevelXp - playerStats.PrevLevelXp;
-        const expPercent = 100 * exp / expNeeded;
+        const exp = playerStats.Experience - StaticInfo.totalExpForLevel[playerStats.Level];
+        const expForNextLvl = StaticInfo.expForLevel[playerStats.Level+1];
+        const expPercent = 100 * exp / expForNextLvl;
         this.config.profileInfoElement.find(".profile-lvl").text(` lvl ${playerStats.Level} `);
-        this.config.profileInfoElement.find(".profile-exp").text(` ${exp} / ${expNeeded} `);
+        this.config.profileInfoElement.find(".profile-exp").text(` ${exp} / ${expForNextLvl} `);
         this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
     }
 }

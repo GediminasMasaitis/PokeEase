@@ -323,10 +323,10 @@ var InterfaceHandler = (function () {
     };
     return InterfaceHandler;
 }());
-var InventoryInfo = (function () {
-    function InventoryInfo() {
+var StaticInfo = (function () {
+    function StaticInfo() {
     }
-    InventoryInfo.__ctor = (function () {
+    StaticInfo.__ctor = (function () {
         var itemCodes = [];
         itemCodes[1] = "ItemPokeBall";
         itemCodes[2] = "ItemGreatBall";
@@ -339,7 +339,7 @@ var InventoryInfo = (function () {
         itemCodes[201] = "ItemRevive";
         itemCodes[202] = "ItemMaxRevive";
         itemCodes[701] = "ItemRazzBerry";
-        InventoryInfo.itemCodes = itemCodes;
+        StaticInfo.itemCodes = itemCodes;
         var itemIds = [];
         itemIds["ItemPokeBall"] = 1;
         itemIds["ItemGreatBall"] = 2;
@@ -352,9 +352,57 @@ var InventoryInfo = (function () {
         itemIds["ItemRevive"] = 201;
         itemIds["ItemMaxRevive"] = 202;
         itemIds["ItemRazzBerry"] = 701;
-        InventoryInfo.itemIds = itemIds;
+        StaticInfo.itemIds = itemIds;
+        var totalExpForLevel = [];
+        totalExpForLevel[0] = 0;
+        totalExpForLevel[1] = 0;
+        totalExpForLevel[2] = 1000;
+        totalExpForLevel[3] = 3000;
+        totalExpForLevel[4] = 6000;
+        totalExpForLevel[5] = 10000;
+        totalExpForLevel[6] = 15000;
+        totalExpForLevel[7] = 21000;
+        totalExpForLevel[8] = 28000;
+        totalExpForLevel[9] = 36000;
+        totalExpForLevel[10] = 45000;
+        totalExpForLevel[11] = 55000;
+        totalExpForLevel[12] = 65000;
+        totalExpForLevel[13] = 75000;
+        totalExpForLevel[14] = 85000;
+        totalExpForLevel[15] = 100000;
+        totalExpForLevel[16] = 120000;
+        totalExpForLevel[17] = 140000;
+        totalExpForLevel[18] = 160000;
+        totalExpForLevel[19] = 185000;
+        totalExpForLevel[20] = 210000;
+        totalExpForLevel[21] = 260000;
+        totalExpForLevel[22] = 335000;
+        totalExpForLevel[23] = 435000;
+        totalExpForLevel[24] = 560000;
+        totalExpForLevel[25] = 710000;
+        totalExpForLevel[26] = 900000;
+        totalExpForLevel[27] = 1100000;
+        totalExpForLevel[28] = 1350000;
+        totalExpForLevel[29] = 1650000;
+        totalExpForLevel[30] = 2000000;
+        totalExpForLevel[31] = 2500000;
+        totalExpForLevel[32] = 3000000;
+        totalExpForLevel[33] = 3750000;
+        totalExpForLevel[34] = 4750000;
+        totalExpForLevel[35] = 6000000;
+        totalExpForLevel[36] = 7500000;
+        totalExpForLevel[37] = 9500000;
+        totalExpForLevel[38] = 12000000;
+        totalExpForLevel[39] = 15000000;
+        totalExpForLevel[40] = 20000000;
+        totalExpForLevel[41] = Infinity;
+        StaticInfo.totalExpForLevel = totalExpForLevel;
+        StaticInfo.expForLevel = [];
+        for (var i = 1; i < totalExpForLevel.length; i++) {
+            StaticInfo.expForLevel[i] = StaticInfo.totalExpForLevel[i] - StaticInfo.totalExpForLevel[i - 1];
+        }
     })();
-    return InventoryInfo;
+    return StaticInfo;
 }());
 var LeafletMap = (function () {
     function LeafletMap(config) {
@@ -577,7 +625,7 @@ var NotificationManager = (function () {
         this.addNotificationPokeStopUsed = function (fortUsed) {
             var itemsHtml = "";
             _.each(fortUsed.ItemsList, function (item) {
-                var itemId = InventoryInfo.itemIds[item.Name];
+                var itemId = StaticInfo.itemIds[item.Name];
                 var itemName = _this.config.translationManager.translation.itemNames[itemId];
                 itemsHtml += "<div class=\"item\" title=\"" + itemName + "\"><img src=\"images/items/" + itemId + ".png\"/>x" + item.Count + "</div>";
             });
@@ -656,11 +704,11 @@ var ProfileInfoManager = (function () {
             _this.config.profileInfoElement.find(".profile-stardust").text(profile.PlayerData.StarDust);
         };
         this.setPlayerStats = function (playerStats) {
-            var exp = playerStats.Experience - playerStats.PrevLevelXp;
-            var expNeeded = playerStats.NextLevelXp - playerStats.PrevLevelXp;
-            var expPercent = 100 * exp / expNeeded;
+            var exp = playerStats.Experience - StaticInfo.totalExpForLevel[playerStats.Level];
+            var expForNextLvl = StaticInfo.expForLevel[playerStats.Level + 1];
+            var expPercent = 100 * exp / expForNextLvl;
             _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + playerStats.Level + " ");
-            _this.config.profileInfoElement.find(".profile-exp").text(" " + exp + " / " + expNeeded + " ");
+            _this.config.profileInfoElement.find(".profile-exp").text(" " + exp + " / " + expForNextLvl + " ");
             _this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
         };
         this.config = config;
