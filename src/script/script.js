@@ -432,8 +432,12 @@ var MainMenuManager = (function () {
 var PokemonMenuManager = (function () {
     function PokemonMenuManager(config) {
         var _this = this;
+        this.pokemonListRequested = function (request) {
+            _this.config.pokemonMenuElement.find(".spinner-overlay").show();
+        };
         this.updatePokemonList = function (pokemonList) {
             _this.config.pokemonMenuElement.find(".pokemon").remove();
+            _this.config.pokemonMenuElement.find(".spinner-overlay").hide();
             _.each(pokemonList.Pokemons, function (pokemon) {
                 var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemon.PokemonId];
                 var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
@@ -444,8 +448,6 @@ var PokemonMenuManager = (function () {
         };
         this.config = config;
     }
-    PokemonMenuManager.prototype.pokemonListRequested = function (request) {
-    };
     return PokemonMenuManager;
 }());
 var GymTeam;

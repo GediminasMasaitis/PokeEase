@@ -5,8 +5,8 @@
         this.config = config;
     }
 
-    public pokemonListRequested(request: IRequest) {
-        
+    public pokemonListRequested = (request: IRequest): void => {
+        this.config.pokemonMenuElement.find(".spinner-overlay").show();
     }
 
     updatePokemonList = (pokemonList: IPokemonListEvent): void => {
@@ -26,5 +26,6 @@
             const pokemonElement = $(html);
             this.config.pokemonMenuElement.append(pokemonElement);
         });
+        this.config.pokemonMenuElement.find(".spinner-overlay").hide();
     }
 }
