@@ -931,9 +931,10 @@ var NotificationManager = (function () {
             _this.addNotification(pokemonTransfer, html, "transfer");
         };
         this.addNotification = function (event, innerHtml, eventType, extendedInfoHtml) {
+            extendedInfoHtml = extendedInfoHtml || "";
             var eventTypeName = _this.config.translationManager.translation.eventTypes[eventType];
-            var wrappedExtendedInfoHtml = extendedInfoHtml ? "<div class=\"extended-info\">" + extendedInfoHtml + "</div>" : "";
-            var html = "<div class=\"event " + eventType + "\">\n                        <div class=\"item-container\">\n                            <i class=\"fa fa-times dismiss\"></i>\n                            " + innerHtml + "\n                            <span class=\"event-type\">" + eventTypeName + "</span>\n                            <span class=\"timestamp\">0 seconds ago</span>\n                            <div class=\"category\"></div>\n                        </div>\n                        " + wrappedExtendedInfoHtml + "\n                    </div>";
+            var dateStr = moment().format("MMMM Do YYYY, HH:mm:ss");
+            var html = "<div class=\"event " + eventType + "\">\n    <div class=\"item-container\">\n        <i class=\"fa fa-times dismiss\"></i>\n        " + innerHtml + "\n        <span class=\"event-type\">" + eventTypeName + "</span>\n        <span class=\"timestamp\">0 seconds ago</span>\n        <div class=\"category\"></div>\n    </div>\n    <div class=\"extended-info\">\n        Date <span class=\"extended-date\">" + dateStr + "</span><br/>\n        " + extendedInfoHtml + "\n    </div>\n</div>";
             var element = $(html);
             element.click(_this.toggleExtendedInfo);
             element.find(".dismiss").click(_this.closeNotification);

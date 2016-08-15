@@ -146,18 +146,23 @@ CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp
     }
 
     private addNotification = (event: IEvent, innerHtml: string, eventType: string, extendedInfoHtml?: string): void => {
+        extendedInfoHtml = extendedInfoHtml || "";
         const eventTypeName = this.config.translationManager.translation.eventTypes[eventType];
-        const wrappedExtendedInfoHtml = extendedInfoHtml ? `<div class="extended-info">${extendedInfoHtml}</div>` : "";
-        const html=`<div class="event ${eventType}">
-                        <div class="item-container">
-                            <i class="fa fa-times dismiss"></i>
-                            ${innerHtml}
-                            <span class="event-type">${eventTypeName}</span>
-                            <span class="timestamp">0 seconds ago</span>
-                            <div class="category"></div>
-                        </div>
-                        ${wrappedExtendedInfoHtml}
-                    </div>`;
+        const dateStr = moment().format("MMMM Do YYYY, HH:mm:ss");
+        const html = 
+`<div class="event ${eventType}">
+    <div class="item-container">
+        <i class="fa fa-times dismiss"></i>
+        ${innerHtml}
+        <span class="event-type">${eventTypeName}</span>
+        <span class="timestamp">0 seconds ago</span>
+        <div class="category"></div>
+    </div>
+    <div class="extended-info">
+        Date <span class="extended-date">${dateStr}</span><br/>
+        ${extendedInfoHtml}
+    </div>
+</div>`;
 
         const element = $(html);
         element.click(this.toggleExtendedInfo);

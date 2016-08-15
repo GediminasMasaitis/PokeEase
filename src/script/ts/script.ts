@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../external/typings/jquery/jquery.d.ts" />
 /// <reference path="../../external/typings/lodash/lodash.d.ts" />
 /// <reference path="../../external/typings/leaflet/leaflet.d.ts" />
+/// <reference path="../../external/typings/moment/moment.d.ts" />
 /// <reference path="../../external/typings/googlemaps/google.maps.d.ts" />
 
 $(() => {
