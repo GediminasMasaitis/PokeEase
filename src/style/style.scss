@@ -946,6 +946,7 @@ $event-incubator-status-color: #e9e1b5;
         div {
             display: inline-block;
             text-transform: uppercase;
+            position: relative;
             margin: 5px;
             border-radius: 3px;
             background: #08C1C6;
@@ -956,7 +957,9 @@ $event-incubator-status-color: #e9e1b5;
             padding-top: 8px;
             letter-spacing: 1px;
             font-weight: 500;
+            min-width: 82px;
             cursor: pointer;
+            outline: 0;
 
             i {
                 display: block;
@@ -968,6 +971,33 @@ $event-incubator-status-color: #e9e1b5;
                 margin: 0 !important;
                 color: white;
             }
+
+            .confirm {
+                position: absolute;
+                font-size: 10px;
+                top: -37px;
+                left: -40px;
+                right: -40px;
+                cursor: auto;
+                transform: scaleY(0);
+                transform-origin: bottom;
+                transition: 0.2s;
+                background: #232323;
+                padding: 0.5em;
+                border-radius: 3px;
+
+                span {
+                    background: #BADA55;
+                    color: black;
+                    border-radius: 10px;
+                    padding: 3px 6px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        div:focus .confirm {
+            transform: scaleY(1);
         }
     }
 

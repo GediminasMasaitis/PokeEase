@@ -834,6 +834,7 @@ body {
     #pokemon-content .controls div {
       display: inline-block;
       text-transform: uppercase;
+      position: relative;
       margin: 5px;
       border-radius: 3px;
       background: #08C1C6;
@@ -844,7 +845,9 @@ body {
       padding-top: 8px;
       letter-spacing: 1px;
       font-weight: 500;
-      cursor: pointer; }
+      min-width: 82px;
+      cursor: pointer;
+      outline: 0; }
       #pokemon-content .controls div i {
         display: block;
         font-size: 1.5em;
@@ -852,5 +855,26 @@ body {
       #pokemon-content .controls div i:before {
         margin: 0 !important;
         color: white; }
+      #pokemon-content .controls div .confirm {
+        position: absolute;
+        font-size: 10px;
+        top: -37px;
+        left: -40px;
+        right: -40px;
+        cursor: auto;
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: 0.2s;
+        background: #232323;
+        padding: 0.5em;
+        border-radius: 3px; }
+        #pokemon-content .controls div .confirm span {
+          background: #BADA55;
+          color: black;
+          border-radius: 10px;
+          padding: 3px 6px;
+          cursor: pointer; }
+    #pokemon-content .controls div:focus .confirm {
+      transform: scaleY(1); }
 
 /*# sourceMappingURL=style.css.map */
