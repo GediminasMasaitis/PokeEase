@@ -77,6 +77,7 @@ XP              <span class="xp"> ${pokemonCatch.Exp} </span><br/>
 Candies         <span class="candies"> ${pokemonCatch.FamilyCandies} </span><br/>
 Catch Type      <span class="catch-type"> ${pokemonCatch.CatchType} </span><br/>
 Level           <span class="level"> ${pokemonCatch.Level} </span><br/>
+IV              <span class="level"> ${roundedPerfection} </span><br/>
 CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp"> ${pokemonCatch.MaxCp} </span><br/>
 `;
 
