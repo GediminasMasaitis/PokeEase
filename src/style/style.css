@@ -545,7 +545,11 @@ body {
   width: 175px;
   vertical-align: top;
   background: white;
+  cursor: pointer;
   transition: 0.3s; }
+
+.inner-wrap .pokemon.opened {
+  width: calc(100% - 30px); }
 
 .inner-wrap .pokemon:hover {
   transform: translateY(-5px);

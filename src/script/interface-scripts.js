@@ -33,6 +33,9 @@ $(document).ready(function () {
         $("#popup").fadeOut();
     });
 
+    $(".content").on("click", ".pokemon", function() {
+        $(this).toggleClass('opened');
+    });
 
     // JOURNAL EVENTS
     $("#journal .event").each(function() {
