@@ -57,9 +57,26 @@ class GoogleMap implements IMap {
         const pos = new google.maps.LatLng(posArr[0], posArr[1]);
 
         this.playerMarker.setPosition(pos);
-        if(this.config.followPlayer)
-            this.map.setCenter(pos);
 
+        if(this.config.followPlayer) {
+            // Animate the map centering.
+            var from    = {lat: this.map.getCenter().lat(), lng: this.map.getCenter().lng()};
+            var to      = {lat: posArr[0], lng: posArr[1]};            
+            var currentMap: google.maps.Map = this.map;
+            $(from).animate(to, {
+                duration: 200, 
+                step: function(cs, t) {
+                    var newPos: any;
+
+                    if(t.prop == "lat") 
+                        newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
+                    if(t.prop == "lng") 
+                        newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
+
+                    currentMap.setCenter(newPos);
+                }
+            });
+        }
         // Setup the location history line.
         this.locationHistory.push({ lat: posArr[0], lng: posArr[1] });
 

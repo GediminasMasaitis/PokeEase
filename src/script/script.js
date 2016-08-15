@@ -518,8 +518,22 @@ var GoogleMap = (function () {
             var posArr = [position.Latitude, position.Longitude];
             var pos = new google.maps.LatLng(posArr[0], posArr[1]);
             _this.playerMarker.setPosition(pos);
-            if (_this.config.followPlayer)
-                _this.map.setCenter(pos);
+            if (_this.config.followPlayer) {
+                var from = { lat: _this.map.getCenter().lat(), lng: _this.map.getCenter().lng() };
+                var to = { lat: posArr[0], lng: posArr[1] };
+                var currentMap = _this.map;
+                $(from).animate(to, {
+                    duration: 200,
+                    step: function (cs, t) {
+                        var newPos;
+                        if (t.prop == "lat")
+                            newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
+                        if (t.prop == "lng")
+                            newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
+                        currentMap.setCenter(newPos);
+                    }
+                });
+            }
             _this.locationHistory.push({ lat: posArr[0], lng: posArr[1] });
             _this.locationLine = new google.maps.Polyline({
                 path: _this.locationHistory,
