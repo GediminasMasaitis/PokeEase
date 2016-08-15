@@ -977,6 +977,9 @@ var ProfileInfoManager = (function () {
             _this.animateTo(_this.config.profileInfoElement.find(".profile-exp-current"), exp);
             _this.animateTo(_this.config.profileInfoElement.find(".profile-exp-next"), expForNextLvl);
             _this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
+            _this.config.profileInfoElement.find(".profile-exp-loading").remove();
+            _this.config.profileInfoElement.find(".profile-exp-loaded").show();
+            _this.config.profileInfoElement.find(".xp-progress").show();
             if (expAdded) {
                 _this.expBubble(expAdded);
             }

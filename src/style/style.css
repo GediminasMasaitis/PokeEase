@@ -435,7 +435,7 @@ body {
   margin-bottom: 5px; }
 
 #journal .event .info .item + .item {
-  margin-left: .7em; }
+  margin-left: .5em; }
 
 #journal .event .info .item img {
   max-width: 32px;

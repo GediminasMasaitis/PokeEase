@@ -24,6 +24,9 @@
         this.animateTo(this.config.profileInfoElement.find(".profile-exp-current"), exp);
         this.animateTo(this.config.profileInfoElement.find(".profile-exp-next"), expForNextLvl);
         this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
+        this.config.profileInfoElement.find(".profile-exp-loading").remove();
+        this.config.profileInfoElement.find(".profile-exp-loaded").show();
+        this.config.profileInfoElement.find(".xp-progress").show();
         if (expAdded) {
             this.expBubble(expAdded);
         }

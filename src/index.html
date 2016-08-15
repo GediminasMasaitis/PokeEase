@@ -14,7 +14,6 @@
             Menu
             <i class="fa fa-angle-right fa-lg"></i>
         </div>
-
         <div id="menu" class="menu">
             <div class="container center">
                 <div>
@@ -51,13 +50,10 @@
         </div>
 
 
-
-
         <div class="open-journal">
             <i class="fa fa-angle-left fa-lg"></i>
             Journal
         </div>
-
         <div id="journal" class="menu">
             <div class="title">
                 <span>journal</span>
@@ -66,7 +62,6 @@
                 </div>
             </div>
             <div class="items">
-
             </div>
             <div class="clear-all">
                 <span>
@@ -79,8 +74,6 @@
                 </span>
             </div>
         </div>
-
-
 
         <div id="popup">
             <div class="container center">
@@ -108,15 +101,16 @@
             </div>
             <div class="overlay"></div>
         </div>
-
         <div id="profile" class="menu">
             <i class="fa fa-angle-down hide"></i>
             <div class="user-info">
                 <h1 class="profile-username"> <i class="fa fa-circle-o-notch fa-spin"></i> </h1>
-                <h1 class="profile-username"> iTayGNR </h1>
-                <h6 class="profile-lvl"> lvl 21 </h6>
+                <h6 class="profile-lvl"> <i class="fa fa-circle-o-notch fa-spin"></i> </h6>
                 <div class="profile-exp">
-                    <span class="profile-exp-current">21,243</span> / <span class="profile-exp-next">150,000</span>
+                    <div class="profile-exp-loading"> <i class="fa fa-circle-o-notch fa-spin"></i> </div>
+                    <div class="profile-exp-loaded" style="display: none">
+                        <span class="profile-exp-current">0</span> / <span class="profile-exp-next">1000</span>
+                    </div>
                 </div>
                 <div class="xp-progress"><div class="current-xp"></div></div>
             </div>
@@ -126,12 +120,11 @@
                     <span class="profile-stardust"><i class="fa fa-circle-o-notch fa-spin"></i></span>
                 </div>
                 <div>
-                    <img src="images/items/PokeCoin.png"/>
+                    <img src="images/items/PokeCoin.png" />
                     <span class="profile-pokecoin"><i class="fa fa-circle-o-notch fa-spin"></i></span>
                 </div>
             </div>
         </div>
-
     </div>
     <script src="external/jquery-3.1.0.js"></script>
     <script src="external/lodash.js"></script>
