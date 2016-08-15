@@ -84,6 +84,11 @@
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
 
+        else if (_.includes(type, "UseBerry")) {
+            const useBerry = message as IUseBerryEvent;
+            _.each(this.config.eventHandlers, eh => eh.onUseBerry(useBerry));
+        }
+
         else if (_.includes(type, "PokemonCaptureEvent")) {
             const pokemonCapture = message as IPokemonCaptureEvent;
             pokemonCapture.IsSnipe = this.currentlySniping;

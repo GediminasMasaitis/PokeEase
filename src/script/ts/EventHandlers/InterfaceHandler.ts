@@ -80,14 +80,19 @@
     }
 
     public onUseBerry(berry: IUseBerryEvent): void {
-        const berryId = berry.BerryType || berry.BerryType;
+        const berryId = berry.BerryType || StaticInfo.berryIds[0];
         this.itemsUsedForCapture.push(berryId);
     }
 
     public onPokemonCapture = (pokemonCapture: IPokemonCaptureEvent): void => {
-        if (this.previousCaptureAttempts.length > 0 && this.previousCaptureAttempts[0].Id != pokemonCapture.Id) {
+        if (this.previousCaptureAttempts.length > 0 && this.previousCaptureAttempts[0].Id !== pokemonCapture.Id) {
             this.previousCaptureAttempts = [];
-            this.itemsUsedForCapture = [];
+            if (this.itemsUsedForCapture.length > 0) {
+                const lastUsed = _.last(this.itemsUsedForCapture);
+                if (StaticInfo.berryIds.indexOf(lastUsed) === -1) {
+                    this.itemsUsedForCapture = [];
+                }
+            }
         }
         this.previousCaptureAttempts.push(pokemonCapture);
         this.itemsUsedForCapture.push(pokemonCapture.Pokeball);

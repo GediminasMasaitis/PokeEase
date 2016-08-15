@@ -65,7 +65,8 @@
         let itemsHtml = "";
         _.each(itemsUsedForCapture, i => itemsHtml += `<img src="images/items/${i}.png">`);
         const extendedInfoHtml = `
-Attempts        <span class="attempts">${itemsHtml}</span><br/>
+Used            <span class="attempts">${itemsHtml}</span><br/>
+Attempts        <span class="attempts">${pokemonCatches.length}</span><br/>
 Probability     <span class="probability"> ${pokemonCatch.Probability}% </span><br/>
 XP              <span class="xp"> ${pokemonCatch.Exp} </span><br/>
 Candies         <span class="candies"> ${pokemonCatch.FamilyCandies} </span><br/>

@@ -4,6 +4,7 @@ interface IEventHandler {
     onFortTarget: (fortTarget: IFortTargetEvent) => void;
     onFortUsed: (fortUsed: IFortUsedEvent) => void;
     onProfile: (profile: IProfileEvent) => void;
+    onUseBerry: (useBerry: IUseBerryEvent) => void;
     onPokemonCapture: (pokemonCapture: IPokemonCaptureEvent) => void;
     onEvolveCount: (pokemonCapture: IEvolveCountEvent) => void;
     onPokemonEvolve: (pokemonCapture: IPokemonEvolveEvent) => void;

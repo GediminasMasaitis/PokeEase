@@ -3,6 +3,7 @@
     public static itemIds: number[];
     public static totalExpForLevel: number[];
     public static expForLevel: number[];
+    public static berryIds: number[];
 
     public static __ctor = (() => {
         const itemCodes: string[] = [];
@@ -32,6 +33,8 @@
         itemIds["ItemMaxRevive"] = 202;
         itemIds["ItemRazzBerry"] = 701;
         StaticInfo.itemIds = itemIds;
+
+        StaticInfo.berryIds = [701];
 
         const totalExpForLevel: number[] = [];
         totalExpForLevel[0] = -Infinity;
