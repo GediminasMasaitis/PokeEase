@@ -45,8 +45,13 @@
                           ${itemsHtml}
                           <div class="stats">+${fortUsed.Exp}XP</div>
                       </div>`;
-
-        this.addNotification(fortUsed, html, "pokestop");
+        const inventoryFullStr = fortUsed.InventoryFull ? "<span class=inv-full>inventory full</span>" : "";
+        const extendedInfoHtml = `
+${inventoryFullStr}
+Name            <span class="name"> ${fortUsed.Name} </span><br/>
+Gems            <span class="xp"> ${fortUsed.Gems} </span><br/>
+`;
+        this.addNotification(fortUsed, html, "pokestop", extendedInfoHtml);
     }
 
     public addNotificationPokemonCapture = (pokemonCatches: IPokemonCaptureEvent[], itemsUsedForCapture: number[]): void => {

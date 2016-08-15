@@ -900,7 +900,9 @@ var NotificationManager = (function () {
                 itemsHtml += "<div class=\"item\" title=\"" + itemName + "\"><img src=\"images/items/" + itemId + ".png\"/>x" + item.Count + "</div>";
             });
             var html = "<div class=\"info\">\n                          " + itemsHtml + "\n                          <div class=\"stats\">+" + fortUsed.Exp + "XP</div>\n                      </div>";
-            _this.addNotification(fortUsed, html, "pokestop");
+            var inventoryFullStr = fortUsed.InventoryFull ? "<span class=inv-full>inventory full</span>" : "";
+            var extendedInfoHtml = "\n" + inventoryFullStr + "\nName            <span class=\"name\"> " + fortUsed.Name + " </span><br/>\nGems            <span class=\"xp\"> " + fortUsed.Gems + " </span><br/>\n";
+            _this.addNotification(fortUsed, html, "pokestop", extendedInfoHtml);
         };
         this.addNotificationPokemonCapture = function (pokemonCatches, itemsUsedForCapture) {
             var pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
