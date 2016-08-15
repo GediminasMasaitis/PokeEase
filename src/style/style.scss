@@ -846,7 +846,7 @@ $event-incubator-status-color: #e9e1b5;
 }
 
 @keyframes SlideIn {
-    0% {transform: translateY(-40px);}
+    0% {transform: translateY(-20px);}
     100% {transform: translateY(0);}
 }
 
@@ -861,7 +861,7 @@ $event-incubator-status-color: #e9e1b5;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     line-height: 1.75;
     overflow: hidden;
-    animation: SlideIn 1s cubic-bezier(0, 0, 0, 1);
+    animation: SlideIn .5s cubic-bezier(0, 0, 0, 1);
 
     i.close-button {
         position: absolute;
