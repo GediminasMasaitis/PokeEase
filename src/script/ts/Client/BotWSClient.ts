@@ -29,7 +29,6 @@
 
     private clientOnOpen = (event: Event): void => {
         console.log(`WebSocket connected to ${this.webSocket.url}`);
-        this.sendPlayerStatsRequest();
     }
 
     private clientOnClose = (event: CloseEvent): void => {

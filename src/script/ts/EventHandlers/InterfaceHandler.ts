@@ -77,6 +77,7 @@
     public onProfile(profile: IProfileEvent): void {
         this.config.mainMenuManager.updateProfileData(profile);
         this.config.profileInfoManager.setProfileData(profile);
+        this.config.requestSender.sendPlayerStatsRequest();
     }
 
     public onUseBerry(berry: IUseBerryEvent): void {

@@ -21,7 +21,6 @@ var BotWSClient = (function () {
         };
         this.clientOnOpen = function (event) {
             console.log("WebSocket connected to " + _this.webSocket.url);
-            _this.sendPlayerStatsRequest();
         };
         this.clientOnClose = function (event) {
             console.log("WebSocket closed", event);
@@ -316,6 +315,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onProfile = function (profile) {
         this.config.mainMenuManager.updateProfileData(profile);
         this.config.profileInfoManager.setProfileData(profile);
+        this.config.requestSender.sendPlayerStatsRequest();
     };
     InterfaceHandler.prototype.onUseBerry = function (berry) {
         var berryId = berry.BerryType || StaticInfo.berryIds[0];
@@ -1200,6 +1200,7 @@ $(function () {
         mainMenuManager: mainMenuManager,
         pokemonMenuManager: pokemonMenuManager,
         profileInfoManager: profileInfoManager,
+        requestSender: client,
         map: lMap
     });
     client.start({

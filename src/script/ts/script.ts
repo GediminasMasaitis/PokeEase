@@ -38,6 +38,7 @@ $(() => {
         mainMenuManager: mainMenuManager,
         pokemonMenuManager: pokemonMenuManager,
         profileInfoManager: profileInfoManager,
+        requestSender: client,
         map: lMap
     });
 

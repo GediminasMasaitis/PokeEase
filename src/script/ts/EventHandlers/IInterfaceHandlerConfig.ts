@@ -4,5 +4,6 @@
     mainMenuManager: IMainMenuManager;
     pokemonMenuManager: IPokemonMenuManager;
     profileInfoManager: IProfileInfoManager;
+    requestSender: IRequestSender,
     map: IMap;
 }
