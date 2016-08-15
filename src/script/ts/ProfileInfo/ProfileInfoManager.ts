@@ -18,14 +18,22 @@
     public addExp = (totalExp: number, expAdded?: number): void => {
         const currentLevel = this.calculateCurrentLevel(totalExp);
         const exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
-        const expForNextLvl = StaticInfo.totalExpForLevel[currentLevel + 1];
+        const expForNextLvl = StaticInfo.expForLevel[currentLevel + 1];
         const expPercent = 100 * exp / expForNextLvl;
         this.config.profileInfoElement.find(".profile-lvl").text(` lvl ${currentLevel} `);
-        this.config.profileInfoElement.find(".profile-exp").text(` ${exp} / ${expForNextLvl} `);
+        this.animateTo(this.config.profileInfoElement.find(".profile-exp-current"), exp);
+        this.animateTo(this.config.profileInfoElement.find(".profile-exp-next"), expForNextLvl);
         this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
         if (expAdded) {
             this.expBubble(expAdded);
         }
+    }
+
+    private animateTo(element: JQuery, to: number) {
+        element.prop("number", parseInt(element.text()));
+        element.animateNumber({
+            number: to
+        });
     }
 
     private expBubble = (expAdded: number): void => {

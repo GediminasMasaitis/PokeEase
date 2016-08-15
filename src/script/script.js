@@ -971,10 +971,11 @@ var ProfileInfoManager = (function () {
         this.addExp = function (totalExp, expAdded) {
             var currentLevel = _this.calculateCurrentLevel(totalExp);
             var exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
-            var expForNextLvl = StaticInfo.totalExpForLevel[currentLevel + 1];
+            var expForNextLvl = StaticInfo.expForLevel[currentLevel + 1];
             var expPercent = 100 * exp / expForNextLvl;
             _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + currentLevel + " ");
-            _this.config.profileInfoElement.find(".profile-exp").text(" " + exp + " / " + expForNextLvl + " ");
+            _this.animateTo(_this.config.profileInfoElement.find(".profile-exp-current"), exp);
+            _this.animateTo(_this.config.profileInfoElement.find(".profile-exp-next"), expForNextLvl);
             _this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
             if (expAdded) {
                 _this.expBubble(expAdded);
@@ -996,6 +997,12 @@ var ProfileInfoManager = (function () {
         };
         this.config = config;
     }
+    ProfileInfoManager.prototype.animateTo = function (element, to) {
+        element.prop("number", parseInt(element.text()));
+        element.animateNumber({
+            number: to
+        });
+    };
     return ProfileInfoManager;
 }());
 var EnglishTranslation = (function () {
