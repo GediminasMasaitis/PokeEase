@@ -924,7 +924,8 @@ var NotificationManager = (function () {
             var pokemonName = _this.config.translationManager.translation.pokemonNames[eggHatched.PokemonId];
             var roundedPerfection = Math.round(eggHatched.Perfection * 100) / 100;
             var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + eggHatched.PokemonId + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">CP " + eggHatched.Cp + " | IV " + roundedPerfection + "%</div>\n                      </div>";
-            _this.addNotification(eggHatched, html, "egg-hatched");
+            var extendedInfoHtml = "\nLevel           <span class=\"level\"> " + eggHatched.Level + " </span><br/>\nIV              <span class=\"level\"> " + roundedPerfection + " </span><br/>\nCP              <span class=\"cp\"> " + eggHatched.Cp + " </span>/<span class=\"max-cp\"> " + eggHatched.MaxCp + " </span><br/>\n";
+            _this.addNotification(eggHatched, html, "egg-hatched", extendedInfoHtml);
         };
         this.addNotificationIncubatorStatus = function (incubatorStatus) {
             var km = Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining) * 100) / 100;

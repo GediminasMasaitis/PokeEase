@@ -109,8 +109,12 @@ CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp
                           ${pokemonName}
                           <div class="stats">CP ${eggHatched.Cp} | IV ${roundedPerfection}%</div>
                       </div>`;
-
-        this.addNotification(eggHatched, html, "egg-hatched");
+        const extendedInfoHtml = `
+Level           <span class="level"> ${eggHatched.Level} </span><br/>
+IV              <span class="level"> ${roundedPerfection} </span><br/>
+CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp"> ${eggHatched.MaxCp} </span><br/>
+`;
+        this.addNotification(eggHatched, html, "egg-hatched", extendedInfoHtml);
     }
 
     public addNotificationIncubatorStatus = (incubatorStatus: IIncubatorStatusEvent): void => {
