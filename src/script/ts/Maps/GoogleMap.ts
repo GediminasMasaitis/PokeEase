@@ -24,8 +24,9 @@ class GoogleMap implements IMap {
 
         // Initialize the map.
         var mapOptions: google.maps.MapOptions = {
-            zoom:18,
-            center: new google.maps.LatLng(51.5073509,-0.12775829999998223),
+            zoom: 16,
+            center: new google.maps.LatLng(0,0),
+            //center: new google.maps.LatLng(51.5073509,-0.12775829999998223),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             styles: mapStyle,
             mapTypeControl: false,
@@ -61,16 +62,16 @@ class GoogleMap implements IMap {
         if(this.config.followPlayer) {
             // Animate the map centering.
             var from    = {lat: this.map.getCenter().lat(), lng: this.map.getCenter().lng()};
-            var to      = {lat: posArr[0], lng: posArr[1]};            
+            var to      = {lat: posArr[0], lng: posArr[1]};
             var currentMap: google.maps.Map = this.map;
             $(from).animate(to, {
-                duration: 200, 
-                step: function(cs, t) {
-                    var newPos: any;
+                duration: 200,
+                step(cs, t) {
+                    let newPos: any;
 
-                    if(t.prop == "lat") 
+                    if(t.prop === "lat") 
                         newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
-                    if(t.prop == "lng") 
+                    if(t.prop === "lng") 
                         newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
 
                     currentMap.setCenter(newPos);

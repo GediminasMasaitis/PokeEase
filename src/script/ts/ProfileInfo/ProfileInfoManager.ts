@@ -3,6 +3,9 @@
 
     constructor(config: IProfileInfoManagerConfig) {
         this.config = config;
+        if (this.config.hideUsername) {
+            this.config.profileInfoElement.find(".profile-username").hide();
+        }
     }
 
     public setProfileData = (profile: IProfileEvent):void => {

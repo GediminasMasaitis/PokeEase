@@ -526,9 +526,9 @@ var GoogleMap = (function () {
                     duration: 200,
                     step: function (cs, t) {
                         var newPos;
-                        if (t.prop == "lat")
+                        if (t.prop === "lat")
                             newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
-                        if (t.prop == "lng")
+                        if (t.prop === "lng")
                             newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
                         currentMap.setCenter(newPos);
                     }
@@ -587,8 +587,8 @@ var GoogleMap = (function () {
         this.config = config;
         var mapStyle = [{ "featureType": "all", "elementType": "geometry", "stylers": [{ "color": "#262c33" }] }, { "featureType": "all", "elementType": "labels.text.fill", "stylers": [{ "gamma": 0.01 }, { "lightness": 20 }, { "color": "#949aa6" }] }, { "featureType": "all", "elementType": "labels.text.stroke", "stylers": [{ "saturation": -31 }, { "lightness": -33 }, { "weight": 2 }, { "gamma": "0.00" }, { "visibility": "off" }] }, { "featureType": "all", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.province", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.locality", "elementType": "all", "stylers": [{ "visibility": "simplified" }] }, { "featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.neighborhood", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.land_parcel", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "lightness": 30 }, { "saturation": 30 }, { "color": "#323e4b" }, { "visibility": "on" }] }, { "featureType": "poi", "elementType": "geometry", "stylers": [{ "saturation": "0" }, { "lightness": "0" }, { "gamma": "0.30" }, { "weight": "0.01" }, { "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "lightness": "100" }, { "saturation": -20 }, { "visibility": "simplified" }, { "color": "#293139" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 10 }, { "saturation": -30 }, { "color": "#282e36" }] }, { "featureType": "road", "elementType": "geometry.stroke", "stylers": [{ "saturation": "-100" }, { "lightness": "-100" }, { "gamma": "0.00" }, { "color": "#2a3037" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "on" }] }, { "featureType": "road", "elementType": "labels.text", "stylers": [{ "visibility": "on" }, { "color": "#575e6b" }] }, { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "road.highway", "elementType": "geometry.fill", "stylers": [{ "color": "#424f61" }, { "visibility": "on" }] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "geometry", "stylers": [{ "visibility": "simplified" }, { "color": "#2c3440" }] }, { "featureType": "transit.station.airport", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "lightness": -20 }, { "color": "#252a31" }] }];
         var mapOptions = {
-            zoom: 18,
-            center: new google.maps.LatLng(51.5073509, -0.12775829999998223),
+            zoom: 16,
+            center: new google.maps.LatLng(0, 0),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             styles: mapStyle,
             mapTypeControl: false,
@@ -1049,6 +1049,9 @@ var ProfileInfoManager = (function () {
             throw "Unable to determine level";
         };
         this.config = config;
+        if (this.config.hideUsername) {
+            this.config.profileInfoElement.find(".profile-username").hide();
+        }
     }
     ProfileInfoManager.prototype.animateTo = function (element, to) {
         element.prop("number", parseInt(element.text()));
@@ -1202,12 +1205,15 @@ $(function () {
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]')
     });
     var profileInfoManager = new ProfileInfoManager({
+        hideUsername: false,
         profileInfoElement: $("#profile")
     });
-    var lMap = new LeafletMap({
+    var mapConfig = {
         followPlayer: true,
         translationManager: translationManager
-    });
+    };
+    var useGoogleMap = true;
+    var lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
     var interfaceHandler = new InterfaceHandler({
         translationManager: translationManager,
         notificationManager: notificationManager,

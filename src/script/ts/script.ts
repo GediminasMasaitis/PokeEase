@@ -24,13 +24,17 @@ $(() => {
     });
 
     const profileInfoManager = new ProfileInfoManager({
+        hideUsername: false,
         profileInfoElement: $("#profile")
     });
 
-    const lMap = new LeafletMap({
+    const mapConfig: IMapConfig = {
         followPlayer: true,
         translationManager: translationManager
-    });
+    };
+
+    const useGoogleMap = true;
+    const lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
 
     const interfaceHandler = new InterfaceHandler({
         translationManager: translationManager,
