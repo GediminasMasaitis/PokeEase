@@ -16,7 +16,7 @@
         this.exp = 0;
     }
 
-    public onLocationUpdate = (location: IMapLocationEvent): void => {
+    public onUpdatePosition = (location: IUpdatePositionEvent): void => {
         if (!this.currentlySniping) {
             this.config.map.movePlayer(location);
         }

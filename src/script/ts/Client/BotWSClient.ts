@@ -54,8 +54,8 @@
         const type = message.$type as string;
 
         if (_.includes(type, "UpdatePositionEvent")) {
-            const mapLocation = message as IMapLocationEvent;
-            _.each(this.config.eventHandlers, eh => eh.onLocationUpdate(mapLocation));
+            const mapLocation = message as IUpdatePositionEvent;
+            _.each(this.config.eventHandlers, eh => eh.onUpdatePosition(mapLocation));
         }
 
         else if (_.includes(type, "PokeStopListEvent")) {

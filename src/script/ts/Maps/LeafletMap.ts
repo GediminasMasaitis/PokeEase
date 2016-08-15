@@ -76,7 +76,7 @@
         });
     }
 
-    public movePlayer = (position: IMapLocationEvent): void => {
+    public movePlayer = (position: IUpdatePositionEvent): void => {
         const posArr = [position.Latitude, position.Longitude];
         this.playerMarker.setLatLng(posArr);
         this.playerPath.addLatLng(posArr);

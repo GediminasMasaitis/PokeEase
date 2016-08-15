@@ -1,4 +1,4 @@
-interface IPokemonCaptureEvent extends IMapLocationEvent {
+interface IPokemonCaptureEvent extends IUpdatePositionEvent {
     Id: string;
     Attempt: number;
     BallAmount: number;

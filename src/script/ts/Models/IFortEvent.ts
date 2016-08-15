@@ -1,4 +1,4 @@
-interface IFortEvent extends IMapLocationEvent {
+interface IFortEvent extends IUpdatePositionEvent {
     Type: number;
     Id: string;
     Name?: string;

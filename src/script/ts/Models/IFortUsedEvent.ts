@@ -1,4 +1,4 @@
-interface IFortUsedEvent extends IMapLocationEvent {
+interface IFortUsedEvent extends IUpdatePositionEvent {
     Id: string;
     Exp: number;
     Gems: number;

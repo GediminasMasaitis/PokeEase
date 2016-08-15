@@ -52,7 +52,7 @@ class GoogleMap implements IMap {
 
     }
 
-    public movePlayer = (position: IMapLocationEvent): void => {
+    public movePlayer = (position: IUpdatePositionEvent): void => {
         const posArr = [position.Latitude, position.Longitude];
         const pos = new google.maps.LatLng(posArr[0], posArr[1]);
 

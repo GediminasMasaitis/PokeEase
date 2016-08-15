@@ -3,6 +3,6 @@ interface IMapLocation {
     Longitude: number;
 }
 
-interface IMapLocationEvent extends IEvent, IMapLocation {
+interface IUpdatePositionEvent extends IEvent, IMapLocation {
 
 }

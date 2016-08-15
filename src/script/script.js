@@ -40,7 +40,7 @@ var BotWSClient = (function () {
             var type = message.$type;
             if (_.includes(type, "UpdatePositionEvent")) {
                 var mapLocation_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onLocationUpdate(mapLocation_1); });
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdatePosition(mapLocation_1); });
             }
             else if (_.includes(type, "PokeStopListEvent")) {
                 var forts_1 = message.Forts.$values;
@@ -233,7 +233,7 @@ var BotWSClient = (function () {
 var InterfaceHandler = (function () {
     function InterfaceHandler(config) {
         var _this = this;
-        this.onLocationUpdate = function (location) {
+        this.onUpdatePosition = function (location) {
             if (!_this.currentlySniping) {
                 _this.config.map.movePlayer(location);
             }

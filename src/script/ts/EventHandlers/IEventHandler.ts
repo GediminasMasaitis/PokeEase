@@ -1,5 +1,5 @@
 interface IEventHandler {
-    onLocationUpdate: (location: IMapLocationEvent) => void;
+    onUpdatePosition: (location: IUpdatePositionEvent) => void;
     onPokeStopList: (forts: IFortEvent[]) => void;
     onFortTarget: (fortTarget: IFortTargetEvent) => void;
     onFortUsed: (fortUsed: IFortUsedEvent) => void;
