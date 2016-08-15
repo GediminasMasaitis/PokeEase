@@ -34,7 +34,13 @@ $(document).ready(function () {
     });
 
     $(".content").on("click", ".pokemon", function() {
-        $(this).toggleClass('opened');
+        $("#pokemon-info").fadeIn();
+        $("#content-wrap").css('opacity', '0.2');
+    });
+
+    $("#pokemon-info").click(function() {
+        $(this).fadeOut();
+        $("#content-wrap").css('opacity', '1');
     });
 
     // JOURNAL EVENTS

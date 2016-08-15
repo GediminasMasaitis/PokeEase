@@ -593,7 +593,8 @@ body {
 #content-wrap {
   overflow-y: auto;
   height: calc(100% - 36px);
-  position: relative; }
+  position: relative;
+  transition: 0.4s; }
 
 #popup .inner-wrap .content[data-category="pokemons"] {
   margin: .5em 0; }
@@ -731,5 +732,15 @@ body {
   100% {
     opacity: 0;
     top: -20px; } }
+
+#pokemon-info {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  right: 50px;
+  bottom: 50px;
+  background: #ededed;
+  z-index: 1;
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */
