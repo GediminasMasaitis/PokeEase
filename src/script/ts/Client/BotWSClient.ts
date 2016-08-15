@@ -3,10 +3,13 @@
     private config: IBotClientConfig;
     private webSocket: WebSocket;
     private currentlySniping: boolean;
+    private running: boolean;
+    private monitorInterval: number;
 
     constructor(url: string) {
         this.url = url;
         this.currentlySniping = false;
+        this.running = false;
     }
 
     public start = (config: IBotClientConfig): void => {
@@ -14,11 +17,32 @@
         this.webSocket = new WebSocket(this.url);
         this.webSocket.onopen = this.clientOnOpen;
         this.webSocket.onmessage = this.clientOnMessage;
+        this.webSocket.onclose = this.clientOnClose;
+        this.webSocket.onerror = this.clientOnError;
+        this.running = true;
     }
 
-    private clientOnOpen = (): void => {
-        console.log(`Connected to ${this.webSocket.url}`);
+    public stop = (): void => {
+        this.running = false;
+        this.webSocket.close();
+    }
+
+    private clientOnOpen = (event: Event): void => {
+        console.log(`WebSocket connected to ${this.webSocket.url}`);
         this.sendPlayerStatsRequest();
+    }
+
+    private clientOnClose = (event: CloseEvent): void => {
+        console.log("WebSocket closed", event);
+        if (this.running) {
+            setTimeout(() => {
+                this.start(this.config);
+            }, 2000);
+        }
+    }
+
+    private clientOnError = (event: Event): void => {
+
     }
 
     private clientOnMessage = (event: MessageEvent): void => {

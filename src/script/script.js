@@ -11,10 +11,27 @@ var BotWSClient = (function () {
             _this.webSocket = new WebSocket(_this.url);
             _this.webSocket.onopen = _this.clientOnOpen;
             _this.webSocket.onmessage = _this.clientOnMessage;
+            _this.webSocket.onclose = _this.clientOnClose;
+            _this.webSocket.onerror = _this.clientOnError;
+            _this.running = true;
         };
-        this.clientOnOpen = function () {
-            console.log("Connected to " + _this.webSocket.url);
+        this.stop = function () {
+            _this.running = false;
+            _this.webSocket.close();
+        };
+        this.clientOnOpen = function (event) {
+            console.log("WebSocket connected to " + _this.webSocket.url);
             _this.sendPlayerStatsRequest();
+        };
+        this.clientOnClose = function (event) {
+            console.log("WebSocket closed", event);
+            if (_this.running) {
+                setTimeout(function () {
+                    _this.start(_this.config);
+                }, 2000);
+            }
+        };
+        this.clientOnError = function (event) {
         };
         this.clientOnMessage = function (event) {
             var message = JSON.parse(event.data);
@@ -206,6 +223,7 @@ var BotWSClient = (function () {
         };
         this.url = url;
         this.currentlySniping = false;
+        this.running = false;
     }
     return BotWSClient;
 }());
@@ -919,10 +937,7 @@ var NotificationManager = (function () {
             var element = $(html);
             element.click(_this.toggleExtendedInfo);
             element.find(".dismiss").click(_this.closeNotification);
-            var scrollTop = _this.config.container.scrollTop();
-            var innerHeight = _this.config.container.innerHeight();
-            var scrollHeight = _this.config.container[0].scrollHeight;
-            var scroll = scrollTop + innerHeight === scrollHeight;
+            var scroll = _this.isAtBottom();
             _this.config.container.append(element);
             _this.notifications.push({
                 event: event,
@@ -931,6 +946,13 @@ var NotificationManager = (function () {
             if (scroll) {
                 _this.scrollToBottom();
             }
+        };
+        this.isAtBottom = function () {
+            var scrollTop = _this.config.container.scrollTop();
+            var innerHeight = _this.config.container.innerHeight();
+            var scrollHeight = _this.config.container[0].scrollHeight;
+            var atBottom = scrollTop + innerHeight === scrollHeight;
+            return atBottom;
         };
         this.scrollToBottom = function () {
             var animation = {

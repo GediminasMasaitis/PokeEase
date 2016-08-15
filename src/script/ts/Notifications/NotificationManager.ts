@@ -163,19 +163,25 @@ CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp
         element.click(this.toggleExtendedInfo);
         element.find(".dismiss").click(this.closeNotification);
 
-        const scrollTop = this.config.container.scrollTop();
-        const innerHeight = this.config.container.innerHeight();
-        const scrollHeight = this.config.container[0].scrollHeight;
-        const scroll = scrollTop + innerHeight === scrollHeight;
+        const scroll = this.isAtBottom();
 
         this.config.container.append(element);
         this.notifications.push({
             event: event,
             element: element
         });
+
         if (scroll) {
             this.scrollToBottom();
         }
+    }
+
+    private isAtBottom = (): boolean => {
+        const scrollTop = this.config.container.scrollTop();
+        const innerHeight = this.config.container.innerHeight();
+        const scrollHeight = this.config.container[0].scrollHeight;
+        const atBottom = scrollTop + innerHeight === scrollHeight;
+        return atBottom;
     }
 
     private scrollToBottom = () => {
