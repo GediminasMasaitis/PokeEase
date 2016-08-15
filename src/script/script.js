@@ -375,6 +375,27 @@ var InterfaceHandler = (function () {
     };
     return InterfaceHandler;
 }());
+var PokemonType;
+(function (PokemonType) {
+    PokemonType[PokemonType["Bug"] = 0] = "Bug";
+    PokemonType[PokemonType["Grass"] = 1] = "Grass";
+    PokemonType[PokemonType["Dark"] = 2] = "Dark";
+    PokemonType[PokemonType["Ground"] = 3] = "Ground";
+    PokemonType[PokemonType["Dragon"] = 4] = "Dragon";
+    PokemonType[PokemonType["Ice"] = 5] = "Ice";
+    PokemonType[PokemonType["Electric"] = 6] = "Electric";
+    PokemonType[PokemonType["Normal"] = 7] = "Normal";
+    PokemonType[PokemonType["Fairy"] = 8] = "Fairy";
+    PokemonType[PokemonType["Poison"] = 9] = "Poison";
+    PokemonType[PokemonType["Fighting"] = 10] = "Fighting";
+    PokemonType[PokemonType["Psychic"] = 11] = "Psychic";
+    PokemonType[PokemonType["Fire"] = 12] = "Fire";
+    PokemonType[PokemonType["Rock"] = 13] = "Rock";
+    PokemonType[PokemonType["Flying"] = 14] = "Flying";
+    PokemonType[PokemonType["Steel"] = 15] = "Steel";
+    PokemonType[PokemonType["Ghost"] = 16] = "Ghost";
+    PokemonType[PokemonType["Water"] = 17] = "Water";
+})(PokemonType || (PokemonType = {}));
 var StaticInfo = (function () {
     function StaticInfo() {
     }
@@ -454,6 +475,612 @@ var StaticInfo = (function () {
         for (var i = 1; i < totalExpForLevel.length; i++) {
             StaticInfo.expForLevel[i] = StaticInfo.totalExpForLevel[i] - StaticInfo.totalExpForLevel[i - 1];
         }
+        var pokemonInfo = [];
+        pokemonInfo[1] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: [2]
+        };
+        pokemonInfo[2] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: [3]
+        };
+        pokemonInfo[3] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[4] = {
+            types: [PokemonType.Fire],
+            evolvesInto: [5]
+        };
+        pokemonInfo[5] = {
+            types: [PokemonType.Fire],
+            evolvesInto: [6]
+        };
+        pokemonInfo[6] = {
+            types: [PokemonType.Fire, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[7] = {
+            types: [PokemonType.Water],
+            evolvesInto: [8]
+        };
+        pokemonInfo[8] = {
+            types: [PokemonType.Water],
+            evolvesInto: [9]
+        };
+        pokemonInfo[9] = {
+            types: [PokemonType.Water],
+            evolvesInto: []
+        };
+        pokemonInfo[10] = {
+            types: [PokemonType.Bug],
+            evolvesInto: [11]
+        };
+        pokemonInfo[11] = {
+            types: [PokemonType.Bug],
+            evolvesInto: [12]
+        };
+        pokemonInfo[12] = {
+            types: [PokemonType.Bug, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[13] = {
+            types: [PokemonType.Bug, PokemonType.Poison],
+            evolvesInto: [14]
+        };
+        pokemonInfo[14] = {
+            types: [PokemonType.Bug, PokemonType.Poison],
+            evolvesInto: [15]
+        };
+        pokemonInfo[15] = {
+            types: [PokemonType.Bug, PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[16] = {
+            types: [PokemonType.Normal],
+            evolvesInto: [17]
+        };
+        pokemonInfo[17] = {
+            types: [PokemonType.Normal, PokemonType.Flying],
+            evolvesInto: [18]
+        };
+        pokemonInfo[18] = {
+            types: [PokemonType.Normal, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[19] = {
+            types: [PokemonType.Normal],
+            evolvesInto: [20]
+        };
+        pokemonInfo[20] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[21] = {
+            types: [PokemonType.Normal, PokemonType.Flying],
+            evolvesInto: [22]
+        };
+        pokemonInfo[22] = {
+            types: [PokemonType.Normal, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[23] = {
+            types: [PokemonType.Poison],
+            evolvesInto: [24]
+        };
+        pokemonInfo[24] = {
+            types: [PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[25] = {
+            types: [PokemonType.Electric],
+            evolvesInto: [26]
+        };
+        pokemonInfo[26] = {
+            types: [PokemonType.Electric],
+            evolvesInto: []
+        };
+        pokemonInfo[27] = {
+            types: [PokemonType.Ground],
+            evolvesInto: [28]
+        };
+        pokemonInfo[28] = {
+            types: [PokemonType.Ground],
+            evolvesInto: []
+        };
+        pokemonInfo[29] = {
+            types: [PokemonType.Poison],
+            evolvesInto: [30]
+        };
+        pokemonInfo[30] = {
+            types: [PokemonType.Poison],
+            evolvesInto: [31]
+        };
+        pokemonInfo[31] = {
+            types: [PokemonType.Poison, PokemonType.Ground],
+            evolvesInto: []
+        };
+        pokemonInfo[32] = {
+            types: [PokemonType.Poison],
+            evolvesInto: [33]
+        };
+        pokemonInfo[33] = {
+            types: [PokemonType.Poison],
+            evolvesInto: [34]
+        };
+        pokemonInfo[34] = {
+            types: [PokemonType.Poison, PokemonType.Ground],
+            evolvesInto: []
+        };
+        pokemonInfo[35] = {
+            types: [PokemonType.Fairy],
+            evolvesInto: [36]
+        };
+        pokemonInfo[36] = {
+            types: [PokemonType.Fairy],
+            evolvesInto: []
+        };
+        pokemonInfo[37] = {
+            types: [PokemonType.Fire],
+            evolvesInto: [38]
+        };
+        pokemonInfo[38] = {
+            types: [PokemonType.Fire],
+            evolvesInto: []
+        };
+        pokemonInfo[39] = {
+            types: [PokemonType.Normal, PokemonType.Fairy],
+            evolvesInto: [40]
+        };
+        pokemonInfo[40] = {
+            types: [PokemonType.Normal, PokemonType.Fairy],
+            evolvesInto: []
+        };
+        pokemonInfo[41] = {
+            types: [PokemonType.Poison, PokemonType.Flying],
+            evolvesInto: [42]
+        };
+        pokemonInfo[42] = {
+            types: [PokemonType.Poison, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[43] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: [44]
+        };
+        pokemonInfo[44] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: [45]
+        };
+        pokemonInfo[45] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[46] = {
+            types: [PokemonType.Bug, PokemonType.Grass],
+            evolvesInto: [47]
+        };
+        pokemonInfo[47] = {
+            types: [PokemonType.Bug, PokemonType.Grass],
+            evolvesInto: []
+        };
+        pokemonInfo[48] = {
+            types: [PokemonType.Bug, PokemonType.Poison],
+            evolvesInto: [49]
+        };
+        pokemonInfo[49] = {
+            types: [PokemonType.Bug, PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[50] = {
+            types: [PokemonType.Ground],
+            evolvesInto: [51]
+        };
+        pokemonInfo[51] = {
+            types: [PokemonType.Ground],
+            evolvesInto: []
+        };
+        pokemonInfo[52] = {
+            types: [PokemonType.Normal],
+            evolvesInto: [53]
+        };
+        pokemonInfo[53] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[54] = {
+            types: [PokemonType.Water],
+            evolvesInto: [55]
+        };
+        pokemonInfo[55] = {
+            types: [PokemonType.Water],
+            evolvesInto: []
+        };
+        pokemonInfo[56] = {
+            types: [PokemonType.Fighting],
+            evolvesInto: [57]
+        };
+        pokemonInfo[57] = {
+            types: [PokemonType.Fighting],
+            evolvesInto: []
+        };
+        pokemonInfo[58] = {
+            types: [PokemonType.Fire],
+            evolvesInto: [59]
+        };
+        pokemonInfo[59] = {
+            types: [PokemonType.Fire],
+            evolvesInto: []
+        };
+        pokemonInfo[60] = {
+            types: [PokemonType.Water],
+            evolvesInto: [61]
+        };
+        pokemonInfo[61] = {
+            types: [PokemonType.Water],
+            evolvesInto: [62]
+        };
+        pokemonInfo[62] = {
+            types: [PokemonType.Water, PokemonType.Fighting],
+            evolvesInto: []
+        };
+        pokemonInfo[63] = {
+            types: [PokemonType.Psychic],
+            evolvesInto: [64]
+        };
+        pokemonInfo[64] = {
+            types: [PokemonType.Psychic],
+            evolvesInto: [65]
+        };
+        pokemonInfo[65] = {
+            types: [PokemonType.Psychic],
+            evolvesInto: []
+        };
+        pokemonInfo[66] = {
+            types: [PokemonType.Fighting],
+            evolvesInto: [67]
+        };
+        pokemonInfo[67] = {
+            types: [PokemonType.Fighting],
+            evolvesInto: [68]
+        };
+        pokemonInfo[68] = {
+            types: [PokemonType.Fighting],
+            evolvesInto: []
+        };
+        pokemonInfo[69] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: [70]
+        };
+        pokemonInfo[70] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: [71]
+        };
+        pokemonInfo[71] = {
+            types: [PokemonType.Grass, PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[72] = {
+            types: [PokemonType.Water, PokemonType.Poison],
+            evolvesInto: [73]
+        };
+        pokemonInfo[73] = {
+            types: [PokemonType.Water, PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[74] = {
+            types: [PokemonType.Rock, PokemonType.Ground],
+            evolvesInto: [75]
+        };
+        pokemonInfo[75] = {
+            types: [PokemonType.Rock, PokemonType.Ground],
+            evolvesInto: [76]
+        };
+        pokemonInfo[76] = {
+            types: [PokemonType.Rock, PokemonType.Ground],
+            evolvesInto: []
+        };
+        pokemonInfo[77] = {
+            types: [PokemonType.Fire],
+            evolvesInto: [78]
+        };
+        pokemonInfo[78] = {
+            types: [PokemonType.Fire],
+            evolvesInto: []
+        };
+        pokemonInfo[79] = {
+            types: [PokemonType.Water, PokemonType.Psychic],
+            evolvesInto: [80]
+        };
+        pokemonInfo[80] = {
+            types: [PokemonType.Water, PokemonType.Psychic],
+            evolvesInto: []
+        };
+        pokemonInfo[81] = {
+            types: [PokemonType.Electric, PokemonType.Steel],
+            evolvesInto: [82]
+        };
+        pokemonInfo[82] = {
+            types: [PokemonType.Electric, PokemonType.Steel],
+            evolvesInto: []
+        };
+        pokemonInfo[83] = {
+            types: [PokemonType.Normal, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[84] = {
+            types: [PokemonType.Normal, PokemonType.Flying],
+            evolvesInto: [85]
+        };
+        pokemonInfo[85] = {
+            types: [PokemonType.Normal, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[86] = {
+            types: [PokemonType.Water],
+            evolvesInto: [87]
+        };
+        pokemonInfo[87] = {
+            types: [PokemonType.Water, PokemonType.Ice],
+            evolvesInto: []
+        };
+        pokemonInfo[88] = {
+            types: [PokemonType.Poison],
+            evolvesInto: [89]
+        };
+        pokemonInfo[89] = {
+            types: [PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[90] = {
+            types: [PokemonType.Water],
+            evolvesInto: [91]
+        };
+        pokemonInfo[91] = {
+            types: [PokemonType.Water, PokemonType.Ice],
+            evolvesInto: []
+        };
+        pokemonInfo[92] = {
+            types: [PokemonType.Ghost, PokemonType.Poison],
+            evolvesInto: [93]
+        };
+        pokemonInfo[93] = {
+            types: [PokemonType.Ghost, PokemonType.Poison],
+            evolvesInto: [94]
+        };
+        pokemonInfo[94] = {
+            types: [PokemonType.Ghost, PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[95] = {
+            types: [PokemonType.Rock, PokemonType.Ground],
+            evolvesInto: []
+        };
+        pokemonInfo[96] = {
+            types: [PokemonType.Psychic],
+            evolvesInto: [97]
+        };
+        pokemonInfo[97] = {
+            types: [PokemonType.Psychic],
+            evolvesInto: []
+        };
+        pokemonInfo[98] = {
+            types: [PokemonType.Water],
+            evolvesInto: [99]
+        };
+        pokemonInfo[99] = {
+            types: [PokemonType.Water],
+            evolvesInto: []
+        };
+        pokemonInfo[100] = {
+            types: [PokemonType.Electric],
+            evolvesInto: [101]
+        };
+        pokemonInfo[101] = {
+            types: [PokemonType.Electric],
+            evolvesInto: []
+        };
+        pokemonInfo[102] = {
+            types: [PokemonType.Grass, PokemonType.Psychic],
+            evolvesInto: [103]
+        };
+        pokemonInfo[103] = {
+            types: [PokemonType.Grass, PokemonType.Psychic],
+            evolvesInto: []
+        };
+        pokemonInfo[104] = {
+            types: [PokemonType.Ground],
+            evolvesInto: [105]
+        };
+        pokemonInfo[105] = {
+            types: [PokemonType.Ground],
+            evolvesInto: []
+        };
+        pokemonInfo[106] = {
+            types: [PokemonType.Fighting],
+            evolvesInto: []
+        };
+        pokemonInfo[107] = {
+            types: [PokemonType.Fighting],
+            evolvesInto: []
+        };
+        pokemonInfo[108] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[109] = {
+            types: [PokemonType.Poison],
+            evolvesInto: [110]
+        };
+        pokemonInfo[110] = {
+            types: [PokemonType.Poison],
+            evolvesInto: []
+        };
+        pokemonInfo[111] = {
+            types: [PokemonType.Ground, PokemonType.Rock],
+            evolvesInto: [112]
+        };
+        pokemonInfo[112] = {
+            types: [PokemonType.Ground, PokemonType.Rock],
+            evolvesInto: []
+        };
+        pokemonInfo[113] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[114] = {
+            types: [PokemonType.Grass],
+            evolvesInto: []
+        };
+        pokemonInfo[115] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[116] = {
+            types: [PokemonType.Water],
+            evolvesInto: [117]
+        };
+        pokemonInfo[117] = {
+            types: [PokemonType.Water],
+            evolvesInto: []
+        };
+        pokemonInfo[118] = {
+            types: [PokemonType.Water],
+            evolvesInto: [119]
+        };
+        pokemonInfo[119] = {
+            types: [PokemonType.Water],
+            evolvesInto: []
+        };
+        pokemonInfo[120] = {
+            types: [PokemonType.Water],
+            evolvesInto: [121]
+        };
+        pokemonInfo[121] = {
+            types: [PokemonType.Water, PokemonType.Psychic],
+            evolvesInto: []
+        };
+        pokemonInfo[122] = {
+            types: [PokemonType.Psychic, PokemonType.Fairy],
+            evolvesInto: []
+        };
+        pokemonInfo[123] = {
+            types: [PokemonType.Bug, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[124] = {
+            types: [PokemonType.Ice, PokemonType.Psychic],
+            evolvesInto: []
+        };
+        pokemonInfo[125] = {
+            types: [PokemonType.Electric],
+            evolvesInto: []
+        };
+        pokemonInfo[126] = {
+            types: [PokemonType.Fire],
+            evolvesInto: []
+        };
+        pokemonInfo[127] = {
+            types: [PokemonType.Bug],
+            evolvesInto: []
+        };
+        pokemonInfo[128] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[129] = {
+            types: [PokemonType.Water],
+            evolvesInto: [130]
+        };
+        pokemonInfo[130] = {
+            types: [PokemonType.Water, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[131] = {
+            types: [PokemonType.Water, PokemonType.Ice],
+            evolvesInto: []
+        };
+        pokemonInfo[132] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[133] = {
+            types: [PokemonType.Normal],
+            evolvesInto: [134, 135, 136]
+        };
+        pokemonInfo[134] = {
+            types: [PokemonType.Water],
+            evolvesInto: []
+        };
+        pokemonInfo[135] = {
+            types: [PokemonType.Electric],
+            evolvesInto: []
+        };
+        pokemonInfo[136] = {
+            types: [PokemonType.Fire],
+            evolvesInto: []
+        };
+        pokemonInfo[137] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[138] = {
+            types: [PokemonType.Rock, PokemonType.Water],
+            evolvesInto: [139]
+        };
+        pokemonInfo[139] = {
+            types: [PokemonType.Rock, PokemonType.Water],
+            evolvesInto: []
+        };
+        pokemonInfo[140] = {
+            types: [PokemonType.Rock, PokemonType.Water],
+            evolvesInto: [141]
+        };
+        pokemonInfo[141] = {
+            types: [PokemonType.Rock, PokemonType.Water],
+            evolvesInto: []
+        };
+        pokemonInfo[142] = {
+            types: [PokemonType.Rock, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[143] = {
+            types: [PokemonType.Normal],
+            evolvesInto: []
+        };
+        pokemonInfo[144] = {
+            types: [PokemonType.Ice, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[145] = {
+            types: [PokemonType.Electric, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[146] = {
+            types: [PokemonType.Fire, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[147] = {
+            types: [PokemonType.Dragon],
+            evolvesInto: [148]
+        };
+        pokemonInfo[148] = {
+            types: [PokemonType.Dragon],
+            evolvesInto: [149]
+        };
+        pokemonInfo[149] = {
+            types: [PokemonType.Dragon, PokemonType.Flying],
+            evolvesInto: []
+        };
+        pokemonInfo[150] = {
+            types: [PokemonType.Psychic],
+            evolvesInto: []
+        };
+        pokemonInfo[151] = {
+            types: [PokemonType.Psychic],
+            evolvesInto: []
+        };
+        StaticInfo.pokemonInfo = pokemonInfo;
     })();
     return StaticInfo;
 }());
@@ -840,14 +1467,34 @@ var PokemonMenuManager = (function () {
         };
         this.updatePokemonList = function (pokemonList) {
             _this.config.pokemonMenuElement.find(".pokemon").remove();
-            _.each(pokemonList.Pokemons, function (pokemon) {
+            _this.pokemonList = pokemonList;
+            for (var i = 0; i < pokemonList.Pokemons.length; i++) {
+                var pokemon = pokemonList.Pokemons[i];
                 var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemon.PokemonId];
                 var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
                 var html = "<div class=\"pokemon\">\n    <h1 class=\"name\">" + pokemonName + "</h1>\n    <div class=\"image-container\">\n        <img src=\"images/pokemon/" + pokemon.PokemonId + ".png\"/>\n    </div>\n    <h3 class=\"cp\">" + pokemon.Cp + "</h3>\n    <h3 class=\"iv\">" + roundedIv + "</h3>\n</div>";
                 var pokemonElement = $(html);
+                pokemonElement.prop("pokemon-index", i);
+                pokemonElement.click(_this.pokemonClick);
                 _this.config.pokemonMenuElement.append(pokemonElement);
-            });
+            }
             _this.config.pokemonMenuElement.find(".spinner-overlay").hide();
+        };
+        this.pokemonClick = function (ev) {
+            var pokemonBox = $(ev.target).closest(".pokemon");
+            var pokemonIndex = pokemonBox.prop("pokemon-index");
+            var pokemon = _this.pokemonList.Pokemons[pokemonIndex];
+            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemon.PokemonId];
+            var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
+            _this.config.pokemonDetailsElement.fadeIn();
+            _this.config.pokemonMenuElement.closest("#content-wrap").addClass("blurred");
+            _this.config.pokemonDetailsElement.find("#pokemon-info-name").text(pokemonName);
+            _this.config.pokemonDetailsElement.find("#pokemon-info-image").attr("src", "images/pokemon/" + pokemon.PokemonId + ".png");
+            _this.config.pokemonDetailsElement.find(".attack").text(pokemon.IndividualAttack);
+            _this.config.pokemonDetailsElement.find(".defense").text(pokemon.IndividualDefense);
+            _this.config.pokemonDetailsElement.find(".stamina").text(pokemon.IndividualStamina);
+            _this.config.pokemonDetailsElement.find(".total-iv").text(roundedIv + "%");
+            _this.config.pokemonDetailsElement.find(".poke-cp").text("" + pokemon.Cp);
         };
         this.config = config;
     }
@@ -1078,7 +1725,7 @@ var EnglishTranslation = (function () {
             701: "Razzberry"
         };
         this.eventTypes = {
-            "pokestop": "pokéstop",
+            "pokestop": "pokestop",
             "catch": "catch",
             "snipe": "snipe",
             "evolve": "evolve",
@@ -1087,11 +1734,32 @@ var EnglishTranslation = (function () {
             "incubator-status": "incubator",
             "egg-hatched": "hatched"
         };
+        this.pokemonTypes = [];
+        this.pokemonTypes[PokemonType.Bug] = "Bug";
+        this.pokemonTypes[PokemonType.Grass] = "Grass";
+        this.pokemonTypes[PokemonType.Dark] = "Dark";
+        this.pokemonTypes[PokemonType.Ground] = "Ground";
+        this.pokemonTypes[PokemonType.Dragon] = "Dragon";
+        this.pokemonTypes[PokemonType.Ice] = "Ice";
+        this.pokemonTypes[PokemonType.Electric] = "Electric";
+        this.pokemonTypes[PokemonType.Normal] = "Normal";
+        this.pokemonTypes[PokemonType.Fairy] = "Fairy";
+        this.pokemonTypes[PokemonType.Poison] = "Poison";
+        this.pokemonTypes[PokemonType.Fighting] = "Fighting";
+        this.pokemonTypes[PokemonType.Psychic] = "Psychic";
+        this.pokemonTypes[PokemonType.Fire] = "Fire";
+        this.pokemonTypes[PokemonType.Rock] = "Rock";
+        this.pokemonTypes[PokemonType.Flying] = "Flying";
+        this.pokemonTypes[PokemonType.Steel] = "Steel";
+        this.pokemonTypes[PokemonType.Ghost] = "Ghost";
+        this.pokemonTypes[PokemonType.Water] = "Water";
     }
     return EnglishTranslation;
 }());
-var GermanTranslation = (function () {
+var GermanTranslation = (function (_super) {
+    __extends(GermanTranslation, _super);
     function GermanTranslation() {
+        _super.apply(this, arguments);
         this.pokemonNames = ["MissingNo", "Bisasam", "Bisaknosp", "Bisaflor", "Glumanda", "Glutexo", "Glurak", "Schiggy", "Schillok", "Turtok", "Raupy", "Safcon", "Smettbo", "Hornliu", "Kokuna", "Bibor", "Taubsi", "Tauboga", "Tauboss", "Rattfratz", "Rattikarl", "Habitak", "Ibitak", "Rettan", "Arbok", "Pikachu", "Raichu", "Sandan", "Sandamer", "Nidoran♀", "Nidorina", "Nidoqueen", "Nidoran♂", "Nidorino", "Nidoking", "Piepi", "Pixi", "Vulpix", "Vulnona", "Pummeluff", "Knuddeluff", "Zubat", "Golbat", "Myrapla", "Duflor", "Giflor", "Paras", "Parasek", "Bluzuk", "Omot", "Digda", "Digdri", "Mauzi", "Snobilikat", "Enton", "Entoron", "Menki", "Rasaff", "Fukano", "Arkani", "Quapsel", "Quaputzi", "Quappo", "Abra", "Kadabra", "Simsala", "Machollo", "Maschock", "Machomei", "Knofensa", "Ultrigaria", "Sarzenia", "Tentacha", "Tentoxa", "Kleinstein", "Georok", "Geowaz", "Ponita", "Gallopa", "Flegmon", "Lahmus", "Magnetilo", "Magneton", "Porenta", "Dodu", "Dodri", "Jurob", "Jugong", "Sleima", "Sleimok", "Muschas", "Austos", "Nebulak", "Alpollo", "Gengar", "Onix", "Traumato", "Hypno", "Krabby", "Kingler", "Voltobal", "Lektrobal", "Owei", "Kokowei", "Tragosso", "Knogga", "Kicklee", "Nockchan", "Schlurp", "Smogon", "Smogmog", "Rihorn", "Rizeros", "Chaneira", "Tangela", "Kangama", "Seeper", "Seemon", "Goldini", "Golking", "Sterndu", "Starmie", "Pantimos", "Sichlor", "Rossana", "Elektek", "Magmar", "Pinsir", "Tauros", "Karpador", "Garados", "Lapras", "Ditto", "Evoli", "Aquana", "Blitza", "Flamara", "Porygon", "Amonitas", "Amoroso", "Kabuto", "Kabutops", "Aerodactyl", "Relaxo", "Arktos", "Zapdos", "Lavados", "Dratini", "Dragonir", "Dragoran", "Mewtu", "Mew",
             "Chikorita", "Bayleef", "Meganium", "Cyndaquil", "Quilava", "Typhlosion", "Totodile", "Croconaw", "Feraligatr", "Sentret", "Furret", "Hoothoot", "Noctowl", "Ledyba", "Ledian", "Spinarak", "Ariados", "Crobat", "Chinchou", "Lanturn", "Pichu", "Cleffa", "Igglybuff", "Togepi", "Togetic", "Natu", "Xatu", "Mareep", "Flaaffy", "Ampharos", "Bellossom", "Marill", "Azumarill", "Sudowoodo", "Politoed", "Hoppip", "Skiploom", "Jumpluff", "Aipom", "Sunkern", "Sunflora", "Yanma", "Wooper", "Quagsire", "Espeon", "Umbreon", "Murkrow", "Slowking", "Misdreavus", "Unown", "Wobbuffet", "Girafarig", "Pineco", "Forretress", "Dunsparce", "Gligar", "Steelix", "Snubbull", "Granbull", "Qwilfish", "Scizor", "Shuckle", "Heracross", "Sneasel", "Teddiursa", "Ursaring", "Slugma", "Magcargo", "Swinub", "Piloswine", "Corsola", "Remoraid", "Octillery", "Delibird", "Mantine", "Skarmory", "Houndour", "Houndoom", "Kingdra", "Phanpy", "Donphan", "Porygon2", "Stantler", "Smeargle", "Tyrogue", "Hitmontop", "Smoochum", "Elekid", "Magby", "Miltank", "Blissey", "Raikou", "Entei", "Suicune", "Larvitar", "Pupitar", "Tyranitar", "Lugia", "Ho-Oh", "Celebi", "Treecko", "Grovyle", "Sceptile", "Torchic", "Combusken", "Blaziken", "Mudkip", "Marshtomp", "Swampert", "Poochyena", "Mightyena", "Zigzagoon", "Linoone", "Wurmple", "Silcoon", "Beautifly", "Cascoon", "Dustox", "Lotad", "Lombre", "Ludicolo", "Seedot", "Nuzleaf", "Shiftry", "Taillow", "Swellow", "Wingull", "Pelipper", "Ralts", "Kirlia", "Gardevoir", "Surskit", "Masquerain", "Shroomish", "Breloom", "Slakoth", "Vigoroth", "Slaking", "Nincada", "Ninjask", "Shedinja", "Whismur", "Loudred", "Exploud", "Makuhita", "Hariyama", "Azurill", "Nosepass", "Skitty", "Delcatty", "Sableye", "Mawile", "Aron", "Lairon", "Aggron", "Meditite", "Medicham", "Electrike", "Manectric", "Plusle", "Minun", "Volbeat", "Illumise", "Roselia", "Gulpin", "Swalot", "Carvanha", "Sharpedo", "Wailmer", "Wailord", "Numel", "Camerupt", "Torkoal", "Spoink", "Grumpig", "Spinda", "Trapinch", "Vibrava", "Flygon", "Cacnea", "Cacturne", "Swablu", "Altaria", "Zangoose", "Seviper", "Lunatone", "Solrock", "Barboach", "Whiscash", "Corphish", "Crawdaunt", "Baltoy", "Claydol", "Lileep", "Cradily", "Anorith", "Armaldo", "Feebas", "Milotic", "Castform", "Kecleon", "Shuppet", "Banette", "Duskull", "Dusclops", "Tropius", "Chimecho", "Absol", "Wynaut", "Snorunt", "Glalie", "Spheal", "Sealeo", "Walrein", "Clamperl", "Huntail", "Gorebyss", "Relicanth", "Luvdisc", "Bagon", "Shelgon", "Salamence", "Beldum", "Metang", "Metagross", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Jirachi", "Deoxys", "Turtwig", "Grotle", "Torterra", "Chimchar", "Monferno", "Infernape", "Piplup", "Prinplup", "Empoleon", "Starly", "Staravia", "Staraptor", "Bidoof", "Bibarel", "Kricketot", "Kricketune", "Shinx", "Luxio", "Luxray", "Budew", "Roserade", "Cranidos", "Rampardos", "Shieldon", "Bastiodon", "Burmy", "Wormadam", "Mothim", "Combee", "Vespiquen", "Pachirisu", "Buizel", "Floatzel", "Cherubi", "Cherrim", "Shellos", "Gastrodon", "Ambipom", "Drifloon", "Drifblim", "Buneary", "Lopunny", "Mismagius", "Honchkrow", "Glameow", "Purugly", "Chingling", "Stunky", "Skuntank", "Bronzor", "Bronzong", "Bonsly", "Mime Jr.", "Happiny", "Chatot", "Spiritomb", "Gible", "Gabite", "Garchomp", "Munchlax", "Riolu", "Lucario", "Hippopotas", "Hippowdon", "Skorupi", "Drapion", "Croagunk", "Toxicroak", "Carnivine", "Finneon", "Lumineon", "Mantyke", "Snover", "Abomasnow", "Weavile", "Magnezone", "Lickilicky", "Rhyperior", "Tangrowth", "Electivire", "Magmortar", "Togekiss", "Yanmega", "Leafeon", "Glaceon", "Gliscor", "Mamoswine", "Porygon-Z", "Gallade", "Probopass", "Dusknoir", "Froslass", "Rotom", "Uxie", "Mesprit", "Azelf", "Dialga", "Palkia", "Heatran", "Regigigas", "Giratina", "Cresselia", "Phione", "Manaphy", "Darkrai", "Shaymin", "Arceus", "Victini", "Snivy", "Servine", "Serperior", "Tepig", "Pignite", "Emboar", "Oshawott", "Dewott", "Samurott", "Patrat", "Watchog", "Lillipup", "Herdier", "Stoutland", "Purrloin", "Liepard", "Pansage", "Simisage", "Pansear", "Simisear", "Panpour", "Simipour", "Munna", "Musharna", "Pidove", "Tranquill", "Unfezant", "Blitzle", "Zebstrika", "Roggenrola", "Boldore", "Gigalith", "Woobat", "Swoobat", "Drilbur", "Excadrill", "Audino", "Timburr", "Gurdurr", "Conkeldurr", "Tympole", "Palpitoad", "Seismitoad", "Throh", "Sawk", "Sewaddle", "Swadloon", "Leavanny", "Venipede", "Whirlipede", "Scolipede", "Cottonee", "Whimsicott", "Petilil", "Lilligant", "Basculin", "Sandile", "Krokorok", "Krookodile", "Darumaka", "Darmanitan", "Maractus", "Dwebble", "Crustle", "Scraggy", "Scrafty", "Sigilyph", "Yamask", "Cofagrigus", "Tirtouga", "Carracosta", "Archen", "Archeops", "Trubbish", "Garbodor", "Zorua", "Zoroark", "Minccino", "Cinccino", "Gothita", "Gothorita", "Gothitelle", "Solosis", "Duosion", "Reuniclus", "Ducklett", "Swanna", "Vanillite", "Vanillish", "Vanilluxe", "Deerling", "Sawsbuck", "Emolga", "Karrablast", "Escavalier", "Foongus", "Amoonguss", "Frillish", "Jellicent", "Alomomola", "Joltik", "Galvantula", "Ferroseed", "Ferrothorn", "Klink", "Klang", "Klinklang", "Tynamo", "Eelektrik", "Eelektross", "Elgyem", "Beheeyem", "Litwick", "Lampent", "Chandelure", "Axew", "Fraxure", "Haxorus", "Cubchoo", "Beartic", "Cryogonal", "Shelmet", "Accelgor", "Stunfisk", "Mienfoo", "Mienshao", "Druddigon", "Golett", "Golurk", "Pawniard", "Bisharp", "Bouffalant", "Rufflet", "Braviary", "Vullaby", "Mandibuzz", "Heatmor", "Durant", "Deino", "Zweilous", "Hydreigon", "Larvesta", "Volcarona", "Cobalion", "Terrakion", "Virizion", "Tornadus", "Thundurus", "Reshiram", "Zekrom", "Landorus", "Kyurem", "Keldeo", "Meloetta", "Genesect", "Chespin", "Quilladin", "Chesnaught", "Fennekin", "Braixen", "Delphox", "Froakie", "Frogadier", "Greninja", "Bunnelby", "Diggersby", "Fletchling", "Fletchinder", "Talonflame", "Scatterbug", "Spewpa", "Vivillon", "Litleo", "Pyroar", "Flabébé", "Floette", "Florges", "Skiddo", "Gogoat", "Pancham", "Pangoro", "Furfrou", "Espurr", "Meowstic", "Honedge", "Doublade", "Aegislash", "Spritzee", "Aromatisse", "Swirlix", "Slurpuff", "Inkay", "Malamar", "Binacle", "Barbaracle", "Skrelp", "Dragalge", "Clauncher", "Clawitzer", "Helioptile", "Heliolisk", "Tyrunt", "Tyrantrum", "Amaura", "Aurorus", "Sylveon", "Hawlucha", "Dedenne", "Carbink", "Goomy", "Sliggoo", "Goodra", "Klefki", "Phantump", "Trevenant", "Pumpkaboo", "Gourgeist", "Bergmite", "Avalugg", "Noibat", "Noivern", "Xerneas", "Yveltal", "Zygarde", "Diancie", "Hoopa", "Volcanion"];
         this.itemNames = {
@@ -1119,7 +1787,7 @@ var GermanTranslation = (function () {
         };
     }
     return GermanTranslation;
-}());
+}(EnglishTranslation));
 var Language;
 (function (Language) {
     Language[Language["English"] = 0] = "English";
@@ -1202,7 +1870,8 @@ $(function () {
     });
     var pokemonMenuManager = new PokemonMenuManager({
         translationManager: translationManager,
-        pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]')
+        pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
+        pokemonDetailsElement: $("#pokemon-info")
     });
     var profileInfoManager = new ProfileInfoManager({
         hideUsername: false,

@@ -16,7 +16,7 @@
     };
 
     public eventTypes = {
-        "pokestop": "pokéstop",
+        "pokestop": "pokestop",
         "catch": "catch",
         "snipe": "snipe",
         "evolve": "evolve",
@@ -25,4 +25,28 @@
         "incubator-status": "incubator",
         "egg-hatched": "hatched"
     };
+
+    public pokemonTypes: string[];
+
+    constructor() {
+        this.pokemonTypes = [];
+        this.pokemonTypes[PokemonType.Bug] = "Bug";
+        this.pokemonTypes[PokemonType.Grass] = "Grass";
+        this.pokemonTypes[PokemonType.Dark] = "Dark";
+        this.pokemonTypes[PokemonType.Ground] = "Ground";
+        this.pokemonTypes[PokemonType.Dragon] = "Dragon";
+        this.pokemonTypes[PokemonType.Ice] = "Ice";
+        this.pokemonTypes[PokemonType.Electric] = "Electric";
+        this.pokemonTypes[PokemonType.Normal] = "Normal";
+        this.pokemonTypes[PokemonType.Fairy] = "Fairy";
+        this.pokemonTypes[PokemonType.Poison] = "Poison";
+        this.pokemonTypes[PokemonType.Fighting] = "Fighting";
+        this.pokemonTypes[PokemonType.Psychic] = "Psychic";
+        this.pokemonTypes[PokemonType.Fire] = "Fire";
+        this.pokemonTypes[PokemonType.Rock] = "Rock";
+        this.pokemonTypes[PokemonType.Flying] = "Flying";
+        this.pokemonTypes[PokemonType.Steel] = "Steel";
+        this.pokemonTypes[PokemonType.Ghost] = "Ghost";
+        this.pokemonTypes[PokemonType.Water] = "Water";
+    }
 }

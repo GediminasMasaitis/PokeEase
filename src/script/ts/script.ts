@@ -20,7 +20,8 @@ $(() => {
 
     const pokemonMenuManager = new PokemonMenuManager({
         translationManager: translationManager,
-        pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]')
+        pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
+        pokemonDetailsElement: $("#pokemon-info")
     });
 
     const profileInfoManager = new ProfileInfoManager({

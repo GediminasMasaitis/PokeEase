@@ -33,10 +33,10 @@ $(document).ready(function () {
         $("#popup").fadeOut();
     });
 
-    $(".content").on("click", ".pokemon", function() {
-        $("#pokemon-info").fadeIn();
-        $("#content-wrap").addClass('blurred');
-    });
+    //$(".content").on("click", ".pokemon", function() {
+    //    $("#pokemon-info").fadeIn();
+    //    $("#content-wrap").addClass('blurred');
+    //});
 
     $("#pokemon-info").click(function() {
         $(this).fadeOut();

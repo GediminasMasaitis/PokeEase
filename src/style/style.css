@@ -843,7 +843,8 @@ body {
       padding: 5px 7px;
       padding-top: 8px;
       letter-spacing: 1px;
-      font-weight: 500; }
+      font-weight: 500;
+      cursor: pointer; }
       #pokemon-content .controls div i {
         display: block;
         font-size: 1.5em;
