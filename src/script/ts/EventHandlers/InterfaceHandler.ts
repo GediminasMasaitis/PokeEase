@@ -13,6 +13,7 @@
         this.currentlySniping = false;
         this.previousCaptureAttempts = [];
         this.itemsUsedForCapture = [];
+        this.exp = 0;
     }
 
     public onLocationUpdate = (location: IMapLocationEvent): void => {

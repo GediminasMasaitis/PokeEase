@@ -34,7 +34,7 @@
         StaticInfo.itemIds = itemIds;
 
         const totalExpForLevel: number[] = [];
-        totalExpForLevel[0] = 0;
+        totalExpForLevel[0] = -Infinity;
         totalExpForLevel[1] = 0;
         totalExpForLevel[2] = 1000;
         totalExpForLevel[3] = 3000;

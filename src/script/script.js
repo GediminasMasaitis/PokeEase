@@ -274,6 +274,7 @@ var InterfaceHandler = (function () {
         this.currentlySniping = false;
         this.previousCaptureAttempts = [];
         this.itemsUsedForCapture = [];
+        this.exp = 0;
     }
     InterfaceHandler.prototype.onFortTarget = function (fortTarget) {
     };
@@ -378,7 +379,7 @@ var StaticInfo = (function () {
         itemIds["ItemRazzBerry"] = 701;
         StaticInfo.itemIds = itemIds;
         var totalExpForLevel = [];
-        totalExpForLevel[0] = 0;
+        totalExpForLevel[0] = -Infinity;
         totalExpForLevel[1] = 0;
         totalExpForLevel[2] = 1000;
         totalExpForLevel[3] = 3000;
@@ -918,14 +919,24 @@ var NotificationManager = (function () {
             var element = $(html);
             element.click(_this.toggleExtendedInfo);
             element.find(".dismiss").click(_this.closeNotification);
+            var scrollTop = _this.config.container.scrollTop();
+            var innerHeight = _this.config.container.innerHeight();
+            var scrollHeight = _this.config.container[0].scrollHeight;
+            var scroll = scrollTop + innerHeight === scrollHeight;
             _this.config.container.append(element);
             _this.notifications.push({
                 event: event,
                 element: element
             });
-            _this.config.container.animate({
+            if (scroll) {
+                _this.scrollToBottom();
+            }
+        };
+        this.scrollToBottom = function () {
+            var animation = {
                 scrollTop: _this.config.container.prop("scrollHeight") - _this.config.container.height()
-            }, 100);
+            };
+            _this.config.container.animate(animation, 100);
         };
         this.toggleExtendedInfo = function (ev) {
             var notificationElement = $(ev.target).closest(".event");
@@ -1118,8 +1129,8 @@ $(function () {
     var client = new BotWSClient("ws://127.0.0.1:14252");
     var translationManager = new TranslationManager();
     var notificationManager = new NotificationManager({
-        container: $(".items"),
-        clearAllButton: $(".clear-all"),
+        container: $("#journal .items"),
+        clearAllButton: $("#journal .clear-all"),
         translationManager: translationManager
     });
     var mainMenuManager = new MainMenuManager({

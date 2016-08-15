@@ -162,20 +162,34 @@ CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp
         const element = $(html);
         element.click(this.toggleExtendedInfo);
         element.find(".dismiss").click(this.closeNotification);
+
+        const scrollTop = this.config.container.scrollTop();
+        const innerHeight = this.config.container.innerHeight();
+        const scrollHeight = this.config.container[0].scrollHeight;
+        const scroll = scrollTop + innerHeight === scrollHeight;
+
         this.config.container.append(element);
         this.notifications.push({
             event: event,
             element: element
         });
-        this.config.container.animate({
+        if (scroll) {
+            this.scrollToBottom();
+        }
+    }
+
+    private scrollToBottom = () => {
+        const animation = {
             scrollTop: this.config.container.prop("scrollHeight") - this.config.container.height()
-        }, 100);
+        };
+        this.config.container.animate(animation, 100);
     }
 
     private toggleExtendedInfo = (ev: JQueryEventObject): void => {
         const notificationElement =  $(ev.target).closest(".event");
         notificationElement.find(".extended-info").slideToggle(300);
     }
+
     private closeNotification = (ev: JQueryEventObject): void => {
         const closeButton = $(ev.target);
         const element = closeButton.closest(".event");

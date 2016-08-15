@@ -7,8 +7,8 @@ $(() => {
     const client = new BotWSClient("ws://127.0.0.1:14252");
     const translationManager = new TranslationManager();
     const notificationManager = new NotificationManager({
-        container: $(".items"),
-        clearAllButton: $(".clear-all"),
+        container: $("#journal .items"),
+        clearAllButton: $("#journal .clear-all"),
         translationManager: translationManager
     });
 
