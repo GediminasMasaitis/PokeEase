@@ -840,23 +840,51 @@ $event-incubator-status-color: #e9e1b5;
     vertical-align: middle;
 }
 
-#pokemon-content {
-    display: inline-block;
-    padding: 2em;
-    border-radius: 5px;
-    vertical-align: middle;
-    background: white;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
-
 #content-wrap.blurred {
     -webkit-filter: blur(5px);
     opacity: 0.2;
 }
 
+@keyframes SlideIn {
+    0% {transform: translateY(-40px);}
+    100% {transform: translateY(0);}
+}
+
 #pokemon-content {
 
+    display: inline-block;
+    padding: 2em;
+    border-radius: 5px;
+    position: relative;
+    vertical-align: middle;
+    background: white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
     line-height: 1.75;
+    overflow: hidden;
+    animation: SlideIn 1s cubic-bezier(0, 0, 0, 1);
+
+    i.close-button {
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 10px;
+        color: black;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    i.close-button:hover {
+        background: transparent !important;
+    }
+
+    i.close-button:before {
+        margin: 0 !important;
+        transition: 0.3s;
+    }
+
+    i.close-button:hover::before {
+        color: black !important;
+    }
 
     #pokemon-iv {
 
