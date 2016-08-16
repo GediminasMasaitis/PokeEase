@@ -5485,7 +5485,6 @@ class StaticInfo {
             });
             poke.possibleMoves = _.map(possibleMoves, move => move.moveId);
         }
-        console.log(pokemonInfo);
         StaticInfo.pokemonInfo = pokemonInfo;
         //#endregion
     };

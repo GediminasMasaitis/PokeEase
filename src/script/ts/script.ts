@@ -6,6 +6,7 @@
 
 $(() => {
     StaticInfo.init();
+    const settingsService = new LocalStorageSettingsService();
     const client = new BotWSClient("ws://127.0.0.1:14252");
     const translationController = new TranslationService();
     const notificationController = new NotificationController({

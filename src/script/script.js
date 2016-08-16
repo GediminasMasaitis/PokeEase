@@ -6421,7 +6421,6 @@ var StaticInfo = (function () {
         for (var i = 0; i < pokemonInfo.length; i++) {
             _loop_1(i);
         }
-        console.log(pokemonInfo);
         StaticInfo.pokemonInfo = pokemonInfo;
     };
     return StaticInfo;
@@ -6695,6 +6694,63 @@ var BotWSClient = (function () {
     }
     return BotWSClient;
 }());
+var DefaultSettings = (function () {
+    function DefaultSettings() {
+    }
+    Object.defineProperty(DefaultSettings, "settings", {
+        get: function () {
+            return {
+                testNum: 42
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return DefaultSettings;
+}());
+var LocalStorageSettingsService = (function () {
+    function LocalStorageSettingsService() {
+        var _this = this;
+        this.settingsKey = "settings";
+        this.load = function () {
+            var settingsJson = localStorage.getItem(_this.settingsKey);
+            if (!settingsJson) {
+                _this.reset();
+                _this.save();
+                return;
+            }
+            var loadedSettings = JSON.parse(settingsJson);
+            var defaultSettings = DefaultSettings.settings;
+            var mergedSettings = _this.mergeSettings([loadedSettings, defaultSettings]);
+            _this.settings = mergedSettings;
+        };
+        this.save = function () {
+            var settingsJson = JSON.stringify(_this.settings);
+            localStorage.setItem(_this.settingsKey, settingsJson);
+        };
+    }
+    LocalStorageSettingsService.prototype.mergeSettings = function (allSettings) {
+        return {
+            testNum: this.coalesceMap(allSettings, function (s) { return s.testNum; })
+        };
+    };
+    LocalStorageSettingsService.prototype.coalesceMap = function (inputs, map) {
+        var mapped = _.map(inputs, map);
+        return this.coalesce(mapped);
+    };
+    LocalStorageSettingsService.prototype.coalesce = function (inputs) {
+        for (var i = 0; i < inputs.length; i++) {
+            if (typeof inputs[i] !== "undefined") {
+                return inputs[i];
+            }
+        }
+        throw "No value found";
+    };
+    LocalStorageSettingsService.prototype.reset = function () {
+        this.settings = DefaultSettings.settings;
+    };
+    return LocalStorageSettingsService;
+}());
 var Language;
 (function (Language) {
     Language[Language["English"] = 0] = "English";
@@ -6845,6 +6901,7 @@ var TimeUtils = (function () {
 }());
 $(function () {
     StaticInfo.init();
+    var settingsService = new LocalStorageSettingsService();
     var client = new BotWSClient("ws://127.0.0.1:14252");
     var translationController = new TranslationService();
     var notificationController = new NotificationController({
