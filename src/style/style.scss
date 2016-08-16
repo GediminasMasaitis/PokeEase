@@ -775,8 +775,9 @@ $event-incubator-status-color: #e9e1b5;
     position: absolute;
     right: 0;
     left: 0;
-    top: 0;
+    top: 36px;
     bottom: 0;
+    z-index: 1;
 }
 
 #profile .xp-progress {

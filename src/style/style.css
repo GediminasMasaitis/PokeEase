@@ -695,8 +695,9 @@ body {
   position: absolute;
   right: 0;
   left: 0;
-  top: 0;
-  bottom: 0; }
+  top: 36px;
+  bottom: 0;
+  z-index: 1; }
 
 #profile .xp-progress {
   height: 2px;
