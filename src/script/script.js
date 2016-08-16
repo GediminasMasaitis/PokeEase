@@ -6596,7 +6596,7 @@ var NotificationManager = (function () {
             var scrollTop = _this.config.container.scrollTop();
             var innerHeight = _this.config.container.innerHeight();
             var scrollHeight = _this.config.container[0].scrollHeight;
-            var atBottom = scrollTop + innerHeight > scrollHeight - 100;
+            var atBottom = scrollTop + innerHeight > scrollHeight - 200;
             return atBottom;
         };
         this.scrollToBottom = function () {

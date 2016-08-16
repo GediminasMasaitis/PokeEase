@@ -196,7 +196,7 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
         const scrollTop = this.config.container.scrollTop();
         const innerHeight = this.config.container.innerHeight();
         const scrollHeight = this.config.container[0].scrollHeight;
-        const atBottom = scrollTop + innerHeight > scrollHeight - 100;
+        const atBottom = scrollTop + innerHeight > scrollHeight - 200;
         return atBottom;
     }
 
