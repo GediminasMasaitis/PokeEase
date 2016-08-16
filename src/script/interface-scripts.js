@@ -197,8 +197,8 @@ function addCircleProgress() {
 
     $('.content[data-category="eggs"] .egg').each(function() {
 
-        done = parseInt($(this).find('b').text());
-        total = parseInt($(this).find('i').text());
+        done = parseFloat($(this).find('b').text());
+        total = parseFloat($(this).find('i').text());
 
         $(this).children('.circle').circleProgress({
             value: (done / total),
