@@ -5723,7 +5723,6 @@ var CaptureMarker = (function (_super) {
                 'background-repeat': 'no-repeat',
                 'width': "40px",
                 'height': "40px",
-                'border-radius': '20px',
                 'margin': "5px"
             });
             d.append(i);
