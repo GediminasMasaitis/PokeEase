@@ -167,11 +167,18 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
         }
 
+        else if (_.includes(type, "EggListEvent")) {
+            const eggList = message as IEggListEvent;
+            eggList.Incubators = message.Incubators.$values;
+            eggList.UnusedEggs = message.UnusedEggs.$values;
+            eggList.Timestamp = timestamp;
+            _.each(this.config.eventHandlers, eh => eh.onEggList(eggList));
+        }
+
         else if (_.includes(type, "InventoryListEvent")) {
-            const inventoryList: IInventoryListEvent = {
-                Items: message.Items.$values,
-                Timestamp: timestamp
-            };
+            const inventoryList = message as IInventoryListEvent;
+            inventoryList.Items = message.Items.$values;
+            inventoryList.Timestamp = timestamp;
             _.each(this.config.eventHandlers, eh => eh.onInventoryList(inventoryList));
         }
 

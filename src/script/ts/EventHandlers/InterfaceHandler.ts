@@ -161,8 +161,12 @@
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
     }
 
+    public onEggList(eggList: IEggListEvent): void {
+
+    }
+
     public onInventoryList(inventoryList: IInventoryListEvent): void {
-        //this.config.pokemonMenuManager.updatePokemonList(pokemonList);
+
     }
 
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {

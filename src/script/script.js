@@ -130,6 +130,19 @@ var BotWSClient = (function () {
                 });
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
             }
+            else if (_.includes(type, "EggListEvent")) {
+                var eggList_1 = message;
+                eggList_1.Incubators = message.Incubators.$values;
+                eggList_1.UnusedEggs = message.UnusedEggs.$values;
+                eggList_1.Timestamp = timestamp;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_1); });
+            }
+            else if (_.includes(type, "InventoryListEvent")) {
+                var inventoryList_1 = message;
+                inventoryList_1.Items = message.Items.$values;
+                inventoryList_1.Timestamp = timestamp;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onInventoryList(inventoryList_1); });
+            }
             else if (_.includes(type, "PlayerStatsEvent")) {
                 var originalStats = message.PlayerStats.$values[0];
                 var playerStats_1 = originalStats;
@@ -357,6 +370,10 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
+    };
+    InterfaceHandler.prototype.onEggList = function (eggList) {
+    };
+    InterfaceHandler.prototype.onInventoryList = function (inventoryList) {
     };
     InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
         this.exp = playerStats.Experience;
