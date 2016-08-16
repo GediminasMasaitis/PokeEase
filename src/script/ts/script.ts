@@ -7,53 +7,53 @@
 $(() => {
     StaticInfo.init();
     const client = new BotWSClient("ws://127.0.0.1:14252");
-    const translationManager = new TranslationManager();
-    const notificationManager = new NotificationManager({
+    const translationController = new TranslationService();
+    const notificationController = new NotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
-        translationManager: translationManager
+        translationController: translationController
     });
 
-    const mainMenuManager = new MainMenuManager({
+    const mainMenuController = new MainMenuController({
         requestSender: client,
         mainMenuElement: $("#menu")
     });
 
-    const pokemonMenuManager = new PokemonMenuManager({
-        translationManager: translationManager,
+    const pokemonMenuController = new PokemonMenuController({
+        translationController: translationController,
         requestSender: client,
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
         pokemonDetailsElement: $("#pokemon-info"),
         pokemonLoadingSpinner: $(".spinner-overlay")
     });
 
-    const inventoryMenuManager = new InventoryMenuManager({
-        translationManager: translationManager,
+    const inventoryMenuController = new InventoryMenuController({
+        translationController: translationController,
         requestSender: client,
         inventoryMenuElement: $('body .content[data-category="items"]'),
         inventoryLoadingSpinner: $(".spinner-overlay")
     });
 
-    const profileInfoManager = new ProfileInfoManager({
+    const profileInfoController = new ProfileInfoController({
         hideUsername: false,
         profileInfoElement: $("#profile")
     });
 
     const mapConfig: IMapConfig = {
         followPlayer: true,
-        translationManager: translationManager
+        translationController: translationController
     };
 
     const useGoogleMap = true;
     const lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
 
     const interfaceHandler = new InterfaceHandler({
-        translationManager: translationManager,
-        notificationManager: notificationManager,
-        mainMenuManager: mainMenuManager,
-        pokemonMenuManager: pokemonMenuManager,
-        inventoryMenuManager: inventoryMenuManager,
-        profileInfoManager: profileInfoManager,
+        translationController: translationController,
+        notificationController: notificationController,
+        mainMenuController: mainMenuController,
+        pokemonMenuController: pokemonMenuController,
+        inventoryMenuController: inventoryMenuController,
+        profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap
     });

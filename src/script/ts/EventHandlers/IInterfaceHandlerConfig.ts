@@ -1,10 +1,10 @@
 ﻿interface IInterfaceHandlerConfig {
-    notificationManager: INotificationManager;
-    translationManager: ITranslationManager;
-    mainMenuManager: IMainMenuManager;
-    pokemonMenuManager: IPokemonMenuManager;
-    inventoryMenuManager: IInventoryMenuManager;
-    profileInfoManager: IProfileInfoManager;
+    notificationController: INotificationController;
+    translationController: ITranslationService;
+    mainMenuController: IMainMenuController;
+    pokemonMenuController: IPokemonMenuController;
+    inventoryMenuController: IInventoryMenuController;
+    profileInfoController: IProfileInfoController;
     requestSender: IRequestSender,
     map: IMap;
 }

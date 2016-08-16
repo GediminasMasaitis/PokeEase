@@ -3,245 +3,978 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var BotWSClient = (function () {
-    function BotWSClient(url) {
+var MainMenuController = (function () {
+    function MainMenuController(config) {
         var _this = this;
-        this.start = function (config) {
-            _this.config = config;
-            _this.webSocket = new WebSocket(_this.url);
-            _this.webSocket.onopen = _this.clientOnOpen;
-            _this.webSocket.onmessage = _this.clientOnMessage;
-            _this.webSocket.onclose = _this.clientOnClose;
-            _this.webSocket.onerror = _this.clientOnError;
-            _this.running = true;
+        this.onPokemonMenuClick = function (ev) {
+            _this.config.requestSender.sendPokemonListRequest();
         };
-        this.stop = function () {
-            _this.running = false;
-            _this.webSocket.close();
+        this.onItemsMenuClick = function (ev) {
+            _this.config.requestSender.sendInventoryListRequest();
         };
-        this.clientOnOpen = function (event) {
-            console.log("WebSocket connected to " + _this.webSocket.url);
+        this.updateProfileData = function (profile) {
         };
-        this.clientOnClose = function (event) {
-            console.log("WebSocket closed", event);
-            if (_this.running) {
-                setTimeout(function () {
-                    _this.start(_this.config);
-                }, 2000);
-            }
-        };
-        this.clientOnError = function (event) {
-        };
-        this.clientOnMessage = function (event) {
-            var message = JSON.parse(event.data);
-            var timestamp = Date.now();
-            message.Timestamp = timestamp;
-            console.log("%c<<< INCOMING", "color: green", message);
-            var type = message.$type;
-            if (_.includes(type, "UpdatePositionEvent")) {
-                var mapLocation_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdatePosition(mapLocation_1); });
-            }
-            else if (_.includes(type, "PokeStopListEvent")) {
-                var forts_1 = message.Forts.$values;
-                _.each(forts_1, function (fort) { return fort.Timestamp = timestamp; });
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokeStopList(forts_1); });
-            }
-            else if (_.includes(type, "FortTargetEvent")) {
-                var fortTarget_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onFortTarget(fortTarget_1); });
-            }
-            else if (_.includes(type, "FortUsedEvent")) {
-                var fortUsed_1 = message;
-                fortUsed_1.ItemsList = _this.parseItemString(fortUsed_1.Items);
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onFortUsed(fortUsed_1); });
-            }
-            else if (_.includes(type, "ProfileEvent")) {
-                var profile_1 = message.Profile;
-                profile_1.Timestamp = timestamp;
-                profile_1.PlayerData.PokeCoin = _this.getCurrency(message, "POKECOIN");
-                profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
-            }
-            else if (_.includes(type, "UseBerry")) {
-                var useBerry_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onUseBerry(useBerry_1); });
-            }
-            else if (_.includes(type, "PokemonCaptureEvent")) {
-                var pokemonCapture_1 = message;
-                pokemonCapture_1.IsSnipe = _this.currentlySniping;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonCapture(pokemonCapture_1); });
-            }
-            else if (_.includes(type, "EvolveCountEvent")) {
-                var evolveCount_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onEvolveCount(evolveCount_1); });
-            }
-            else if (_.includes(type, "PokemonEvolveEvent")) {
-                var pokemonEvolve_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonEvolve(pokemonEvolve_1); });
-            }
-            else if (_.includes(type, "SnipeScanEvent")) {
-                var snipeScan_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeScan(snipeScan_1); });
-            }
-            else if (_.includes(type, "SnipeModeEvent")) {
-                var snipeMode_1 = message;
-                _this.currentlySniping = snipeMode_1.Active;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMode(snipeMode_1); });
-            }
-            else if (_.includes(type, "SnipeEvent")) {
-                var snipeMessage_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMessage(snipeMessage_1); });
-            }
-            else if (_.includes(type, "UpdateEvent")) {
-                var updateEvent_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdate(updateEvent_1); });
-            }
-            else if (_.includes(type, "WarnEvent")) {
-                var warnEvent_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onWarn(warnEvent_1); });
-            }
-            else if (_.includes(type, "EggHatchedEvent")) {
-                var eggHatched_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onEggHatched(eggHatched_1); });
-            }
-            else if (_.includes(type, "EggIncubatorStatusEvent")) {
-                var incubatorStatus_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onIncubatorStatus(incubatorStatus_1); });
-            }
-            else if (_.includes(type, "ItemRecycledEvent")) {
-                var itemRecycle_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onItemRecycle(itemRecycle_1); });
-            }
-            else if (_.includes(type, "TransferPokemonEvent")) {
-                var pokemonTransfer_1 = message;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
-            }
-            else if (_.includes(type, "PokemonListEvent")) {
-                var pokemonList_1 = {
-                    Pokemons: [],
-                    Timestamp: timestamp
-                };
-                _.each(message.PokemonList.$values, function (val) {
-                    var pokemon = val.Item1;
-                    pokemon.Perfection = val.Item2;
-                    pokemon.FamilyCandies = val.Item3;
-                    pokemonList_1.Pokemons.push(pokemon);
-                });
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
-            }
-            else if (_.includes(type, "EggListEvent")) {
-                var eggList_1 = message;
-                eggList_1.Incubators = message.Incubators.$values;
-                eggList_1.UnusedEggs = message.UnusedEggs.$values;
-                eggList_1.Timestamp = timestamp;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_1); });
-            }
-            else if (_.includes(type, "InventoryListEvent")) {
-                var inventoryList_1 = message;
-                inventoryList_1.Items = message.Items.$values;
-                inventoryList_1.Timestamp = timestamp;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onInventoryList(inventoryList_1); });
-            }
-            else if (_.includes(type, "PlayerStatsEvent")) {
-                var originalStats = message.PlayerStats.$values[0];
-                var playerStats_1 = originalStats;
-                playerStats_1.Experience = parseInt(originalStats.Experience);
-                playerStats_1.NextLevelXp = parseInt(originalStats.NextLevelXp);
-                playerStats_1.PrevLevelXp = parseInt(originalStats.PrevLevelXp);
-                playerStats_1.PokemonCaughtByType = originalStats.PokemonCaughtByType.$values;
-                playerStats_1.Timestamp = timestamp;
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onPlayerStats(playerStats_1); });
-            }
-            else {
-                _.each(_this.config.eventHandlers, function (eh) {
-                    if (eh.onUnknownEvent) {
-                        eh.onUnknownEvent(message);
+        this.config = config;
+        this.config.mainMenuElement.find("#pokemons").click(this.onPokemonMenuClick);
+        this.config.mainMenuElement.find("#items").click(this.onItemsMenuClick);
+    }
+    return MainMenuController;
+}());
+var CaptureMarker = (function (_super) {
+    __extends(CaptureMarker, _super);
+    function CaptureMarker(latlng, map, args) {
+        _super.call(this);
+        this.latlng = latlng;
+        this.args = args;
+        this.setMap(map);
+    }
+    CaptureMarker.prototype.draw = function () {
+        var div = this.div;
+        if (!div) {
+            div = this.div = document.createElement('div');
+            var innerdiv = document.createElement('div');
+            var d = $(div);
+            var i = $(innerdiv);
+            d.addClass('marker');
+            d.css({
+                'position': "absolute",
+                'width': "60px",
+                'height': "60px",
+                'z-index': "99999"
+            });
+            if (this.args.PokemonId !== 'undefined')
+                i.css({ 'background-image': "url(images/pokemon/" + this.args.PokemonId + ".png)" });
+            i.css({
+                'background-size': "contain",
+                'background-position': "center center",
+                'background-repeat': 'no-repeat',
+                'width': "40px",
+                'height': "40px",
+                'margin': "5px"
+            });
+            d.append(i);
+            var panes = this.getPanes();
+            panes.overlayLayer.appendChild(div);
+        }
+        var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
+        if (point) {
+            div.style.left = (point.x - 10) + 'px';
+            div.style.top = (point.y - 20) + 'px';
+        }
+    };
+    CaptureMarker.prototype.getPosition = function () {
+        return this.latlng;
+    };
+    return CaptureMarker;
+}(google.maps.OverlayView));
+var GoogleMap = (function () {
+    function GoogleMap(config) {
+        var _this = this;
+        this.locationHistory = [];
+        this.pokestopMarkers = {};
+        this.pokestopEvents = {};
+        this.gymMarkers = {};
+        this.gymEvents = {};
+        this.capMarkers = [];
+        this.movePlayer = function (position) {
+            var posArr = [position.Latitude, position.Longitude];
+            var pos = new google.maps.LatLng(posArr[0], posArr[1]);
+            _this.playerMarker.setPosition(pos);
+            if (_this.config.followPlayer) {
+                var from = { lat: _this.map.getCenter().lat(), lng: _this.map.getCenter().lng() };
+                var to = { lat: posArr[0], lng: posArr[1] };
+                var currentMap = _this.map;
+                $(from).animate(to, {
+                    duration: 200,
+                    step: function (cs, t) {
+                        var newPos;
+                        if (t.prop === "lat")
+                            newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
+                        if (t.prop === "lng")
+                            newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
+                        currentMap.setCenter(newPos);
                     }
                 });
             }
+            _this.locationHistory.push({ lat: posArr[0], lng: posArr[1] });
+            _this.locationLine = new google.maps.Polyline({
+                path: _this.locationHistory,
+                geodesic: true,
+                strokeColor: '#00FFFF',
+                strokeOpacity: 0.7,
+                strokeWeight: 4
+            });
+            _this.locationLine.setMap(_this.map);
         };
-        this.sendPokemonListRequest = function () {
-            var request = {
-                Command: "PokemonList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendEggsListRequest = function () {
-            var request = {
-                Command: "EggsList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEggsListRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendInventoryListRequest = function () {
-            var request = {
-                Command: "InventoryList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendInventoryListRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendPlayerStatsRequest = function () {
-            var request = {
-                Command: "PlayerStats"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendGetPokemonSettingsRequest = function () {
-            var request = {
-                Command: "GetPokemonSettings"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendGetPokemonSettingsRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendTransferPokemonRequest = function (pokemonId) {
-            var request = {
-                Command: "TransferPokemon",
-                Data: pokemonId.toString()
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendTransferPokemonRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendEvolvePokemonRequest = function (pokemonId) {
-            var request = {
-                Command: "EvolvePokemon",
-                Data: pokemonId.toString()
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEvolvePokemonRequest(request); });
-            _this.sendRequest(request);
-        };
-        this.sendRequest = function (request) {
-            console.log("%c>>> OUTGOING:", "color: red", request);
-            var requestStr = JSON.stringify(request);
-            _this.webSocket.send(requestStr);
-        };
-        this.parseItemString = function (itemStr) {
-            var itemParseRegex = /(\d+) x (.+?)(?:,|$)/g;
-            var itemsList = [];
-            while (true) {
-                var regexResults = itemParseRegex.exec(itemStr);
-                if (regexResults === null) {
-                    break;
+        this.setPokeStops = function (pokeStops) {
+            var incomingPokestops = {};
+            _.each(pokeStops, function (stop) { incomingPokestops[stop.Id] = stop; });
+            _.each(_this.pokestopEvents, function (stop) {
+                if (!(stop.Id in incomingPokestops)) {
+                    _this.pokestopMarkers[stop.Id].setMap(null);
+                    delete _this.pokestopMarkers[stop.Id];
+                    delete _this.pokestopEvents[stop.Id];
                 }
-                itemsList.push({
-                    Count: parseInt(regexResults[1]),
-                    Name: regexResults[2]
-                });
+            });
+            _.each(incomingPokestops, function (stop) {
+                if (!(stop.Id in _this.pokestopEvents)) {
+                    _this.pokestopEvents[stop.Id] = stop;
+                    _this.pokestopMarkers[stop.Id] = _this.createStopMarker(stop);
+                }
+            });
+            _.each(pokeStops, function (pstop) {
+                if (pstop.LastModifiedTimestampMs > _this.pokestopEvents[pstop.Id].LastModifiedTimestampMs) {
+                    _this.pokestopMarkers[pstop.Id].setIcon(_this.getStopIconData(pstop.Status));
+                    _this.pokestopEvents[pstop.Id] = pstop;
+                }
+            });
+        };
+        this.setGyms = function (gyms) {
+            var incomingGyms = {};
+            _.each(gyms, function (g) { incomingGyms[g.Id] = g; });
+            _.each(_this.gymEvents, function (g) {
+                if (!(g.Id in incomingGyms)) {
+                    _this.pokestopMarkers[g.Id].setMap(null);
+                    delete _this.gymMarkers[g.Id];
+                    delete _this.gymEvents[g.Id];
+                }
+            });
+            _.each(incomingGyms, function (g) {
+                if (!(g.Id in _this.gymEvents)) {
+                    _this.gymEvents[g.Id] = g;
+                    _this.gymMarkers[g.Id] = _this.createGymMarker(g);
+                }
+            });
+        };
+        this.config = config;
+        var mapStyle = [
+            {
+                "featureType": "all",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#293037"
+                    }
+                ]
+            },
+            {
+                "featureType": "all",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "gamma": 0.01
+                    },
+                    {
+                        "lightness": 20
+                    },
+                    {
+                        "color": "#949aa6"
+                    }
+                ]
+            },
+            {
+                "featureType": "all",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "saturation": -31
+                    },
+                    {
+                        "lightness": -33
+                    },
+                    {
+                        "weight": 2
+                    },
+                    {
+                        "gamma": "0.00"
+                    },
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "all",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.country",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.province",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.locality",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.locality",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.neighborhood",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative.land_parcel",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "lightness": 30
+                    },
+                    {
+                        "saturation": 30
+                    },
+                    {
+                        "color": "#344150"
+                    },
+                    {
+                        "visibility": "on"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "saturation": "0"
+                    },
+                    {
+                        "lightness": "0"
+                    },
+                    {
+                        "gamma": "0.30"
+                    },
+                    {
+                        "weight": "0.01"
+                    },
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "lightness": "100"
+                    },
+                    {
+                        "saturation": -20
+                    },
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "color": "#344150"
+                    },
+                    {
+                        "gamma": "0.92"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "lightness": 10
+                    },
+                    {
+                        "saturation": -30
+                    },
+                    {
+                        "color": "#28323f"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "saturation": "-100"
+                    },
+                    {
+                        "lightness": "-100"
+                    },
+                    {
+                        "gamma": "0.00"
+                    },
+                    {
+                        "color": "#282f38"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "on"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.text",
+                "stylers": [
+                    {
+                        "visibility": "on"
+                    },
+                    {
+                        "color": "#575e6b"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#232c37"
+                    },
+                    {
+                        "visibility": "on"
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "visibility": "simplified"
+                    },
+                    {
+                        "color": "#222935"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.station.airport",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "all",
+                "stylers": [
+                    {
+                        "lightness": -20
+                    },
+                    {
+                        "color": "#212a35"
+                    }
+                ]
             }
-            return itemsList;
+        ];
+        var mapOptions = {
+            zoom: 16,
+            center: new google.maps.LatLng(0, 0),
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            styles: mapStyle,
+            mapTypeControl: false,
+            scaleControl: false,
+            zoomControl: false,
         };
-        this.getCurrency = function (message, currencyName) {
-            var currencies = message.Profile.PlayerData.Currencies.$values;
-            var currency = _.find(currencies, function (x) { return x.Name === currencyName; });
-            return currency.Amount;
-        };
-        this.url = url;
-        this.currentlySniping = false;
-        this.running = false;
+        this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        this.playerMarker = new google.maps.Marker({
+            map: this.map,
+            position: new google.maps.LatLng(51.5073509, -0.12775829999998223),
+            icon: {
+                url: "images/markers/location.png",
+                scaledSize: new google.maps.Size(50, 55)
+            },
+            zIndex: 300
+        });
     }
-    return BotWSClient;
+    GoogleMap.prototype.usePokeStop = function (pokeStopUsed) {
+        var setStatus = PokeStopStatus.Visited;
+        if (this.pokestopEvents[pokeStopUsed.Id].Status === PokeStopStatus.Lure)
+            setStatus = PokeStopStatus.VisitedLure;
+        this.pokestopMarkers[pokeStopUsed.Id].setIcon(this.getStopIconData(setStatus));
+        this.pokestopEvents[pokeStopUsed.Id].Status = setStatus;
+    };
+    GoogleMap.prototype.onPokemonCapture = function (pokemonCapture) {
+        console.log(pokemonCapture);
+        var captureMarker = new CaptureMarker(new google.maps.LatLng(pokemonCapture.Latitude, pokemonCapture.Longitude), this.map, {
+            PokemonId: pokemonCapture.Id
+        });
+        this.capMarkers.push(captureMarker);
+    };
+    GoogleMap.prototype.createStopMarker = function (pstop) {
+        var psMarker = new google.maps.Marker({
+            map: this.map,
+            position: new google.maps.LatLng(pstop.Latitude, pstop.Longitude),
+            icon: this.getStopIconData(pstop.Status),
+            zIndex: 100
+        });
+        return psMarker;
+    };
+    GoogleMap.prototype.getStopIconData = function (status) {
+        var stopImage = "images/markers/";
+        switch (status) {
+            case PokeStopStatus.Normal:
+                stopImage += "Normal.png";
+                break;
+            case PokeStopStatus.Lure:
+                stopImage += "Lured.png";
+                break;
+            case PokeStopStatus.Visited:
+                stopImage += "Visited.png";
+                break;
+            case PokeStopStatus.VisitedLure:
+                stopImage += "VisitedLure.png";
+                break;
+            default:
+                stopImage += "Normal.png";
+                break;
+        }
+        return {
+            url: stopImage,
+            scaledSize: new google.maps.Size(50, 50)
+        };
+    };
+    GoogleMap.prototype.createGymMarker = function (gym) {
+        var gMarker = new google.maps.Marker({
+            map: this.map,
+            position: new google.maps.LatLng(gym.Latitude, gym.Longitude),
+            icon: this.getGymIconData(gym),
+            zIndex: 100
+        });
+        return gMarker;
+    };
+    GoogleMap.prototype.getGymIconData = function (gym) {
+        var stopImage = "images/markers/";
+        switch (gym.OwnedByTeam) {
+            case PlayerTeam.Instinct:
+                stopImage += "instinct.png";
+                break;
+            case PlayerTeam.Mystic:
+                stopImage += "mystic.png";
+                break;
+            case PlayerTeam.Valor:
+                stopImage += "valor.png";
+                break;
+            case PlayerTeam.Neutral:
+                stopImage += "unoccupied.png";
+                break;
+            default:
+                stopImage += "unoccupied.png";
+                break;
+        }
+        return {
+            url: stopImage,
+            scaledSize: new google.maps.Size(50, 50)
+        };
+    };
+    return GoogleMap;
+}());
+var LeafletMap = (function () {
+    function LeafletMap(config) {
+        var _this = this;
+        this.movePlayer = function (position) {
+            var posArr = [position.Latitude, position.Longitude];
+            _this.playerMarker.setLatLng(posArr);
+            _this.playerPath.addLatLng(posArr);
+            if (_this.config.followPlayer) {
+                _this.map.setView(posArr);
+            }
+        };
+        this.setPokeStops = function (pokeStops) {
+            _.each(_this.pokeStops, function (m) { return _this.map.removeLayer(m.LMarker); });
+            _this.pokeStops = [];
+            _.each(pokeStops, function (pokeStop) {
+                var posArr = [pokeStop.Latitude, pokeStop.Longitude];
+                var marker = new L.Marker(posArr, {
+                    icon: _this.pokeStopIcons[pokeStop.Status]
+                });
+                _this.map.addLayer(marker);
+                pokeStop.LMarker = marker;
+                _this.pokeStops.push(pokeStop);
+            });
+        };
+        this.setGyms = function (gyms) {
+            _.each(_this.gyms, function (gym) { return _this.map.removeLayer(gym.LMarker); });
+            _this.gyms = [];
+            _.each(gyms, function (gym) {
+                var posArr = [gym.Latitude, gym.Longitude];
+                var marker = new L.Marker(posArr, {
+                    icon: _this.gymIcons[gym.OwnedByTeam]
+                });
+                _this.map.addLayer(marker);
+                gym.LMarker = marker;
+                _this.gyms.push(gym);
+            });
+        };
+        this.config = config;
+        this.map = L.map("map", {
+            zoomControl: false
+        }).setView([0, 0], 16);
+        var mainLayer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png");
+        mainLayer.addTo(this.map);
+        this.pokeStops = [];
+        this.gyms = [];
+        this.pokemons = [];
+        this.playerPath = L.polyline([], {
+            color: "cyan",
+            opacity: 1
+        });
+        this.playerPath.addTo(this.map);
+        this.playerMarker = L.marker([0, 0], {
+            icon: new L.Icon({
+                iconUrl: "images/markers/location.png",
+                iconSize: [50, 55],
+                iconAnchor: [25, 45]
+            })
+        });
+        this.playerMarker.addTo(this.map);
+        this.pokeStopIcons = [];
+        this.pokeStopIcons[PokeStopStatus.Normal] = new L.Icon({
+            iconUrl: "images/markers/Normal.png",
+            iconSize: [48, 48]
+        });
+        this.pokeStopIcons[PokeStopStatus.Visited] = new L.Icon({
+            iconUrl: "images/markers/Visited.png",
+            iconSize: [48, 48]
+        });
+        this.pokeStopIcons[PokeStopStatus.Lure] = new L.Icon({
+            iconUrl: "images/markers/Lured.png",
+            iconSize: [48, 48]
+        });
+        this.pokeStopIcons[PokeStopStatus.VisitedLure] = new L.Icon({
+            iconUrl: "images/markers/VisitedLure.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons = [];
+        this.gymIcons[PlayerTeam.Neutral] = new L.Icon({
+            iconUrl: "images/markers/unoccupied.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[PlayerTeam.Mystic] = new L.Icon({
+            iconUrl: "images/markers/mystic.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[PlayerTeam.Valor] = new L.Icon({
+            iconUrl: "images/markers/valor.png",
+            iconSize: [48, 48]
+        });
+        this.gymIcons[PlayerTeam.Instinct] = new L.Icon({
+            iconUrl: "images/markers/instinct.png",
+            iconSize: [48, 48]
+        });
+    }
+    LeafletMap.prototype.usePokeStop = function (pokeStopUsed) {
+        var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
+        var icon = pokeStop.LureInfo === null
+            ? this.pokeStopIcons[PokeStopStatus.Visited]
+            : this.pokeStopIcons[PokeStopStatus.VisitedLure];
+        pokeStop.LMarker.setIcon(icon);
+    };
+    LeafletMap.prototype.onPokemonCapture = function (pokemonCapture) {
+        var _this = this;
+        var posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
+        var img = new Image();
+        var imgUrl = "images/pokemon/" + pokemonCapture.Id + ".png";
+        var maxWidth = 42;
+        var maxHeight = 38;
+        img.onload = function () {
+            var widthScaleFactor = maxWidth / img.width;
+            var heightScaleFactor = maxHeight / img.height;
+            var scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
+            if (scaleFactor > 1) {
+                scaleFactor = 1;
+            }
+            var width = img.width * scaleFactor;
+            var height = img.height * scaleFactor;
+            var marker = new L.Marker(posArr, {
+                icon: new L.Icon({
+                    iconUrl: imgUrl,
+                    iconSize: [width, height]
+                })
+            });
+            _this.map.addLayer(marker);
+            pokemonCapture.LMarker = marker;
+            _this.pokemons.push(pokemonCapture);
+        };
+        img.src = imgUrl;
+    };
+    return LeafletMap;
+}());
+var EggMenuController = (function () {
+    function EggMenuController(config) {
+        var _this = this;
+        this.eggListRequested = function (request) {
+            _this.config.eggLoadingSpinner.show();
+        };
+        this.updateEggList = function (eggList) {
+        };
+        this.config = config;
+    }
+    return EggMenuController;
+}());
+var InventoryMenuController = (function () {
+    function InventoryMenuController(config) {
+        var _this = this;
+        this.inventoryListRequested = function (request) {
+            _this.config.inventoryLoadingSpinner.show();
+        };
+        this.updateInventoryList = function (inventoryList) {
+            var currentItems = _this.config.inventoryMenuElement.find(".product");
+            currentItems.removeClass("brighter");
+            currentItems.find(".number").text(0);
+            for (var i = 0; i < inventoryList.Items.length; i++) {
+                var item = inventoryList.Items[i];
+                var itemElement = _this.config.inventoryMenuElement.find(".product[data-item-id=\"" + item.ItemId + "\"]");
+                itemElement.addClass("brighter");
+                itemElement.find(".number").text(item.Count);
+            }
+            _this.config.inventoryLoadingSpinner.fadeOut(150);
+        };
+        this.config = config;
+    }
+    return InventoryMenuController;
+}());
+var PokemonMenuController = (function () {
+    function PokemonMenuController(config) {
+        var _this = this;
+        this.pokemonListRequested = function (request) {
+            _this.config.pokemonLoadingSpinner.show();
+        };
+        this.updatePokemonList = function (pokemonList) {
+            _this.config.pokemonMenuElement.find(".pokemon").remove();
+            _this.pokemonList = pokemonList;
+            for (var i = 0; i < pokemonList.Pokemons.length; i++) {
+                var pokemon = pokemonList.Pokemons[i];
+                var pokemonName = _this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
+                var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
+                var html = "<div class=\"pokemon\">\n    <h1 class=\"name\">" + pokemonName + "</h1>\n    <div class=\"image-container\">\n        <img src=\"images/pokemon/" + pokemon.PokemonId + ".png\"/>\n    </div>\n    <h3 class=\"cp\">" + pokemon.Cp + "</h3>\n    <h3 class=\"iv\">" + roundedIv + "</h3>\n</div>";
+                var pokemonElement = $(html);
+                pokemonElement.prop("pokemon-index", i);
+                pokemonElement.click(_this.pokemonClick);
+                _this.config.pokemonMenuElement.append(pokemonElement);
+            }
+            _this.config.pokemonLoadingSpinner.fadeOut(150);
+        };
+        this.pokemonClick = function (ev) {
+            var pokemonBox = $(ev.target).closest(".pokemon");
+            var pokemonIndex = pokemonBox.prop("pokemon-index");
+            var pokemon = _this.pokemonList.Pokemons[pokemonIndex];
+            _this.currentPokemon = pokemon;
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
+            var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
+            var evolveButton = _this.config.pokemonDetailsElement.find("#evolve-pokemon-button");
+            if (StaticInfo.pokemonInfo[pokemon.PokemonId].evolvesInto.length === 0) {
+                evolveButton.hide();
+            }
+            else {
+                evolveButton.show();
+            }
+            _this.config.pokemonDetailsElement.find("#pokemon-info-name").text(pokemonName);
+            _this.config.pokemonDetailsElement.find("#pokemon-info-image").attr("src", "images/pokemon/" + pokemon.PokemonId + ".png");
+            _this.config.pokemonDetailsElement.find(".attack").text(pokemon.IndividualAttack);
+            _this.config.pokemonDetailsElement.find(".defense").text(pokemon.IndividualDefense);
+            _this.config.pokemonDetailsElement.find(".stamina").text(pokemon.IndividualStamina);
+            _this.config.pokemonDetailsElement.find(".total-iv").text(roundedIv + "%");
+            _this.config.pokemonDetailsElement.find(".poke-cp").text("" + pokemon.Cp);
+            var move1Name = StaticInfo.moveInfo[pokemon.Move1] ? StaticInfo.moveInfo[pokemon.Move1].name : "Unknown move";
+            var move2Name = StaticInfo.moveInfo[pokemon.Move2] ? StaticInfo.moveInfo[pokemon.Move2].name : "Unknown move";
+            var pokemonInfo = StaticInfo.pokemonInfo[pokemon.PokemonId];
+            var elementElement = _this.config.pokemonDetailsElement.find("#pokemon-type");
+            elementElement.html("");
+            for (var i = 0; i < pokemonInfo.elements.length; i++) {
+                var elementStr = PokeElement[pokemonInfo.elements[i]].toLowerCase();
+                var elementHtml = "<span class=\"" + elementStr + "\">" + elementStr + "</span>";
+                var el = $(elementHtml);
+                elementElement.append(el);
+            }
+            _this.config.pokemonDetailsElement.find(".move1").text(move1Name);
+            _this.config.pokemonDetailsElement.find(".move2").text(move2Name);
+            _this.config.pokemonMenuElement.closest("#content-wrap").addClass("blurred");
+            _this.config.pokemonDetailsElement.fadeIn();
+        };
+        this.transferPokemon = function (ev) {
+            var pokemonUniqueId = _this.currentPokemon.Id;
+            _this.config.requestSender.sendTransferPokemonRequest(pokemonUniqueId);
+        };
+        this.evolvePokemon = function (ev) {
+            var pokemonUniqueId = _this.currentPokemon.Id;
+            _this.config.requestSender.sendEvolvePokemonRequest(pokemonUniqueId);
+        };
+        this.config = config;
+        this.config.pokemonDetailsElement.find("#confirm-transfer").click(this.transferPokemon);
+        this.config.pokemonDetailsElement.find("#confirm-evolve").click(this.evolvePokemon);
+    }
+    return PokemonMenuController;
+}());
+var SettingsMenuController = (function () {
+    function SettingsMenuController(config) {
+        this.config = config;
+    }
+    return SettingsMenuController;
+}());
+var NotificationController = (function () {
+    function NotificationController(config) {
+        var _this = this;
+        this.clearAll = function (ev) {
+            var allNotificationElements = _this.config.container.children(".event").get().reverse();
+            var delay = 0;
+            allNotificationElements.forEach(function (notification) {
+                var notificationElement = $(notification);
+                notificationElement.delay(delay).slideUp(300, function () {
+                    notificationElement.remove();
+                });
+                delay += 50;
+            });
+            _this.notifications = [];
+        };
+        this.onUpdateTimerElapsed = function () {
+            var currentTime = Date.now();
+            _.each(_this.notifications, function (notification) {
+                var diff = currentTime - notification.event.Timestamp;
+                var diffStr = TimeUtils.timestampToDateStr(diff);
+                var timestampElement = notification.element.find(".timestamp");
+                timestampElement.text(diffStr + " ago");
+            });
+        };
+        this.addNotificationPokeStopUsed = function (fortUsed) {
+            var itemsHtml = "";
+            _.each(fortUsed.ItemsList, function (item) {
+                var itemId = StaticInfo.itemIds[item.Name];
+                var itemName = _this.config.translationController.translation.itemNames[itemId];
+                itemsHtml += "<div class=\"item\" title=\"" + itemName + "\"><img src=\"images/items/" + itemId + ".png\"/>x" + item.Count + "</div>";
+            });
+            var html = "<div class=\"info\">\n                          " + itemsHtml + "\n                          <div class=\"stats\">+" + fortUsed.Exp + "XP</div>\n                      </div>";
+            var inventoryFullStr = fortUsed.InventoryFull ? "<span class=inv-full>inventory full</span>" : "";
+            var extendedInfoHtml = "\n" + inventoryFullStr + "\nName            <span class=\"name\"> " + fortUsed.Name + " </span><br/>\nGems            <span class=\"xp\"> " + fortUsed.Gems + " </span><br/>\n";
+            _this.addNotification(fortUsed, html, "pokestop", extendedInfoHtml);
+        };
+        this.addNotificationPokemonCapture = function (pokemonCatches, itemsUsedForCapture) {
+            var pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonCatch.Id];
+            var roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
+            var eventType = pokemonCatch.IsSnipe ? "snipe" : "catch";
+            var html = "<div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + roundedPerfection + "%</div>\n                        </div>";
+            var itemsHtml = "";
+            _.each(itemsUsedForCapture, function (i) { return itemsHtml += "<img src=\"images/items/" + i + ".png\">"; });
+            var extendedInfoHtml = "\nUsed            <span class=\"attempts\">" + itemsHtml + "</span><br/>\nAttempts        <span class=\"attempts\">" + pokemonCatches.length + "</span><br/>\nProbability     <span class=\"probability\"> " + pokemonCatch.Probability + "% </span><br/>\nXP              <span class=\"xp\"> " + pokemonCatch.Exp + " </span><br/>\nCandies         <span class=\"candies\"> " + pokemonCatch.FamilyCandies + " </span><br/>\nCatch Type      <span class=\"catch-type\"> " + pokemonCatch.CatchType + " </span><br/>\nLevel           <span class=\"level\"> " + pokemonCatch.Level + " </span><br/>\nIV              <span class=\"level\"> " + roundedPerfection + " </span><br/>\nCP              <span class=\"cp\"> " + pokemonCatch.Cp + " </span>/<span class=\"max-cp\"> " + pokemonCatch.MaxCp + " </span><br/>\n";
+            _this.addNotification(pokemonCatch, html, eventType, extendedInfoHtml);
+        };
+        this.addNotificationPokemonEvolved = function (pokemonEvolve) {
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonEvolve.Id];
+            var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + pokemonEvolve.Id + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">+" + pokemonEvolve.Exp + "XP</div>\n                      </div>";
+            _this.addNotification(pokemonEvolve, html, "evolve");
+        };
+        this.addNotificationEggHatched = function (eggHatched) {
+            var pokemonName = _this.config.translationController.translation.pokemonNames[eggHatched.PokemonId];
+            var roundedPerfection = Math.round(eggHatched.Perfection * 100) / 100;
+            var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + eggHatched.PokemonId + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">CP " + eggHatched.Cp + " | IV " + roundedPerfection + "%</div>\n                      </div>";
+            var extendedInfoHtml = "\nLevel           <span class=\"level\"> " + eggHatched.Level + " </span><br/>\nIV              <span class=\"level\"> " + roundedPerfection + " </span><br/>\nCP              <span class=\"cp\"> " + eggHatched.Cp + " </span>/<span class=\"max-cp\"> " + eggHatched.MaxCp + " </span><br/>\n";
+            _this.addNotification(eggHatched, html, "egg-hatched", extendedInfoHtml);
+        };
+        this.addNotificationIncubatorStatus = function (incubatorStatus) {
+            var km = Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining) * 100) / 100;
+            var html = "<div class=\"image\">\n                          <img src=\"images/items/0.png\"/>\n                      </div>\n                      <div class=\"info\">Egg\n                          <div class=\"stats\">" + km + " of " + incubatorStatus.KmToWalk + "km</div>\n                      </div>";
+            _this.addNotification(incubatorStatus, html, "incubator-status");
+        };
+        this.addNotificationItemRecycle = function (itemRecycle) {
+            var itemName = _this.config.translationController.translation.itemNames[itemRecycle.Id];
+            var html = "<div class=\"info\" title=\"" + itemName + "\">\n                          <div class=\"item\"><img src=\"images/items/" + itemRecycle.Id + ".png\"/>x" + itemRecycle.Count + "</div>\n                          <div class=\"stats\">+" + itemRecycle.Count + " free space</div>\n                      </div>";
+            _this.addNotification(itemRecycle, html, "recycle");
+        };
+        this.addNotificationPokemonTransfer = function (pokemonTransfer) {
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonTransfer.Id];
+            var roundedPerfection = Math.round(pokemonTransfer.Perfection * 100) / 100;
+            var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + pokemonTransfer.Id + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">CP " + pokemonTransfer.Cp + " | IV " + roundedPerfection + "%</div>\n                      </div>";
+            _this.addNotification(pokemonTransfer, html, "transfer");
+        };
+        this.addNotification = function (event, innerHtml, eventType, extendedInfoHtml) {
+            extendedInfoHtml = extendedInfoHtml || "";
+            var eventTypeName = _this.config.translationController.translation.eventTypes[eventType];
+            var dateStr = moment().format("MMMM Do YYYY, HH:mm:ss");
+            var html = "<div class=\"event " + eventType + "\">\n    <div class=\"item-container\">\n        <i class=\"fa fa-times dismiss\"></i>\n        " + innerHtml + "\n        <span class=\"event-type\">" + eventTypeName + "</span>\n        <span class=\"timestamp\">0 seconds ago</span>\n        <div class=\"category\"></div>\n    </div>\n    <div class=\"extended-info\">\n        Date <span class=\"extended-date\">" + dateStr + "</span><br/>\n        " + extendedInfoHtml + "\n    </div>\n</div>";
+            var element = $(html);
+            element.click(_this.toggleExtendedInfo);
+            element.find(".dismiss").click(_this.closeNotification);
+            var scroll = _this.isAtBottom();
+            _this.config.container.append(element);
+            _this.notifications.push({
+                event: event,
+                element: element
+            });
+            if (scroll) {
+                _this.scrollToBottom();
+            }
+        };
+        this.isAtBottom = function () {
+            var scrollTop = _this.config.container.scrollTop();
+            var innerHeight = _this.config.container.innerHeight();
+            var scrollHeight = _this.config.container[0].scrollHeight;
+            var atBottom = scrollTop + innerHeight > scrollHeight - 200;
+            return atBottom;
+        };
+        this.scrollToBottom = function () {
+            var animation = {
+                scrollTop: _this.config.container.prop("scrollHeight") - _this.config.container.height()
+            };
+            _this.config.container.finish().animate(animation, 100);
+        };
+        this.toggleExtendedInfo = function (ev) {
+            var notificationElement = $(ev.target).closest(".event");
+            notificationElement.find(".extended-info").slideToggle(300);
+        };
+        this.closeNotification = function (ev) {
+            var closeButton = $(ev.target);
+            var element = closeButton.closest(".event");
+            element.slideUp(300, function () {
+                element.remove();
+                _.remove(_this.notifications, function (n) { return n.element.is(element); });
+            });
+        };
+        this.config = config;
+        this.notifications = [];
+        this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
+        this.config.clearAllButton.click(this.clearAll);
+    }
+    return NotificationController;
+}());
+var ProfileInfoController = (function () {
+    function ProfileInfoController(config) {
+        var _this = this;
+        this.setProfileData = function (profile) {
+            _this.config.profileInfoElement.find(".profile-username").text(" " + profile.PlayerData.Username + " ");
+            _this.config.profileInfoElement.find(".profile-pokecoin").text(profile.PlayerData.PokeCoin);
+            _this.config.profileInfoElement.find(".profile-stardust").text(profile.PlayerData.StarDust);
+        };
+        this.setPlayerStats = function (playerStats) {
+            _this.addExp(playerStats.Experience);
+        };
+        this.addExp = function (totalExp, expAdded) {
+            var currentLevel = _this.calculateCurrentLevel(totalExp);
+            var exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
+            var expForNextLvl = StaticInfo.expForLevel[currentLevel + 1];
+            var expPercent = 100 * exp / expForNextLvl;
+            _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + currentLevel + " ");
+            _this.animateTo(_this.config.profileInfoElement.find(".profile-exp-current"), exp);
+            _this.animateTo(_this.config.profileInfoElement.find(".profile-exp-next"), expForNextLvl);
+            _this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
+            _this.config.profileInfoElement.find(".profile-exp-loading").remove();
+            _this.config.profileInfoElement.find(".profile-exp-loaded").show();
+            _this.config.profileInfoElement.find(".xp-progress").show();
+            if (expAdded) {
+                _this.expBubble(expAdded);
+            }
+        };
+        this.expBubble = function (expAdded) {
+            var bubbleHtml = "<div class=\"xp-bubble\">+" + expAdded + " XP</div>";
+            var bubble = $(bubbleHtml);
+            _this.config.profileInfoElement.find(".profile-exp").append(bubble);
+            setTimeout(function () { bubble.remove(); }, 1000);
+        };
+        this.calculateCurrentLevel = function (totalExp) {
+            for (var i = 0; i < StaticInfo.totalExpForLevel.length; i++) {
+                if (StaticInfo.totalExpForLevel[i + 1] >= totalExp) {
+                    return i;
+                }
+            }
+            throw "Unable to determine level";
+        };
+        this.config = config;
+        if (this.config.hideUsername) {
+            this.config.profileInfoElement.find(".profile-username").hide();
+        }
+    }
+    ProfileInfoController.prototype.animateTo = function (element, to) {
+        element.prop("number", parseInt(element.text()));
+        element.animateNumber({
+            number: to
+        });
+    };
+    return ProfileInfoController;
 }());
 var InterfaceHandler = (function () {
     function InterfaceHandler(config) {
@@ -304,9 +1037,9 @@ var InterfaceHandler = (function () {
             _this.itemsUsedForCapture.push(pokemonCapture.Pokeball);
             if (pokemonCapture.Status === PokemonCatchStatus.Success) {
                 _this.config.map.onPokemonCapture(pokemonCapture);
-                _this.config.notificationManager.addNotificationPokemonCapture(_this.previousCaptureAttempts, _this.itemsUsedForCapture);
+                _this.config.notificationController.addNotificationPokemonCapture(_this.previousCaptureAttempts, _this.itemsUsedForCapture);
                 _this.exp += pokemonCapture.Exp;
-                _this.config.profileInfoManager.addExp(_this.exp, pokemonCapture.Exp);
+                _this.config.profileInfoController.addExp(_this.exp, pokemonCapture.Exp);
             }
         };
         this.config = config;
@@ -322,12 +1055,12 @@ var InterfaceHandler = (function () {
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
         this.exp += fortUsed.Exp;
-        this.config.notificationManager.addNotificationPokeStopUsed(fortUsed);
-        this.config.profileInfoManager.addExp(this.exp, fortUsed.Exp);
+        this.config.notificationController.addNotificationPokeStopUsed(fortUsed);
+        this.config.profileInfoController.addExp(this.exp, fortUsed.Exp);
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
-        this.config.mainMenuManager.updateProfileData(profile);
-        this.config.profileInfoManager.setProfileData(profile);
+        this.config.mainMenuController.updateProfileData(profile);
+        this.config.profileInfoController.setProfileData(profile);
         this.config.requestSender.sendPlayerStatsRequest();
         this.config.requestSender.sendGetPokemonSettingsRequest();
         this.config.requestSender.sendInventoryListRequest();
@@ -341,9 +1074,9 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onEvolveCount = function (evolveCount) {
     };
     InterfaceHandler.prototype.onPokemonEvolve = function (pokemonEvolve) {
-        this.config.notificationManager.addNotificationPokemonEvolved(pokemonEvolve);
+        this.config.notificationController.addNotificationPokemonEvolved(pokemonEvolve);
         this.exp += pokemonEvolve.Exp;
-        this.config.profileInfoManager.addExp(this.exp, pokemonEvolve.Exp);
+        this.config.profileInfoController.addExp(this.exp, pokemonEvolve.Exp);
     };
     InterfaceHandler.prototype.onSnipeScan = function (snipeScan) {
     };
@@ -357,36 +1090,36 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onWarn = function (warn) {
     };
     InterfaceHandler.prototype.onEggHatched = function (eggHatched) {
-        this.config.notificationManager.addNotificationEggHatched(eggHatched);
+        this.config.notificationController.addNotificationEggHatched(eggHatched);
     };
     InterfaceHandler.prototype.onIncubatorStatus = function (incubatorStatus) {
-        this.config.notificationManager.addNotificationIncubatorStatus(incubatorStatus);
+        this.config.notificationController.addNotificationIncubatorStatus(incubatorStatus);
     };
     InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
-        this.config.notificationManager.addNotificationItemRecycle(itemRecycle);
+        this.config.notificationController.addNotificationItemRecycle(itemRecycle);
     };
     InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
-        this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
+        this.config.notificationController.addNotificationPokemonTransfer(pokemonTransfer);
     };
     InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
-        this.config.pokemonMenuManager.updatePokemonList(pokemonList);
+        this.config.pokemonMenuController.updatePokemonList(pokemonList);
     };
     InterfaceHandler.prototype.onEggList = function (eggList) {
     };
     InterfaceHandler.prototype.onInventoryList = function (inventoryList) {
-        this.config.inventoryMenuManager.updateInventoryList(inventoryList);
+        this.config.inventoryMenuController.updateInventoryList(inventoryList);
     };
     InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
         this.exp = playerStats.Experience;
-        this.config.profileInfoManager.setPlayerStats(playerStats);
+        this.config.profileInfoController.setPlayerStats(playerStats);
     };
     InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
-        this.config.pokemonMenuManager.pokemonListRequested(request);
+        this.config.pokemonMenuController.pokemonListRequested(request);
     };
     InterfaceHandler.prototype.onSendEggsListRequest = function (request) {
     };
     InterfaceHandler.prototype.onSendInventoryListRequest = function (request) {
-        this.config.inventoryMenuManager.inventoryListRequested(request);
+        this.config.inventoryMenuController.inventoryListRequested(request);
     };
     InterfaceHandler.prototype.onSendPlayerStatsRequest = function (request) {
     };
@@ -5693,794 +6426,6 @@ var StaticInfo = (function () {
     };
     return StaticInfo;
 }());
-var CaptureMarker = (function (_super) {
-    __extends(CaptureMarker, _super);
-    function CaptureMarker(latlng, map, args) {
-        _super.call(this);
-        this.latlng = latlng;
-        this.args = args;
-        this.setMap(map);
-    }
-    CaptureMarker.prototype.draw = function () {
-        var div = this.div;
-        if (!div) {
-            div = this.div = document.createElement('div');
-            var innerdiv = document.createElement('div');
-            var d = $(div);
-            var i = $(innerdiv);
-            d.addClass('marker');
-            d.css({
-                'position': "absolute",
-                'width': "60px",
-                'height': "60px",
-                'z-index': "99999"
-            });
-            if (this.args.PokemonId !== 'undefined')
-                i.css({ 'background-image': "url(images/pokemon/" + this.args.PokemonId + ".png)" });
-            i.css({
-                'background-size': "contain",
-                'background-position': "center center",
-                'background-repeat': 'no-repeat',
-                'width': "40px",
-                'height': "40px",
-                'margin': "5px"
-            });
-            d.append(i);
-            var panes = this.getPanes();
-            panes.overlayLayer.appendChild(div);
-        }
-        var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
-        if (point) {
-            div.style.left = (point.x - 10) + 'px';
-            div.style.top = (point.y - 20) + 'px';
-        }
-    };
-    CaptureMarker.prototype.getPosition = function () {
-        return this.latlng;
-    };
-    return CaptureMarker;
-}(google.maps.OverlayView));
-var GoogleMap = (function () {
-    function GoogleMap(config) {
-        var _this = this;
-        this.locationHistory = [];
-        this.pokestopMarkers = {};
-        this.pokestopEvents = {};
-        this.gymMarkers = {};
-        this.gymEvents = {};
-        this.capMarkers = [];
-        this.movePlayer = function (position) {
-            var posArr = [position.Latitude, position.Longitude];
-            var pos = new google.maps.LatLng(posArr[0], posArr[1]);
-            _this.playerMarker.setPosition(pos);
-            if (_this.config.followPlayer) {
-                var from = { lat: _this.map.getCenter().lat(), lng: _this.map.getCenter().lng() };
-                var to = { lat: posArr[0], lng: posArr[1] };
-                var currentMap = _this.map;
-                $(from).animate(to, {
-                    duration: 200,
-                    step: function (cs, t) {
-                        var newPos;
-                        if (t.prop === "lat")
-                            newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
-                        if (t.prop === "lng")
-                            newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
-                        currentMap.setCenter(newPos);
-                    }
-                });
-            }
-            _this.locationHistory.push({ lat: posArr[0], lng: posArr[1] });
-            _this.locationLine = new google.maps.Polyline({
-                path: _this.locationHistory,
-                geodesic: true,
-                strokeColor: '#00FFFF',
-                strokeOpacity: 0.7,
-                strokeWeight: 4
-            });
-            _this.locationLine.setMap(_this.map);
-        };
-        this.setPokeStops = function (pokeStops) {
-            var incomingPokestops = {};
-            _.each(pokeStops, function (stop) { incomingPokestops[stop.Id] = stop; });
-            _.each(_this.pokestopEvents, function (stop) {
-                if (!(stop.Id in incomingPokestops)) {
-                    _this.pokestopMarkers[stop.Id].setMap(null);
-                    delete _this.pokestopMarkers[stop.Id];
-                    delete _this.pokestopEvents[stop.Id];
-                }
-            });
-            _.each(incomingPokestops, function (stop) {
-                if (!(stop.Id in _this.pokestopEvents)) {
-                    _this.pokestopEvents[stop.Id] = stop;
-                    _this.pokestopMarkers[stop.Id] = _this.createStopMarker(stop);
-                }
-            });
-            _.each(pokeStops, function (pstop) {
-                if (pstop.LastModifiedTimestampMs > _this.pokestopEvents[pstop.Id].LastModifiedTimestampMs) {
-                    _this.pokestopMarkers[pstop.Id].setIcon(_this.getStopIconData(pstop.Status));
-                    _this.pokestopEvents[pstop.Id] = pstop;
-                }
-            });
-        };
-        this.setGyms = function (gyms) {
-            var incomingGyms = {};
-            _.each(gyms, function (g) { incomingGyms[g.Id] = g; });
-            _.each(_this.gymEvents, function (g) {
-                if (!(g.Id in incomingGyms)) {
-                    _this.pokestopMarkers[g.Id].setMap(null);
-                    delete _this.gymMarkers[g.Id];
-                    delete _this.gymEvents[g.Id];
-                }
-            });
-            _.each(incomingGyms, function (g) {
-                if (!(g.Id in _this.gymEvents)) {
-                    _this.gymEvents[g.Id] = g;
-                    _this.gymMarkers[g.Id] = _this.createGymMarker(g);
-                }
-            });
-        };
-        this.config = config;
-        var mapStyle = [
-            {
-                "featureType": "all",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#293037"
-                    }
-                ]
-            },
-            {
-                "featureType": "all",
-                "elementType": "labels.text.fill",
-                "stylers": [
-                    {
-                        "gamma": 0.01
-                    },
-                    {
-                        "lightness": 20
-                    },
-                    {
-                        "color": "#949aa6"
-                    }
-                ]
-            },
-            {
-                "featureType": "all",
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                    {
-                        "saturation": -31
-                    },
-                    {
-                        "lightness": -33
-                    },
-                    {
-                        "weight": 2
-                    },
-                    {
-                        "gamma": "0.00"
-                    },
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "all",
-                "elementType": "labels.icon",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative.country",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative.province",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative.locality",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "visibility": "simplified"
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative.locality",
-                "elementType": "labels.icon",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative.neighborhood",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "administrative.land_parcel",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "landscape",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "lightness": 30
-                    },
-                    {
-                        "saturation": 30
-                    },
-                    {
-                        "color": "#344150"
-                    },
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "poi",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "saturation": "0"
-                    },
-                    {
-                        "lightness": "0"
-                    },
-                    {
-                        "gamma": "0.30"
-                    },
-                    {
-                        "weight": "0.01"
-                    },
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "poi.park",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "lightness": "100"
-                    },
-                    {
-                        "saturation": -20
-                    },
-                    {
-                        "visibility": "simplified"
-                    },
-                    {
-                        "color": "#344150"
-                    },
-                    {
-                        "gamma": "0.92"
-                    }
-                ]
-            },
-            {
-                "featureType": "road",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "lightness": 10
-                    },
-                    {
-                        "saturation": -30
-                    },
-                    {
-                        "color": "#28323f"
-                    }
-                ]
-            },
-            {
-                "featureType": "road",
-                "elementType": "geometry.stroke",
-                "stylers": [
-                    {
-                        "saturation": "-100"
-                    },
-                    {
-                        "lightness": "-100"
-                    },
-                    {
-                        "gamma": "0.00"
-                    },
-                    {
-                        "color": "#282f38"
-                    }
-                ]
-            },
-            {
-                "featureType": "road",
-                "elementType": "labels",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "road",
-                "elementType": "labels.text",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    },
-                    {
-                        "color": "#575e6b"
-                    }
-                ]
-            },
-            {
-                "featureType": "road",
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "road",
-                "elementType": "labels.icon",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "geometry.fill",
-                "stylers": [
-                    {
-                        "color": "#232c37"
-                    },
-                    {
-                        "visibility": "on"
-                    }
-                ]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "geometry.stroke",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "transit",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "transit",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "visibility": "simplified"
-                    },
-                    {
-                        "color": "#222935"
-                    }
-                ]
-            },
-            {
-                "featureType": "transit.station.airport",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "visibility": "off"
-                    }
-                ]
-            },
-            {
-                "featureType": "water",
-                "elementType": "all",
-                "stylers": [
-                    {
-                        "lightness": -20
-                    },
-                    {
-                        "color": "#212a35"
-                    }
-                ]
-            }
-        ];
-        var mapOptions = {
-            zoom: 16,
-            center: new google.maps.LatLng(0, 0),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            styles: mapStyle,
-            mapTypeControl: false,
-            scaleControl: false,
-            zoomControl: false,
-        };
-        this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        this.playerMarker = new google.maps.Marker({
-            map: this.map,
-            position: new google.maps.LatLng(51.5073509, -0.12775829999998223),
-            icon: {
-                url: "images/markers/location.png",
-                scaledSize: new google.maps.Size(50, 55)
-            },
-            zIndex: 300
-        });
-    }
-    GoogleMap.prototype.usePokeStop = function (pokeStopUsed) {
-        var setStatus = PokeStopStatus.Visited;
-        if (this.pokestopEvents[pokeStopUsed.Id].Status === PokeStopStatus.Lure)
-            setStatus = PokeStopStatus.VisitedLure;
-        this.pokestopMarkers[pokeStopUsed.Id].setIcon(this.getStopIconData(setStatus));
-        this.pokestopEvents[pokeStopUsed.Id].Status = setStatus;
-    };
-    GoogleMap.prototype.onPokemonCapture = function (pokemonCapture) {
-        console.log(pokemonCapture);
-        var captureMarker = new CaptureMarker(new google.maps.LatLng(pokemonCapture.Latitude, pokemonCapture.Longitude), this.map, {
-            PokemonId: pokemonCapture.Id
-        });
-        this.capMarkers.push(captureMarker);
-    };
-    GoogleMap.prototype.createStopMarker = function (pstop) {
-        var psMarker = new google.maps.Marker({
-            map: this.map,
-            position: new google.maps.LatLng(pstop.Latitude, pstop.Longitude),
-            icon: this.getStopIconData(pstop.Status),
-            zIndex: 100
-        });
-        return psMarker;
-    };
-    GoogleMap.prototype.getStopIconData = function (status) {
-        var stopImage = "images/markers/";
-        switch (status) {
-            case PokeStopStatus.Normal:
-                stopImage += "Normal.png";
-                break;
-            case PokeStopStatus.Lure:
-                stopImage += "Lured.png";
-                break;
-            case PokeStopStatus.Visited:
-                stopImage += "Visited.png";
-                break;
-            case PokeStopStatus.VisitedLure:
-                stopImage += "VisitedLure.png";
-                break;
-            default:
-                stopImage += "Normal.png";
-                break;
-        }
-        return {
-            url: stopImage,
-            scaledSize: new google.maps.Size(50, 50)
-        };
-    };
-    GoogleMap.prototype.createGymMarker = function (gym) {
-        var gMarker = new google.maps.Marker({
-            map: this.map,
-            position: new google.maps.LatLng(gym.Latitude, gym.Longitude),
-            icon: this.getGymIconData(gym),
-            zIndex: 100
-        });
-        return gMarker;
-    };
-    GoogleMap.prototype.getGymIconData = function (gym) {
-        var stopImage = "images/markers/";
-        switch (gym.OwnedByTeam) {
-            case PlayerTeam.Instinct:
-                stopImage += "instinct.png";
-                break;
-            case PlayerTeam.Mystic:
-                stopImage += "mystic.png";
-                break;
-            case PlayerTeam.Valor:
-                stopImage += "valor.png";
-                break;
-            case PlayerTeam.Neutral:
-                stopImage += "unoccupied.png";
-                break;
-            default:
-                stopImage += "unoccupied.png";
-                break;
-        }
-        return {
-            url: stopImage,
-            scaledSize: new google.maps.Size(50, 50)
-        };
-    };
-    return GoogleMap;
-}());
-var LeafletMap = (function () {
-    function LeafletMap(config) {
-        var _this = this;
-        this.movePlayer = function (position) {
-            var posArr = [position.Latitude, position.Longitude];
-            _this.playerMarker.setLatLng(posArr);
-            _this.playerPath.addLatLng(posArr);
-            if (_this.config.followPlayer) {
-                _this.map.setView(posArr);
-            }
-        };
-        this.setPokeStops = function (pokeStops) {
-            _.each(_this.pokeStops, function (m) { return _this.map.removeLayer(m.LMarker); });
-            _this.pokeStops = [];
-            _.each(pokeStops, function (pokeStop) {
-                var posArr = [pokeStop.Latitude, pokeStop.Longitude];
-                var marker = new L.Marker(posArr, {
-                    icon: _this.pokeStopIcons[pokeStop.Status]
-                });
-                _this.map.addLayer(marker);
-                pokeStop.LMarker = marker;
-                _this.pokeStops.push(pokeStop);
-            });
-        };
-        this.setGyms = function (gyms) {
-            _.each(_this.gyms, function (gym) { return _this.map.removeLayer(gym.LMarker); });
-            _this.gyms = [];
-            _.each(gyms, function (gym) {
-                var posArr = [gym.Latitude, gym.Longitude];
-                var marker = new L.Marker(posArr, {
-                    icon: _this.gymIcons[gym.OwnedByTeam]
-                });
-                _this.map.addLayer(marker);
-                gym.LMarker = marker;
-                _this.gyms.push(gym);
-            });
-        };
-        this.config = config;
-        this.map = L.map("map", {
-            zoomControl: false
-        }).setView([0, 0], 16);
-        var mainLayer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png");
-        mainLayer.addTo(this.map);
-        this.pokeStops = [];
-        this.gyms = [];
-        this.pokemons = [];
-        this.playerPath = L.polyline([], {
-            color: "cyan",
-            opacity: 1
-        });
-        this.playerPath.addTo(this.map);
-        this.playerMarker = L.marker([0, 0], {
-            icon: new L.Icon({
-                iconUrl: "images/markers/location.png",
-                iconSize: [50, 55],
-                iconAnchor: [25, 45]
-            })
-        });
-        this.playerMarker.addTo(this.map);
-        this.pokeStopIcons = [];
-        this.pokeStopIcons[PokeStopStatus.Normal] = new L.Icon({
-            iconUrl: "images/markers/Normal.png",
-            iconSize: [48, 48]
-        });
-        this.pokeStopIcons[PokeStopStatus.Visited] = new L.Icon({
-            iconUrl: "images/markers/Visited.png",
-            iconSize: [48, 48]
-        });
-        this.pokeStopIcons[PokeStopStatus.Lure] = new L.Icon({
-            iconUrl: "images/markers/Lured.png",
-            iconSize: [48, 48]
-        });
-        this.pokeStopIcons[PokeStopStatus.VisitedLure] = new L.Icon({
-            iconUrl: "images/markers/VisitedLure.png",
-            iconSize: [48, 48]
-        });
-        this.gymIcons = [];
-        this.gymIcons[PlayerTeam.Neutral] = new L.Icon({
-            iconUrl: "images/markers/unoccupied.png",
-            iconSize: [48, 48]
-        });
-        this.gymIcons[PlayerTeam.Mystic] = new L.Icon({
-            iconUrl: "images/markers/mystic.png",
-            iconSize: [48, 48]
-        });
-        this.gymIcons[PlayerTeam.Valor] = new L.Icon({
-            iconUrl: "images/markers/valor.png",
-            iconSize: [48, 48]
-        });
-        this.gymIcons[PlayerTeam.Instinct] = new L.Icon({
-            iconUrl: "images/markers/instinct.png",
-            iconSize: [48, 48]
-        });
-    }
-    LeafletMap.prototype.usePokeStop = function (pokeStopUsed) {
-        var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
-        var icon = pokeStop.LureInfo === null
-            ? this.pokeStopIcons[PokeStopStatus.Visited]
-            : this.pokeStopIcons[PokeStopStatus.VisitedLure];
-        pokeStop.LMarker.setIcon(icon);
-    };
-    LeafletMap.prototype.onPokemonCapture = function (pokemonCapture) {
-        var _this = this;
-        var posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
-        var img = new Image();
-        var imgUrl = "images/pokemon/" + pokemonCapture.Id + ".png";
-        var maxWidth = 42;
-        var maxHeight = 38;
-        img.onload = function () {
-            var widthScaleFactor = maxWidth / img.width;
-            var heightScaleFactor = maxHeight / img.height;
-            var scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
-            if (scaleFactor > 1) {
-                scaleFactor = 1;
-            }
-            var width = img.width * scaleFactor;
-            var height = img.height * scaleFactor;
-            var marker = new L.Marker(posArr, {
-                icon: new L.Icon({
-                    iconUrl: imgUrl,
-                    iconSize: [width, height]
-                })
-            });
-            _this.map.addLayer(marker);
-            pokemonCapture.LMarker = marker;
-            _this.pokemons.push(pokemonCapture);
-        };
-        img.src = imgUrl;
-    };
-    return LeafletMap;
-}());
-var EggMenuManager = (function () {
-    function EggMenuManager(config) {
-        var _this = this;
-        this.eggListRequested = function (request) {
-            _this.config.eggLoadingSpinner.show();
-        };
-        this.updateEggList = function (eggList) {
-        };
-        this.config = config;
-    }
-    return EggMenuManager;
-}());
-var InventoryMenuManager = (function () {
-    function InventoryMenuManager(config) {
-        var _this = this;
-        this.inventoryListRequested = function (request) {
-            _this.config.inventoryLoadingSpinner.show();
-        };
-        this.updateInventoryList = function (inventoryList) {
-            var currentItems = _this.config.inventoryMenuElement.find(".product");
-            currentItems.removeClass("brighter");
-            currentItems.find(".number").text(0);
-            for (var i = 0; i < inventoryList.Items.length; i++) {
-                var item = inventoryList.Items[i];
-                var itemElement = _this.config.inventoryMenuElement.find(".product[data-item-id=\"" + item.ItemId + "\"]");
-                itemElement.addClass("brighter");
-                itemElement.find(".number").text(item.Count);
-            }
-            _this.config.inventoryLoadingSpinner.fadeOut(150);
-        };
-        this.config = config;
-    }
-    return InventoryMenuManager;
-}());
-var MainMenuManager = (function () {
-    function MainMenuManager(config) {
-        var _this = this;
-        this.onPokemonMenuClick = function (ev) {
-            _this.config.requestSender.sendPokemonListRequest();
-        };
-        this.onItemsMenuClick = function (ev) {
-            _this.config.requestSender.sendInventoryListRequest();
-        };
-        this.config = config;
-        this.config.mainMenuElement.find("#pokemons").click(this.onPokemonMenuClick);
-        this.config.mainMenuElement.find("#items").click(this.onItemsMenuClick);
-    }
-    MainMenuManager.prototype.updateProfileData = function (profile) {
-    };
-    return MainMenuManager;
-}());
-var PokemonMenuManager = (function () {
-    function PokemonMenuManager(config) {
-        var _this = this;
-        this.pokemonListRequested = function (request) {
-            _this.config.pokemonLoadingSpinner.show();
-        };
-        this.updatePokemonList = function (pokemonList) {
-            _this.config.pokemonMenuElement.find(".pokemon").remove();
-            _this.pokemonList = pokemonList;
-            for (var i = 0; i < pokemonList.Pokemons.length; i++) {
-                var pokemon = pokemonList.Pokemons[i];
-                var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemon.PokemonId];
-                var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
-                var html = "<div class=\"pokemon\">\n    <h1 class=\"name\">" + pokemonName + "</h1>\n    <div class=\"image-container\">\n        <img src=\"images/pokemon/" + pokemon.PokemonId + ".png\"/>\n    </div>\n    <h3 class=\"cp\">" + pokemon.Cp + "</h3>\n    <h3 class=\"iv\">" + roundedIv + "</h3>\n</div>";
-                var pokemonElement = $(html);
-                pokemonElement.prop("pokemon-index", i);
-                pokemonElement.click(_this.pokemonClick);
-                _this.config.pokemonMenuElement.append(pokemonElement);
-            }
-            _this.config.pokemonLoadingSpinner.fadeOut(150);
-        };
-        this.pokemonClick = function (ev) {
-            var pokemonBox = $(ev.target).closest(".pokemon");
-            var pokemonIndex = pokemonBox.prop("pokemon-index");
-            var pokemon = _this.pokemonList.Pokemons[pokemonIndex];
-            _this.currentPokemon = pokemon;
-            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemon.PokemonId];
-            var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
-            var evolveButton = _this.config.pokemonDetailsElement.find("#evolve-pokemon-button");
-            if (StaticInfo.pokemonInfo[pokemon.PokemonId].evolvesInto.length === 0) {
-                evolveButton.hide();
-            }
-            else {
-                evolveButton.show();
-            }
-            _this.config.pokemonDetailsElement.find("#pokemon-info-name").text(pokemonName);
-            _this.config.pokemonDetailsElement.find("#pokemon-info-image").attr("src", "images/pokemon/" + pokemon.PokemonId + ".png");
-            _this.config.pokemonDetailsElement.find(".attack").text(pokemon.IndividualAttack);
-            _this.config.pokemonDetailsElement.find(".defense").text(pokemon.IndividualDefense);
-            _this.config.pokemonDetailsElement.find(".stamina").text(pokemon.IndividualStamina);
-            _this.config.pokemonDetailsElement.find(".total-iv").text(roundedIv + "%");
-            _this.config.pokemonDetailsElement.find(".poke-cp").text("" + pokemon.Cp);
-            var move1Name = StaticInfo.moveInfo[pokemon.Move1] ? StaticInfo.moveInfo[pokemon.Move1].name : "Unknown move";
-            var move2Name = StaticInfo.moveInfo[pokemon.Move2] ? StaticInfo.moveInfo[pokemon.Move2].name : "Unknown move";
-            var pokemonInfo = StaticInfo.pokemonInfo[pokemon.PokemonId];
-            var elementElement = _this.config.pokemonDetailsElement.find("#pokemon-type");
-            elementElement.html("");
-            for (var i = 0; i < pokemonInfo.elements.length; i++) {
-                var elementStr = PokeElement[pokemonInfo.elements[i]].toLowerCase();
-                var elementHtml = "<span class=\"" + elementStr + "\">" + elementStr + "</span>";
-                var el = $(elementHtml);
-                elementElement.append(el);
-            }
-            _this.config.pokemonDetailsElement.find(".move1").text(move1Name);
-            _this.config.pokemonDetailsElement.find(".move2").text(move2Name);
-            _this.config.pokemonMenuElement.closest("#content-wrap").addClass("blurred");
-            _this.config.pokemonDetailsElement.fadeIn();
-        };
-        this.transferPokemon = function (ev) {
-            var pokemonUniqueId = _this.currentPokemon.Id;
-            _this.config.requestSender.sendTransferPokemonRequest(pokemonUniqueId);
-        };
-        this.evolvePokemon = function (ev) {
-            var pokemonUniqueId = _this.currentPokemon.Id;
-            _this.config.requestSender.sendEvolvePokemonRequest(pokemonUniqueId);
-        };
-        this.config = config;
-        this.config.pokemonDetailsElement.find("#confirm-transfer").click(this.transferPokemon);
-        this.config.pokemonDetailsElement.find("#confirm-evolve").click(this.evolvePokemon);
-    }
-    return PokemonMenuManager;
-}());
 var PokeStopStatus;
 (function (PokeStopStatus) {
     PokeStopStatus[PokeStopStatus["Normal"] = 0] = "Normal";
@@ -6510,184 +6455,272 @@ var PlayerTeam;
     PlayerTeam[PlayerTeam["Valor"] = 2] = "Valor";
     PlayerTeam[PlayerTeam["Instinct"] = 3] = "Instinct";
 })(PlayerTeam || (PlayerTeam = {}));
-var NotificationManager = (function () {
-    function NotificationManager(config) {
+var BotWSClient = (function () {
+    function BotWSClient(url) {
         var _this = this;
-        this.clearAll = function (ev) {
-            var allNotificationElements = _this.config.container.children(".event").get().reverse();
-            var delay = 0;
-            allNotificationElements.forEach(function (notification) {
-                var notificationElement = $(notification);
-                notificationElement.delay(delay).slideUp(300, function () {
-                    notificationElement.remove();
+        this.start = function (config) {
+            _this.config = config;
+            _this.webSocket = new WebSocket(_this.url);
+            _this.webSocket.onopen = _this.clientOnOpen;
+            _this.webSocket.onmessage = _this.clientOnMessage;
+            _this.webSocket.onclose = _this.clientOnClose;
+            _this.webSocket.onerror = _this.clientOnError;
+            _this.running = true;
+        };
+        this.stop = function () {
+            _this.running = false;
+            _this.webSocket.close();
+        };
+        this.clientOnOpen = function (event) {
+            console.log("WebSocket connected to " + _this.webSocket.url);
+        };
+        this.clientOnClose = function (event) {
+            console.log("WebSocket closed", event);
+            if (_this.running) {
+                setTimeout(function () {
+                    _this.start(_this.config);
+                }, 2000);
+            }
+        };
+        this.clientOnError = function (event) {
+        };
+        this.clientOnMessage = function (event) {
+            var message = JSON.parse(event.data);
+            var timestamp = Date.now();
+            message.Timestamp = timestamp;
+            console.log("%c<<< INCOMING", "color: green", message);
+            var type = message.$type;
+            if (_.includes(type, "UpdatePositionEvent")) {
+                var mapLocation_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdatePosition(mapLocation_1); });
+            }
+            else if (_.includes(type, "PokeStopListEvent")) {
+                var forts_1 = message.Forts.$values;
+                _.each(forts_1, function (fort) { return fort.Timestamp = timestamp; });
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokeStopList(forts_1); });
+            }
+            else if (_.includes(type, "FortTargetEvent")) {
+                var fortTarget_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onFortTarget(fortTarget_1); });
+            }
+            else if (_.includes(type, "FortUsedEvent")) {
+                var fortUsed_1 = message;
+                fortUsed_1.ItemsList = _this.parseItemString(fortUsed_1.Items);
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onFortUsed(fortUsed_1); });
+            }
+            else if (_.includes(type, "ProfileEvent")) {
+                var profile_1 = message.Profile;
+                profile_1.Timestamp = timestamp;
+                profile_1.PlayerData.PokeCoin = _this.getCurrency(message, "POKECOIN");
+                profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
+            }
+            else if (_.includes(type, "UseBerry")) {
+                var useBerry_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onUseBerry(useBerry_1); });
+            }
+            else if (_.includes(type, "PokemonCaptureEvent")) {
+                var pokemonCapture_1 = message;
+                pokemonCapture_1.IsSnipe = _this.currentlySniping;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonCapture(pokemonCapture_1); });
+            }
+            else if (_.includes(type, "EvolveCountEvent")) {
+                var evolveCount_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onEvolveCount(evolveCount_1); });
+            }
+            else if (_.includes(type, "PokemonEvolveEvent")) {
+                var pokemonEvolve_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonEvolve(pokemonEvolve_1); });
+            }
+            else if (_.includes(type, "SnipeScanEvent")) {
+                var snipeScan_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeScan(snipeScan_1); });
+            }
+            else if (_.includes(type, "SnipeModeEvent")) {
+                var snipeMode_1 = message;
+                _this.currentlySniping = snipeMode_1.Active;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMode(snipeMode_1); });
+            }
+            else if (_.includes(type, "SnipeEvent")) {
+                var snipeMessage_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMessage(snipeMessage_1); });
+            }
+            else if (_.includes(type, "UpdateEvent")) {
+                var updateEvent_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdate(updateEvent_1); });
+            }
+            else if (_.includes(type, "WarnEvent")) {
+                var warnEvent_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onWarn(warnEvent_1); });
+            }
+            else if (_.includes(type, "EggHatchedEvent")) {
+                var eggHatched_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onEggHatched(eggHatched_1); });
+            }
+            else if (_.includes(type, "EggIncubatorStatusEvent")) {
+                var incubatorStatus_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onIncubatorStatus(incubatorStatus_1); });
+            }
+            else if (_.includes(type, "ItemRecycledEvent")) {
+                var itemRecycle_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onItemRecycle(itemRecycle_1); });
+            }
+            else if (_.includes(type, "TransferPokemonEvent")) {
+                var pokemonTransfer_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
+            }
+            else if (_.includes(type, "PokemonListEvent")) {
+                var pokemonList_1 = {
+                    Pokemons: [],
+                    Timestamp: timestamp
+                };
+                _.each(message.PokemonList.$values, function (val) {
+                    var pokemon = val.Item1;
+                    pokemon.Perfection = val.Item2;
+                    pokemon.FamilyCandies = val.Item3;
+                    pokemonList_1.Pokemons.push(pokemon);
                 });
-                delay += 50;
-            });
-            _this.notifications = [];
-        };
-        this.onUpdateTimerElapsed = function () {
-            var currentTime = Date.now();
-            _.each(_this.notifications, function (notification) {
-                var diff = currentTime - notification.event.Timestamp;
-                var diffStr = TimeUtils.timestampToDateStr(diff);
-                var timestampElement = notification.element.find(".timestamp");
-                timestampElement.text(diffStr + " ago");
-            });
-        };
-        this.addNotificationPokeStopUsed = function (fortUsed) {
-            var itemsHtml = "";
-            _.each(fortUsed.ItemsList, function (item) {
-                var itemId = StaticInfo.itemIds[item.Name];
-                var itemName = _this.config.translationManager.translation.itemNames[itemId];
-                itemsHtml += "<div class=\"item\" title=\"" + itemName + "\"><img src=\"images/items/" + itemId + ".png\"/>x" + item.Count + "</div>";
-            });
-            var html = "<div class=\"info\">\n                          " + itemsHtml + "\n                          <div class=\"stats\">+" + fortUsed.Exp + "XP</div>\n                      </div>";
-            var inventoryFullStr = fortUsed.InventoryFull ? "<span class=inv-full>inventory full</span>" : "";
-            var extendedInfoHtml = "\n" + inventoryFullStr + "\nName            <span class=\"name\"> " + fortUsed.Name + " </span><br/>\nGems            <span class=\"xp\"> " + fortUsed.Gems + " </span><br/>\n";
-            _this.addNotification(fortUsed, html, "pokestop", extendedInfoHtml);
-        };
-        this.addNotificationPokemonCapture = function (pokemonCatches, itemsUsedForCapture) {
-            var pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
-            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonCatch.Id];
-            var roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
-            var eventType = pokemonCatch.IsSnipe ? "snipe" : "catch";
-            var html = "<div class=\"image\">\n                            <img src=\"images/pokemon/" + pokemonCatch.Id + ".png\"/>\n                        </div>\n                        <div class=\"info\">\n                            " + pokemonName + "\n                            <div class=\"stats\">CP " + pokemonCatch.Cp + " | IV " + roundedPerfection + "%</div>\n                        </div>";
-            var itemsHtml = "";
-            _.each(itemsUsedForCapture, function (i) { return itemsHtml += "<img src=\"images/items/" + i + ".png\">"; });
-            var extendedInfoHtml = "\nUsed            <span class=\"attempts\">" + itemsHtml + "</span><br/>\nAttempts        <span class=\"attempts\">" + pokemonCatches.length + "</span><br/>\nProbability     <span class=\"probability\"> " + pokemonCatch.Probability + "% </span><br/>\nXP              <span class=\"xp\"> " + pokemonCatch.Exp + " </span><br/>\nCandies         <span class=\"candies\"> " + pokemonCatch.FamilyCandies + " </span><br/>\nCatch Type      <span class=\"catch-type\"> " + pokemonCatch.CatchType + " </span><br/>\nLevel           <span class=\"level\"> " + pokemonCatch.Level + " </span><br/>\nIV              <span class=\"level\"> " + roundedPerfection + " </span><br/>\nCP              <span class=\"cp\"> " + pokemonCatch.Cp + " </span>/<span class=\"max-cp\"> " + pokemonCatch.MaxCp + " </span><br/>\n";
-            _this.addNotification(pokemonCatch, html, eventType, extendedInfoHtml);
-        };
-        this.addNotificationPokemonEvolved = function (pokemonEvolve) {
-            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonEvolve.Id];
-            var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + pokemonEvolve.Id + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">+" + pokemonEvolve.Exp + "XP</div>\n                      </div>";
-            _this.addNotification(pokemonEvolve, html, "evolve");
-        };
-        this.addNotificationEggHatched = function (eggHatched) {
-            var pokemonName = _this.config.translationManager.translation.pokemonNames[eggHatched.PokemonId];
-            var roundedPerfection = Math.round(eggHatched.Perfection * 100) / 100;
-            var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + eggHatched.PokemonId + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">CP " + eggHatched.Cp + " | IV " + roundedPerfection + "%</div>\n                      </div>";
-            var extendedInfoHtml = "\nLevel           <span class=\"level\"> " + eggHatched.Level + " </span><br/>\nIV              <span class=\"level\"> " + roundedPerfection + " </span><br/>\nCP              <span class=\"cp\"> " + eggHatched.Cp + " </span>/<span class=\"max-cp\"> " + eggHatched.MaxCp + " </span><br/>\n";
-            _this.addNotification(eggHatched, html, "egg-hatched", extendedInfoHtml);
-        };
-        this.addNotificationIncubatorStatus = function (incubatorStatus) {
-            var km = Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining) * 100) / 100;
-            var html = "<div class=\"image\">\n                          <img src=\"images/items/0.png\"/>\n                      </div>\n                      <div class=\"info\">Egg\n                          <div class=\"stats\">" + km + " of " + incubatorStatus.KmToWalk + "km</div>\n                      </div>";
-            _this.addNotification(incubatorStatus, html, "incubator-status");
-        };
-        this.addNotificationItemRecycle = function (itemRecycle) {
-            var itemName = _this.config.translationManager.translation.itemNames[itemRecycle.Id];
-            var html = "<div class=\"info\" title=\"" + itemName + "\">\n                          <div class=\"item\"><img src=\"images/items/" + itemRecycle.Id + ".png\"/>x" + itemRecycle.Count + "</div>\n                          <div class=\"stats\">+" + itemRecycle.Count + " free space</div>\n                      </div>";
-            _this.addNotification(itemRecycle, html, "recycle");
-        };
-        this.addNotificationPokemonTransfer = function (pokemonTransfer) {
-            var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemonTransfer.Id];
-            var roundedPerfection = Math.round(pokemonTransfer.Perfection * 100) / 100;
-            var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + pokemonTransfer.Id + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">CP " + pokemonTransfer.Cp + " | IV " + roundedPerfection + "%</div>\n                      </div>";
-            _this.addNotification(pokemonTransfer, html, "transfer");
-        };
-        this.addNotification = function (event, innerHtml, eventType, extendedInfoHtml) {
-            extendedInfoHtml = extendedInfoHtml || "";
-            var eventTypeName = _this.config.translationManager.translation.eventTypes[eventType];
-            var dateStr = moment().format("MMMM Do YYYY, HH:mm:ss");
-            var html = "<div class=\"event " + eventType + "\">\n    <div class=\"item-container\">\n        <i class=\"fa fa-times dismiss\"></i>\n        " + innerHtml + "\n        <span class=\"event-type\">" + eventTypeName + "</span>\n        <span class=\"timestamp\">0 seconds ago</span>\n        <div class=\"category\"></div>\n    </div>\n    <div class=\"extended-info\">\n        Date <span class=\"extended-date\">" + dateStr + "</span><br/>\n        " + extendedInfoHtml + "\n    </div>\n</div>";
-            var element = $(html);
-            element.click(_this.toggleExtendedInfo);
-            element.find(".dismiss").click(_this.closeNotification);
-            var scroll = _this.isAtBottom();
-            _this.config.container.append(element);
-            _this.notifications.push({
-                event: event,
-                element: element
-            });
-            if (scroll) {
-                _this.scrollToBottom();
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
+            }
+            else if (_.includes(type, "EggListEvent")) {
+                var eggList_1 = message;
+                eggList_1.Incubators = message.Incubators.$values;
+                eggList_1.UnusedEggs = message.UnusedEggs.$values;
+                eggList_1.Timestamp = timestamp;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_1); });
+            }
+            else if (_.includes(type, "InventoryListEvent")) {
+                var inventoryList_1 = message;
+                inventoryList_1.Items = message.Items.$values;
+                inventoryList_1.Timestamp = timestamp;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onInventoryList(inventoryList_1); });
+            }
+            else if (_.includes(type, "PlayerStatsEvent")) {
+                var originalStats = message.PlayerStats.$values[0];
+                var playerStats_1 = originalStats;
+                playerStats_1.Experience = parseInt(originalStats.Experience);
+                playerStats_1.NextLevelXp = parseInt(originalStats.NextLevelXp);
+                playerStats_1.PrevLevelXp = parseInt(originalStats.PrevLevelXp);
+                playerStats_1.PokemonCaughtByType = originalStats.PokemonCaughtByType.$values;
+                playerStats_1.Timestamp = timestamp;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPlayerStats(playerStats_1); });
+            }
+            else {
+                _.each(_this.config.eventHandlers, function (eh) {
+                    if (eh.onUnknownEvent) {
+                        eh.onUnknownEvent(message);
+                    }
+                });
             }
         };
-        this.isAtBottom = function () {
-            var scrollTop = _this.config.container.scrollTop();
-            var innerHeight = _this.config.container.innerHeight();
-            var scrollHeight = _this.config.container[0].scrollHeight;
-            var atBottom = scrollTop + innerHeight > scrollHeight - 200;
-            return atBottom;
-        };
-        this.scrollToBottom = function () {
-            var animation = {
-                scrollTop: _this.config.container.prop("scrollHeight") - _this.config.container.height()
+        this.sendPokemonListRequest = function () {
+            var request = {
+                Command: "PokemonList"
             };
-            _this.config.container.finish().animate(animation, 100);
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(request); });
+            _this.sendRequest(request);
         };
-        this.toggleExtendedInfo = function (ev) {
-            var notificationElement = $(ev.target).closest(".event");
-            notificationElement.find(".extended-info").slideToggle(300);
+        this.sendEggsListRequest = function () {
+            var request = {
+                Command: "EggsList"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEggsListRequest(request); });
+            _this.sendRequest(request);
         };
-        this.closeNotification = function (ev) {
-            var closeButton = $(ev.target);
-            var element = closeButton.closest(".event");
-            element.slideUp(300, function () {
-                element.remove();
-                _.remove(_this.notifications, function (n) { return n.element.is(element); });
-            });
+        this.sendInventoryListRequest = function () {
+            var request = {
+                Command: "InventoryList"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendInventoryListRequest(request); });
+            _this.sendRequest(request);
         };
-        this.config = config;
-        this.notifications = [];
-        this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
-        this.config.clearAllButton.click(this.clearAll);
-    }
-    return NotificationManager;
-}());
-var ProfileInfoManager = (function () {
-    function ProfileInfoManager(config) {
-        var _this = this;
-        this.setProfileData = function (profile) {
-            _this.config.profileInfoElement.find(".profile-username").text(" " + profile.PlayerData.Username + " ");
-            _this.config.profileInfoElement.find(".profile-pokecoin").text(profile.PlayerData.PokeCoin);
-            _this.config.profileInfoElement.find(".profile-stardust").text(profile.PlayerData.StarDust);
+        this.sendPlayerStatsRequest = function () {
+            var request = {
+                Command: "PlayerStats"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(request); });
+            _this.sendRequest(request);
         };
-        this.setPlayerStats = function (playerStats) {
-            _this.addExp(playerStats.Experience);
+        this.sendGetPokemonSettingsRequest = function () {
+            var request = {
+                Command: "GetPokemonSettings"
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendGetPokemonSettingsRequest(request); });
+            _this.sendRequest(request);
         };
-        this.addExp = function (totalExp, expAdded) {
-            var currentLevel = _this.calculateCurrentLevel(totalExp);
-            var exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
-            var expForNextLvl = StaticInfo.expForLevel[currentLevel + 1];
-            var expPercent = 100 * exp / expForNextLvl;
-            _this.config.profileInfoElement.find(".profile-lvl").text(" lvl " + currentLevel + " ");
-            _this.animateTo(_this.config.profileInfoElement.find(".profile-exp-current"), exp);
-            _this.animateTo(_this.config.profileInfoElement.find(".profile-exp-next"), expForNextLvl);
-            _this.config.profileInfoElement.find(".current-xp").css("width", expPercent + "%");
-            _this.config.profileInfoElement.find(".profile-exp-loading").remove();
-            _this.config.profileInfoElement.find(".profile-exp-loaded").show();
-            _this.config.profileInfoElement.find(".xp-progress").show();
-            if (expAdded) {
-                _this.expBubble(expAdded);
-            }
+        this.sendTransferPokemonRequest = function (pokemonId) {
+            var request = {
+                Command: "TransferPokemon",
+                Data: pokemonId.toString()
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendTransferPokemonRequest(request); });
+            _this.sendRequest(request);
         };
-        this.expBubble = function (expAdded) {
-            var bubbleHtml = "<div class=\"xp-bubble\">+" + expAdded + " XP</div>";
-            var bubble = $(bubbleHtml);
-            _this.config.profileInfoElement.find(".profile-exp").append(bubble);
-            setTimeout(function () { bubble.remove(); }, 1000);
+        this.sendEvolvePokemonRequest = function (pokemonId) {
+            var request = {
+                Command: "EvolvePokemon",
+                Data: pokemonId.toString()
+            };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEvolvePokemonRequest(request); });
+            _this.sendRequest(request);
         };
-        this.calculateCurrentLevel = function (totalExp) {
-            for (var i = 0; i < StaticInfo.totalExpForLevel.length; i++) {
-                if (StaticInfo.totalExpForLevel[i + 1] >= totalExp) {
-                    return i;
+        this.sendRequest = function (request) {
+            console.log("%c>>> OUTGOING:", "color: red", request);
+            var requestStr = JSON.stringify(request);
+            _this.webSocket.send(requestStr);
+        };
+        this.parseItemString = function (itemStr) {
+            var itemParseRegex = /(\d+) x (.+?)(?:,|$)/g;
+            var itemsList = [];
+            while (true) {
+                var regexResults = itemParseRegex.exec(itemStr);
+                if (regexResults === null) {
+                    break;
                 }
+                itemsList.push({
+                    Count: parseInt(regexResults[1]),
+                    Name: regexResults[2]
+                });
             }
-            throw "Unable to determine level";
+            return itemsList;
         };
-        this.config = config;
-        if (this.config.hideUsername) {
-            this.config.profileInfoElement.find(".profile-username").hide();
-        }
+        this.getCurrency = function (message, currencyName) {
+            var currencies = message.Profile.PlayerData.Currencies.$values;
+            var currency = _.find(currencies, function (x) { return x.Name === currencyName; });
+            return currency.Amount;
+        };
+        this.url = url;
+        this.currentlySniping = false;
+        this.running = false;
     }
-    ProfileInfoManager.prototype.animateTo = function (element, to) {
-        element.prop("number", parseInt(element.text()));
-        element.animateNumber({
-            number: to
-        });
-    };
-    return ProfileInfoManager;
+    return BotWSClient;
+}());
+var Language;
+(function (Language) {
+    Language[Language["English"] = 0] = "English";
+    Language[Language["German"] = 1] = "German";
+})(Language || (Language = {}));
+var TranslationService = (function () {
+    function TranslationService(language) {
+        var _this = this;
+        if (language === void 0) { language = Language.English; }
+        this.getCurrentLanguage = function () { return _this.currentLanguage; };
+        this.setCurrentLanguage = function (language) {
+            _this.currentLanguage = language;
+            switch (language) {
+                case Language.English:
+                    _this.translation = new EnglishTranslation();
+                    break;
+                case Language.German:
+                    _this.translation = new GermanTranslation();
+                    break;
+                default:
+                    throw "Unknown language";
+            }
+        };
+        this.setCurrentLanguage(language);
+    }
+    return TranslationService;
 }());
 var EnglishTranslation = (function () {
     function EnglishTranslation() {
@@ -6769,33 +6802,6 @@ var GermanTranslation = (function (_super) {
     }
     return GermanTranslation;
 }(EnglishTranslation));
-var Language;
-(function (Language) {
-    Language[Language["English"] = 0] = "English";
-    Language[Language["German"] = 1] = "German";
-})(Language || (Language = {}));
-var TranslationManager = (function () {
-    function TranslationManager(language) {
-        var _this = this;
-        if (language === void 0) { language = Language.English; }
-        this.getCurrentLanguage = function () { return _this.currentLanguage; };
-        this.setCurrentLanguage = function (language) {
-            _this.currentLanguage = language;
-            switch (language) {
-                case Language.English:
-                    _this.translation = new EnglishTranslation();
-                    break;
-                case Language.German:
-                    _this.translation = new GermanTranslation();
-                    break;
-                default:
-                    throw "Unknown language";
-            }
-        };
-        this.setCurrentLanguage(language);
-    }
-    return TranslationManager;
-}());
 var TimeUtils = (function () {
     function TimeUtils() {
     }
@@ -6840,46 +6846,46 @@ var TimeUtils = (function () {
 $(function () {
     StaticInfo.init();
     var client = new BotWSClient("ws://127.0.0.1:14252");
-    var translationManager = new TranslationManager();
-    var notificationManager = new NotificationManager({
+    var translationController = new TranslationService();
+    var notificationController = new NotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
-        translationManager: translationManager
+        translationController: translationController
     });
-    var mainMenuManager = new MainMenuManager({
+    var mainMenuController = new MainMenuController({
         requestSender: client,
         mainMenuElement: $("#menu")
     });
-    var pokemonMenuManager = new PokemonMenuManager({
-        translationManager: translationManager,
+    var pokemonMenuController = new PokemonMenuController({
+        translationController: translationController,
         requestSender: client,
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
         pokemonDetailsElement: $("#pokemon-info"),
         pokemonLoadingSpinner: $(".spinner-overlay")
     });
-    var inventoryMenuManager = new InventoryMenuManager({
-        translationManager: translationManager,
+    var inventoryMenuController = new InventoryMenuController({
+        translationController: translationController,
         requestSender: client,
         inventoryMenuElement: $('body .content[data-category="items"]'),
         inventoryLoadingSpinner: $(".spinner-overlay")
     });
-    var profileInfoManager = new ProfileInfoManager({
+    var profileInfoController = new ProfileInfoController({
         hideUsername: false,
         profileInfoElement: $("#profile")
     });
     var mapConfig = {
         followPlayer: true,
-        translationManager: translationManager
+        translationController: translationController
     };
     var useGoogleMap = true;
     var lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
     var interfaceHandler = new InterfaceHandler({
-        translationManager: translationManager,
-        notificationManager: notificationManager,
-        mainMenuManager: mainMenuManager,
-        pokemonMenuManager: pokemonMenuManager,
-        inventoryMenuManager: inventoryMenuManager,
-        profileInfoManager: profileInfoManager,
+        translationController: translationController,
+        notificationController: notificationController,
+        mainMenuController: mainMenuController,
+        pokemonMenuController: pokemonMenuController,
+        inventoryMenuController: inventoryMenuController,
+        profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap
     });

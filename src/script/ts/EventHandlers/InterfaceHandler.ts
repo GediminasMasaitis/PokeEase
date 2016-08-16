@@ -70,13 +70,13 @@
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
         this.exp += fortUsed.Exp;
-        this.config.notificationManager.addNotificationPokeStopUsed(fortUsed);
-        this.config.profileInfoManager.addExp(this.exp, fortUsed.Exp);
+        this.config.notificationController.addNotificationPokeStopUsed(fortUsed);
+        this.config.profileInfoController.addExp(this.exp, fortUsed.Exp);
     }
 
     public onProfile(profile: IProfileEvent): void {
-        this.config.mainMenuManager.updateProfileData(profile);
-        this.config.profileInfoManager.setProfileData(profile);
+        this.config.mainMenuController.updateProfileData(profile);
+        this.config.profileInfoController.setProfileData(profile);
         this.config.requestSender.sendPlayerStatsRequest();
         this.config.requestSender.sendGetPokemonSettingsRequest();
         this.config.requestSender.sendInventoryListRequest();
@@ -103,9 +103,9 @@
         this.itemsUsedForCapture.push(pokemonCapture.Pokeball);
         if (pokemonCapture.Status === PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
-            this.config.notificationManager.addNotificationPokemonCapture(this.previousCaptureAttempts, this.itemsUsedForCapture);
+            this.config.notificationController.addNotificationPokemonCapture(this.previousCaptureAttempts, this.itemsUsedForCapture);
             this.exp += pokemonCapture.Exp;
-            this.config.profileInfoManager.addExp(this.exp, pokemonCapture.Exp);
+            this.config.profileInfoController.addExp(this.exp, pokemonCapture.Exp);
         }
     }
 
@@ -114,9 +114,9 @@
     }
 
     public onPokemonEvolve(pokemonEvolve: IPokemonEvolveEvent): void {
-        this.config.notificationManager.addNotificationPokemonEvolved(pokemonEvolve);
+        this.config.notificationController.addNotificationPokemonEvolved(pokemonEvolve);
         this.exp += pokemonEvolve.Exp;
-        this.config.profileInfoManager.addExp(this.exp, pokemonEvolve.Exp);
+        this.config.profileInfoController.addExp(this.exp, pokemonEvolve.Exp);
     }
 
     public onSnipeScan(snipeScan: ISnipeScanEvent): void {
@@ -140,25 +140,25 @@
     }
 
     public onEggHatched(eggHatched: IEggHatchedEvent): void {
-        this.config.notificationManager.addNotificationEggHatched(eggHatched);
+        this.config.notificationController.addNotificationEggHatched(eggHatched);
     }
 
     public onIncubatorStatus(incubatorStatus: IIncubatorStatusEvent): void {
-        this.config.notificationManager.addNotificationIncubatorStatus(incubatorStatus);
+        this.config.notificationController.addNotificationIncubatorStatus(incubatorStatus);
     }
 
     public onItemRecycle(itemRecycle: IItemRecycleEvent): void {
-        this.config.notificationManager.addNotificationItemRecycle(itemRecycle);
+        this.config.notificationController.addNotificationItemRecycle(itemRecycle);
     }
 
     public onPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void {
-        this.config.notificationManager.addNotificationPokemonTransfer(pokemonTransfer);
+        this.config.notificationController.addNotificationPokemonTransfer(pokemonTransfer);
     }
 
 
 
     public onPokemonList(pokemonList: IPokemonListEvent): void {
-        this.config.pokemonMenuManager.updatePokemonList(pokemonList);
+        this.config.pokemonMenuController.updatePokemonList(pokemonList);
     }
 
     public onEggList(eggList: IEggListEvent): void {
@@ -166,18 +166,18 @@
     }
 
     public onInventoryList(inventoryList: IInventoryListEvent): void {
-        this.config.inventoryMenuManager.updateInventoryList(inventoryList);
+        this.config.inventoryMenuController.updateInventoryList(inventoryList);
     }
 
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {
         this.exp = playerStats.Experience;
-        this.config.profileInfoManager.setPlayerStats(playerStats);
+        this.config.profileInfoController.setPlayerStats(playerStats);
     }
 
 
 
     public onSendPokemonListRequest(request: IRequest): void {
-        this.config.pokemonMenuManager.pokemonListRequested(request);
+        this.config.pokemonMenuController.pokemonListRequested(request);
     }
 
     public onSendEggsListRequest(request: IRequest): void {
@@ -185,7 +185,7 @@
     }
 
     public onSendInventoryListRequest(request: IRequest): void {
-        this.config.inventoryMenuManager.inventoryListRequested(request);
+        this.config.inventoryMenuController.inventoryListRequested(request);
     }
 
     public onSendPlayerStatsRequest(request: IRequest): void {
