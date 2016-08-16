@@ -174,4 +174,5 @@ $(window).ready(function() {
     for (var i = 1; i <= 151; i++) {
         $('.content[data-category="pokedex"]').append('<div class="pokemon"><h1 class="name">'+i+'. '+pokemonNames[i]+'</h1><div class="image-container"><img src="images/pokemon/' +i+ '.png"/></div><h3 class="caught">'+i+'</h3><h3 class="seen">'+i+'</h3></div>');
     }
+
 });
