@@ -935,6 +935,8 @@ $event-incubator-status-color: #e9e1b5;
             margin: 3px;
             background-color: rgba(0, 0, 0, 0.75);
             padding: 3px 8px;
+            text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+            color: white !important;
         }
 
         .bug        {background-color: #a8b72a;}
