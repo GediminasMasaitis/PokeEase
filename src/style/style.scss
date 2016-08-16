@@ -1060,6 +1060,8 @@ $event-incubator-status-color: #e9e1b5;
 
 .content[data-category="items"] {
 
+    padding: 0 !important;
+
 
     /* .recycle-action {
         .recycle-product {
@@ -1145,6 +1147,9 @@ $event-incubator-status-color: #e9e1b5;
                 display: inline-block;
                 font-size: 18px;
                 margin-left: 1em;
+                text-transform: uppercase;
+                color: rgba(0, 0, 0, 0.8);
+                font-size: 14px;
             }
 
         }
@@ -1160,7 +1165,11 @@ $event-incubator-status-color: #e9e1b5;
         }
     }
 
+    .product.brighter {
+        background: rgba(255, 255, 255, 0.35);
+    }
+
     .product + .product {
-        border-top: 1px solid rgba(0, 0, 0, 0.15);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 }

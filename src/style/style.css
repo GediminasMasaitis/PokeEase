@@ -944,6 +944,7 @@ body {
       transform: scaleY(1); }
 
 .content[data-category="items"] {
+  padding: 0 !important;
   /* .recycle-action {
         .recycle-product {
             display: inline-block;
@@ -1020,7 +1021,10 @@ body {
       .content[data-category="items"] .product .product-info h1 {
         display: inline-block;
         font-size: 18px;
-        margin-left: 1em; }
+        margin-left: 1em;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.8);
+        font-size: 14px; }
     .content[data-category="items"] .product .number {
       display: table-cell;
       vertical-align: middle;
@@ -1029,7 +1033,9 @@ body {
       width: 30%;
       text-align: right;
       padding-right: 5%; }
+  .content[data-category="items"] .product.brighter {
+    background: rgba(255, 255, 255, 0.35); }
   .content[data-category="items"] .product + .product {
-    border-top: 1px solid rgba(0, 0, 0, 0.15); }
+    border-top: 1px solid rgba(0, 0, 0, 0.1); }
 
 /*# sourceMappingURL=style.css.map */
