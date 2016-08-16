@@ -43,7 +43,7 @@ $(document).ready(function () {
         $("#content-wrap").removeClass('blurred');
     });
 
-    $("#pokemon-info .close-button").click(function() {
+    $("#pokemon-info .close-button, #pokemon-content .controls div .confirm span").click(function() {
         $("#pokemon-info").fadeOut();
         $("#content-wrap").removeClass('blurred');
     });
