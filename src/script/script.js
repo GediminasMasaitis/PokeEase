@@ -1484,10 +1484,16 @@ var PokemonMenuManager = (function () {
             var pokemonBox = $(ev.target).closest(".pokemon");
             var pokemonIndex = pokemonBox.prop("pokemon-index");
             var pokemon = _this.pokemonList.Pokemons[pokemonIndex];
+            _this.currentPokemon = pokemon;
             var pokemonName = _this.config.translationManager.translation.pokemonNames[pokemon.PokemonId];
             var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
-            _this.config.pokemonDetailsElement.fadeIn();
-            _this.config.pokemonMenuElement.closest("#content-wrap").addClass("blurred");
+            var evolveButton = _this.config.pokemonDetailsElement.find("#evolve-pokemon-button");
+            if (StaticInfo.pokemonInfo[pokemon.PokemonId].evolvesInto.length === 0) {
+                evolveButton.hide();
+            }
+            else {
+                evolveButton.show();
+            }
             _this.config.pokemonDetailsElement.find("#pokemon-info-name").text(pokemonName);
             _this.config.pokemonDetailsElement.find("#pokemon-info-image").attr("src", "images/pokemon/" + pokemon.PokemonId + ".png");
             _this.config.pokemonDetailsElement.find(".attack").text(pokemon.IndividualAttack);
@@ -1495,8 +1501,20 @@ var PokemonMenuManager = (function () {
             _this.config.pokemonDetailsElement.find(".stamina").text(pokemon.IndividualStamina);
             _this.config.pokemonDetailsElement.find(".total-iv").text(roundedIv + "%");
             _this.config.pokemonDetailsElement.find(".poke-cp").text("" + pokemon.Cp);
+            _this.config.pokemonMenuElement.closest("#content-wrap").addClass("blurred");
+            _this.config.pokemonDetailsElement.fadeIn();
+        };
+        this.transferPokemon = function (ev) {
+            var pokemonUniqueId = _this.currentPokemon.Id;
+            _this.config.requestSender.sendTransferPokemonRequest(pokemonUniqueId);
+        };
+        this.evolvePokemon = function (ev) {
+            var pokemonUniqueId = _this.currentPokemon.Id;
+            _this.config.requestSender.sendEvolvePokemonRequest(pokemonUniqueId);
         };
         this.config = config;
+        this.config.pokemonDetailsElement.find("#confirm-transfer").click(this.transferPokemon);
+        this.config.pokemonDetailsElement.find("#confirm-evolve").click(this.evolvePokemon);
     }
     return PokemonMenuManager;
 }());
@@ -1870,6 +1888,7 @@ $(function () {
     });
     var pokemonMenuManager = new PokemonMenuManager({
         translationManager: translationManager,
+        requestSender: client,
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
         pokemonDetailsElement: $("#pokemon-info")
     });
