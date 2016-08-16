@@ -1,7 +1,8 @@
 ﻿class LocalStorageSettingsService implements ISettingsService {
 
-    public settings: ISettings;
+    private settings: ISettings;
     private settingsKey = "settings";
+    private subscribers: ISettingsSubscriber[];
 
     constructor() {
         
@@ -10,14 +11,12 @@
     public load = (): void => {
         const settingsJson = localStorage.getItem(this.settingsKey);
         if (!settingsJson) {
-            this.reset();
+            this.apply(DefaultSettings.settings);
             this.save();
             return;
         }
         const loadedSettings = JSON.parse(settingsJson);
-        const defaultSettings = DefaultSettings.settings;
-        const mergedSettings = this.mergeSettings([loadedSettings, defaultSettings]);
-        this.settings = mergedSettings;
+        this.apply(loadedSettings);
     }
 
     private mergeSettings(allSettings: ISettings[]):ISettings {
@@ -40,12 +39,23 @@
         throw "No value found";
     }
 
+    private apply(settings: ISettings) {
+        const previousSettings = this.settings;
+        const defaultSettings = DefaultSettings.settings;
+        const mergedSettings = this.mergeSettings([settings, defaultSettings]);
+        this.settings = mergedSettings;
+        for (let i = 0; i < this.subscribers.length; i++) {
+            // TODO: clone the merged settings to allow subscribers to change it how they please
+            this.subscribers[i].onSettingsChanged(mergedSettings, previousSettings);
+        }
+    }
+
     public save = (): void => {
         const settingsJson = JSON.stringify(this.settings);
         localStorage.setItem(this.settingsKey, settingsJson);
     }
 
-    public reset(): void {
-        this.settings = DefaultSettings.settings;
+    public subscribe(subscriber: ISettingsSubscriber): void {
+        this.subscribers.push(subscriber);
     }
 }

@@ -6715,14 +6715,12 @@ var LocalStorageSettingsService = (function () {
         this.load = function () {
             var settingsJson = localStorage.getItem(_this.settingsKey);
             if (!settingsJson) {
-                _this.reset();
+                _this.apply(DefaultSettings.settings);
                 _this.save();
                 return;
             }
             var loadedSettings = JSON.parse(settingsJson);
-            var defaultSettings = DefaultSettings.settings;
-            var mergedSettings = _this.mergeSettings([loadedSettings, defaultSettings]);
-            _this.settings = mergedSettings;
+            _this.apply(loadedSettings);
         };
         this.save = function () {
             var settingsJson = JSON.stringify(_this.settings);
@@ -6746,8 +6744,17 @@ var LocalStorageSettingsService = (function () {
         }
         throw "No value found";
     };
-    LocalStorageSettingsService.prototype.reset = function () {
-        this.settings = DefaultSettings.settings;
+    LocalStorageSettingsService.prototype.apply = function (settings) {
+        var previousSettings = this.settings;
+        var defaultSettings = DefaultSettings.settings;
+        var mergedSettings = this.mergeSettings([settings, defaultSettings]);
+        this.settings = mergedSettings;
+        for (var i = 0; i < this.subscribers.length; i++) {
+            this.subscribers[i].onSettingsChanged(mergedSettings, previousSettings);
+        }
+    };
+    LocalStorageSettingsService.prototype.subscribe = function (subscriber) {
+        this.subscribers.push(subscriber);
     };
     return LocalStorageSettingsService;
 }());

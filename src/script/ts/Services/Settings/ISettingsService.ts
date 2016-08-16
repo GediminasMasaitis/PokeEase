@@ -1,6 +1,5 @@
 ﻿interface ISettingsService {
-    settings: ISettings;
     load(): void;
     save(): void;
-    reset(): void;
+    subscribe(subscriber: ISettingsSubscriber):void;
 }
