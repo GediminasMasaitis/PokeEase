@@ -27,6 +27,13 @@ $(() => {
         pokemonLoadingSpinner: $(".spinner-overlay")
     });
 
+    const inventoryMenuManager = new InventoryMenuManager({
+        translationManager: translationManager,
+        requestSender: client,
+        inventoryMenuElement: $('body .content[data-category="items"]'),
+        inventoryLoadingSpinner: $(".spinner-overlay")
+    });
+
     const profileInfoManager = new ProfileInfoManager({
         hideUsername: false,
         profileInfoElement: $("#profile")
@@ -45,6 +52,7 @@ $(() => {
         notificationManager: notificationManager,
         mainMenuManager: mainMenuManager,
         pokemonMenuManager: pokemonMenuManager,
+        inventoryMenuManager: inventoryMenuManager,
         profileInfoManager: profileInfoManager,
         requestSender: client,
         map: lMap

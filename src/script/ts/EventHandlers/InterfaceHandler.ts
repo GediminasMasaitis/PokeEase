@@ -162,11 +162,11 @@
     }
 
     public onEggList(eggList: IEggListEvent): void {
-
+        
     }
 
     public onInventoryList(inventoryList: IInventoryListEvent): void {
-
+        this.config.inventoryMenuManager.updateInventoryList(inventoryList);
     }
 
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {
@@ -185,7 +185,7 @@
     }
 
     public onSendInventoryListRequest(request: IRequest): void {
-        
+        this.config.inventoryMenuManager.inventoryListRequested(request);
     }
 
     public onSendPlayerStatsRequest(request: IRequest): void {

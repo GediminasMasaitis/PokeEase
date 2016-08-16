@@ -374,6 +374,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onEggList = function (eggList) {
     };
     InterfaceHandler.prototype.onInventoryList = function (inventoryList) {
+        this.config.inventoryMenuManager.updateInventoryList(inventoryList);
     };
     InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
         this.exp = playerStats.Experience;
@@ -385,6 +386,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onSendEggsListRequest = function (request) {
     };
     InterfaceHandler.prototype.onSendInventoryListRequest = function (request) {
+        this.config.inventoryMenuManager.inventoryListRequested(request);
     };
     InterfaceHandler.prototype.onSendPlayerStatsRequest = function (request) {
     };
@@ -6357,14 +6359,38 @@ var LeafletMap = (function () {
     };
     return LeafletMap;
 }());
+var InventoryMenuManager = (function () {
+    function InventoryMenuManager(config) {
+        var _this = this;
+        this.inventoryListRequested = function (request) {
+            _this.config.inventoryLoadingSpinner.show();
+        };
+        this.updateInventoryList = function (inventoryList) {
+            var currentItems = _this.config.inventoryMenuElement.find(".product");
+            currentItems.find(".number").text(0);
+            for (var i = 0; i < inventoryList.Items.length; i++) {
+                var item = inventoryList.Items[i];
+                var itemElement = _this.config.inventoryMenuElement.find(".product[data-item-id=\"" + item.ItemId + "\"]");
+                itemElement.find(".number").text(item.Count);
+            }
+            _this.config.inventoryLoadingSpinner.fadeOut(150);
+        };
+        this.config = config;
+    }
+    return InventoryMenuManager;
+}());
 var MainMenuManager = (function () {
     function MainMenuManager(config) {
         var _this = this;
         this.onPokemonMenuClick = function (ev) {
             _this.config.requestSender.sendPokemonListRequest();
         };
+        this.onItemsMenuClick = function (ev) {
+            _this.config.requestSender.sendInventoryListRequest();
+        };
         this.config = config;
         this.config.mainMenuElement.find("#pokemons").click(this.onPokemonMenuClick);
+        this.config.mainMenuElement.find("#items").click(this.onItemsMenuClick);
     }
     MainMenuManager.prototype.updateProfileData = function (profile) {
     };
@@ -6818,6 +6844,12 @@ $(function () {
         pokemonDetailsElement: $("#pokemon-info"),
         pokemonLoadingSpinner: $(".spinner-overlay")
     });
+    var inventoryMenuManager = new InventoryMenuManager({
+        translationManager: translationManager,
+        requestSender: client,
+        inventoryMenuElement: $('body .content[data-category="items"]'),
+        inventoryLoadingSpinner: $(".spinner-overlay")
+    });
     var profileInfoManager = new ProfileInfoManager({
         hideUsername: false,
         profileInfoElement: $("#profile")
@@ -6833,6 +6865,7 @@ $(function () {
         notificationManager: notificationManager,
         mainMenuManager: mainMenuManager,
         pokemonMenuManager: pokemonMenuManager,
+        inventoryMenuManager: inventoryMenuManager,
         profileInfoManager: profileInfoManager,
         requestSender: client,
         map: lMap
