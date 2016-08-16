@@ -648,9 +648,12 @@ body {
   color: rgba(255, 255, 255, 0.75); }
 
 #profile .profile-exp {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.2);
   display: inline-block;
-  position: relative; }
+  position: relative;
+  letter-spacing: 1px; }
+  #profile .profile-exp span {
+    color: rgba(255, 255, 255, 0.5); }
 
 /* #profile .user-items div {
     margin: 0.5em 0;
