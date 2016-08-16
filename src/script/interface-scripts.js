@@ -14,7 +14,7 @@ $(document).ready(function () {
 
     $("#menu .item").click(function() {
         var PopupTitle = $(this).attr('id');
-        $("#popup").stop().fadeIn();
+        $("#popup").stop().fadeIn(300);
         $("#popup .title span").text($(this).attr('id'));
         $("#popup .title").css('background-color', $(this).css('background-color'));
         $("#popup .content").each(function() {
@@ -26,7 +26,7 @@ $(document).ready(function () {
     });
 
     $("#popup .overlay, #popup .close-me").click(function() {
-        $("#popup").stop().fadeOut();
+        $("#popup").stop().fadeOut(300);
     });
 
     //$(".content").on("click", ".pokemon", function() {
@@ -35,12 +35,12 @@ $(document).ready(function () {
     //});
 
     $("#pokemon-info").click(function() {
-        $(this).stop().fadeOut();
+        $(this).stop().fadeOut(300);
         $("#content-wrap").removeClass('blurred');
     });
 
     $("#pokemon-info .close-button, #pokemon-content .controls div .confirm span").click(function() {
-        $("#pokemon-info").stop().fadeOut();
+        $("#pokemon-info").stop().fadeOut(300);
         $("#content-wrap").removeClass('blurred');
     });
 

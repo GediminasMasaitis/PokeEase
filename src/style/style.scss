@@ -232,6 +232,11 @@ body {
     color: white;
     background: rgba(0, 0, 0, 0.15);
     line-height: 34px;
+    transition: 0.3s;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.4);
+    }
 }
 
 #popup .inner-wrap .title {
@@ -659,7 +664,7 @@ $event-incubator-status-color: #e9e1b5;
     content: "%";
 }
 
-#content-wrap {overflow-y: auto; height: calc(100% - 36px); position: relative; transition: 0.4s;}
+#content-wrap {overflow-y: auto; height: calc(100% - 36px); position: relative; transition: 0.3s;}
 
 #popup .inner-wrap .content[data-category="pokemons"] {
     margin: .5em 0;

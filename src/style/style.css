@@ -203,7 +203,10 @@ body {
   width: 36px;
   color: white;
   background: rgba(0, 0, 0, 0.15);
-  line-height: 34px; }
+  line-height: 34px;
+  transition: 0.3s; }
+  #popup .inner-wrap .close-me:hover {
+    background: rgba(0, 0, 0, 0.4); }
 
 #popup .inner-wrap .title {
   color: white;
@@ -599,7 +602,7 @@ body {
   overflow-y: auto;
   height: calc(100% - 36px);
   position: relative;
-  transition: 0.4s; }
+  transition: 0.3s; }
 
 #popup .inner-wrap .content[data-category="pokemons"] {
   margin: .5em 0; }
