@@ -61,6 +61,15 @@
 
         const move1Name = StaticInfo.moveInfo[pokemon.Move1] ? StaticInfo.moveInfo[pokemon.Move1].name : "Unknown move";
         const move2Name = StaticInfo.moveInfo[pokemon.Move2] ? StaticInfo.moveInfo[pokemon.Move2].name : "Unknown move";
+        const pokemonInfo = StaticInfo.pokemonInfo[pokemon.PokemonId];
+        const elementElement = this.config.pokemonDetailsElement.find("#pokemon-type");
+        elementElement.html("");
+        for (let i = 0; i < pokemonInfo.elements.length; i++) {
+            const elementStr = PokeElement[pokemonInfo.elements[i]].toLowerCase();
+            const elementHtml = `<span class="${elementStr}">${elementStr}</span>`;
+            const el = $(elementHtml);
+            elementElement.append(el);
+        }
         this.config.pokemonDetailsElement.find(".move1").text(move1Name);
         this.config.pokemonDetailsElement.find(".move2").text(move2Name);
 

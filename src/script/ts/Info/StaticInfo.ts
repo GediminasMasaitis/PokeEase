@@ -48,7 +48,7 @@ interface IAvailableToPokemonInfo {
 
 interface IPokemonInfo {
     pokemonId: number;
-    types: PokeElement[];
+    elements: PokeElement[];
     evolvesInto: number[];
     possibleMoves: IMoveInfo[];
 }
@@ -4708,762 +4708,762 @@ class StaticInfo {
         pokemonInfo[0] = 
         {
             // MissingNo
-            types: [],
+            elements: [],
             evolvesInto: []
         }
         pokemonInfo[1] = {
             // Bulbasaur
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [2] // Ivysaur
         };
         pokemonInfo[2] = {
             // Ivysaur
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [3] // Venusaur
         };
         pokemonInfo[3] = {
             // Venusaur
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[4] = {
             // Charmander
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: [5] // Charmeleon
         };
         pokemonInfo[5] = {
             // Charmeleon
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: [6] // Charizard
         };
         pokemonInfo[6] = {
             // Charizard
-            types: [PokeElement.Fire, PokeElement.Flying],
+            elements: [PokeElement.Fire, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[7] = {
             // Squirtle
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [8] // Wartortle
         };
         pokemonInfo[8] = {
             // Wartortle
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [9] // Blastoise
         };
         pokemonInfo[9] = {
             // Blastoise
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[10] = {
             // Caterpie
-            types: [PokeElement.Bug],
+            elements: [PokeElement.Bug],
             evolvesInto: [11] // Metapod
         };
         pokemonInfo[11] = {
             // Metapod
-            types: [PokeElement.Bug],
+            elements: [PokeElement.Bug],
             evolvesInto: [12] // Butterfree
         };
         pokemonInfo[12] = {
             // Butterfree
-            types: [PokeElement.Bug, PokeElement.Flying],
+            elements: [PokeElement.Bug, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[13] = {
             // Weedle
-            types: [PokeElement.Bug, PokeElement.Poison],
+            elements: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: [14] // Kakuna
         };
         pokemonInfo[14] = {
             // Kakuna
-            types: [PokeElement.Bug, PokeElement.Poison],
+            elements: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: [15] // Beedrill
         };
         pokemonInfo[15] = {
             // Beedrill
-            types: [PokeElement.Bug, PokeElement.Poison],
+            elements: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[16] = {
             // Pidgey
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: [17] // Pidgeotto
         };
         pokemonInfo[17] = {
             // Pidgeotto
-            types: [PokeElement.Normal, PokeElement.Flying],
+            elements: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: [18] // Pidgeot
         };
         pokemonInfo[18] = {
             // Pidgeot
-            types: [PokeElement.Normal, PokeElement.Flying],
+            elements: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[19] = {
             // Rattata
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: [20] // Raticate
         };
         pokemonInfo[20] = {
             // Raticate
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[21] = {
             // Spearow
-            types: [PokeElement.Normal, PokeElement.Flying],
+            elements: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: [22] // Fearow
         };
         pokemonInfo[22] = {
             // Fearow
-            types: [PokeElement.Normal, PokeElement.Flying],
+            elements: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[23] = {
             // Ekans
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: [24] // Arbok
         };
         pokemonInfo[24] = {
             // Arbok
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[25] = {
             // Pikachu
-            types: [PokeElement.Electric],
+            elements: [PokeElement.Electric],
             evolvesInto: [26] // Raichu
         };
         pokemonInfo[26] = {
             // Raichu
-            types: [PokeElement.Electric],
+            elements: [PokeElement.Electric],
             evolvesInto: []
         };
         pokemonInfo[27] = {
             // Sandshrew
-            types: [PokeElement.Ground],
+            elements: [PokeElement.Ground],
             evolvesInto: [28] // Sandslash
         };
         pokemonInfo[28] = {
             // Sandslash
-            types: [PokeElement.Ground],
+            elements: [PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[29] = {
             // Nidoran F
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: [30] // Nidorina
         };
         pokemonInfo[30] = {
             // Nidorina
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: [31] // Nidoqueen
         };
         pokemonInfo[31] = {
             // Nidoqueen
-            types: [PokeElement.Poison, PokeElement.Ground],
+            elements: [PokeElement.Poison, PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[32] = {
             // Nidoran M
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: [33] // Nidorino
         };
         pokemonInfo[33] = {
             // Nidorino
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: [34] // Nidoking
         };
         pokemonInfo[34] = {
             // Nidoking
-            types: [PokeElement.Poison, PokeElement.Ground],
+            elements: [PokeElement.Poison, PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[35] = {
             // Clefairy
-            types: [PokeElement.Fairy],
+            elements: [PokeElement.Fairy],
             evolvesInto: [36] // Clefable
         };
         pokemonInfo[36] = {
             // Clefable
-            types: [PokeElement.Fairy],
+            elements: [PokeElement.Fairy],
             evolvesInto: []
         };
         pokemonInfo[37] = {
             // Vulpix
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: [38] // Ninetales
         };
         pokemonInfo[38] = {
             // Ninetales
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[39] = {
             // Jigglypuff
-            types: [PokeElement.Normal, PokeElement.Fairy],
+            elements: [PokeElement.Normal, PokeElement.Fairy],
             evolvesInto: [40] // Wigglytuff
         };
         pokemonInfo[40] = {
             // Wigglytuff
-            types: [PokeElement.Normal, PokeElement.Fairy],
+            elements: [PokeElement.Normal, PokeElement.Fairy],
             evolvesInto: []
         };
         pokemonInfo[41] = {
             // Zubat
-            types: [PokeElement.Poison, PokeElement.Flying],
+            elements: [PokeElement.Poison, PokeElement.Flying],
             evolvesInto: [42] // Golbat
         };
         pokemonInfo[42] = {
             // Golbat
-            types: [PokeElement.Poison, PokeElement.Flying],
+            elements: [PokeElement.Poison, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[43] = {
             // Oddish
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [44] // Gloom
         };
         pokemonInfo[44] = {
             // Gloom
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [45] // Vileplume
         };
         pokemonInfo[45] = {
             // Vileplume
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[46] = {
             // Paras
-            types: [PokeElement.Bug, PokeElement.Grass],
+            elements: [PokeElement.Bug, PokeElement.Grass],
             evolvesInto: [47] // Parasect
         };
         pokemonInfo[47] = {
             // Parasect
-            types: [PokeElement.Bug, PokeElement.Grass],
+            elements: [PokeElement.Bug, PokeElement.Grass],
             evolvesInto: []
         };
         pokemonInfo[48] = {
             // Venonat
-            types: [PokeElement.Bug, PokeElement.Poison],
+            elements: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: [49] // Venomoth
         };
         pokemonInfo[49] = {
             // Venomoth
-            types: [PokeElement.Bug, PokeElement.Poison],
+            elements: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[50] = {
             // Diglett
-            types: [PokeElement.Ground],
+            elements: [PokeElement.Ground],
             evolvesInto: [51] // Dugtrio
         };
         pokemonInfo[51] = {
             // Dugtrio
-            types: [PokeElement.Ground],
+            elements: [PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[52] = {
             // Meowth
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: [53] // Persian
         };
         pokemonInfo[53] = {
             // Persian
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[54] = {
             // Psyduck
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [55] // Golduck
         };
         pokemonInfo[55] = {
             // Golduck
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[56] = {
             // Mankey
-            types: [PokeElement.Fighting],
+            elements: [PokeElement.Fighting],
             evolvesInto: [57] // Primeape
         };
         pokemonInfo[57] = {
             // Primeape
-            types: [PokeElement.Fighting],
+            elements: [PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[58] = {
             // Growlithe
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: [59] // Arcanine
         };
         pokemonInfo[59] = {
             // Arcanine
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[60] = {
             // Poliwag
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [61] // Poliwhirl
         };
         pokemonInfo[61] = {
             // Poliwhirl
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [62] // Poliwrath
         };
         pokemonInfo[62] = {
             // Poliwrath
-            types: [PokeElement.Water, PokeElement.Fighting],
+            elements: [PokeElement.Water, PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[63] = {
             // Abra
-            types: [PokeElement.Psychic],
+            elements: [PokeElement.Psychic],
             evolvesInto: [64] // Kadabra
         };
         pokemonInfo[64] = {
             // Kadabra
-            types: [PokeElement.Psychic],
+            elements: [PokeElement.Psychic],
             evolvesInto: [65] // Alakazam
         };
         pokemonInfo[65] = {
             // Alakazam
-            types: [PokeElement.Psychic],
+            elements: [PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[66] = {
             // Machop
-            types: [PokeElement.Fighting],
+            elements: [PokeElement.Fighting],
             evolvesInto: [67] // Machoke
         };
         pokemonInfo[67] = {
             // Machoke
-            types: [PokeElement.Fighting],
+            elements: [PokeElement.Fighting],
             evolvesInto: [68] // Machamp
         };
         pokemonInfo[68] = {
             // Machamp
-            types: [PokeElement.Fighting],
+            elements: [PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[69] = {
             // Bellsprout
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [70] // Weepinbell
         };
         pokemonInfo[70] = {
             // Weepinbell
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [71] // Victreebel
         };
         pokemonInfo[71] = {
             // Victreebel
-            types: [PokeElement.Grass, PokeElement.Poison],
+            elements: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[72] = {
             // Tentacool
-            types: [PokeElement.Water, PokeElement.Poison],
+            elements: [PokeElement.Water, PokeElement.Poison],
             evolvesInto: [73] // Tentacruel
         };
         pokemonInfo[73] = {
             // Tentacruel
-            types: [PokeElement.Water, PokeElement.Poison],
+            elements: [PokeElement.Water, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[74] = {
             // Geodude
-            types: [PokeElement.Rock, PokeElement.Ground],
+            elements: [PokeElement.Rock, PokeElement.Ground],
             evolvesInto: [75] // Graveler
         };
         pokemonInfo[75] = {
             // Graveler
-            types: [PokeElement.Rock, PokeElement.Ground],
+            elements: [PokeElement.Rock, PokeElement.Ground],
             evolvesInto: [76] // Golem
         };
         pokemonInfo[76] = {
             // Golem
-            types: [PokeElement.Rock, PokeElement.Ground],
+            elements: [PokeElement.Rock, PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[77] = {
             // Ponyta
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: [78] // Rapidash
         };
         pokemonInfo[78] = {
             // Rapidash
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[79] = {
             // Slowpoke
-            types: [PokeElement.Water, PokeElement.Psychic],
+            elements: [PokeElement.Water, PokeElement.Psychic],
             evolvesInto: [80] // Slowbro
         };
         pokemonInfo[80] = {
             // Slowbro
-            types: [PokeElement.Water, PokeElement.Psychic],
+            elements: [PokeElement.Water, PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[81] = {
             // Magnemite
-            types: [PokeElement.Electric, PokeElement.Steel],
+            elements: [PokeElement.Electric, PokeElement.Steel],
             evolvesInto: [82] // Magneton
         };
         pokemonInfo[82] = {
             // Magneton
-            types: [PokeElement.Electric, PokeElement.Steel],
+            elements: [PokeElement.Electric, PokeElement.Steel],
             evolvesInto: []
         };
         pokemonInfo[83] = {
             // Farfetch'd
-            types: [PokeElement.Normal, PokeElement.Flying],
+            elements: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[84] = {
             // Doduo
-            types: [PokeElement.Normal, PokeElement.Flying],
+            elements: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: [85] // Dodrio
         };
         pokemonInfo[85] = {
             // Dodrio
-            types: [PokeElement.Normal, PokeElement.Flying],
+            elements: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[86] = {
             // Seel
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [87] // Dewgong
         };
         pokemonInfo[87] = {
             // Dewgong
-            types: [PokeElement.Water, PokeElement.Ice],
+            elements: [PokeElement.Water, PokeElement.Ice],
             evolvesInto: []
         };
         pokemonInfo[88] = {
             // Grimer
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: [89] // Muk
         };
         pokemonInfo[89] = {
             // Muk
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[90] = {
             // Shellder
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [91] // Cloyster
         };
         pokemonInfo[91] = {
             // Cloyster
-            types: [PokeElement.Water, PokeElement.Ice],
+            elements: [PokeElement.Water, PokeElement.Ice],
             evolvesInto: []
         };
         pokemonInfo[92] = {
             // Gastly
-            types: [PokeElement.Ghost, PokeElement.Poison],
+            elements: [PokeElement.Ghost, PokeElement.Poison],
             evolvesInto: [93] // Haunter
         };
         pokemonInfo[93] = {
             // Haunter
-            types: [PokeElement.Ghost, PokeElement.Poison],
+            elements: [PokeElement.Ghost, PokeElement.Poison],
             evolvesInto: [94] // Gengar
         };
         pokemonInfo[94] = {
             // Gengar
-            types: [PokeElement.Ghost, PokeElement.Poison],
+            elements: [PokeElement.Ghost, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[95] = {
             // Onix
-            types: [PokeElement.Rock, PokeElement.Ground],
+            elements: [PokeElement.Rock, PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[96] = {
             // Drowzee
-            types: [PokeElement.Psychic],
+            elements: [PokeElement.Psychic],
             evolvesInto: [97] // Hypno
         };
         pokemonInfo[97] = {
             // Hypno
-            types: [PokeElement.Psychic],
+            elements: [PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[98] = {
             // Krabby
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [99] // Kingler
         };
         pokemonInfo[99] = {
             // Kingler
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[100] = {
             // Voltorb
-            types: [PokeElement.Electric],
+            elements: [PokeElement.Electric],
             evolvesInto: [101] // Electrode
         };
         pokemonInfo[101] = {
             // Electrode
-            types: [PokeElement.Electric],
+            elements: [PokeElement.Electric],
             evolvesInto: []
         };
         pokemonInfo[102] = {
             // Exeggcute
-            types: [PokeElement.Grass, PokeElement.Psychic],
+            elements: [PokeElement.Grass, PokeElement.Psychic],
             evolvesInto: [103] // Exeggutor
         };
         pokemonInfo[103] = {
             // Exeggutor
-            types: [PokeElement.Grass, PokeElement.Psychic],
+            elements: [PokeElement.Grass, PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[104] = {
             // Cubone
-            types: [PokeElement.Ground],
+            elements: [PokeElement.Ground],
             evolvesInto: [105] // Marowak
         };
         pokemonInfo[105] = {
             // Marowak
-            types: [PokeElement.Ground],
+            elements: [PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[106] = {
             // Hitmonlee
-            types: [PokeElement.Fighting],
+            elements: [PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[107] = {
             // Hitmonchan
-            types: [PokeElement.Fighting],
+            elements: [PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[108] = {
             // Lickitung
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[109] = {
             // Koffing
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: [110] // Weezing
         };
         pokemonInfo[110] = {
             // Weezing
-            types: [PokeElement.Poison],
+            elements: [PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[111] = {
             // Rhyhorn
-            types: [PokeElement.Ground, PokeElement.Rock],
+            elements: [PokeElement.Ground, PokeElement.Rock],
             evolvesInto: [112] // Rhydon
         };
         pokemonInfo[112] = {
             // Rhydon
-            types: [PokeElement.Ground, PokeElement.Rock],
+            elements: [PokeElement.Ground, PokeElement.Rock],
             evolvesInto: []
         };
         pokemonInfo[113] = {
             // Chansey
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[114] = {
             // Tangela
-            types: [PokeElement.Grass],
+            elements: [PokeElement.Grass],
             evolvesInto: []
         };
         pokemonInfo[115] = {
             // Kangaskhan
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[116] = {
             // Horsea
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [117] // Seadra
         };
         pokemonInfo[117] = {
             // Seadra
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[118] = {
             // Goldeen
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [119] // Seaking
         };
         pokemonInfo[119] = {
             // Seaking
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[120] = {
             // Staryu
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [121] // Starmie
         };
         pokemonInfo[121] = {
             // Starmie
-            types: [PokeElement.Water, PokeElement.Psychic],
+            elements: [PokeElement.Water, PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[122] = {
             // Mr. Mime
-            types: [PokeElement.Psychic, PokeElement.Fairy],
+            elements: [PokeElement.Psychic, PokeElement.Fairy],
             evolvesInto: []
         };
         pokemonInfo[123] = {
             // Scyther
-            types: [PokeElement.Bug, PokeElement.Flying],
+            elements: [PokeElement.Bug, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[124] = {
             // Jynx
-            types: [PokeElement.Ice, PokeElement.Psychic],
+            elements: [PokeElement.Ice, PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[125] = {
             // Electabuzz
-            types: [PokeElement.Electric],
+            elements: [PokeElement.Electric],
             evolvesInto: []
         };
         pokemonInfo[126] = {
             // Magmar
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[127] = {
             // Pinsir
-            types: [PokeElement.Bug],
+            elements: [PokeElement.Bug],
             evolvesInto: []
         };
         pokemonInfo[128] = {
             // Tauros
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[129] = {
             // Magikarp
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: [130] // Gyarados
         };
         pokemonInfo[130] = {
             // Gyarados
-            types: [PokeElement.Water, PokeElement.Flying],
+            elements: [PokeElement.Water, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[131] = {
             // Lapras
-            types: [PokeElement.Water, PokeElement.Ice],
+            elements: [PokeElement.Water, PokeElement.Ice],
             evolvesInto: []
         };
         pokemonInfo[132] = {
             // Ditto
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[133] = {
             // Eevee
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: [134, 135, 136] // Vaporeon, Jolteon, Flareon
         };
         pokemonInfo[134] = {
             // Vaporeon
-            types: [PokeElement.Water],
+            elements: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[135] = {
             // Jolteon
-            types: [PokeElement.Electric],
+            elements: [PokeElement.Electric],
             evolvesInto: []
         };
         pokemonInfo[136] = {
             // Flareon
-            types: [PokeElement.Fire],
+            elements: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[137] = {
             // Porygon
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[138] = {
             // Omanyte
-            types: [PokeElement.Rock, PokeElement.Water],
+            elements: [PokeElement.Rock, PokeElement.Water],
             evolvesInto: [139] // Omastar
         };
         pokemonInfo[139] = {
             // Omastar
-            types: [PokeElement.Rock, PokeElement.Water],
+            elements: [PokeElement.Rock, PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[140] = {
             // Kabuto
-            types: [PokeElement.Rock, PokeElement.Water],
+            elements: [PokeElement.Rock, PokeElement.Water],
             evolvesInto: [141] // Kabutops
         };
         pokemonInfo[141] = {
             // Kabutops
-            types: [PokeElement.Rock, PokeElement.Water],
+            elements: [PokeElement.Rock, PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[142] = {
             // Aerodactyl
-            types: [PokeElement.Rock, PokeElement.Flying],
+            elements: [PokeElement.Rock, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[143] = {
             // Snorlax
-            types: [PokeElement.Normal],
+            elements: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[144] = {
             // Articuno
-            types: [PokeElement.Ice, PokeElement.Flying],
+            elements: [PokeElement.Ice, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[145] = {
             // Zapdos
-            types: [PokeElement.Electric, PokeElement.Flying],
+            elements: [PokeElement.Electric, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[146] = {
             // Moltres
-            types: [PokeElement.Fire, PokeElement.Flying],
+            elements: [PokeElement.Fire, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[147] = {
             // Dratini
-            types: [PokeElement.Dragon],
+            elements: [PokeElement.Dragon],
             evolvesInto: [148] // Dragonair
         };
         pokemonInfo[148] = {
             // Dragonair
-            types: [PokeElement.Dragon],
+            elements: [PokeElement.Dragon],
             evolvesInto: [149] // Dragonite
         };
         pokemonInfo[149] = {
             // Dragonite
-            types: [PokeElement.Dragon, PokeElement.Flying],
+            elements: [PokeElement.Dragon, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[150] = {
             // Mewtwo
-            types: [PokeElement.Psychic],
+            elements: [PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[151] = {
             // Mew
-            types: [PokeElement.Psychic],
+            elements: [PokeElement.Psychic],
             evolvesInto: []
         };
 
