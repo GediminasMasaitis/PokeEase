@@ -6358,6 +6358,18 @@ var LeafletMap = (function () {
     };
     return LeafletMap;
 }());
+var EggMenuManager = (function () {
+    function EggMenuManager(config) {
+        var _this = this;
+        this.eggListRequested = function (request) {
+            _this.config.eggLoadingSpinner.show();
+        };
+        this.updateEggList = function (eggList) {
+        };
+        this.config = config;
+    }
+    return EggMenuManager;
+}());
 var InventoryMenuManager = (function () {
     function InventoryMenuManager(config) {
         var _this = this;
