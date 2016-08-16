@@ -175,17 +175,41 @@ $(window).ready(function() {
         $('.content[data-category="pokedex"]').append('<div class="pokemon"><h1 class="name">'+i+'. '+pokemonNames[i]+'</h1><div class="image-container"><img src="images/pokemon/' +i+ '.png"/></div><h3 class="caught">'+i+'</h3><h3 class="seen">'+i+'</h3></div>');
     }
 
-    $('.content[data-category="eggs"] .egg').each(function() {$(this).append('<div class="circle"></div>');});
-    $('.content[data-category="eggs"] .circle').circleProgress({
+    addCircleProgress();
+
+});
+
+
+function addCircleProgress() {
+    // $('.content[data-category="eggs"] .egg').each(function() {$(this).append('<div class="circle"></div>');});
+    /* $('.content[data-category="eggs"] .circle').circleProgress({
         value: 0.75,
         size: 180,
         thickness: 5,
+        reverse: true,
         fill: {
-            gradient: ["red", "orange"]
+            gradient: ["#b1ffaa", "#64f0d0"]
         },
-        emptyFill: {
-            color: "rgba(0, 0, 0, 0.1)"
-        }
-    });
+        emptyFill: 'rgba(0, 0, 0, 0)',
+    }); */
 
-});
+    var done, total;
+
+    $('.content[data-category="eggs"] .egg').each(function() {
+
+        done = parseInt($(this).find('b').text());
+        total = parseInt($(this).find('i').text());
+
+        $(this).children('.circle').circleProgress({
+            value: (done / total),
+            size: 180,
+            thickness: 5,
+            startAngle: -Math.PI/2,
+            animation: {duration: 1200},
+            fill: {
+                gradient: ["#b1ffaa", "#64f0d0"]
+            },
+            emptyFill: 'rgba(0, 0, 0, 0)',
+        });
+    });
+}

@@ -1192,6 +1192,7 @@ $event-incubator-status-color: #e9e1b5;
         margin: 2em 3em;
         display: inline-block;
         box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+        position: relative;
 
         p {
             font-weight: 600;
@@ -1201,6 +1202,17 @@ $event-incubator-status-color: #e9e1b5;
             b {
                 color: rgba(0, 0, 0, 0.7);
             }
+
+            i {
+                font-style: normal;
+            }
+        }
+
+        .circle {
+            position: absolute;
+            top: -2.5px;
+            left: -2.5px;
+            right: -2.5px;
         }
     }
 

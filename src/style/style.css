@@ -1050,13 +1050,21 @@ body {
   background: white;
   margin: 2em 3em;
   display: inline-block;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); }
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  position: relative; }
   .content[data-category="eggs"] .egg p {
     font-weight: 600;
     color: rgba(0, 0, 0, 0.4);
     margin: 0.5em 0; }
     .content[data-category="eggs"] .egg p b {
       color: rgba(0, 0, 0, 0.7); }
+    .content[data-category="eggs"] .egg p i {
+      font-style: normal; }
+  .content[data-category="eggs"] .egg .circle {
+    position: absolute;
+    top: -2.5px;
+    left: -2.5px;
+    right: -2.5px; }
 
 .content[data-category="eggs"] .egg .incubator {
   background-image: url("../images/items/0.png");
