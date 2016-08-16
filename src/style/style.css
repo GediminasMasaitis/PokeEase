@@ -111,7 +111,8 @@ body {
   text-align: center;
   background: rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  transition: 0.3s; }
+  transition: 0.3s;
+  color: white; }
 
 #menu .help i {
   line-height: 48px; }
