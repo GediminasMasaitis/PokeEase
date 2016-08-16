@@ -1059,7 +1059,7 @@ body {
       color: rgba(0, 0, 0, 0.7); }
 
 .content[data-category="eggs"] .egg .incubator {
-  background-image: url("../images/items/ItemEgg.png");
+  background-image: url("../images/items/0.png");
   background-size: 16%;
   background-position: 50% 49%;
   background-repeat: no-repeat; }

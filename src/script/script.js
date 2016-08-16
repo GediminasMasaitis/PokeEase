@@ -6558,7 +6558,7 @@ var NotificationManager = (function () {
         };
         this.addNotificationIncubatorStatus = function (incubatorStatus) {
             var km = Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining) * 100) / 100;
-            var html = "<div class=\"image\">\n                          <img src=\"images/items/ItemEgg.png\"/>\n                      </div>\n                      <div class=\"info\">Egg\n                          <div class=\"stats\">" + km + " of " + incubatorStatus.KmToWalk + "km</div>\n                      </div>";
+            var html = "<div class=\"image\">\n                          <img src=\"images/items/0.png\"/>\n                      </div>\n                      <div class=\"info\">Egg\n                          <div class=\"stats\">" + km + " of " + incubatorStatus.KmToWalk + "km</div>\n                      </div>";
             _this.addNotification(incubatorStatus, html, "incubator-status");
         };
         this.addNotificationItemRecycle = function (itemRecycle) {
