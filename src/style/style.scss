@@ -283,7 +283,7 @@ body {
 }
 
 #journal .items {
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     position: relative;
     direction: rtl;
@@ -352,11 +352,12 @@ body {
 
 #journal .items::-webkit-scrollbar {
     width: 10px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
 }
 
 #journal .items::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.5);
+    /* background: rgba(0, 0, 0, 0.5); */
+    background: rgba(97, 128, 160, 0.5);
 }
 
 #journal .items:before {
@@ -939,6 +940,14 @@ $event-incubator-status-color: #e9e1b5;
 
     .parameter:before {
         content: "Parameter";
+    }
+
+    .move1:before {
+        content: "Quick move";
+    }
+
+    .move2:before {
+        content: "Charge move";
     }
 
 

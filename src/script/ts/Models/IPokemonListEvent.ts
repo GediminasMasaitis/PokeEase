@@ -23,7 +23,7 @@ interface IPokemonListEntry {
     IndividualDefense: number;
     IndividualStamina: number;
     IsEgg: boolean;
-    Move: number;
+    Move1: number;
     Move2: number;
     Nickname: string;
     NumUpgrades: number;
