@@ -375,31 +375,37 @@ var InterfaceHandler = (function () {
     };
     return InterfaceHandler;
 }());
-var PokemonType;
-(function (PokemonType) {
-    PokemonType[PokemonType["Bug"] = 0] = "Bug";
-    PokemonType[PokemonType["Grass"] = 1] = "Grass";
-    PokemonType[PokemonType["Dark"] = 2] = "Dark";
-    PokemonType[PokemonType["Ground"] = 3] = "Ground";
-    PokemonType[PokemonType["Dragon"] = 4] = "Dragon";
-    PokemonType[PokemonType["Ice"] = 5] = "Ice";
-    PokemonType[PokemonType["Electric"] = 6] = "Electric";
-    PokemonType[PokemonType["Normal"] = 7] = "Normal";
-    PokemonType[PokemonType["Fairy"] = 8] = "Fairy";
-    PokemonType[PokemonType["Poison"] = 9] = "Poison";
-    PokemonType[PokemonType["Fighting"] = 10] = "Fighting";
-    PokemonType[PokemonType["Psychic"] = 11] = "Psychic";
-    PokemonType[PokemonType["Fire"] = 12] = "Fire";
-    PokemonType[PokemonType["Rock"] = 13] = "Rock";
-    PokemonType[PokemonType["Flying"] = 14] = "Flying";
-    PokemonType[PokemonType["Steel"] = 15] = "Steel";
-    PokemonType[PokemonType["Ghost"] = 16] = "Ghost";
-    PokemonType[PokemonType["Water"] = 17] = "Water";
-})(PokemonType || (PokemonType = {}));
+var PokeElement;
+(function (PokeElement) {
+    PokeElement[PokeElement["Bug"] = 0] = "Bug";
+    PokeElement[PokeElement["Grass"] = 1] = "Grass";
+    PokeElement[PokeElement["Dark"] = 2] = "Dark";
+    PokeElement[PokeElement["Ground"] = 3] = "Ground";
+    PokeElement[PokeElement["Dragon"] = 4] = "Dragon";
+    PokeElement[PokeElement["Ice"] = 5] = "Ice";
+    PokeElement[PokeElement["Electric"] = 6] = "Electric";
+    PokeElement[PokeElement["Normal"] = 7] = "Normal";
+    PokeElement[PokeElement["Fairy"] = 8] = "Fairy";
+    PokeElement[PokeElement["Poison"] = 9] = "Poison";
+    PokeElement[PokeElement["Fighting"] = 10] = "Fighting";
+    PokeElement[PokeElement["Psychic"] = 11] = "Psychic";
+    PokeElement[PokeElement["Fire"] = 12] = "Fire";
+    PokeElement[PokeElement["Rock"] = 13] = "Rock";
+    PokeElement[PokeElement["Flying"] = 14] = "Flying";
+    PokeElement[PokeElement["Steel"] = 15] = "Steel";
+    PokeElement[PokeElement["Ghost"] = 16] = "Ghost";
+    PokeElement[PokeElement["Water"] = 17] = "Water";
+})(PokeElement || (PokeElement = {}));
+var MoveType;
+(function (MoveType) {
+    MoveType[MoveType["QuickMove"] = 0] = "QuickMove";
+    MoveType[MoveType["ChargeMove"] = 1] = "ChargeMove";
+})(MoveType || (MoveType = {}));
+;
 var StaticInfo = (function () {
     function StaticInfo() {
     }
-    StaticInfo.__ctor = (function () {
+    StaticInfo.init = function () {
         var itemCodes = [];
         itemCodes[1] = "ItemPokeBall";
         itemCodes[2] = "ItemGreatBall";
@@ -475,613 +481,5193 @@ var StaticInfo = (function () {
         for (var i = 1; i < totalExpForLevel.length; i++) {
             StaticInfo.expForLevel[i] = StaticInfo.totalExpForLevel[i] - StaticInfo.totalExpForLevel[i - 1];
         }
+        var moveInfo = [];
+        moveInfo[13] = {
+            moveId: 13,
+            name: "Wrap",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 6.25,
+            damagePerSecondWithStab: 7.81,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 0.6,
+            cooldown: 4.00
+        };
+        moveInfo[13].availableToPokemon[23] = {
+            pokemonId: 23,
+            baseAttack: 112
+        };
+        moveInfo[13].availableToPokemon[69] = {
+            pokemonId: 69,
+            baseAttack: 158
+        };
+        moveInfo[13].availableToPokemon[72] = {
+            pokemonId: 72,
+            baseAttack: 106
+        };
+        moveInfo[13].availableToPokemon[147] = {
+            pokemonId: 147,
+            baseAttack: 128
+        };
+        moveInfo[13].availableToPokemon[148] = {
+            pokemonId: 148,
+            baseAttack: 170
+        };
+        moveInfo[14] = {
+            moveId: 14,
+            name: "Hyper Beam",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 120,
+            damageWithStab: 120,
+            damagePerSecond: 24.00,
+            damagePerSecondWithStab: 30.00,
+            damagePerSecondDefensive: 17.14,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.8,
+            cooldown: 5.00
+        };
+        moveInfo[14].availableToPokemon[20] = {
+            pokemonId: 20,
+            baseAttack: 146
+        };
+        moveInfo[14].availableToPokemon[40] = {
+            pokemonId: 40,
+            baseAttack: 168
+        };
+        moveInfo[14].availableToPokemon[101] = {
+            pokemonId: 101,
+            baseAttack: 150
+        };
+        moveInfo[14].availableToPokemon[108] = {
+            pokemonId: 108,
+            baseAttack: 126
+        };
+        moveInfo[14].availableToPokemon[142] = {
+            pokemonId: 142,
+            baseAttack: 182
+        };
+        moveInfo[14].availableToPokemon[143] = {
+            pokemonId: 143,
+            baseAttack: 180
+        };
+        moveInfo[14].availableToPokemon[149] = {
+            pokemonId: 149,
+            baseAttack: 250
+        };
+        moveInfo[14].availableToPokemon[150] = {
+            pokemonId: 150,
+            baseAttack: 284
+        };
+        moveInfo[14].availableToPokemon[151] = {
+            pokemonId: 151,
+            baseAttack: 220
+        };
+        moveInfo[16] = {
+            moveId: 16,
+            name: "Dark Pulse",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Dark,
+            damage: 45,
+            damageWithStab: 45,
+            damagePerSecond: 12.86,
+            damagePerSecondWithStab: 16.07,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 1.1,
+            cooldown: 3.50
+        };
+        moveInfo[16].availableToPokemon[24] = {
+            pokemonId: 24,
+            baseAttack: 166
+        };
+        moveInfo[16].availableToPokemon[52] = {
+            pokemonId: 52,
+            baseAttack: 104
+        };
+        moveInfo[16].availableToPokemon[89] = {
+            pokemonId: 89,
+            baseAttack: 180
+        };
+        moveInfo[16].availableToPokemon[92] = {
+            pokemonId: 92,
+            baseAttack: 136
+        };
+        moveInfo[16].availableToPokemon[93] = {
+            pokemonId: 93,
+            baseAttack: 172
+        };
+        moveInfo[16].availableToPokemon[94] = {
+            pokemonId: 94,
+            baseAttack: 204
+        };
+        moveInfo[16].availableToPokemon[109] = {
+            pokemonId: 109,
+            baseAttack: 136
+        };
+        moveInfo[16].availableToPokemon[110] = {
+            pokemonId: 110,
+            baseAttack: 190
+        };
+        moveInfo[18] = {
+            moveId: 18,
+            name: "Sludge",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 11.54,
+            damagePerSecondWithStab: 14.42,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.5,
+            cooldown: 2.60
+        };
+        moveInfo[18].availableToPokemon[88] = {
+            pokemonId: 88,
+            baseAttack: 124
+        };
+        moveInfo[18].availableToPokemon[109] = {
+            pokemonId: 109,
+            baseAttack: 136
+        };
+        moveInfo[20] = {
+            moveId: 20,
+            name: "Vice Grip",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 11.90,
+            damagePerSecondWithStab: 14.88,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 0.25,
+            cooldown: 2.10
+        };
+        moveInfo[20].availableToPokemon[98] = {
+            pokemonId: 98,
+            baseAttack: 116
+        };
+        moveInfo[20].availableToPokemon[99] = {
+            pokemonId: 99,
+            baseAttack: 178
+        };
+        moveInfo[20].availableToPokemon[127] = {
+            pokemonId: 127,
+            baseAttack: 184
+        };
+        moveInfo[21] = {
+            moveId: 21,
+            name: "Flame Wheel",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 8.70,
+            damagePerSecondWithStab: 10.87,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.5,
+            cooldown: 4.60
+        };
+        moveInfo[21].availableToPokemon[58] = {
+            pokemonId: 58,
+            baseAttack: 156
+        };
+        moveInfo[21].availableToPokemon[77] = {
+            pokemonId: 77,
+            baseAttack: 168
+        };
+        moveInfo[22] = {
+            moveId: 22,
+            name: "Megahorn",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Bug,
+            damage: 80,
+            damageWithStab: 80,
+            damagePerSecond: 25.00,
+            damagePerSecondWithStab: 31.25,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.3,
+            cooldown: 3.20
+        };
+        moveInfo[22].availableToPokemon[34] = {
+            pokemonId: 34,
+            baseAttack: 204
+        };
+        moveInfo[22].availableToPokemon[112] = {
+            pokemonId: 112,
+            baseAttack: 166
+        };
+        moveInfo[22].availableToPokemon[119] = {
+            pokemonId: 119,
+            baseAttack: 172
+        };
+        moveInfo[24] = {
+            moveId: 24,
+            name: "Flamethrower",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 55,
+            damageWithStab: 55,
+            damagePerSecond: 18.97,
+            damagePerSecondWithStab: 23.71,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 0.9,
+            cooldown: 2.90
+        };
+        moveInfo[24].availableToPokemon[4] = {
+            pokemonId: 4,
+            baseAttack: 128
+        };
+        moveInfo[24].availableToPokemon[5] = {
+            pokemonId: 5,
+            baseAttack: 160
+        };
+        moveInfo[24].availableToPokemon[6] = {
+            pokemonId: 6,
+            baseAttack: 212
+        };
+        moveInfo[24].availableToPokemon[37] = {
+            pokemonId: 37,
+            baseAttack: 106
+        };
+        moveInfo[24].availableToPokemon[38] = {
+            pokemonId: 38,
+            baseAttack: 176
+        };
+        moveInfo[24].availableToPokemon[58] = {
+            pokemonId: 58,
+            baseAttack: 156
+        };
+        moveInfo[24].availableToPokemon[59] = {
+            pokemonId: 59,
+            baseAttack: 230
+        };
+        moveInfo[24].availableToPokemon[126] = {
+            pokemonId: 126,
+            baseAttack: 214
+        };
+        moveInfo[24].availableToPokemon[136] = {
+            pokemonId: 136,
+            baseAttack: 238
+        };
+        moveInfo[26] = {
+            moveId: 26,
+            name: "Dig",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ground,
+            damage: 70,
+            damageWithStab: 70,
+            damagePerSecond: 12.07,
+            damagePerSecondWithStab: 15.09,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.4,
+            cooldown: 5.80
+        };
+        moveInfo[26].availableToPokemon[19] = {
+            pokemonId: 19,
+            baseAttack: 92
+        };
+        moveInfo[26].availableToPokemon[20] = {
+            pokemonId: 20,
+            baseAttack: 146
+        };
+        moveInfo[26].availableToPokemon[27] = {
+            pokemonId: 27,
+            baseAttack: 90
+        };
+        moveInfo[26].availableToPokemon[30] = {
+            pokemonId: 30,
+            baseAttack: 132
+        };
+        moveInfo[26].availableToPokemon[33] = {
+            pokemonId: 33,
+            baseAttack: 142
+        };
+        moveInfo[26].availableToPokemon[50] = {
+            pokemonId: 50,
+            baseAttack: 108
+        };
+        moveInfo[26].availableToPokemon[74] = {
+            pokemonId: 74,
+            baseAttack: 106
+        };
+        moveInfo[26].availableToPokemon[75] = {
+            pokemonId: 75,
+            baseAttack: 142
+        };
+        moveInfo[26].availableToPokemon[104] = {
+            pokemonId: 104,
+            baseAttack: 102
+        };
+        moveInfo[26].availableToPokemon[105] = {
+            pokemonId: 105,
+            baseAttack: 140
+        };
+        moveInfo[26].availableToPokemon[133] = {
+            pokemonId: 133,
+            baseAttack: 114
+        };
+        moveInfo[28] = {
+            moveId: 28,
+            name: "Cross Chop",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fighting,
+            damage: 60,
+            damageWithStab: 60,
+            damagePerSecond: 30.00,
+            damagePerSecondWithStab: 37.50,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.3,
+            cooldown: 2.00
+        };
+        moveInfo[28].availableToPokemon[54] = {
+            pokemonId: 54,
+            baseAttack: 132
+        };
+        moveInfo[28].availableToPokemon[56] = {
+            pokemonId: 56,
+            baseAttack: 122
+        };
+        moveInfo[28].availableToPokemon[57] = {
+            pokemonId: 57,
+            baseAttack: 178
+        };
+        moveInfo[28].availableToPokemon[66] = {
+            pokemonId: 66,
+            baseAttack: 118
+        };
+        moveInfo[28].availableToPokemon[67] = {
+            pokemonId: 67,
+            baseAttack: 154
+        };
+        moveInfo[28].availableToPokemon[68] = {
+            pokemonId: 68,
+            baseAttack: 198
+        };
+        moveInfo[30] = {
+            moveId: 30,
+            name: "Psybeam",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Psychic,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 10.53,
+            damagePerSecondWithStab: 13.16,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 1.3,
+            cooldown: 3.80
+        };
+        moveInfo[30].availableToPokemon[48] = {
+            pokemonId: 48,
+            baseAttack: 108
+        };
+        moveInfo[30].availableToPokemon[54] = {
+            pokemonId: 54,
+            baseAttack: 132
+        };
+        moveInfo[30].availableToPokemon[64] = {
+            pokemonId: 64,
+            baseAttack: 150
+        };
+        moveInfo[30].availableToPokemon[96] = {
+            pokemonId: 96,
+            baseAttack: 104
+        };
+        moveInfo[30].availableToPokemon[113] = {
+            pokemonId: 113,
+            baseAttack: 40
+        };
+        moveInfo[30].availableToPokemon[121] = {
+            pokemonId: 121,
+            baseAttack: 194
+        };
+        moveInfo[30].availableToPokemon[122] = {
+            pokemonId: 122,
+            baseAttack: 154
+        };
+        moveInfo[30].availableToPokemon[137] = {
+            pokemonId: 137,
+            baseAttack: 156
+        };
+        moveInfo[31] = {
+            moveId: 31,
+            name: "Earthquake",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ground,
+            damage: 100,
+            damageWithStab: 100,
+            damagePerSecond: 23.81,
+            damagePerSecondWithStab: 29.76,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 1.95,
+            cooldown: 4.20
+        };
+        moveInfo[31].availableToPokemon[28] = {
+            pokemonId: 28,
+            baseAttack: 150
+        };
+        moveInfo[31].availableToPokemon[31] = {
+            pokemonId: 31,
+            baseAttack: 184
+        };
+        moveInfo[31].availableToPokemon[34] = {
+            pokemonId: 34,
+            baseAttack: 204
+        };
+        moveInfo[31].availableToPokemon[51] = {
+            pokemonId: 51,
+            baseAttack: 148
+        };
+        moveInfo[31].availableToPokemon[76] = {
+            pokemonId: 76,
+            baseAttack: 176
+        };
+        moveInfo[31].availableToPokemon[105] = {
+            pokemonId: 105,
+            baseAttack: 140
+        };
+        moveInfo[31].availableToPokemon[112] = {
+            pokemonId: 112,
+            baseAttack: 166
+        };
+        moveInfo[31].availableToPokemon[115] = {
+            pokemonId: 115,
+            baseAttack: 142
+        };
+        moveInfo[31].availableToPokemon[128] = {
+            pokemonId: 128,
+            baseAttack: 148
+        };
+        moveInfo[31].availableToPokemon[143] = {
+            pokemonId: 143,
+            baseAttack: 180
+        };
+        moveInfo[31].availableToPokemon[151] = {
+            pokemonId: 151,
+            baseAttack: 220
+        };
+        moveInfo[32] = {
+            moveId: 32,
+            name: "Stone Edge",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Rock,
+            damage: 80,
+            damageWithStab: 80,
+            damagePerSecond: 25.81,
+            damagePerSecondWithStab: 32.26,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.4,
+            cooldown: 3.10
+        };
+        moveInfo[32].availableToPokemon[31] = {
+            pokemonId: 31,
+            baseAttack: 184
+        };
+        moveInfo[32].availableToPokemon[51] = {
+            pokemonId: 51,
+            baseAttack: 148
+        };
+        moveInfo[32].availableToPokemon[68] = {
+            pokemonId: 68,
+            baseAttack: 198
+        };
+        moveInfo[32].availableToPokemon[75] = {
+            pokemonId: 75,
+            baseAttack: 142
+        };
+        moveInfo[32].availableToPokemon[76] = {
+            pokemonId: 76,
+            baseAttack: 176
+        };
+        moveInfo[32].availableToPokemon[95] = {
+            pokemonId: 95,
+            baseAttack: 90
+        };
+        moveInfo[32].availableToPokemon[106] = {
+            pokemonId: 106,
+            baseAttack: 148
+        };
+        moveInfo[32].availableToPokemon[112] = {
+            pokemonId: 112,
+            baseAttack: 166
+        };
+        moveInfo[32].availableToPokemon[141] = {
+            pokemonId: 141,
+            baseAttack: 190
+        };
+        moveInfo[33] = {
+            moveId: 33,
+            name: "Ice Punch",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ice,
+            damage: 45,
+            damageWithStab: 45,
+            damagePerSecond: 12.86,
+            damagePerSecondWithStab: 16.07,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 1.1,
+            cooldown: 3.50
+        };
+        moveInfo[33].availableToPokemon[62] = {
+            pokemonId: 62,
+            baseAttack: 180
+        };
+        moveInfo[33].availableToPokemon[107] = {
+            pokemonId: 107,
+            baseAttack: 138
+        };
+        moveInfo[33].availableToPokemon[124] = {
+            pokemonId: 124,
+            baseAttack: 172
+        };
+        moveInfo[35] = {
+            moveId: 35,
+            name: "Discharge",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Electric,
+            damage: 35,
+            damageWithStab: 35,
+            damagePerSecond: 14.00,
+            damagePerSecondWithStab: 17.50,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.7,
+            cooldown: 2.50
+        };
+        moveInfo[35].availableToPokemon[25] = {
+            pokemonId: 25,
+            baseAttack: 124
+        };
+        moveInfo[35].availableToPokemon[81] = {
+            pokemonId: 81,
+            baseAttack: 128
+        };
+        moveInfo[35].availableToPokemon[82] = {
+            pokemonId: 82,
+            baseAttack: 186
+        };
+        moveInfo[35].availableToPokemon[100] = {
+            pokemonId: 100,
+            baseAttack: 102
+        };
+        moveInfo[35].availableToPokemon[101] = {
+            pokemonId: 101,
+            baseAttack: 150
+        };
+        moveInfo[35].availableToPokemon[135] = {
+            pokemonId: 135,
+            baseAttack: 192
+        };
+        moveInfo[35].availableToPokemon[137] = {
+            pokemonId: 137,
+            baseAttack: 156
+        };
+        moveInfo[35].availableToPokemon[145] = {
+            pokemonId: 145,
+            baseAttack: 232
+        };
+        moveInfo[36] = {
+            moveId: 36,
+            name: "Flash Cannon",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Steel,
+            damage: 60,
+            damageWithStab: 60,
+            damagePerSecond: 15.38,
+            damagePerSecondWithStab: 19.23,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 1.1,
+            cooldown: 3.90
+        };
+        moveInfo[36].availableToPokemon[9] = {
+            pokemonId: 9,
+            baseAttack: 186
+        };
+        moveInfo[36].availableToPokemon[82] = {
+            pokemonId: 82,
+            baseAttack: 186
+        };
+        moveInfo[36].availableToPokemon[116] = {
+            pokemonId: 116,
+            baseAttack: 122
+        };
+        moveInfo[38] = {
+            moveId: 38,
+            name: "Drill Peck",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Flying,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 14.81,
+            damagePerSecondWithStab: 18.52,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.9,
+            cooldown: 2.70
+        };
+        moveInfo[38].availableToPokemon[21] = {
+            pokemonId: 21,
+            baseAttack: 102
+        };
+        moveInfo[38].availableToPokemon[84] = {
+            pokemonId: 84,
+            baseAttack: 126
+        };
+        moveInfo[38].availableToPokemon[85] = {
+            pokemonId: 85,
+            baseAttack: 182
+        };
+        moveInfo[39] = {
+            moveId: 39,
+            name: "Ice Beam",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ice,
+            damage: 65,
+            damageWithStab: 65,
+            damagePerSecond: 17.81,
+            damagePerSecondWithStab: 22.26,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 1.35,
+            cooldown: 3.65
+        };
+        moveInfo[39].availableToPokemon[8] = {
+            pokemonId: 8,
+            baseAttack: 144
+        };
+        moveInfo[39].availableToPokemon[9] = {
+            pokemonId: 9,
+            baseAttack: 186
+        };
+        moveInfo[39].availableToPokemon[55] = {
+            pokemonId: 55,
+            baseAttack: 194
+        };
+        moveInfo[39].availableToPokemon[80] = {
+            pokemonId: 80,
+            baseAttack: 184
+        };
+        moveInfo[39].availableToPokemon[131] = {
+            pokemonId: 131,
+            baseAttack: 186
+        };
+        moveInfo[39].availableToPokemon[144] = {
+            pokemonId: 144,
+            baseAttack: 198
+        };
+        moveInfo[40] = {
+            moveId: 40,
+            name: "Blizzard",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ice,
+            damage: 100,
+            damageWithStab: 100,
+            damagePerSecond: 25.64,
+            damagePerSecondWithStab: 32.05,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0,
+            cooldown: 3.90
+        };
+        moveInfo[40].availableToPokemon[73] = {
+            pokemonId: 73,
+            baseAttack: 170
+        };
+        moveInfo[40].availableToPokemon[87] = {
+            pokemonId: 87,
+            baseAttack: 156
+        };
+        moveInfo[40].availableToPokemon[91] = {
+            pokemonId: 91,
+            baseAttack: 196
+        };
+        moveInfo[40].availableToPokemon[117] = {
+            pokemonId: 117,
+            baseAttack: 176
+        };
+        moveInfo[40].availableToPokemon[131] = {
+            pokemonId: 131,
+            baseAttack: 186
+        };
+        moveInfo[40].availableToPokemon[144] = {
+            pokemonId: 144,
+            baseAttack: 198
+        };
+        moveInfo[42] = {
+            moveId: 42,
+            name: "Heat Wave",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 80,
+            damageWithStab: 80,
+            damagePerSecond: 21.05,
+            damagePerSecondWithStab: 26.32,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.4,
+            cooldown: 3.80
+        };
+        moveInfo[42].availableToPokemon[38] = {
+            pokemonId: 38,
+            baseAttack: 176
+        };
+        moveInfo[42].availableToPokemon[78] = {
+            pokemonId: 78,
+            baseAttack: 200
+        };
+        moveInfo[42].availableToPokemon[136] = {
+            pokemonId: 136,
+            baseAttack: 238
+        };
+        moveInfo[45] = {
+            moveId: 45,
+            name: "Aerial Ace",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Flying,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 10.34,
+            damagePerSecondWithStab: 12.93,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.6,
+            cooldown: 2.90
+        };
+        moveInfo[45].availableToPokemon[15] = {
+            pokemonId: 15,
+            baseAttack: 144
+        };
+        moveInfo[45].availableToPokemon[16] = {
+            pokemonId: 16,
+            baseAttack: 94
+        };
+        moveInfo[45].availableToPokemon[17] = {
+            pokemonId: 17,
+            baseAttack: 126
+        };
+        moveInfo[45].availableToPokemon[18] = {
+            pokemonId: 18,
+            baseAttack: 170
+        };
+        moveInfo[45].availableToPokemon[21] = {
+            pokemonId: 21,
+            baseAttack: 102
+        };
+        moveInfo[45].availableToPokemon[22] = {
+            pokemonId: 22,
+            baseAttack: 168
+        };
+        moveInfo[45].availableToPokemon[83] = {
+            pokemonId: 83,
+            baseAttack: 138
+        };
+        moveInfo[45].availableToPokemon[84] = {
+            pokemonId: 84,
+            baseAttack: 126
+        };
+        moveInfo[45].availableToPokemon[85] = {
+            pokemonId: 85,
+            baseAttack: 182
+        };
+        moveInfo[46] = {
+            moveId: 46,
+            name: "Drill Run",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ground,
+            damage: 50,
+            damageWithStab: 50,
+            damagePerSecond: 14.71,
+            damagePerSecondWithStab: 18.38,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.7,
+            cooldown: 3.40
+        };
+        moveInfo[46].availableToPokemon[22] = {
+            pokemonId: 22,
+            baseAttack: 168
+        };
+        moveInfo[46].availableToPokemon[78] = {
+            pokemonId: 78,
+            baseAttack: 200
+        };
+        moveInfo[46].availableToPokemon[119] = {
+            pokemonId: 119,
+            baseAttack: 172
+        };
+        moveInfo[47] = {
+            moveId: 47,
+            name: "Petal Blizzard",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Grass,
+            damage: 65,
+            damageWithStab: 65,
+            damagePerSecond: 20.31,
+            damagePerSecondWithStab: 25.39,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 1,
+            cooldown: 3.20
+        };
+        moveInfo[47].availableToPokemon[3] = {
+            pokemonId: 3,
+            baseAttack: 198
+        };
+        moveInfo[47].availableToPokemon[44] = {
+            pokemonId: 44,
+            baseAttack: 162
+        };
+        moveInfo[47].availableToPokemon[45] = {
+            pokemonId: 45,
+            baseAttack: 202
+        };
+        moveInfo[49] = {
+            moveId: 49,
+            name: "Bug Buzz",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Bug,
+            damage: 75,
+            damageWithStab: 75,
+            damagePerSecond: 17.65,
+            damagePerSecondWithStab: 22.06,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 1.5,
+            cooldown: 4.25
+        };
+        moveInfo[49].availableToPokemon[12] = {
+            pokemonId: 12,
+            baseAttack: 144
+        };
+        moveInfo[49].availableToPokemon[49] = {
+            pokemonId: 49,
+            baseAttack: 172
+        };
+        moveInfo[49].availableToPokemon[123] = {
+            pokemonId: 123,
+            baseAttack: 176
+        };
+        moveInfo[50] = {
+            moveId: 50,
+            name: "Poison Fang",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 10.42,
+            damagePerSecondWithStab: 13.02,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 0.2,
+            cooldown: 2.40
+        };
+        moveInfo[50].availableToPokemon[29] = {
+            pokemonId: 29,
+            baseAttack: 100
+        };
+        moveInfo[50].availableToPokemon[30] = {
+            pokemonId: 30,
+            baseAttack: 132
+        };
+        moveInfo[50].availableToPokemon[41] = {
+            pokemonId: 41,
+            baseAttack: 88
+        };
+        moveInfo[50].availableToPokemon[42] = {
+            pokemonId: 42,
+            baseAttack: 164
+        };
+        moveInfo[50].availableToPokemon[48] = {
+            pokemonId: 48,
+            baseAttack: 108
+        };
+        moveInfo[50].availableToPokemon[49] = {
+            pokemonId: 49,
+            baseAttack: 172
+        };
+        moveInfo[51] = {
+            moveId: 51,
+            name: "Night Slash",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Dark,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 11.11,
+            damagePerSecondWithStab: 13.89,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.2,
+            cooldown: 2.70
+        };
+        moveInfo[51].availableToPokemon[52] = {
+            pokemonId: 52,
+            baseAttack: 104
+        };
+        moveInfo[51].availableToPokemon[53] = {
+            pokemonId: 53,
+            baseAttack: 156
+        };
+        moveInfo[51].availableToPokemon[57] = {
+            pokemonId: 57,
+            baseAttack: 178
+        };
+        moveInfo[51].availableToPokemon[123] = {
+            pokemonId: 123,
+            baseAttack: 176
+        };
+        moveInfo[53] = {
+            moveId: 53,
+            name: "Bubble Beam",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 10.34,
+            damagePerSecondWithStab: 12.93,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.2,
+            cooldown: 2.90
+        };
+        moveInfo[53].availableToPokemon[60] = {
+            pokemonId: 60,
+            baseAttack: 108
+        };
+        moveInfo[53].availableToPokemon[61] = {
+            pokemonId: 61,
+            baseAttack: 132
+        };
+        moveInfo[53].availableToPokemon[72] = {
+            pokemonId: 72,
+            baseAttack: 106
+        };
+        moveInfo[53].availableToPokemon[90] = {
+            pokemonId: 90,
+            baseAttack: 120
+        };
+        moveInfo[53].availableToPokemon[98] = {
+            pokemonId: 98,
+            baseAttack: 116
+        };
+        moveInfo[53].availableToPokemon[116] = {
+            pokemonId: 116,
+            baseAttack: 122
+        };
+        moveInfo[53].availableToPokemon[120] = {
+            pokemonId: 120,
+            baseAttack: 130
+        };
+        moveInfo[54] = {
+            moveId: 54,
+            name: "Submission",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fighting,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 14.29,
+            damagePerSecondWithStab: 17.86,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.15,
+            cooldown: 2.10
+        };
+        moveInfo[54].availableToPokemon[62] = {
+            pokemonId: 62,
+            baseAttack: 180
+        };
+        moveInfo[54].availableToPokemon[67] = {
+            pokemonId: 67,
+            baseAttack: 154
+        };
+        moveInfo[54].availableToPokemon[68] = {
+            pokemonId: 68,
+            baseAttack: 198
+        };
+        moveInfo[54].availableToPokemon[127] = {
+            pokemonId: 127,
+            baseAttack: 184
+        };
+        moveInfo[56] = {
+            moveId: 56,
+            name: "Low Sweep",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fighting,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 13.33,
+            damagePerSecondWithStab: 16.67,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.15,
+            cooldown: 2.25
+        };
+        moveInfo[56].availableToPokemon[56] = {
+            pokemonId: 56,
+            baseAttack: 122
+        };
+        moveInfo[56].availableToPokemon[57] = {
+            pokemonId: 57,
+            baseAttack: 178
+        };
+        moveInfo[56].availableToPokemon[66] = {
+            pokemonId: 66,
+            baseAttack: 118
+        };
+        moveInfo[56].availableToPokemon[106] = {
+            pokemonId: 106,
+            baseAttack: 148
+        };
+        moveInfo[57] = {
+            moveId: 57,
+            name: "Aqua Jet",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 10.64,
+            damagePerSecondWithStab: 13.30,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 0.4,
+            cooldown: 2.35
+        };
+        moveInfo[57].availableToPokemon[7] = {
+            pokemonId: 7,
+            baseAttack: 112
+        };
+        moveInfo[57].availableToPokemon[8] = {
+            pokemonId: 8,
+            baseAttack: 144
+        };
+        moveInfo[57].availableToPokemon[86] = {
+            pokemonId: 86,
+            baseAttack: 104
+        };
+        moveInfo[57].availableToPokemon[87] = {
+            pokemonId: 87,
+            baseAttack: 156
+        };
+        moveInfo[57].availableToPokemon[140] = {
+            pokemonId: 140,
+            baseAttack: 148
+        };
+        moveInfo[58] = {
+            moveId: 58,
+            name: "Aqua Tail",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 45,
+            damageWithStab: 45,
+            damagePerSecond: 19.15,
+            damagePerSecondWithStab: 23.94,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 0.2,
+            cooldown: 2.35
+        };
+        moveInfo[58].availableToPokemon[7] = {
+            pokemonId: 7,
+            baseAttack: 112
+        };
+        moveInfo[58].availableToPokemon[54] = {
+            pokemonId: 54,
+            baseAttack: 132
+        };
+        moveInfo[58].availableToPokemon[86] = {
+            pokemonId: 86,
+            baseAttack: 104
+        };
+        moveInfo[58].availableToPokemon[118] = {
+            pokemonId: 118,
+            baseAttack: 112
+        };
+        moveInfo[58].availableToPokemon[134] = {
+            pokemonId: 134,
+            baseAttack: 186
+        };
+        moveInfo[58].availableToPokemon[147] = {
+            pokemonId: 147,
+            baseAttack: 128
+        };
+        moveInfo[58].availableToPokemon[148] = {
+            pokemonId: 148,
+            baseAttack: 170
+        };
+        moveInfo[59] = {
+            moveId: 59,
+            name: "Seed Bomb",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Grass,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 16.67,
+            damagePerSecondWithStab: 20.83,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.5,
+            cooldown: 2.40
+        };
+        moveInfo[59].availableToPokemon[1] = {
+            pokemonId: 1,
+            baseAttack: 126
+        };
+        moveInfo[59].availableToPokemon[43] = {
+            pokemonId: 43,
+            baseAttack: 134
+        };
+        moveInfo[59].availableToPokemon[46] = {
+            pokemonId: 46,
+            baseAttack: 122
+        };
+        moveInfo[59].availableToPokemon[70] = {
+            pokemonId: 70,
+            baseAttack: 190
+        };
+        moveInfo[59].availableToPokemon[102] = {
+            pokemonId: 102,
+            baseAttack: 110
+        };
+        moveInfo[59].availableToPokemon[103] = {
+            pokemonId: 103,
+            baseAttack: 232
+        };
+        moveInfo[60] = {
+            moveId: 60,
+            name: "Psyshock",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Psychic,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 14.81,
+            damagePerSecondWithStab: 18.52,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.5,
+            cooldown: 2.70
+        };
+        moveInfo[60].availableToPokemon[63] = {
+            pokemonId: 63,
+            baseAttack: 110
+        };
+        moveInfo[60].availableToPokemon[79] = {
+            pokemonId: 79,
+            baseAttack: 110
+        };
+        moveInfo[60].availableToPokemon[96] = {
+            pokemonId: 96,
+            baseAttack: 104
+        };
+        moveInfo[60].availableToPokemon[97] = {
+            pokemonId: 97,
+            baseAttack: 162
+        };
+        moveInfo[60].availableToPokemon[124] = {
+            pokemonId: 124,
+            baseAttack: 172
+        };
+        moveInfo[62] = {
+            moveId: 62,
+            name: "Ancient Power",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Rock,
+            damage: 35,
+            damageWithStab: 35,
+            damagePerSecond: 9.72,
+            damagePerSecondWithStab: 12.15,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.35,
+            cooldown: 3.60
+        };
+        moveInfo[62].availableToPokemon[76] = {
+            pokemonId: 76,
+            baseAttack: 176
+        };
+        moveInfo[62].availableToPokemon[102] = {
+            pokemonId: 102,
+            baseAttack: 110
+        };
+        moveInfo[62].availableToPokemon[138] = {
+            pokemonId: 138,
+            baseAttack: 132
+        };
+        moveInfo[62].availableToPokemon[139] = {
+            pokemonId: 139,
+            baseAttack: 180
+        };
+        moveInfo[62].availableToPokemon[140] = {
+            pokemonId: 140,
+            baseAttack: 148
+        };
+        moveInfo[62].availableToPokemon[141] = {
+            pokemonId: 141,
+            baseAttack: 190
+        };
+        moveInfo[62].availableToPokemon[142] = {
+            pokemonId: 142,
+            baseAttack: 182
+        };
+        moveInfo[63] = {
+            moveId: 63,
+            name: "Rock Tomb",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Rock,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 8.82,
+            damagePerSecondWithStab: 11.03,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.9,
+            cooldown: 3.40
+        };
+        moveInfo[63].availableToPokemon[27] = {
+            pokemonId: 27,
+            baseAttack: 90
+        };
+        moveInfo[63].availableToPokemon[28] = {
+            pokemonId: 28,
+            baseAttack: 150
+        };
+        moveInfo[63].availableToPokemon[50] = {
+            pokemonId: 50,
+            baseAttack: 108
+        };
+        moveInfo[63].availableToPokemon[74] = {
+            pokemonId: 74,
+            baseAttack: 106
+        };
+        moveInfo[63].availableToPokemon[138] = {
+            pokemonId: 138,
+            baseAttack: 132
+        };
+        moveInfo[63].availableToPokemon[140] = {
+            pokemonId: 140,
+            baseAttack: 148
+        };
+        moveInfo[64] = {
+            moveId: 64,
+            name: "Rock Slide",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Rock,
+            damage: 50,
+            damageWithStab: 50,
+            damagePerSecond: 15.63,
+            damagePerSecondWithStab: 19.53,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 1.4,
+            cooldown: 3.20
+        };
+        moveInfo[64].availableToPokemon[27] = {
+            pokemonId: 27,
+            baseAttack: 90
+        };
+        moveInfo[64].availableToPokemon[74] = {
+            pokemonId: 74,
+            baseAttack: 106
+        };
+        moveInfo[64].availableToPokemon[75] = {
+            pokemonId: 75,
+            baseAttack: 142
+        };
+        moveInfo[64].availableToPokemon[95] = {
+            pokemonId: 95,
+            baseAttack: 90
+        };
+        moveInfo[64].availableToPokemon[139] = {
+            pokemonId: 139,
+            baseAttack: 180
+        };
+        moveInfo[65] = {
+            moveId: 65,
+            name: "Power Gem",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Rock,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 13.79,
+            damagePerSecondWithStab: 17.24,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.8,
+            cooldown: 2.90
+        };
+        moveInfo[65].availableToPokemon[53] = {
+            pokemonId: 53,
+            baseAttack: 156
+        };
+        moveInfo[65].availableToPokemon[120] = {
+            pokemonId: 120,
+            baseAttack: 130
+        };
+        moveInfo[65].availableToPokemon[121] = {
+            pokemonId: 121,
+            baseAttack: 194
+        };
+        moveInfo[69] = {
+            moveId: 69,
+            name: "Ominous Wind",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ghost,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 9.68,
+            damagePerSecondWithStab: 12.10,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.25,
+            cooldown: 3.10
+        };
+        moveInfo[69].availableToPokemon[42] = {
+            pokemonId: 42,
+            baseAttack: 164
+        };
+        moveInfo[69].availableToPokemon[92] = {
+            pokemonId: 92,
+            baseAttack: 136
+        };
+        moveInfo[70] = {
+            moveId: 70,
+            name: "Shadow Ball",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ghost,
+            damage: 45,
+            damageWithStab: 45,
+            damagePerSecond: 14.61,
+            damagePerSecondWithStab: 18.26,
+            damagePerSecondDefensive: 8.86,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.3,
+            cooldown: 3.08
+        };
+        moveInfo[70].availableToPokemon[63] = {
+            pokemonId: 63,
+            baseAttack: 110
+        };
+        moveInfo[70].availableToPokemon[64] = {
+            pokemonId: 64,
+            baseAttack: 150
+        };
+        moveInfo[70].availableToPokemon[65] = {
+            pokemonId: 65,
+            baseAttack: 186
+        };
+        moveInfo[70].availableToPokemon[93] = {
+            pokemonId: 93,
+            baseAttack: 172
+        };
+        moveInfo[70].availableToPokemon[94] = {
+            pokemonId: 94,
+            baseAttack: 204
+        };
+        moveInfo[70].availableToPokemon[97] = {
+            pokemonId: 97,
+            baseAttack: 162
+        };
+        moveInfo[70].availableToPokemon[110] = {
+            pokemonId: 110,
+            baseAttack: 190
+        };
+        moveInfo[70].availableToPokemon[122] = {
+            pokemonId: 122,
+            baseAttack: 154
+        };
+        moveInfo[70].availableToPokemon[150] = {
+            pokemonId: 150,
+            baseAttack: 284
+        };
+        moveInfo[72] = {
+            moveId: 72,
+            name: "Magnet Bomb",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Steel,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 10.71,
+            damagePerSecondWithStab: 13.39,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.55,
+            cooldown: 2.80
+        };
+        moveInfo[72].availableToPokemon[81] = {
+            pokemonId: 81,
+            baseAttack: 128
+        };
+        moveInfo[72].availableToPokemon[82] = {
+            pokemonId: 82,
+            baseAttack: 186
+        };
+        moveInfo[74] = {
+            moveId: 74,
+            name: "Iron Head",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Steel,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 15.00,
+            damagePerSecondWithStab: 18.75,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.25,
+            cooldown: 2.00
+        };
+        moveInfo[74].availableToPokemon[95] = {
+            pokemonId: 95,
+            baseAttack: 90
+        };
+        moveInfo[74].availableToPokemon[128] = {
+            pokemonId: 128,
+            baseAttack: 148
+        };
+        moveInfo[74].availableToPokemon[142] = {
+            pokemonId: 142,
+            baseAttack: 182
+        };
+        moveInfo[77] = {
+            moveId: 77,
+            name: "Thunder Punch",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Electric,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 16.67,
+            damagePerSecondWithStab: 20.83,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.25,
+            cooldown: 2.40
+        };
+        moveInfo[77].availableToPokemon[26] = {
+            pokemonId: 26,
+            baseAttack: 200
+        };
+        moveInfo[77].availableToPokemon[107] = {
+            pokemonId: 107,
+            baseAttack: 138
+        };
+        moveInfo[77].availableToPokemon[125] = {
+            pokemonId: 125,
+            baseAttack: 198
+        };
+        moveInfo[79] = {
+            moveId: 79,
+            name: "Thunderbolt",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Electric,
+            damage: 55,
+            damageWithStab: 55,
+            damagePerSecond: 20.37,
+            damagePerSecondWithStab: 25.46,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 0.8,
+            cooldown: 2.70
+        };
+        moveInfo[79].availableToPokemon[25] = {
+            pokemonId: 25,
+            baseAttack: 124
+        };
+        moveInfo[79].availableToPokemon[81] = {
+            pokemonId: 81,
+            baseAttack: 128
+        };
+        moveInfo[79].availableToPokemon[100] = {
+            pokemonId: 100,
+            baseAttack: 102
+        };
+        moveInfo[79].availableToPokemon[101] = {
+            pokemonId: 101,
+            baseAttack: 150
+        };
+        moveInfo[79].availableToPokemon[125] = {
+            pokemonId: 125,
+            baseAttack: 198
+        };
+        moveInfo[79].availableToPokemon[135] = {
+            pokemonId: 135,
+            baseAttack: 192
+        };
+        moveInfo[79].availableToPokemon[145] = {
+            pokemonId: 145,
+            baseAttack: 232
+        };
+        moveInfo[80] = {
+            moveId: 80,
+            name: "Twister",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Dragon,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 9.26,
+            damagePerSecondWithStab: 11.57,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 1.75,
+            cooldown: 2.70
+        };
+        moveInfo[80].availableToPokemon[16] = {
+            pokemonId: 16,
+            baseAttack: 94
+        };
+        moveInfo[80].availableToPokemon[17] = {
+            pokemonId: 17,
+            baseAttack: 126
+        };
+        moveInfo[80].availableToPokemon[21] = {
+            pokemonId: 21,
+            baseAttack: 102
+        };
+        moveInfo[80].availableToPokemon[22] = {
+            pokemonId: 22,
+            baseAttack: 168
+        };
+        moveInfo[80].availableToPokemon[130] = {
+            pokemonId: 130,
+            baseAttack: 192
+        };
+        moveInfo[80].availableToPokemon[147] = {
+            pokemonId: 147,
+            baseAttack: 128
+        };
+        moveInfo[82] = {
+            moveId: 82,
+            name: "Dragon Pulse",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Dragon,
+            damage: 65,
+            damageWithStab: 65,
+            damagePerSecond: 18.06,
+            damagePerSecondWithStab: 22.57,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 1.2,
+            cooldown: 3.60
+        };
+        moveInfo[82].availableToPokemon[116] = {
+            pokemonId: 116,
+            baseAttack: 122
+        };
+        moveInfo[82].availableToPokemon[117] = {
+            pokemonId: 117,
+            baseAttack: 176
+        };
+        moveInfo[82].availableToPokemon[130] = {
+            pokemonId: 130,
+            baseAttack: 192
+        };
+        moveInfo[82].availableToPokemon[131] = {
+            pokemonId: 131,
+            baseAttack: 186
+        };
+        moveInfo[82].availableToPokemon[148] = {
+            pokemonId: 148,
+            baseAttack: 170
+        };
+        moveInfo[82].availableToPokemon[149] = {
+            pokemonId: 149,
+            baseAttack: 250
+        };
+        moveInfo[82].availableToPokemon[151] = {
+            pokemonId: 151,
+            baseAttack: 220
+        };
+        moveInfo[83] = {
+            moveId: 83,
+            name: "Dragon Claw",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Dragon,
+            damage: 35,
+            damageWithStab: 35,
+            damagePerSecond: 21.88,
+            damagePerSecondWithStab: 27.34,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 0.2,
+            cooldown: 1.60
+        };
+        moveInfo[83].availableToPokemon[6] = {
+            pokemonId: 6,
+            baseAttack: 212
+        };
+        moveInfo[83].availableToPokemon[149] = {
+            pokemonId: 149,
+            baseAttack: 250
+        };
+        moveInfo[84] = {
+            moveId: 84,
+            name: "Disarming Voice",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fairy,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 6.41,
+            damagePerSecondWithStab: 8.01,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 1.8,
+            cooldown: 3.90
+        };
+        moveInfo[84].availableToPokemon[35] = {
+            pokemonId: 35,
+            baseAttack: 116
+        };
+        moveInfo[84].availableToPokemon[39] = {
+            pokemonId: 39,
+            baseAttack: 98
+        };
+        moveInfo[85] = {
+            moveId: 85,
+            name: "Draining Kiss",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fairy,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 8.93,
+            damagePerSecondWithStab: 11.16,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 0.1,
+            cooldown: 2.80
+        };
+        moveInfo[85].availableToPokemon[124] = {
+            pokemonId: 124,
+            baseAttack: 172
+        };
+        moveInfo[86] = {
+            moveId: 86,
+            name: "Dazzling Gleam",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fairy,
+            damage: 55,
+            damageWithStab: 55,
+            damagePerSecond: 13.10,
+            damagePerSecondWithStab: 16.37,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.8,
+            cooldown: 4.20
+        };
+        moveInfo[86].availableToPokemon[36] = {
+            pokemonId: 36,
+            baseAttack: 178
+        };
+        moveInfo[86].availableToPokemon[40] = {
+            pokemonId: 40,
+            baseAttack: 168
+        };
+        moveInfo[86].availableToPokemon[64] = {
+            pokemonId: 64,
+            baseAttack: 150
+        };
+        moveInfo[86].availableToPokemon[65] = {
+            pokemonId: 65,
+            baseAttack: 186
+        };
+        moveInfo[86].availableToPokemon[113] = {
+            pokemonId: 113,
+            baseAttack: 40
+        };
+        moveInfo[87] = {
+            moveId: 87,
+            name: "Moonblast",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fairy,
+            damage: 85,
+            damageWithStab: 85,
+            damagePerSecond: 20.73,
+            damagePerSecondWithStab: 25.91,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.6,
+            cooldown: 4.10
+        };
+        moveInfo[87].availableToPokemon[35] = {
+            pokemonId: 35,
+            baseAttack: 116
+        };
+        moveInfo[87].availableToPokemon[36] = {
+            pokemonId: 36,
+            baseAttack: 178
+        };
+        moveInfo[87].availableToPokemon[43] = {
+            pokemonId: 43,
+            baseAttack: 134
+        };
+        moveInfo[87].availableToPokemon[44] = {
+            pokemonId: 44,
+            baseAttack: 162
+        };
+        moveInfo[87].availableToPokemon[45] = {
+            pokemonId: 45,
+            baseAttack: 202
+        };
+        moveInfo[87].availableToPokemon[151] = {
+            pokemonId: 151,
+            baseAttack: 220
+        };
+        moveInfo[88] = {
+            moveId: 88,
+            name: "Play Rough",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fairy,
+            damage: 55,
+            damageWithStab: 55,
+            damagePerSecond: 18.97,
+            damagePerSecondWithStab: 23.71,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 1.3,
+            cooldown: 2.90
+        };
+        moveInfo[88].availableToPokemon[39] = {
+            pokemonId: 39,
+            baseAttack: 98
+        };
+        moveInfo[88].availableToPokemon[40] = {
+            pokemonId: 40,
+            baseAttack: 168
+        };
+        moveInfo[88].availableToPokemon[53] = {
+            pokemonId: 53,
+            baseAttack: 156
+        };
+        moveInfo[89] = {
+            moveId: 89,
+            name: "Cross Poison",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 16.67,
+            damagePerSecondWithStab: 20.83,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.3,
+            cooldown: 1.50
+        };
+        moveInfo[89].availableToPokemon[46] = {
+            pokemonId: 46,
+            baseAttack: 122
+        };
+        moveInfo[89].availableToPokemon[47] = {
+            pokemonId: 47,
+            baseAttack: 162
+        };
+        moveInfo[90] = {
+            moveId: 90,
+            name: "Sludge Bomb",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 55,
+            damageWithStab: 55,
+            damagePerSecond: 21.15,
+            damagePerSecondWithStab: 26.44,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 0.5,
+            cooldown: 2.60
+        };
+        moveInfo[90].availableToPokemon[1] = {
+            pokemonId: 1,
+            baseAttack: 126
+        };
+        moveInfo[90].availableToPokemon[2] = {
+            pokemonId: 2,
+            baseAttack: 156
+        };
+        moveInfo[90].availableToPokemon[3] = {
+            pokemonId: 3,
+            baseAttack: 198
+        };
+        moveInfo[90].availableToPokemon[15] = {
+            pokemonId: 15,
+            baseAttack: 144
+        };
+        moveInfo[90].availableToPokemon[23] = {
+            pokemonId: 23,
+            baseAttack: 112
+        };
+        moveInfo[90].availableToPokemon[29] = {
+            pokemonId: 29,
+            baseAttack: 100
+        };
+        moveInfo[90].availableToPokemon[30] = {
+            pokemonId: 30,
+            baseAttack: 132
+        };
+        moveInfo[90].availableToPokemon[32] = {
+            pokemonId: 32,
+            baseAttack: 110
+        };
+        moveInfo[90].availableToPokemon[33] = {
+            pokemonId: 33,
+            baseAttack: 142
+        };
+        moveInfo[90].availableToPokemon[41] = {
+            pokemonId: 41,
+            baseAttack: 88
+        };
+        moveInfo[90].availableToPokemon[43] = {
+            pokemonId: 43,
+            baseAttack: 134
+        };
+        moveInfo[90].availableToPokemon[44] = {
+            pokemonId: 44,
+            baseAttack: 162
+        };
+        moveInfo[90].availableToPokemon[69] = {
+            pokemonId: 69,
+            baseAttack: 158
+        };
+        moveInfo[90].availableToPokemon[70] = {
+            pokemonId: 70,
+            baseAttack: 190
+        };
+        moveInfo[90].availableToPokemon[71] = {
+            pokemonId: 71,
+            baseAttack: 222
+        };
+        moveInfo[90].availableToPokemon[88] = {
+            pokemonId: 88,
+            baseAttack: 124
+        };
+        moveInfo[90].availableToPokemon[92] = {
+            pokemonId: 92,
+            baseAttack: 136
+        };
+        moveInfo[90].availableToPokemon[93] = {
+            pokemonId: 93,
+            baseAttack: 172
+        };
+        moveInfo[90].availableToPokemon[109] = {
+            pokemonId: 109,
+            baseAttack: 136
+        };
+        moveInfo[90].availableToPokemon[110] = {
+            pokemonId: 110,
+            baseAttack: 190
+        };
+        moveInfo[90].availableToPokemon[114] = {
+            pokemonId: 114,
+            baseAttack: 164
+        };
+        moveInfo[91] = {
+            moveId: 91,
+            name: "Sludge Wave",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 70,
+            damageWithStab: 70,
+            damagePerSecond: 20.59,
+            damagePerSecondWithStab: 25.74,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.9,
+            cooldown: 3.40
+        };
+        moveInfo[91].availableToPokemon[24] = {
+            pokemonId: 24,
+            baseAttack: 166
+        };
+        moveInfo[91].availableToPokemon[31] = {
+            pokemonId: 31,
+            baseAttack: 184
+        };
+        moveInfo[91].availableToPokemon[34] = {
+            pokemonId: 34,
+            baseAttack: 204
+        };
+        moveInfo[91].availableToPokemon[73] = {
+            pokemonId: 73,
+            baseAttack: 170
+        };
+        moveInfo[91].availableToPokemon[89] = {
+            pokemonId: 89,
+            baseAttack: 180
+        };
+        moveInfo[91].availableToPokemon[94] = {
+            pokemonId: 94,
+            baseAttack: 204
+        };
+        moveInfo[92] = {
+            moveId: 92,
+            name: "Gunk Shot",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 65,
+            damageWithStab: 65,
+            damagePerSecond: 21.67,
+            damagePerSecondWithStab: 27.08,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.4,
+            cooldown: 3.00
+        };
+        moveInfo[92].availableToPokemon[23] = {
+            pokemonId: 23,
+            baseAttack: 112
+        };
+        moveInfo[92].availableToPokemon[24] = {
+            pokemonId: 24,
+            baseAttack: 166
+        };
+        moveInfo[92].availableToPokemon[89] = {
+            pokemonId: 89,
+            baseAttack: 180
+        };
+        moveInfo[94] = {
+            moveId: 94,
+            name: "Bone Club",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ground,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 15.63,
+            damagePerSecondWithStab: 19.53,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.25,
+            cooldown: 1.60
+        };
+        moveInfo[94].availableToPokemon[104] = {
+            pokemonId: 104,
+            baseAttack: 102
+        };
+        moveInfo[94].availableToPokemon[105] = {
+            pokemonId: 105,
+            baseAttack: 140
+        };
+        moveInfo[95] = {
+            moveId: 95,
+            name: "Bulldoze",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ground,
+            damage: 35,
+            damageWithStab: 35,
+            damagePerSecond: 10.29,
+            damagePerSecondWithStab: 12.87,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 1.1,
+            cooldown: 3.40
+        };
+        moveInfo[95].availableToPokemon[28] = {
+            pokemonId: 28,
+            baseAttack: 150
+        };
+        moveInfo[95].availableToPokemon[59] = {
+            pokemonId: 59,
+            baseAttack: 230
+        };
+        moveInfo[95].availableToPokemon[104] = {
+            pokemonId: 104,
+            baseAttack: 102
+        };
+        moveInfo[95].availableToPokemon[111] = {
+            pokemonId: 111,
+            baseAttack: 110
+        };
+        moveInfo[96] = {
+            moveId: 96,
+            name: "Mud Bomb",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ground,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 11.54,
+            damagePerSecondWithStab: 14.42,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.45,
+            cooldown: 2.60
+        };
+        moveInfo[96].availableToPokemon[50] = {
+            pokemonId: 50,
+            baseAttack: 108
+        };
+        moveInfo[96].availableToPokemon[51] = {
+            pokemonId: 51,
+            baseAttack: 148
+        };
+        moveInfo[96].availableToPokemon[60] = {
+            pokemonId: 60,
+            baseAttack: 108
+        };
+        moveInfo[96].availableToPokemon[61] = {
+            pokemonId: 61,
+            baseAttack: 132
+        };
+        moveInfo[96].availableToPokemon[88] = {
+            pokemonId: 88,
+            baseAttack: 124
+        };
+        moveInfo[99] = {
+            moveId: 99,
+            name: "Signal Beam",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Bug,
+            damage: 45,
+            damageWithStab: 45,
+            damagePerSecond: 14.52,
+            damagePerSecondWithStab: 18.15,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 1,
+            cooldown: 3.10
+        };
+        moveInfo[99].availableToPokemon[12] = {
+            pokemonId: 12,
+            baseAttack: 144
+        };
+        moveInfo[99].availableToPokemon[48] = {
+            pokemonId: 48,
+            baseAttack: 108
+        };
+        moveInfo[99].availableToPokemon[63] = {
+            pokemonId: 63,
+            baseAttack: 110
+        };
+        moveInfo[99].availableToPokemon[100] = {
+            pokemonId: 100,
+            baseAttack: 102
+        };
+        moveInfo[99].availableToPokemon[137] = {
+            pokemonId: 137,
+            baseAttack: 156
+        };
+        moveInfo[100] = {
+            moveId: 100,
+            name: "X-Scissor",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Bug,
+            damage: 35,
+            damageWithStab: 35,
+            damagePerSecond: 16.67,
+            damagePerSecondWithStab: 20.83,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.25,
+            cooldown: 2.10
+        };
+        moveInfo[100].availableToPokemon[15] = {
+            pokemonId: 15,
+            baseAttack: 144
+        };
+        moveInfo[100].availableToPokemon[46] = {
+            pokemonId: 46,
+            baseAttack: 122
+        };
+        moveInfo[100].availableToPokemon[47] = {
+            pokemonId: 47,
+            baseAttack: 162
+        };
+        moveInfo[100].availableToPokemon[99] = {
+            pokemonId: 99,
+            baseAttack: 178
+        };
+        moveInfo[100].availableToPokemon[123] = {
+            pokemonId: 123,
+            baseAttack: 176
+        };
+        moveInfo[100].availableToPokemon[127] = {
+            pokemonId: 127,
+            baseAttack: 184
+        };
+        moveInfo[101] = {
+            moveId: 101,
+            name: "Flame Charge",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 8.06,
+            damagePerSecondWithStab: 10.08,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 0.2,
+            cooldown: 3.10
+        };
+        moveInfo[101].availableToPokemon[4] = {
+            pokemonId: 4,
+            baseAttack: 128
+        };
+        moveInfo[101].availableToPokemon[37] = {
+            pokemonId: 37,
+            baseAttack: 106
+        };
+        moveInfo[101].availableToPokemon[77] = {
+            pokemonId: 77,
+            baseAttack: 168
+        };
+        moveInfo[102] = {
+            moveId: 102,
+            name: "Flame Burst",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 14.29,
+            damagePerSecondWithStab: 17.86,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.2,
+            cooldown: 2.10
+        };
+        moveInfo[102].availableToPokemon[4] = {
+            pokemonId: 4,
+            baseAttack: 128
+        };
+        moveInfo[102].availableToPokemon[5] = {
+            pokemonId: 5,
+            baseAttack: 160
+        };
+        moveInfo[103] = {
+            moveId: 103,
+            name: "Fire Blast",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 100,
+            damageWithStab: 100,
+            damagePerSecond: 24.39,
+            damagePerSecondWithStab: 30.49,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 0.4,
+            cooldown: 4.10
+        };
+        moveInfo[103].availableToPokemon[6] = {
+            pokemonId: 6,
+            baseAttack: 212
+        };
+        moveInfo[103].availableToPokemon[38] = {
+            pokemonId: 38,
+            baseAttack: 176
+        };
+        moveInfo[103].availableToPokemon[59] = {
+            pokemonId: 59,
+            baseAttack: 230
+        };
+        moveInfo[103].availableToPokemon[77] = {
+            pokemonId: 77,
+            baseAttack: 168
+        };
+        moveInfo[103].availableToPokemon[78] = {
+            pokemonId: 78,
+            baseAttack: 200
+        };
+        moveInfo[103].availableToPokemon[126] = {
+            pokemonId: 126,
+            baseAttack: 214
+        };
+        moveInfo[103].availableToPokemon[136] = {
+            pokemonId: 136,
+            baseAttack: 238
+        };
+        moveInfo[103].availableToPokemon[151] = {
+            pokemonId: 151,
+            baseAttack: 220
+        };
+        moveInfo[104] = {
+            moveId: 104,
+            name: "Brine",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 10.42,
+            damagePerSecondWithStab: 13.02,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.35,
+            cooldown: 2.40
+        };
+        moveInfo[104].availableToPokemon[138] = {
+            pokemonId: 138,
+            baseAttack: 132
+        };
+        moveInfo[105] = {
+            moveId: 105,
+            name: "Water Pulse",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 35,
+            damageWithStab: 35,
+            damagePerSecond: 10.61,
+            damagePerSecondWithStab: 13.26,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 1,
+            cooldown: 3.30
+        };
+        moveInfo[105].availableToPokemon[7] = {
+            pokemonId: 7,
+            baseAttack: 112
+        };
+        moveInfo[105].availableToPokemon[72] = {
+            pokemonId: 72,
+            baseAttack: 106
+        };
+        moveInfo[105].availableToPokemon[79] = {
+            pokemonId: 79,
+            baseAttack: 110
+        };
+        moveInfo[105].availableToPokemon[80] = {
+            pokemonId: 80,
+            baseAttack: 184
+        };
+        moveInfo[105].availableToPokemon[90] = {
+            pokemonId: 90,
+            baseAttack: 120
+        };
+        moveInfo[105].availableToPokemon[98] = {
+            pokemonId: 98,
+            baseAttack: 116
+        };
+        moveInfo[105].availableToPokemon[99] = {
+            pokemonId: 99,
+            baseAttack: 178
+        };
+        moveInfo[105].availableToPokemon[118] = {
+            pokemonId: 118,
+            baseAttack: 112
+        };
+        moveInfo[105].availableToPokemon[134] = {
+            pokemonId: 134,
+            baseAttack: 186
+        };
+        moveInfo[105].availableToPokemon[141] = {
+            pokemonId: 141,
+            baseAttack: 190
+        };
+        moveInfo[106] = {
+            moveId: 106,
+            name: "Scald",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 55,
+            damageWithStab: 55,
+            damagePerSecond: 13.75,
+            damagePerSecondWithStab: 17.19,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 2.1,
+            cooldown: 4.00
+        };
+        moveInfo[106].availableToPokemon[61] = {
+            pokemonId: 61,
+            baseAttack: 132
+        };
+        moveInfo[107] = {
+            moveId: 107,
+            name: "Hydro Pump",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 90,
+            damageWithStab: 90,
+            damagePerSecond: 23.68,
+            damagePerSecondWithStab: 29.61,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 2.1,
+            cooldown: 3.80
+        };
+        moveInfo[107].availableToPokemon[8] = {
+            pokemonId: 8,
+            baseAttack: 144
+        };
+        moveInfo[107].availableToPokemon[9] = {
+            pokemonId: 9,
+            baseAttack: 186
+        };
+        moveInfo[107].availableToPokemon[55] = {
+            pokemonId: 55,
+            baseAttack: 194
+        };
+        moveInfo[107].availableToPokemon[62] = {
+            pokemonId: 62,
+            baseAttack: 180
+        };
+        moveInfo[107].availableToPokemon[73] = {
+            pokemonId: 73,
+            baseAttack: 170
+        };
+        moveInfo[107].availableToPokemon[91] = {
+            pokemonId: 91,
+            baseAttack: 196
+        };
+        moveInfo[107].availableToPokemon[117] = {
+            pokemonId: 117,
+            baseAttack: 176
+        };
+        moveInfo[107].availableToPokemon[121] = {
+            pokemonId: 121,
+            baseAttack: 194
+        };
+        moveInfo[107].availableToPokemon[130] = {
+            pokemonId: 130,
+            baseAttack: 192
+        };
+        moveInfo[107].availableToPokemon[134] = {
+            pokemonId: 134,
+            baseAttack: 186
+        };
+        moveInfo[107].availableToPokemon[139] = {
+            pokemonId: 139,
+            baseAttack: 180
+        };
+        moveInfo[111] = {
+            moveId: 111,
+            name: "Icy Wind",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Ice,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 6.58,
+            damagePerSecondWithStab: 8.22,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 0.7,
+            cooldown: 3.80
+        };
+        moveInfo[111].availableToPokemon[86] = {
+            pokemonId: 86,
+            baseAttack: 104
+        };
+        moveInfo[111].availableToPokemon[87] = {
+            pokemonId: 87,
+            baseAttack: 156
+        };
+        moveInfo[111].availableToPokemon[90] = {
+            pokemonId: 90,
+            baseAttack: 120
+        };
+        moveInfo[111].availableToPokemon[91] = {
+            pokemonId: 91,
+            baseAttack: 196
+        };
+        moveInfo[111].availableToPokemon[119] = {
+            pokemonId: 119,
+            baseAttack: 172
+        };
+        moveInfo[111].availableToPokemon[144] = {
+            pokemonId: 144,
+            baseAttack: 198
+        };
+        moveInfo[115] = {
+            moveId: 115,
+            name: "Fire Punch",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 14.29,
+            damagePerSecondWithStab: 17.86,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.51,
+            cooldown: 2.80
+        };
+        moveInfo[115].availableToPokemon[5] = {
+            pokemonId: 5,
+            baseAttack: 160
+        };
+        moveInfo[115].availableToPokemon[107] = {
+            pokemonId: 107,
+            baseAttack: 138
+        };
+        moveInfo[115].availableToPokemon[126] = {
+            pokemonId: 126,
+            baseAttack: 214
+        };
+        moveInfo[116] = {
+            moveId: 116,
+            name: "Solar Beam",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Grass,
+            damage: 120,
+            damageWithStab: 120,
+            damagePerSecond: 24.49,
+            damagePerSecondWithStab: 30.61,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 1.7,
+            cooldown: 4.90
+        };
+        moveInfo[116].availableToPokemon[2] = {
+            pokemonId: 2,
+            baseAttack: 156
+        };
+        moveInfo[116].availableToPokemon[3] = {
+            pokemonId: 3,
+            baseAttack: 198
+        };
+        moveInfo[116].availableToPokemon[45] = {
+            pokemonId: 45,
+            baseAttack: 202
+        };
+        moveInfo[116].availableToPokemon[47] = {
+            pokemonId: 47,
+            baseAttack: 162
+        };
+        moveInfo[116].availableToPokemon[71] = {
+            pokemonId: 71,
+            baseAttack: 222
+        };
+        moveInfo[116].availableToPokemon[103] = {
+            pokemonId: 103,
+            baseAttack: 232
+        };
+        moveInfo[116].availableToPokemon[114] = {
+            pokemonId: 114,
+            baseAttack: 164
+        };
+        moveInfo[116].availableToPokemon[151] = {
+            pokemonId: 151,
+            baseAttack: 220
+        };
+        moveInfo[117] = {
+            moveId: 117,
+            name: "Leaf Blade",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Grass,
+            damage: 55,
+            damageWithStab: 55,
+            damagePerSecond: 19.64,
+            damagePerSecondWithStab: 24.55,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 1,
+            cooldown: 2.80
+        };
+        moveInfo[117].availableToPokemon[71] = {
+            pokemonId: 71,
+            baseAttack: 222
+        };
+        moveInfo[117].availableToPokemon[83] = {
+            pokemonId: 83,
+            baseAttack: 138
+        };
+        moveInfo[118] = {
+            moveId: 118,
+            name: "Power Whip",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Grass,
+            damage: 70,
+            damageWithStab: 70,
+            damagePerSecond: 25.00,
+            damagePerSecondWithStab: 31.25,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 1.3,
+            cooldown: 2.80
+        };
+        moveInfo[118].availableToPokemon[1] = {
+            pokemonId: 1,
+            baseAttack: 126
+        };
+        moveInfo[118].availableToPokemon[2] = {
+            pokemonId: 2,
+            baseAttack: 156
+        };
+        moveInfo[118].availableToPokemon[69] = {
+            pokemonId: 69,
+            baseAttack: 158
+        };
+        moveInfo[118].availableToPokemon[70] = {
+            pokemonId: 70,
+            baseAttack: 190
+        };
+        moveInfo[118].availableToPokemon[108] = {
+            pokemonId: 108,
+            baseAttack: 126
+        };
+        moveInfo[118].availableToPokemon[114] = {
+            pokemonId: 114,
+            baseAttack: 164
+        };
+        moveInfo[121] = {
+            moveId: 121,
+            name: "Air Cutter",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Flying,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 9.09,
+            damagePerSecondWithStab: 11.36,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.9,
+            cooldown: 3.30
+        };
+        moveInfo[121].availableToPokemon[16] = {
+            pokemonId: 16,
+            baseAttack: 94
+        };
+        moveInfo[121].availableToPokemon[17] = {
+            pokemonId: 17,
+            baseAttack: 126
+        };
+        moveInfo[121].availableToPokemon[18] = {
+            pokemonId: 18,
+            baseAttack: 170
+        };
+        moveInfo[121].availableToPokemon[41] = {
+            pokemonId: 41,
+            baseAttack: 88
+        };
+        moveInfo[121].availableToPokemon[42] = {
+            pokemonId: 42,
+            baseAttack: 164
+        };
+        moveInfo[121].availableToPokemon[83] = {
+            pokemonId: 83,
+            baseAttack: 138
+        };
+        moveInfo[121].availableToPokemon[84] = {
+            pokemonId: 84,
+            baseAttack: 126
+        };
+        moveInfo[122] = {
+            moveId: 122,
+            name: "Hurricane",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Flying,
+            damage: 80,
+            damageWithStab: 80,
+            damagePerSecond: 25.00,
+            damagePerSecondWithStab: 31.25,
+            energyPerSecond: 0.00,
+            chargeEnergy: 1,
+            dodgeWindow: 1.77,
+            cooldown: 3.20
+        };
+        moveInfo[122].availableToPokemon[18] = {
+            pokemonId: 18,
+            baseAttack: 170
+        };
+        moveInfo[122].availableToPokemon[151] = {
+            pokemonId: 151,
+            baseAttack: 220
+        };
+        moveInfo[123] = {
+            moveId: 123,
+            name: "Brick Break",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Fighting,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 18.75,
+            damagePerSecondWithStab: 23.44,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.4,
+            cooldown: 1.60
+        };
+        moveInfo[123].availableToPokemon[26] = {
+            pokemonId: 26,
+            baseAttack: 200
+        };
+        moveInfo[123].availableToPokemon[56] = {
+            pokemonId: 56,
+            baseAttack: 122
+        };
+        moveInfo[123].availableToPokemon[66] = {
+            pokemonId: 66,
+            baseAttack: 118
+        };
+        moveInfo[123].availableToPokemon[67] = {
+            pokemonId: 67,
+            baseAttack: 154
+        };
+        moveInfo[123].availableToPokemon[115] = {
+            pokemonId: 115,
+            baseAttack: 142
+        };
+        moveInfo[125] = {
+            moveId: 125,
+            name: "Swift",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 10.00,
+            damagePerSecondWithStab: 12.50,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.5,
+            cooldown: 3.00
+        };
+        moveInfo[125].availableToPokemon[84] = {
+            pokemonId: 84,
+            baseAttack: 126
+        };
+        moveInfo[125].availableToPokemon[120] = {
+            pokemonId: 120,
+            baseAttack: 130
+        };
+        moveInfo[125].availableToPokemon[133] = {
+            pokemonId: 133,
+            baseAttack: 114
+        };
+        moveInfo[126] = {
+            moveId: 126,
+            name: "Horn Attack",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 11.36,
+            damagePerSecondWithStab: 14.20,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.3,
+            cooldown: 2.20
+        };
+        moveInfo[126].availableToPokemon[32] = {
+            pokemonId: 32,
+            baseAttack: 110
+        };
+        moveInfo[126].availableToPokemon[33] = {
+            pokemonId: 33,
+            baseAttack: 142
+        };
+        moveInfo[126].availableToPokemon[111] = {
+            pokemonId: 111,
+            baseAttack: 110
+        };
+        moveInfo[126].availableToPokemon[118] = {
+            pokemonId: 118,
+            baseAttack: 112
+        };
+        moveInfo[126].availableToPokemon[128] = {
+            pokemonId: 128,
+            baseAttack: 148
+        };
+        moveInfo[127] = {
+            moveId: 127,
+            name: "Stomp",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 30,
+            damageWithStab: 30,
+            damagePerSecond: 14.29,
+            damagePerSecondWithStab: 17.86,
+            energyPerSecond: 0.00,
+            chargeEnergy: 4,
+            dodgeWindow: 0.7,
+            cooldown: 2.10
+        };
+        moveInfo[127].availableToPokemon[106] = {
+            pokemonId: 106,
+            baseAttack: 148
+        };
+        moveInfo[127].availableToPokemon[108] = {
+            pokemonId: 108,
+            baseAttack: 126
+        };
+        moveInfo[127].availableToPokemon[111] = {
+            pokemonId: 111,
+            baseAttack: 110
+        };
+        moveInfo[127].availableToPokemon[115] = {
+            pokemonId: 115,
+            baseAttack: 142
+        };
+        moveInfo[129] = {
+            moveId: 129,
+            name: "Hyper Fang",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 35,
+            damageWithStab: 35,
+            damagePerSecond: 16.67,
+            damagePerSecondWithStab: 20.83,
+            energyPerSecond: 0.00,
+            chargeEnergy: 3,
+            dodgeWindow: 0.3,
+            cooldown: 2.10
+        };
+        moveInfo[129].availableToPokemon[19] = {
+            pokemonId: 19,
+            baseAttack: 92
+        };
+        moveInfo[129].availableToPokemon[20] = {
+            pokemonId: 20,
+            baseAttack: 146
+        };
+        moveInfo[131] = {
+            moveId: 131,
+            name: "Body Slam",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 40,
+            damageWithStab: 40,
+            damagePerSecond: 25.64,
+            damagePerSecondWithStab: 32.05,
+            energyPerSecond: 0.00,
+            chargeEnergy: 2,
+            dodgeWindow: 0.2,
+            cooldown: 1.56
+        };
+        moveInfo[131].availableToPokemon[19] = {
+            pokemonId: 19,
+            baseAttack: 92
+        };
+        moveInfo[131].availableToPokemon[29] = {
+            pokemonId: 29,
+            baseAttack: 100
+        };
+        moveInfo[131].availableToPokemon[32] = {
+            pokemonId: 32,
+            baseAttack: 110
+        };
+        moveInfo[131].availableToPokemon[35] = {
+            pokemonId: 35,
+            baseAttack: 116
+        };
+        moveInfo[131].availableToPokemon[37] = {
+            pokemonId: 37,
+            baseAttack: 106
+        };
+        moveInfo[131].availableToPokemon[39] = {
+            pokemonId: 39,
+            baseAttack: 98
+        };
+        moveInfo[131].availableToPokemon[52] = {
+            pokemonId: 52,
+            baseAttack: 104
+        };
+        moveInfo[131].availableToPokemon[58] = {
+            pokemonId: 58,
+            baseAttack: 156
+        };
+        moveInfo[131].availableToPokemon[60] = {
+            pokemonId: 60,
+            baseAttack: 108
+        };
+        moveInfo[131].availableToPokemon[133] = {
+            pokemonId: 133,
+            baseAttack: 114
+        };
+        moveInfo[131].availableToPokemon[143] = {
+            pokemonId: 143,
+            baseAttack: 180
+        };
+        moveInfo[133] = {
+            moveId: 133,
+            name: "Struggle",
+            type: MoveType.ChargeMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 15,
+            damageWithStab: 15,
+            damagePerSecond: 8.85,
+            damagePerSecondWithStab: 11.06,
+            energyPerSecond: 0.00,
+            chargeEnergy: 5,
+            dodgeWindow: 0.7,
+            cooldown: 1.70
+        };
+        moveInfo[133].availableToPokemon[10] = {
+            pokemonId: 10,
+            baseAttack: 62
+        };
+        moveInfo[133].availableToPokemon[11] = {
+            pokemonId: 11,
+            baseAttack: 56
+        };
+        moveInfo[133].availableToPokemon[13] = {
+            pokemonId: 13,
+            baseAttack: 68
+        };
+        moveInfo[133].availableToPokemon[14] = {
+            pokemonId: 14,
+            baseAttack: 62
+        };
+        moveInfo[133].availableToPokemon[129] = {
+            pokemonId: 129,
+            baseAttack: 42
+        };
+        moveInfo[133].availableToPokemon[132] = {
+            pokemonId: 132,
+            baseAttack: 110
+        };
+        moveInfo[200] = {
+            moveId: 200,
+            name: "Fury Cutter",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Bug,
+            damage: 3,
+            damageWithStab: 3,
+            damagePerSecond: 7.50,
+            damagePerSecondWithStab: 9.38,
+            damagePerSecondDefensive: 1.25,
+            energyPerSecond: 15.00,
+            cooldown: 0.40
+        };
+        moveInfo[200].availableToPokemon[34] = {
+            pokemonId: 34,
+            baseAttack: 204
+        };
+        moveInfo[200].availableToPokemon[47] = {
+            pokemonId: 47,
+            baseAttack: 162
+        };
+        moveInfo[200].availableToPokemon[83] = {
+            pokemonId: 83,
+            baseAttack: 138
+        };
+        moveInfo[200].availableToPokemon[123] = {
+            pokemonId: 123,
+            baseAttack: 176
+        };
+        moveInfo[200].availableToPokemon[127] = {
+            pokemonId: 127,
+            baseAttack: 184
+        };
+        moveInfo[200].availableToPokemon[141] = {
+            pokemonId: 141,
+            baseAttack: 190
+        };
+        moveInfo[201] = {
+            moveId: 201,
+            name: "Bug Bite",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Bug,
+            damage: 5,
+            damageWithStab: 5,
+            damagePerSecond: 11.11,
+            damagePerSecondWithStab: 13.89,
+            damagePerSecondDefensive: 2.04,
+            energyPerSecond: 15.56,
+            cooldown: 0.45
+        };
+        moveInfo[201].availableToPokemon[10] = {
+            pokemonId: 10,
+            baseAttack: 62
+        };
+        moveInfo[201].availableToPokemon[11] = {
+            pokemonId: 11,
+            baseAttack: 56
+        };
+        moveInfo[201].availableToPokemon[12] = {
+            pokemonId: 12,
+            baseAttack: 144
+        };
+        moveInfo[201].availableToPokemon[13] = {
+            pokemonId: 13,
+            baseAttack: 68
+        };
+        moveInfo[201].availableToPokemon[14] = {
+            pokemonId: 14,
+            baseAttack: 62
+        };
+        moveInfo[201].availableToPokemon[15] = {
+            pokemonId: 15,
+            baseAttack: 144
+        };
+        moveInfo[201].availableToPokemon[46] = {
+            pokemonId: 46,
+            baseAttack: 122
+        };
+        moveInfo[201].availableToPokemon[47] = {
+            pokemonId: 47,
+            baseAttack: 162
+        };
+        moveInfo[201].availableToPokemon[48] = {
+            pokemonId: 48,
+            baseAttack: 108
+        };
+        moveInfo[201].availableToPokemon[49] = {
+            pokemonId: 49,
+            baseAttack: 172
+        };
+        moveInfo[203] = {
+            moveId: 203,
+            name: "Sucker Punch",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Dark,
+            damage: 7,
+            damageWithStab: 7,
+            damagePerSecond: 10.00,
+            damagePerSecondWithStab: 12.50,
+            damagePerSecondDefensive: 2.59,
+            energyPerSecond: 12.86,
+            cooldown: 0.70
+        };
+        moveInfo[203].availableToPokemon[51] = {
+            pokemonId: 51,
+            baseAttack: 148
+        };
+        moveInfo[203].availableToPokemon[92] = {
+            pokemonId: 92,
+            baseAttack: 136
+        };
+        moveInfo[203].availableToPokemon[94] = {
+            pokemonId: 94,
+            baseAttack: 204
+        };
+        moveInfo[204] = {
+            moveId: 204,
+            name: "Dragon Breath",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Dragon,
+            damage: 6,
+            damageWithStab: 6,
+            damagePerSecond: 12.00,
+            damagePerSecondWithStab: 15.00,
+            damagePerSecondDefensive: 2.40,
+            energyPerSecond: 14.00,
+            cooldown: 0.50
+        };
+        moveInfo[204].availableToPokemon[117] = {
+            pokemonId: 117,
+            baseAttack: 176
+        };
+        moveInfo[204].availableToPokemon[130] = {
+            pokemonId: 130,
+            baseAttack: 192
+        };
+        moveInfo[204].availableToPokemon[147] = {
+            pokemonId: 147,
+            baseAttack: 128
+        };
+        moveInfo[204].availableToPokemon[148] = {
+            pokemonId: 148,
+            baseAttack: 170
+        };
+        moveInfo[204].availableToPokemon[149] = {
+            pokemonId: 149,
+            baseAttack: 250
+        };
+        moveInfo[205] = {
+            moveId: 205,
+            name: "Thunder Shock",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Electric,
+            damage: 5,
+            damageWithStab: 5,
+            damagePerSecond: 8.33,
+            damagePerSecondWithStab: 10.42,
+            damagePerSecondDefensive: 1.92,
+            energyPerSecond: 13.33,
+            cooldown: 0.60
+        };
+        moveInfo[205].availableToPokemon[25] = {
+            pokemonId: 25,
+            baseAttack: 124
+        };
+        moveInfo[205].availableToPokemon[26] = {
+            pokemonId: 26,
+            baseAttack: 200
+        };
+        moveInfo[205].availableToPokemon[81] = {
+            pokemonId: 81,
+            baseAttack: 128
+        };
+        moveInfo[205].availableToPokemon[82] = {
+            pokemonId: 82,
+            baseAttack: 186
+        };
+        moveInfo[205].availableToPokemon[125] = {
+            pokemonId: 125,
+            baseAttack: 198
+        };
+        moveInfo[205].availableToPokemon[135] = {
+            pokemonId: 135,
+            baseAttack: 192
+        };
+        moveInfo[205].availableToPokemon[145] = {
+            pokemonId: 145,
+            baseAttack: 232
+        };
+        moveInfo[206] = {
+            moveId: 206,
+            name: "Spark",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Electric,
+            damage: 7,
+            damageWithStab: 7,
+            damagePerSecond: 10.00,
+            damagePerSecondWithStab: 12.50,
+            damagePerSecondDefensive: 2.59,
+            energyPerSecond: 11.43,
+            cooldown: 0.70
+        };
+        moveInfo[206].availableToPokemon[26] = {
+            pokemonId: 26,
+            baseAttack: 200
+        };
+        moveInfo[206].availableToPokemon[81] = {
+            pokemonId: 81,
+            baseAttack: 128
+        };
+        moveInfo[206].availableToPokemon[82] = {
+            pokemonId: 82,
+            baseAttack: 186
+        };
+        moveInfo[206].availableToPokemon[100] = {
+            pokemonId: 100,
+            baseAttack: 102
+        };
+        moveInfo[206].availableToPokemon[101] = {
+            pokemonId: 101,
+            baseAttack: 150
+        };
+        moveInfo[207] = {
+            moveId: 207,
+            name: "Low Kick",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Fighting,
+            damage: 5,
+            damageWithStab: 5,
+            damagePerSecond: 8.33,
+            damagePerSecondWithStab: 10.42,
+            damagePerSecondDefensive: 1.92,
+            energyPerSecond: 11.67,
+            cooldown: 0.60
+        };
+        moveInfo[207].availableToPokemon[57] = {
+            pokemonId: 57,
+            baseAttack: 178
+        };
+        moveInfo[207].availableToPokemon[66] = {
+            pokemonId: 66,
+            baseAttack: 118
+        };
+        moveInfo[207].availableToPokemon[67] = {
+            pokemonId: 67,
+            baseAttack: 154
+        };
+        moveInfo[207].availableToPokemon[78] = {
+            pokemonId: 78,
+            baseAttack: 200
+        };
+        moveInfo[207].availableToPokemon[106] = {
+            pokemonId: 106,
+            baseAttack: 148
+        };
+        moveInfo[207].availableToPokemon[115] = {
+            pokemonId: 115,
+            baseAttack: 142
+        };
+        moveInfo[207].availableToPokemon[125] = {
+            pokemonId: 125,
+            baseAttack: 198
+        };
+        moveInfo[208] = {
+            moveId: 208,
+            name: "Karate Chop",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Fighting,
+            damage: 6,
+            damageWithStab: 6,
+            damagePerSecond: 7.50,
+            damagePerSecondWithStab: 9.38,
+            damagePerSecondDefensive: 2.14,
+            energyPerSecond: 10.00,
+            cooldown: 0.80
+        };
+        moveInfo[208].availableToPokemon[56] = {
+            pokemonId: 56,
+            baseAttack: 122
+        };
+        moveInfo[208].availableToPokemon[57] = {
+            pokemonId: 57,
+            baseAttack: 178
+        };
+        moveInfo[208].availableToPokemon[66] = {
+            pokemonId: 66,
+            baseAttack: 118
+        };
+        moveInfo[208].availableToPokemon[67] = {
+            pokemonId: 67,
+            baseAttack: 154
+        };
+        moveInfo[208].availableToPokemon[68] = {
+            pokemonId: 68,
+            baseAttack: 198
+        };
+        moveInfo[208].availableToPokemon[126] = {
+            pokemonId: 126,
+            baseAttack: 214
+        };
+        moveInfo[209] = {
+            moveId: 209,
+            name: "Ember",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 10,
+            damageWithStab: 10,
+            damagePerSecond: 9.52,
+            damagePerSecondWithStab: 11.90,
+            damagePerSecondDefensive: 3.28,
+            energyPerSecond: 9.52,
+            cooldown: 1.05
+        };
+        moveInfo[209].availableToPokemon[4] = {
+            pokemonId: 4,
+            baseAttack: 128
+        };
+        moveInfo[209].availableToPokemon[5] = {
+            pokemonId: 5,
+            baseAttack: 160
+        };
+        moveInfo[209].availableToPokemon[6] = {
+            pokemonId: 6,
+            baseAttack: 212
+        };
+        moveInfo[209].availableToPokemon[37] = {
+            pokemonId: 37,
+            baseAttack: 106
+        };
+        moveInfo[209].availableToPokemon[38] = {
+            pokemonId: 38,
+            baseAttack: 176
+        };
+        moveInfo[209].availableToPokemon[58] = {
+            pokemonId: 58,
+            baseAttack: 156
+        };
+        moveInfo[209].availableToPokemon[77] = {
+            pokemonId: 77,
+            baseAttack: 168
+        };
+        moveInfo[209].availableToPokemon[78] = {
+            pokemonId: 78,
+            baseAttack: 200
+        };
+        moveInfo[209].availableToPokemon[126] = {
+            pokemonId: 126,
+            baseAttack: 214
+        };
+        moveInfo[209].availableToPokemon[136] = {
+            pokemonId: 136,
+            baseAttack: 238
+        };
+        moveInfo[209].availableToPokemon[146] = {
+            pokemonId: 146,
+            baseAttack: 242
+        };
+        moveInfo[210] = {
+            moveId: 210,
+            name: "Wing Attack",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Flying,
+            damage: 9,
+            damageWithStab: 9,
+            damagePerSecond: 12.00,
+            damagePerSecondWithStab: 15.00,
+            damagePerSecondDefensive: 3.27,
+            energyPerSecond: 9.33,
+            cooldown: 0.75
+        };
+        moveInfo[210].availableToPokemon[6] = {
+            pokemonId: 6,
+            baseAttack: 212
+        };
+        moveInfo[210].availableToPokemon[17] = {
+            pokemonId: 17,
+            baseAttack: 126
+        };
+        moveInfo[210].availableToPokemon[18] = {
+            pokemonId: 18,
+            baseAttack: 170
+        };
+        moveInfo[210].availableToPokemon[42] = {
+            pokemonId: 42,
+            baseAttack: 164
+        };
+        moveInfo[211] = {
+            moveId: 211,
+            name: "Peck",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Flying,
+            damage: 10,
+            damageWithStab: 10,
+            damagePerSecond: 8.70,
+            damagePerSecondWithStab: 10.87,
+            damagePerSecondDefensive: 3.17,
+            energyPerSecond: 8.70,
+            cooldown: 1.15
+        };
+        moveInfo[211].availableToPokemon[21] = {
+            pokemonId: 21,
+            baseAttack: 102
+        };
+        moveInfo[211].availableToPokemon[22] = {
+            pokemonId: 22,
+            baseAttack: 168
+        };
+        moveInfo[211].availableToPokemon[32] = {
+            pokemonId: 32,
+            baseAttack: 110
+        };
+        moveInfo[211].availableToPokemon[84] = {
+            pokemonId: 84,
+            baseAttack: 126
+        };
+        moveInfo[211].availableToPokemon[118] = {
+            pokemonId: 118,
+            baseAttack: 112
+        };
+        moveInfo[211].availableToPokemon[119] = {
+            pokemonId: 119,
+            baseAttack: 172
+        };
+        moveInfo[212] = {
+            moveId: 212,
+            name: "Lick",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Ghost,
+            damage: 5,
+            damageWithStab: 5,
+            damagePerSecond: 10.00,
+            damagePerSecondWithStab: 12.50,
+            damagePerSecondDefensive: 2.00,
+            energyPerSecond: 12.00,
+            cooldown: 0.50
+        };
+        moveInfo[212].availableToPokemon[92] = {
+            pokemonId: 92,
+            baseAttack: 136
+        };
+        moveInfo[212].availableToPokemon[93] = {
+            pokemonId: 93,
+            baseAttack: 172
+        };
+        moveInfo[212].availableToPokemon[108] = {
+            pokemonId: 108,
+            baseAttack: 126
+        };
+        moveInfo[212].availableToPokemon[143] = {
+            pokemonId: 143,
+            baseAttack: 180
+        };
+        moveInfo[213] = {
+            moveId: 213,
+            name: "Shadow Claw",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Ghost,
+            damage: 11,
+            damageWithStab: 11,
+            damagePerSecond: 11.58,
+            damagePerSecondWithStab: 14.47,
+            damagePerSecondDefensive: 3.73,
+            energyPerSecond: 8.42,
+            cooldown: 0.95
+        };
+        moveInfo[213].availableToPokemon[92] = {
+            pokemonId: 92,
+            baseAttack: 136
+        };
+        moveInfo[213].availableToPokemon[93] = {
+            pokemonId: 93,
+            baseAttack: 172
+        };
+        moveInfo[213].availableToPokemon[94] = {
+            pokemonId: 94,
+            baseAttack: 204
+        };
+        moveInfo[214] = {
+            moveId: 214,
+            name: "Vine Whip",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Grass,
+            damage: 7,
+            damageWithStab: 7,
+            damagePerSecond: 10.77,
+            damagePerSecondWithStab: 13.46,
+            damagePerSecondDefensive: 2.64,
+            energyPerSecond: 10.77,
+            cooldown: 0.65
+        };
+        moveInfo[214].availableToPokemon[1] = {
+            pokemonId: 1,
+            baseAttack: 126
+        };
+        moveInfo[214].availableToPokemon[2] = {
+            pokemonId: 2,
+            baseAttack: 156
+        };
+        moveInfo[214].availableToPokemon[3] = {
+            pokemonId: 3,
+            baseAttack: 198
+        };
+        moveInfo[214].availableToPokemon[69] = {
+            pokemonId: 69,
+            baseAttack: 158
+        };
+        moveInfo[214].availableToPokemon[114] = {
+            pokemonId: 114,
+            baseAttack: 164
+        };
+        moveInfo[215] = {
+            moveId: 215,
+            name: "Razor Leaf",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Grass,
+            damage: 15,
+            damageWithStab: 15,
+            damagePerSecond: 10.34,
+            damagePerSecondWithStab: 12.93,
+            damagePerSecondDefensive: 4.35,
+            energyPerSecond: 8.28,
+            cooldown: 1.45
+        };
+        moveInfo[215].availableToPokemon[2] = {
+            pokemonId: 2,
+            baseAttack: 156
+        };
+        moveInfo[215].availableToPokemon[3] = {
+            pokemonId: 3,
+            baseAttack: 198
+        };
+        moveInfo[215].availableToPokemon[43] = {
+            pokemonId: 43,
+            baseAttack: 134
+        };
+        moveInfo[215].availableToPokemon[44] = {
+            pokemonId: 44,
+            baseAttack: 162
+        };
+        moveInfo[215].availableToPokemon[45] = {
+            pokemonId: 45,
+            baseAttack: 202
+        };
+        moveInfo[215].availableToPokemon[70] = {
+            pokemonId: 70,
+            baseAttack: 190
+        };
+        moveInfo[215].availableToPokemon[71] = {
+            pokemonId: 71,
+            baseAttack: 222
+        };
+        moveInfo[216] = {
+            moveId: 216,
+            name: "Mud Shot",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Ground,
+            damage: 6,
+            damageWithStab: 6,
+            damagePerSecond: 10.91,
+            damagePerSecondWithStab: 13.64,
+            damagePerSecondDefensive: 2.35,
+            energyPerSecond: 12.73,
+            cooldown: 0.55
+        };
+        moveInfo[216].availableToPokemon[27] = {
+            pokemonId: 27,
+            baseAttack: 90
+        };
+        moveInfo[216].availableToPokemon[28] = {
+            pokemonId: 28,
+            baseAttack: 150
+        };
+        moveInfo[216].availableToPokemon[50] = {
+            pokemonId: 50,
+            baseAttack: 108
+        };
+        moveInfo[216].availableToPokemon[51] = {
+            pokemonId: 51,
+            baseAttack: 148
+        };
+        moveInfo[216].availableToPokemon[60] = {
+            pokemonId: 60,
+            baseAttack: 108
+        };
+        moveInfo[216].availableToPokemon[61] = {
+            pokemonId: 61,
+            baseAttack: 132
+        };
+        moveInfo[216].availableToPokemon[62] = {
+            pokemonId: 62,
+            baseAttack: 180
+        };
+        moveInfo[216].availableToPokemon[75] = {
+            pokemonId: 75,
+            baseAttack: 142
+        };
+        moveInfo[216].availableToPokemon[76] = {
+            pokemonId: 76,
+            baseAttack: 176
+        };
+        moveInfo[216].availableToPokemon[98] = {
+            pokemonId: 98,
+            baseAttack: 116
+        };
+        moveInfo[216].availableToPokemon[99] = {
+            pokemonId: 99,
+            baseAttack: 178
+        };
+        moveInfo[216].availableToPokemon[118] = {
+            pokemonId: 118,
+            baseAttack: 112
+        };
+        moveInfo[216].availableToPokemon[138] = {
+            pokemonId: 138,
+            baseAttack: 132
+        };
+        moveInfo[216].availableToPokemon[140] = {
+            pokemonId: 140,
+            baseAttack: 148
+        };
+        moveInfo[216].availableToPokemon[141] = {
+            pokemonId: 141,
+            baseAttack: 190
+        };
+        moveInfo[217] = {
+            moveId: 217,
+            name: "Ice Shard",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Ice,
+            damage: 15,
+            damageWithStab: 15,
+            damagePerSecond: 10.71,
+            damagePerSecondWithStab: 13.39,
+            damagePerSecondDefensive: 4.41,
+            energyPerSecond: 8.57,
+            cooldown: 1.40
+        };
+        moveInfo[217].availableToPokemon[86] = {
+            pokemonId: 86,
+            baseAttack: 104
+        };
+        moveInfo[217].availableToPokemon[87] = {
+            pokemonId: 87,
+            baseAttack: 156
+        };
+        moveInfo[217].availableToPokemon[90] = {
+            pokemonId: 90,
+            baseAttack: 120
+        };
+        moveInfo[217].availableToPokemon[91] = {
+            pokemonId: 91,
+            baseAttack: 196
+        };
+        moveInfo[217].availableToPokemon[131] = {
+            pokemonId: 131,
+            baseAttack: 186
+        };
+        moveInfo[218] = {
+            moveId: 218,
+            name: "Frost Breath",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Ice,
+            damage: 9,
+            damageWithStab: 9,
+            damagePerSecond: 11.11,
+            damagePerSecondWithStab: 13.89,
+            damagePerSecondDefensive: 3.20,
+            energyPerSecond: 8.64,
+            cooldown: 0.81
+        };
+        moveInfo[218].availableToPokemon[87] = {
+            pokemonId: 87,
+            baseAttack: 156
+        };
+        moveInfo[218].availableToPokemon[91] = {
+            pokemonId: 91,
+            baseAttack: 196
+        };
+        moveInfo[218].availableToPokemon[124] = {
+            pokemonId: 124,
+            baseAttack: 172
+        };
+        moveInfo[218].availableToPokemon[131] = {
+            pokemonId: 131,
+            baseAttack: 186
+        };
+        moveInfo[218].availableToPokemon[144] = {
+            pokemonId: 144,
+            baseAttack: 198
+        };
+        moveInfo[219] = {
+            moveId: 219,
+            name: "Quick Attack",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 10,
+            damageWithStab: 10,
+            damagePerSecond: 7.52,
+            damagePerSecondWithStab: 9.40,
+            damagePerSecondDefensive: 3.00,
+            energyPerSecond: 9.02,
+            cooldown: 1.33
+        };
+        moveInfo[219].availableToPokemon[16] = {
+            pokemonId: 16,
+            baseAttack: 94
+        };
+        moveInfo[219].availableToPokemon[19] = {
+            pokemonId: 19,
+            baseAttack: 92
+        };
+        moveInfo[219].availableToPokemon[20] = {
+            pokemonId: 20,
+            baseAttack: 146
+        };
+        moveInfo[219].availableToPokemon[21] = {
+            pokemonId: 21,
+            baseAttack: 102
+        };
+        moveInfo[219].availableToPokemon[25] = {
+            pokemonId: 25,
+            baseAttack: 124
+        };
+        moveInfo[219].availableToPokemon[37] = {
+            pokemonId: 37,
+            baseAttack: 106
+        };
+        moveInfo[219].availableToPokemon[41] = {
+            pokemonId: 41,
+            baseAttack: 88
+        };
+        moveInfo[219].availableToPokemon[84] = {
+            pokemonId: 84,
+            baseAttack: 126
+        };
+        moveInfo[219].availableToPokemon[120] = {
+            pokemonId: 120,
+            baseAttack: 130
+        };
+        moveInfo[219].availableToPokemon[121] = {
+            pokemonId: 121,
+            baseAttack: 194
+        };
+        moveInfo[219].availableToPokemon[133] = {
+            pokemonId: 133,
+            baseAttack: 114
+        };
+        moveInfo[219].availableToPokemon[137] = {
+            pokemonId: 137,
+            baseAttack: 156
+        };
+        moveInfo[220] = {
+            moveId: 220,
+            name: "Scratch",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 6,
+            damageWithStab: 6,
+            damagePerSecond: 12.00,
+            damagePerSecondWithStab: 15.00,
+            damagePerSecondDefensive: 2.40,
+            energyPerSecond: 14.00,
+            cooldown: 0.50
+        };
+        moveInfo[220].availableToPokemon[4] = {
+            pokemonId: 4,
+            baseAttack: 128
+        };
+        moveInfo[220].availableToPokemon[5] = {
+            pokemonId: 5,
+            baseAttack: 160
+        };
+        moveInfo[220].availableToPokemon[27] = {
+            pokemonId: 27,
+            baseAttack: 90
+        };
+        moveInfo[220].availableToPokemon[46] = {
+            pokemonId: 46,
+            baseAttack: 122
+        };
+        moveInfo[220].availableToPokemon[50] = {
+            pokemonId: 50,
+            baseAttack: 108
+        };
+        moveInfo[220].availableToPokemon[52] = {
+            pokemonId: 52,
+            baseAttack: 104
+        };
+        moveInfo[220].availableToPokemon[53] = {
+            pokemonId: 53,
+            baseAttack: 156
+        };
+        moveInfo[220].availableToPokemon[56] = {
+            pokemonId: 56,
+            baseAttack: 122
+        };
+        moveInfo[220].availableToPokemon[140] = {
+            pokemonId: 140,
+            baseAttack: 148
+        };
+        moveInfo[221] = {
+            moveId: 221,
+            name: "Tackle",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 12,
+            damageWithStab: 12,
+            damagePerSecond: 10.91,
+            damagePerSecondWithStab: 13.64,
+            damagePerSecondDefensive: 3.87,
+            energyPerSecond: 9.09,
+            cooldown: 1.10
+        };
+        moveInfo[221].availableToPokemon[1] = {
+            pokemonId: 1,
+            baseAttack: 126
+        };
+        moveInfo[221].availableToPokemon[7] = {
+            pokemonId: 7,
+            baseAttack: 112
+        };
+        moveInfo[221].availableToPokemon[10] = {
+            pokemonId: 10,
+            baseAttack: 62
+        };
+        moveInfo[221].availableToPokemon[11] = {
+            pokemonId: 11,
+            baseAttack: 56
+        };
+        moveInfo[221].availableToPokemon[16] = {
+            pokemonId: 16,
+            baseAttack: 94
+        };
+        moveInfo[221].availableToPokemon[19] = {
+            pokemonId: 19,
+            baseAttack: 92
+        };
+        moveInfo[221].availableToPokemon[74] = {
+            pokemonId: 74,
+            baseAttack: 106
+        };
+        moveInfo[221].availableToPokemon[77] = {
+            pokemonId: 77,
+            baseAttack: 168
+        };
+        moveInfo[221].availableToPokemon[90] = {
+            pokemonId: 90,
+            baseAttack: 120
+        };
+        moveInfo[221].availableToPokemon[95] = {
+            pokemonId: 95,
+            baseAttack: 90
+        };
+        moveInfo[221].availableToPokemon[100] = {
+            pokemonId: 100,
+            baseAttack: 102
+        };
+        moveInfo[221].availableToPokemon[101] = {
+            pokemonId: 101,
+            baseAttack: 150
+        };
+        moveInfo[221].availableToPokemon[109] = {
+            pokemonId: 109,
+            baseAttack: 136
+        };
+        moveInfo[221].availableToPokemon[110] = {
+            pokemonId: 110,
+            baseAttack: 190
+        };
+        moveInfo[221].availableToPokemon[128] = {
+            pokemonId: 128,
+            baseAttack: 148
+        };
+        moveInfo[221].availableToPokemon[133] = {
+            pokemonId: 133,
+            baseAttack: 114
+        };
+        moveInfo[221].availableToPokemon[137] = {
+            pokemonId: 137,
+            baseAttack: 156
+        };
+        moveInfo[222] = {
+            moveId: 222,
+            name: "Pound",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Normal,
+            damage: 7,
+            damageWithStab: 7,
+            damagePerSecond: 12.96,
+            damagePerSecondWithStab: 16.20,
+            damagePerSecondDefensive: 2.76,
+            energyPerSecond: 12.96,
+            cooldown: 0.54
+        };
+        moveInfo[222].availableToPokemon[35] = {
+            pokemonId: 35,
+            baseAttack: 116
+        };
+        moveInfo[222].availableToPokemon[36] = {
+            pokemonId: 36,
+            baseAttack: 178
+        };
+        moveInfo[222].availableToPokemon[39] = {
+            pokemonId: 39,
+            baseAttack: 98
+        };
+        moveInfo[222].availableToPokemon[40] = {
+            pokemonId: 40,
+            baseAttack: 168
+        };
+        moveInfo[222].availableToPokemon[96] = {
+            pokemonId: 96,
+            baseAttack: 104
+        };
+        moveInfo[222].availableToPokemon[113] = {
+            pokemonId: 113,
+            baseAttack: 40
+        };
+        moveInfo[222].availableToPokemon[124] = {
+            pokemonId: 124,
+            baseAttack: 172
+        };
+        moveInfo[222].availableToPokemon[132] = {
+            pokemonId: 132,
+            baseAttack: 110
+        };
+        moveInfo[222].availableToPokemon[151] = {
+            pokemonId: 151,
+            baseAttack: 220
+        };
+        moveInfo[224] = {
+            moveId: 224,
+            name: "Poison Jab",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 12,
+            damageWithStab: 12,
+            damagePerSecond: 11.43,
+            damagePerSecondWithStab: 14.29,
+            damagePerSecondDefensive: 3.93,
+            energyPerSecond: 9.52,
+            cooldown: 1.05
+        };
+        moveInfo[224].availableToPokemon[14] = {
+            pokemonId: 14,
+            baseAttack: 62
+        };
+        moveInfo[224].availableToPokemon[15] = {
+            pokemonId: 15,
+            baseAttack: 144
+        };
+        moveInfo[224].availableToPokemon[31] = {
+            pokemonId: 31,
+            baseAttack: 184
+        };
+        moveInfo[224].availableToPokemon[33] = {
+            pokemonId: 33,
+            baseAttack: 142
+        };
+        moveInfo[224].availableToPokemon[34] = {
+            pokemonId: 34,
+            baseAttack: 204
+        };
+        moveInfo[224].availableToPokemon[73] = {
+            pokemonId: 73,
+            baseAttack: 170
+        };
+        moveInfo[224].availableToPokemon[89] = {
+            pokemonId: 89,
+            baseAttack: 180
+        };
+        moveInfo[224].availableToPokemon[119] = {
+            pokemonId: 119,
+            baseAttack: 172
+        };
+        moveInfo[225] = {
+            moveId: 225,
+            name: "Acid",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 10,
+            damageWithStab: 10,
+            damagePerSecond: 9.52,
+            damagePerSecondWithStab: 11.90,
+            damagePerSecondDefensive: 3.28,
+            energyPerSecond: 9.52,
+            cooldown: 1.05
+        };
+        moveInfo[225].availableToPokemon[23] = {
+            pokemonId: 23,
+            baseAttack: 112
+        };
+        moveInfo[225].availableToPokemon[24] = {
+            pokemonId: 24,
+            baseAttack: 166
+        };
+        moveInfo[225].availableToPokemon[43] = {
+            pokemonId: 43,
+            baseAttack: 134
+        };
+        moveInfo[225].availableToPokemon[44] = {
+            pokemonId: 44,
+            baseAttack: 162
+        };
+        moveInfo[225].availableToPokemon[45] = {
+            pokemonId: 45,
+            baseAttack: 202
+        };
+        moveInfo[225].availableToPokemon[69] = {
+            pokemonId: 69,
+            baseAttack: 158
+        };
+        moveInfo[225].availableToPokemon[70] = {
+            pokemonId: 70,
+            baseAttack: 190
+        };
+        moveInfo[225].availableToPokemon[71] = {
+            pokemonId: 71,
+            baseAttack: 222
+        };
+        moveInfo[225].availableToPokemon[73] = {
+            pokemonId: 73,
+            baseAttack: 170
+        };
+        moveInfo[225].availableToPokemon[88] = {
+            pokemonId: 88,
+            baseAttack: 124
+        };
+        moveInfo[225].availableToPokemon[89] = {
+            pokemonId: 89,
+            baseAttack: 180
+        };
+        moveInfo[225].availableToPokemon[109] = {
+            pokemonId: 109,
+            baseAttack: 136
+        };
+        moveInfo[225].availableToPokemon[110] = {
+            pokemonId: 110,
+            baseAttack: 190
+        };
+        moveInfo[226] = {
+            moveId: 226,
+            name: "Psycho Cut",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Psychic,
+            damage: 7,
+            damageWithStab: 7,
+            damagePerSecond: 12.28,
+            damagePerSecondWithStab: 15.35,
+            damagePerSecondDefensive: 2.72,
+            energyPerSecond: 12.28,
+            cooldown: 0.57
+        };
+        moveInfo[226].availableToPokemon[64] = {
+            pokemonId: 64,
+            baseAttack: 150
+        };
+        moveInfo[226].availableToPokemon[65] = {
+            pokemonId: 65,
+            baseAttack: 186
+        };
+        moveInfo[226].availableToPokemon[150] = {
+            pokemonId: 150,
+            baseAttack: 284
+        };
+        moveInfo[227] = {
+            moveId: 227,
+            name: "Rock Throw",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Rock,
+            damage: 12,
+            damageWithStab: 12,
+            damagePerSecond: 8.82,
+            damagePerSecondWithStab: 11.03,
+            damagePerSecondDefensive: 3.57,
+            energyPerSecond: 11.03,
+            cooldown: 1.36
+        };
+        moveInfo[227].availableToPokemon[74] = {
+            pokemonId: 74,
+            baseAttack: 106
+        };
+        moveInfo[227].availableToPokemon[75] = {
+            pokemonId: 75,
+            baseAttack: 142
+        };
+        moveInfo[227].availableToPokemon[76] = {
+            pokemonId: 76,
+            baseAttack: 176
+        };
+        moveInfo[227].availableToPokemon[95] = {
+            pokemonId: 95,
+            baseAttack: 90
+        };
+        moveInfo[227].availableToPokemon[139] = {
+            pokemonId: 139,
+            baseAttack: 180
+        };
+        moveInfo[228] = {
+            moveId: 228,
+            name: "Metal Claw",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Steel,
+            damage: 8,
+            damageWithStab: 8,
+            damagePerSecond: 12.70,
+            damagePerSecondWithStab: 15.87,
+            damagePerSecondDefensive: 3.04,
+            energyPerSecond: 11.11,
+            cooldown: 0.63
+        };
+        moveInfo[228].availableToPokemon[28] = {
+            pokemonId: 28,
+            baseAttack: 150
+        };
+        moveInfo[228].availableToPokemon[99] = {
+            pokemonId: 99,
+            baseAttack: 178
+        };
+        moveInfo[229] = {
+            moveId: 229,
+            name: "Bullet Punch",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Steel,
+            damage: 10,
+            damageWithStab: 10,
+            damagePerSecond: 8.33,
+            damagePerSecondWithStab: 10.42,
+            damagePerSecondDefensive: 3.13,
+            energyPerSecond: 8.33,
+            cooldown: 1.20
+        };
+        moveInfo[229].availableToPokemon[68] = {
+            pokemonId: 68,
+            baseAttack: 198
+        };
+        moveInfo[229].availableToPokemon[107] = {
+            pokemonId: 107,
+            baseAttack: 138
+        };
+        moveInfo[230] = {
+            moveId: 230,
+            name: "Water Gun",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 6,
+            damageWithStab: 6,
+            damagePerSecond: 12.00,
+            damagePerSecondWithStab: 15.00,
+            damagePerSecondDefensive: 2.40,
+            energyPerSecond: 14.00,
+            cooldown: 0.50
+        };
+        moveInfo[230].availableToPokemon[8] = {
+            pokemonId: 8,
+            baseAttack: 144
+        };
+        moveInfo[230].availableToPokemon[9] = {
+            pokemonId: 9,
+            baseAttack: 186
+        };
+        moveInfo[230].availableToPokemon[54] = {
+            pokemonId: 54,
+            baseAttack: 132
+        };
+        moveInfo[230].availableToPokemon[55] = {
+            pokemonId: 55,
+            baseAttack: 194
+        };
+        moveInfo[230].availableToPokemon[79] = {
+            pokemonId: 79,
+            baseAttack: 110
+        };
+        moveInfo[230].availableToPokemon[80] = {
+            pokemonId: 80,
+            baseAttack: 184
+        };
+        moveInfo[230].availableToPokemon[86] = {
+            pokemonId: 86,
+            baseAttack: 104
+        };
+        moveInfo[230].availableToPokemon[116] = {
+            pokemonId: 116,
+            baseAttack: 122
+        };
+        moveInfo[230].availableToPokemon[117] = {
+            pokemonId: 117,
+            baseAttack: 176
+        };
+        moveInfo[230].availableToPokemon[120] = {
+            pokemonId: 120,
+            baseAttack: 130
+        };
+        moveInfo[230].availableToPokemon[121] = {
+            pokemonId: 121,
+            baseAttack: 194
+        };
+        moveInfo[230].availableToPokemon[134] = {
+            pokemonId: 134,
+            baseAttack: 186
+        };
+        moveInfo[230].availableToPokemon[138] = {
+            pokemonId: 138,
+            baseAttack: 132
+        };
+        moveInfo[230].availableToPokemon[139] = {
+            pokemonId: 139,
+            baseAttack: 180
+        };
+        moveInfo[231] = {
+            moveId: 231,
+            name: "Splash",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 0,
+            damageWithStab: 0,
+            damagePerSecond: 0.00,
+            damagePerSecondWithStab: 0.00,
+            damagePerSecondDefensive: 0.00,
+            energyPerSecond: 0.00,
+            cooldown: 1.23
+        };
+        moveInfo[231].availableToPokemon[129] = {
+            pokemonId: 129,
+            baseAttack: 42
+        };
+        moveInfo[233] = {
+            moveId: 233,
+            name: "Mud Slap",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Ground,
+            damage: 15,
+            damageWithStab: 15,
+            damagePerSecond: 11.11,
+            damagePerSecondWithStab: 13.89,
+            damagePerSecondDefensive: 4.48,
+            energyPerSecond: 8.89,
+            cooldown: 1.35
+        };
+        moveInfo[233].availableToPokemon[88] = {
+            pokemonId: 88,
+            baseAttack: 124
+        };
+        moveInfo[233].availableToPokemon[104] = {
+            pokemonId: 104,
+            baseAttack: 102
+        };
+        moveInfo[233].availableToPokemon[105] = {
+            pokemonId: 105,
+            baseAttack: 140
+        };
+        moveInfo[233].availableToPokemon[111] = {
+            pokemonId: 111,
+            baseAttack: 110
+        };
+        moveInfo[233].availableToPokemon[112] = {
+            pokemonId: 112,
+            baseAttack: 166
+        };
+        moveInfo[233].availableToPokemon[115] = {
+            pokemonId: 115,
+            baseAttack: 142
+        };
+        moveInfo[234] = {
+            moveId: 234,
+            name: "Zen Headbutt",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Psychic,
+            damage: 12,
+            damageWithStab: 12,
+            damagePerSecond: 11.43,
+            damagePerSecondWithStab: 14.29,
+            damagePerSecondDefensive: 3.93,
+            energyPerSecond: 8.57,
+            cooldown: 1.05
+        };
+        moveInfo[234].availableToPokemon[35] = {
+            pokemonId: 35,
+            baseAttack: 116
+        };
+        moveInfo[234].availableToPokemon[36] = {
+            pokemonId: 36,
+            baseAttack: 178
+        };
+        moveInfo[234].availableToPokemon[54] = {
+            pokemonId: 54,
+            baseAttack: 132
+        };
+        moveInfo[234].availableToPokemon[63] = {
+            pokemonId: 63,
+            baseAttack: 110
+        };
+        moveInfo[234].availableToPokemon[97] = {
+            pokemonId: 97,
+            baseAttack: 162
+        };
+        moveInfo[234].availableToPokemon[103] = {
+            pokemonId: 103,
+            baseAttack: 232
+        };
+        moveInfo[234].availableToPokemon[108] = {
+            pokemonId: 108,
+            baseAttack: 126
+        };
+        moveInfo[234].availableToPokemon[113] = {
+            pokemonId: 113,
+            baseAttack: 40
+        };
+        moveInfo[234].availableToPokemon[122] = {
+            pokemonId: 122,
+            baseAttack: 154
+        };
+        moveInfo[234].availableToPokemon[128] = {
+            pokemonId: 128,
+            baseAttack: 148
+        };
+        moveInfo[234].availableToPokemon[143] = {
+            pokemonId: 143,
+            baseAttack: 180
+        };
+        moveInfo[235] = {
+            moveId: 235,
+            name: "Confusion",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Psychic,
+            damage: 15,
+            damageWithStab: 15,
+            damagePerSecond: 9.93,
+            damagePerSecondWithStab: 12.42,
+            damagePerSecondDefensive: 4.27,
+            energyPerSecond: 9.27,
+            cooldown: 1.51
+        };
+        moveInfo[235].availableToPokemon[12] = {
+            pokemonId: 12,
+            baseAttack: 144
+        };
+        moveInfo[235].availableToPokemon[48] = {
+            pokemonId: 48,
+            baseAttack: 108
+        };
+        moveInfo[235].availableToPokemon[49] = {
+            pokemonId: 49,
+            baseAttack: 172
+        };
+        moveInfo[235].availableToPokemon[55] = {
+            pokemonId: 55,
+            baseAttack: 194
+        };
+        moveInfo[235].availableToPokemon[64] = {
+            pokemonId: 64,
+            baseAttack: 150
+        };
+        moveInfo[235].availableToPokemon[65] = {
+            pokemonId: 65,
+            baseAttack: 186
+        };
+        moveInfo[235].availableToPokemon[79] = {
+            pokemonId: 79,
+            baseAttack: 110
+        };
+        moveInfo[235].availableToPokemon[80] = {
+            pokemonId: 80,
+            baseAttack: 184
+        };
+        moveInfo[235].availableToPokemon[96] = {
+            pokemonId: 96,
+            baseAttack: 104
+        };
+        moveInfo[235].availableToPokemon[97] = {
+            pokemonId: 97,
+            baseAttack: 162
+        };
+        moveInfo[235].availableToPokemon[102] = {
+            pokemonId: 102,
+            baseAttack: 110
+        };
+        moveInfo[235].availableToPokemon[103] = {
+            pokemonId: 103,
+            baseAttack: 232
+        };
+        moveInfo[235].availableToPokemon[122] = {
+            pokemonId: 122,
+            baseAttack: 154
+        };
+        moveInfo[235].availableToPokemon[150] = {
+            pokemonId: 150,
+            baseAttack: 284
+        };
+        moveInfo[236] = {
+            moveId: 236,
+            name: "Poison Sting",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Poison,
+            damage: 6,
+            damageWithStab: 6,
+            damagePerSecond: 10.43,
+            damagePerSecondWithStab: 13.04,
+            damagePerSecondDefensive: 2.33,
+            energyPerSecond: 13.91,
+            cooldown: 0.58
+        };
+        moveInfo[236].availableToPokemon[13] = {
+            pokemonId: 13,
+            baseAttack: 68
+        };
+        moveInfo[236].availableToPokemon[23] = {
+            pokemonId: 23,
+            baseAttack: 112
+        };
+        moveInfo[236].availableToPokemon[29] = {
+            pokemonId: 29,
+            baseAttack: 100
+        };
+        moveInfo[236].availableToPokemon[30] = {
+            pokemonId: 30,
+            baseAttack: 132
+        };
+        moveInfo[236].availableToPokemon[32] = {
+            pokemonId: 32,
+            baseAttack: 110
+        };
+        moveInfo[236].availableToPokemon[33] = {
+            pokemonId: 33,
+            baseAttack: 142
+        };
+        moveInfo[236].availableToPokemon[72] = {
+            pokemonId: 72,
+            baseAttack: 106
+        };
+        moveInfo[237] = {
+            moveId: 237,
+            name: "Bubble",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Water,
+            damage: 25,
+            damageWithStab: 25,
+            damagePerSecond: 10.87,
+            damagePerSecondWithStab: 13.59,
+            damagePerSecondDefensive: 5.81,
+            energyPerSecond: 10.87,
+            cooldown: 2.30
+        };
+        moveInfo[237].availableToPokemon[7] = {
+            pokemonId: 7,
+            baseAttack: 112
+        };
+        moveInfo[237].availableToPokemon[60] = {
+            pokemonId: 60,
+            baseAttack: 108
+        };
+        moveInfo[237].availableToPokemon[61] = {
+            pokemonId: 61,
+            baseAttack: 132
+        };
+        moveInfo[237].availableToPokemon[62] = {
+            pokemonId: 62,
+            baseAttack: 180
+        };
+        moveInfo[237].availableToPokemon[72] = {
+            pokemonId: 72,
+            baseAttack: 106
+        };
+        moveInfo[237].availableToPokemon[98] = {
+            pokemonId: 98,
+            baseAttack: 116
+        };
+        moveInfo[237].availableToPokemon[116] = {
+            pokemonId: 116,
+            baseAttack: 122
+        };
+        moveInfo[238] = {
+            moveId: 238,
+            name: "Feint Attack",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Dark,
+            damage: 12,
+            damageWithStab: 12,
+            damagePerSecond: 11.54,
+            damagePerSecondWithStab: 14.42,
+            damagePerSecondDefensive: 3.95,
+            energyPerSecond: 9.62,
+            cooldown: 1.04
+        };
+        moveInfo[238].availableToPokemon[38] = {
+            pokemonId: 38,
+            baseAttack: 176
+        };
+        moveInfo[238].availableToPokemon[39] = {
+            pokemonId: 39,
+            baseAttack: 98
+        };
+        moveInfo[238].availableToPokemon[40] = {
+            pokemonId: 40,
+            baseAttack: 168
+        };
+        moveInfo[238].availableToPokemon[53] = {
+            pokemonId: 53,
+            baseAttack: 156
+        };
+        moveInfo[238].availableToPokemon[85] = {
+            pokemonId: 85,
+            baseAttack: 182
+        };
+        moveInfo[239] = {
+            moveId: 239,
+            name: "Steel Wing",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Steel,
+            damage: 15,
+            damageWithStab: 15,
+            damagePerSecond: 11.28,
+            damagePerSecondWithStab: 14.10,
+            damagePerSecondDefensive: 4.50,
+            energyPerSecond: 9.02,
+            cooldown: 1.33
+        };
+        moveInfo[239].availableToPokemon[17] = {
+            pokemonId: 17,
+            baseAttack: 126
+        };
+        moveInfo[239].availableToPokemon[18] = {
+            pokemonId: 18,
+            baseAttack: 170
+        };
+        moveInfo[239].availableToPokemon[22] = {
+            pokemonId: 22,
+            baseAttack: 168
+        };
+        moveInfo[239].availableToPokemon[85] = {
+            pokemonId: 85,
+            baseAttack: 182
+        };
+        moveInfo[239].availableToPokemon[123] = {
+            pokemonId: 123,
+            baseAttack: 176
+        };
+        moveInfo[239].availableToPokemon[142] = {
+            pokemonId: 142,
+            baseAttack: 182
+        };
+        moveInfo[239].availableToPokemon[149] = {
+            pokemonId: 149,
+            baseAttack: 250
+        };
+        moveInfo[240] = {
+            moveId: 240,
+            name: "Fire Fang",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Fire,
+            damage: 10,
+            damageWithStab: 10,
+            damagePerSecond: 11.90,
+            damagePerSecondWithStab: 14.88,
+            damagePerSecondDefensive: 3.52,
+            energyPerSecond: 9.52,
+            cooldown: 0.84
+        };
+        moveInfo[240].availableToPokemon[59] = {
+            pokemonId: 59,
+            baseAttack: 230
+        };
+        moveInfo[241] = {
+            moveId: 241,
+            name: "Rock Smash",
+            type: MoveType.QuickMove,
+            availableToPokemon: [],
+            element: PokeElement.Fighting,
+            damage: 15,
+            damageWithStab: 15,
+            damagePerSecond: 10.64,
+            damagePerSecondWithStab: 13.30,
+            damagePerSecondDefensive: 4.40,
+            energyPerSecond: 8.51,
+            cooldown: 1.41
+        };
+        moveInfo[241].availableToPokemon[104] = {
+            pokemonId: 104,
+            baseAttack: 102
+        };
+        moveInfo[241].availableToPokemon[105] = {
+            pokemonId: 105,
+            baseAttack: 140
+        };
+        moveInfo[241].availableToPokemon[106] = {
+            pokemonId: 106,
+            baseAttack: 148
+        };
+        moveInfo[241].availableToPokemon[107] = {
+            pokemonId: 107,
+            baseAttack: 138
+        };
+        moveInfo[241].availableToPokemon[111] = {
+            pokemonId: 111,
+            baseAttack: 110
+        };
+        moveInfo[241].availableToPokemon[112] = {
+            pokemonId: 112,
+            baseAttack: 166
+        };
+        moveInfo[241].availableToPokemon[127] = {
+            pokemonId: 127,
+            baseAttack: 184
+        };
+        StaticInfo.moveInfo = moveInfo;
         var pokemonInfo = [];
+        pokemonInfo[0] =
+            {
+                types: [],
+                evolvesInto: []
+            };
         pokemonInfo[1] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [2]
         };
         pokemonInfo[2] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [3]
         };
         pokemonInfo[3] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[4] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: [5]
         };
         pokemonInfo[5] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: [6]
         };
         pokemonInfo[6] = {
-            types: [PokemonType.Fire, PokemonType.Flying],
+            types: [PokeElement.Fire, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[7] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [8]
         };
         pokemonInfo[8] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [9]
         };
         pokemonInfo[9] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[10] = {
-            types: [PokemonType.Bug],
+            types: [PokeElement.Bug],
             evolvesInto: [11]
         };
         pokemonInfo[11] = {
-            types: [PokemonType.Bug],
+            types: [PokeElement.Bug],
             evolvesInto: [12]
         };
         pokemonInfo[12] = {
-            types: [PokemonType.Bug, PokemonType.Flying],
+            types: [PokeElement.Bug, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[13] = {
-            types: [PokemonType.Bug, PokemonType.Poison],
+            types: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: [14]
         };
         pokemonInfo[14] = {
-            types: [PokemonType.Bug, PokemonType.Poison],
+            types: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: [15]
         };
         pokemonInfo[15] = {
-            types: [PokemonType.Bug, PokemonType.Poison],
+            types: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[16] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: [17]
         };
         pokemonInfo[17] = {
-            types: [PokemonType.Normal, PokemonType.Flying],
+            types: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: [18]
         };
         pokemonInfo[18] = {
-            types: [PokemonType.Normal, PokemonType.Flying],
+            types: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[19] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: [20]
         };
         pokemonInfo[20] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[21] = {
-            types: [PokemonType.Normal, PokemonType.Flying],
+            types: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: [22]
         };
         pokemonInfo[22] = {
-            types: [PokemonType.Normal, PokemonType.Flying],
+            types: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[23] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: [24]
         };
         pokemonInfo[24] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[25] = {
-            types: [PokemonType.Electric],
+            types: [PokeElement.Electric],
             evolvesInto: [26]
         };
         pokemonInfo[26] = {
-            types: [PokemonType.Electric],
+            types: [PokeElement.Electric],
             evolvesInto: []
         };
         pokemonInfo[27] = {
-            types: [PokemonType.Ground],
+            types: [PokeElement.Ground],
             evolvesInto: [28]
         };
         pokemonInfo[28] = {
-            types: [PokemonType.Ground],
+            types: [PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[29] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: [30]
         };
         pokemonInfo[30] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: [31]
         };
         pokemonInfo[31] = {
-            types: [PokemonType.Poison, PokemonType.Ground],
+            types: [PokeElement.Poison, PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[32] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: [33]
         };
         pokemonInfo[33] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: [34]
         };
         pokemonInfo[34] = {
-            types: [PokemonType.Poison, PokemonType.Ground],
+            types: [PokeElement.Poison, PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[35] = {
-            types: [PokemonType.Fairy],
+            types: [PokeElement.Fairy],
             evolvesInto: [36]
         };
         pokemonInfo[36] = {
-            types: [PokemonType.Fairy],
+            types: [PokeElement.Fairy],
             evolvesInto: []
         };
         pokemonInfo[37] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: [38]
         };
         pokemonInfo[38] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[39] = {
-            types: [PokemonType.Normal, PokemonType.Fairy],
+            types: [PokeElement.Normal, PokeElement.Fairy],
             evolvesInto: [40]
         };
         pokemonInfo[40] = {
-            types: [PokemonType.Normal, PokemonType.Fairy],
+            types: [PokeElement.Normal, PokeElement.Fairy],
             evolvesInto: []
         };
         pokemonInfo[41] = {
-            types: [PokemonType.Poison, PokemonType.Flying],
+            types: [PokeElement.Poison, PokeElement.Flying],
             evolvesInto: [42]
         };
         pokemonInfo[42] = {
-            types: [PokemonType.Poison, PokemonType.Flying],
+            types: [PokeElement.Poison, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[43] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [44]
         };
         pokemonInfo[44] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [45]
         };
         pokemonInfo[45] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[46] = {
-            types: [PokemonType.Bug, PokemonType.Grass],
+            types: [PokeElement.Bug, PokeElement.Grass],
             evolvesInto: [47]
         };
         pokemonInfo[47] = {
-            types: [PokemonType.Bug, PokemonType.Grass],
+            types: [PokeElement.Bug, PokeElement.Grass],
             evolvesInto: []
         };
         pokemonInfo[48] = {
-            types: [PokemonType.Bug, PokemonType.Poison],
+            types: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: [49]
         };
         pokemonInfo[49] = {
-            types: [PokemonType.Bug, PokemonType.Poison],
+            types: [PokeElement.Bug, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[50] = {
-            types: [PokemonType.Ground],
+            types: [PokeElement.Ground],
             evolvesInto: [51]
         };
         pokemonInfo[51] = {
-            types: [PokemonType.Ground],
+            types: [PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[52] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: [53]
         };
         pokemonInfo[53] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[54] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [55]
         };
         pokemonInfo[55] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[56] = {
-            types: [PokemonType.Fighting],
+            types: [PokeElement.Fighting],
             evolvesInto: [57]
         };
         pokemonInfo[57] = {
-            types: [PokemonType.Fighting],
+            types: [PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[58] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: [59]
         };
         pokemonInfo[59] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[60] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [61]
         };
         pokemonInfo[61] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [62]
         };
         pokemonInfo[62] = {
-            types: [PokemonType.Water, PokemonType.Fighting],
+            types: [PokeElement.Water, PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[63] = {
-            types: [PokemonType.Psychic],
+            types: [PokeElement.Psychic],
             evolvesInto: [64]
         };
         pokemonInfo[64] = {
-            types: [PokemonType.Psychic],
+            types: [PokeElement.Psychic],
             evolvesInto: [65]
         };
         pokemonInfo[65] = {
-            types: [PokemonType.Psychic],
+            types: [PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[66] = {
-            types: [PokemonType.Fighting],
+            types: [PokeElement.Fighting],
             evolvesInto: [67]
         };
         pokemonInfo[67] = {
-            types: [PokemonType.Fighting],
+            types: [PokeElement.Fighting],
             evolvesInto: [68]
         };
         pokemonInfo[68] = {
-            types: [PokemonType.Fighting],
+            types: [PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[69] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [70]
         };
         pokemonInfo[70] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: [71]
         };
         pokemonInfo[71] = {
-            types: [PokemonType.Grass, PokemonType.Poison],
+            types: [PokeElement.Grass, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[72] = {
-            types: [PokemonType.Water, PokemonType.Poison],
+            types: [PokeElement.Water, PokeElement.Poison],
             evolvesInto: [73]
         };
         pokemonInfo[73] = {
-            types: [PokemonType.Water, PokemonType.Poison],
+            types: [PokeElement.Water, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[74] = {
-            types: [PokemonType.Rock, PokemonType.Ground],
+            types: [PokeElement.Rock, PokeElement.Ground],
             evolvesInto: [75]
         };
         pokemonInfo[75] = {
-            types: [PokemonType.Rock, PokemonType.Ground],
+            types: [PokeElement.Rock, PokeElement.Ground],
             evolvesInto: [76]
         };
         pokemonInfo[76] = {
-            types: [PokemonType.Rock, PokemonType.Ground],
+            types: [PokeElement.Rock, PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[77] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: [78]
         };
         pokemonInfo[78] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[79] = {
-            types: [PokemonType.Water, PokemonType.Psychic],
+            types: [PokeElement.Water, PokeElement.Psychic],
             evolvesInto: [80]
         };
         pokemonInfo[80] = {
-            types: [PokemonType.Water, PokemonType.Psychic],
+            types: [PokeElement.Water, PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[81] = {
-            types: [PokemonType.Electric, PokemonType.Steel],
+            types: [PokeElement.Electric, PokeElement.Steel],
             evolvesInto: [82]
         };
         pokemonInfo[82] = {
-            types: [PokemonType.Electric, PokemonType.Steel],
+            types: [PokeElement.Electric, PokeElement.Steel],
             evolvesInto: []
         };
         pokemonInfo[83] = {
-            types: [PokemonType.Normal, PokemonType.Flying],
+            types: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[84] = {
-            types: [PokemonType.Normal, PokemonType.Flying],
+            types: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: [85]
         };
         pokemonInfo[85] = {
-            types: [PokemonType.Normal, PokemonType.Flying],
+            types: [PokeElement.Normal, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[86] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [87]
         };
         pokemonInfo[87] = {
-            types: [PokemonType.Water, PokemonType.Ice],
+            types: [PokeElement.Water, PokeElement.Ice],
             evolvesInto: []
         };
         pokemonInfo[88] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: [89]
         };
         pokemonInfo[89] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[90] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [91]
         };
         pokemonInfo[91] = {
-            types: [PokemonType.Water, PokemonType.Ice],
+            types: [PokeElement.Water, PokeElement.Ice],
             evolvesInto: []
         };
         pokemonInfo[92] = {
-            types: [PokemonType.Ghost, PokemonType.Poison],
+            types: [PokeElement.Ghost, PokeElement.Poison],
             evolvesInto: [93]
         };
         pokemonInfo[93] = {
-            types: [PokemonType.Ghost, PokemonType.Poison],
+            types: [PokeElement.Ghost, PokeElement.Poison],
             evolvesInto: [94]
         };
         pokemonInfo[94] = {
-            types: [PokemonType.Ghost, PokemonType.Poison],
+            types: [PokeElement.Ghost, PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[95] = {
-            types: [PokemonType.Rock, PokemonType.Ground],
+            types: [PokeElement.Rock, PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[96] = {
-            types: [PokemonType.Psychic],
+            types: [PokeElement.Psychic],
             evolvesInto: [97]
         };
         pokemonInfo[97] = {
-            types: [PokemonType.Psychic],
+            types: [PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[98] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [99]
         };
         pokemonInfo[99] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[100] = {
-            types: [PokemonType.Electric],
+            types: [PokeElement.Electric],
             evolvesInto: [101]
         };
         pokemonInfo[101] = {
-            types: [PokemonType.Electric],
+            types: [PokeElement.Electric],
             evolvesInto: []
         };
         pokemonInfo[102] = {
-            types: [PokemonType.Grass, PokemonType.Psychic],
+            types: [PokeElement.Grass, PokeElement.Psychic],
             evolvesInto: [103]
         };
         pokemonInfo[103] = {
-            types: [PokemonType.Grass, PokemonType.Psychic],
+            types: [PokeElement.Grass, PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[104] = {
-            types: [PokemonType.Ground],
+            types: [PokeElement.Ground],
             evolvesInto: [105]
         };
         pokemonInfo[105] = {
-            types: [PokemonType.Ground],
+            types: [PokeElement.Ground],
             evolvesInto: []
         };
         pokemonInfo[106] = {
-            types: [PokemonType.Fighting],
+            types: [PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[107] = {
-            types: [PokemonType.Fighting],
+            types: [PokeElement.Fighting],
             evolvesInto: []
         };
         pokemonInfo[108] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[109] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: [110]
         };
         pokemonInfo[110] = {
-            types: [PokemonType.Poison],
+            types: [PokeElement.Poison],
             evolvesInto: []
         };
         pokemonInfo[111] = {
-            types: [PokemonType.Ground, PokemonType.Rock],
+            types: [PokeElement.Ground, PokeElement.Rock],
             evolvesInto: [112]
         };
         pokemonInfo[112] = {
-            types: [PokemonType.Ground, PokemonType.Rock],
+            types: [PokeElement.Ground, PokeElement.Rock],
             evolvesInto: []
         };
         pokemonInfo[113] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[114] = {
-            types: [PokemonType.Grass],
+            types: [PokeElement.Grass],
             evolvesInto: []
         };
         pokemonInfo[115] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[116] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [117]
         };
         pokemonInfo[117] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[118] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [119]
         };
         pokemonInfo[119] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[120] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [121]
         };
         pokemonInfo[121] = {
-            types: [PokemonType.Water, PokemonType.Psychic],
+            types: [PokeElement.Water, PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[122] = {
-            types: [PokemonType.Psychic, PokemonType.Fairy],
+            types: [PokeElement.Psychic, PokeElement.Fairy],
             evolvesInto: []
         };
         pokemonInfo[123] = {
-            types: [PokemonType.Bug, PokemonType.Flying],
+            types: [PokeElement.Bug, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[124] = {
-            types: [PokemonType.Ice, PokemonType.Psychic],
+            types: [PokeElement.Ice, PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[125] = {
-            types: [PokemonType.Electric],
+            types: [PokeElement.Electric],
             evolvesInto: []
         };
         pokemonInfo[126] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[127] = {
-            types: [PokemonType.Bug],
+            types: [PokeElement.Bug],
             evolvesInto: []
         };
         pokemonInfo[128] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[129] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: [130]
         };
         pokemonInfo[130] = {
-            types: [PokemonType.Water, PokemonType.Flying],
+            types: [PokeElement.Water, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[131] = {
-            types: [PokemonType.Water, PokemonType.Ice],
+            types: [PokeElement.Water, PokeElement.Ice],
             evolvesInto: []
         };
         pokemonInfo[132] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[133] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: [134, 135, 136]
         };
         pokemonInfo[134] = {
-            types: [PokemonType.Water],
+            types: [PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[135] = {
-            types: [PokemonType.Electric],
+            types: [PokeElement.Electric],
             evolvesInto: []
         };
         pokemonInfo[136] = {
-            types: [PokemonType.Fire],
+            types: [PokeElement.Fire],
             evolvesInto: []
         };
         pokemonInfo[137] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[138] = {
-            types: [PokemonType.Rock, PokemonType.Water],
+            types: [PokeElement.Rock, PokeElement.Water],
             evolvesInto: [139]
         };
         pokemonInfo[139] = {
-            types: [PokemonType.Rock, PokemonType.Water],
+            types: [PokeElement.Rock, PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[140] = {
-            types: [PokemonType.Rock, PokemonType.Water],
+            types: [PokeElement.Rock, PokeElement.Water],
             evolvesInto: [141]
         };
         pokemonInfo[141] = {
-            types: [PokemonType.Rock, PokemonType.Water],
+            types: [PokeElement.Rock, PokeElement.Water],
             evolvesInto: []
         };
         pokemonInfo[142] = {
-            types: [PokemonType.Rock, PokemonType.Flying],
+            types: [PokeElement.Rock, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[143] = {
-            types: [PokemonType.Normal],
+            types: [PokeElement.Normal],
             evolvesInto: []
         };
         pokemonInfo[144] = {
-            types: [PokemonType.Ice, PokemonType.Flying],
+            types: [PokeElement.Ice, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[145] = {
-            types: [PokemonType.Electric, PokemonType.Flying],
+            types: [PokeElement.Electric, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[146] = {
-            types: [PokemonType.Fire, PokemonType.Flying],
+            types: [PokeElement.Fire, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[147] = {
-            types: [PokemonType.Dragon],
+            types: [PokeElement.Dragon],
             evolvesInto: [148]
         };
         pokemonInfo[148] = {
-            types: [PokemonType.Dragon],
+            types: [PokeElement.Dragon],
             evolvesInto: [149]
         };
         pokemonInfo[149] = {
-            types: [PokemonType.Dragon, PokemonType.Flying],
+            types: [PokeElement.Dragon, PokeElement.Flying],
             evolvesInto: []
         };
         pokemonInfo[150] = {
-            types: [PokemonType.Psychic],
+            types: [PokeElement.Psychic],
             evolvesInto: []
         };
         pokemonInfo[151] = {
-            types: [PokemonType.Psychic],
+            types: [PokeElement.Psychic],
             evolvesInto: []
         };
+        var _loop_1 = function(i) {
+            var poke = pokemonInfo[i];
+            poke.pokemonId = i;
+            var possibleMoves = _.filter(moveInfo, function (move) {
+                if (!move) {
+                    return false;
+                }
+                var found = _.find(move.availableToPokemon, function (av) {
+                    if (!av) {
+                        return false;
+                    }
+                    var found2 = av.pokemonId === poke.pokemonId;
+                    return found2;
+                });
+                return found;
+            });
+            poke.possibleMoves = _.map(possibleMoves, function (move) { return move.moveId; });
+        };
+        for (var i = 0; i < pokemonInfo.length; i++) {
+            _loop_1(i);
+        }
+        console.log(pokemonInfo);
         StaticInfo.pokemonInfo = pokemonInfo;
-    })();
+    };
     return StaticInfo;
 }());
 var CaptureMarker = (function (_super) {
@@ -1802,6 +6388,10 @@ var PokemonMenuManager = (function () {
             _this.config.pokemonDetailsElement.find(".stamina").text(pokemon.IndividualStamina);
             _this.config.pokemonDetailsElement.find(".total-iv").text(roundedIv + "%");
             _this.config.pokemonDetailsElement.find(".poke-cp").text("" + pokemon.Cp);
+            var move1Name = StaticInfo.moveInfo[pokemon.Move1] ? StaticInfo.moveInfo[pokemon.Move1].name : "Unknown move";
+            var move2Name = StaticInfo.moveInfo[pokemon.Move2] ? StaticInfo.moveInfo[pokemon.Move2].name : "Unknown move";
+            _this.config.pokemonDetailsElement.find(".move1").text(move1Name);
+            _this.config.pokemonDetailsElement.find(".move2").text(move2Name);
             _this.config.pokemonMenuElement.closest("#content-wrap").addClass("blurred");
             _this.config.pokemonDetailsElement.fadeIn();
         };
@@ -2054,24 +6644,24 @@ var EnglishTranslation = (function () {
             "egg-hatched": "hatched"
         };
         this.pokemonTypes = [];
-        this.pokemonTypes[PokemonType.Bug] = "Bug";
-        this.pokemonTypes[PokemonType.Grass] = "Grass";
-        this.pokemonTypes[PokemonType.Dark] = "Dark";
-        this.pokemonTypes[PokemonType.Ground] = "Ground";
-        this.pokemonTypes[PokemonType.Dragon] = "Dragon";
-        this.pokemonTypes[PokemonType.Ice] = "Ice";
-        this.pokemonTypes[PokemonType.Electric] = "Electric";
-        this.pokemonTypes[PokemonType.Normal] = "Normal";
-        this.pokemonTypes[PokemonType.Fairy] = "Fairy";
-        this.pokemonTypes[PokemonType.Poison] = "Poison";
-        this.pokemonTypes[PokemonType.Fighting] = "Fighting";
-        this.pokemonTypes[PokemonType.Psychic] = "Psychic";
-        this.pokemonTypes[PokemonType.Fire] = "Fire";
-        this.pokemonTypes[PokemonType.Rock] = "Rock";
-        this.pokemonTypes[PokemonType.Flying] = "Flying";
-        this.pokemonTypes[PokemonType.Steel] = "Steel";
-        this.pokemonTypes[PokemonType.Ghost] = "Ghost";
-        this.pokemonTypes[PokemonType.Water] = "Water";
+        this.pokemonTypes[PokeElement.Bug] = "Bug";
+        this.pokemonTypes[PokeElement.Grass] = "Grass";
+        this.pokemonTypes[PokeElement.Dark] = "Dark";
+        this.pokemonTypes[PokeElement.Ground] = "Ground";
+        this.pokemonTypes[PokeElement.Dragon] = "Dragon";
+        this.pokemonTypes[PokeElement.Ice] = "Ice";
+        this.pokemonTypes[PokeElement.Electric] = "Electric";
+        this.pokemonTypes[PokeElement.Normal] = "Normal";
+        this.pokemonTypes[PokeElement.Fairy] = "Fairy";
+        this.pokemonTypes[PokeElement.Poison] = "Poison";
+        this.pokemonTypes[PokeElement.Fighting] = "Fighting";
+        this.pokemonTypes[PokeElement.Psychic] = "Psychic";
+        this.pokemonTypes[PokeElement.Fire] = "Fire";
+        this.pokemonTypes[PokeElement.Rock] = "Rock";
+        this.pokemonTypes[PokeElement.Flying] = "Flying";
+        this.pokemonTypes[PokeElement.Steel] = "Steel";
+        this.pokemonTypes[PokeElement.Ghost] = "Ghost";
+        this.pokemonTypes[PokeElement.Water] = "Water";
     }
     return EnglishTranslation;
 }());
@@ -2176,6 +6766,7 @@ var TimeUtils = (function () {
     return TimeUtils;
 }());
 $(function () {
+    StaticInfo.init();
     var client = new BotWSClient("ws://127.0.0.1:14252");
     var translationManager = new TranslationManager();
     var notificationManager = new NotificationManager({

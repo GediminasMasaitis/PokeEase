@@ -59,6 +59,11 @@
         this.config.pokemonDetailsElement.find(".total-iv").text(`${roundedIv}%`);
         this.config.pokemonDetailsElement.find(".poke-cp").text(`${pokemon.Cp}`);
 
+        const move1Name = StaticInfo.moveInfo[pokemon.Move1] ? StaticInfo.moveInfo[pokemon.Move1].name : "Unknown move";
+        const move2Name = StaticInfo.moveInfo[pokemon.Move2] ? StaticInfo.moveInfo[pokemon.Move2].name : "Unknown move";
+        this.config.pokemonDetailsElement.find(".move1").text(move1Name);
+        this.config.pokemonDetailsElement.find(".move2").text(move2Name);
+
         this.config.pokemonMenuElement.closest("#content-wrap").addClass("blurred");
         this.config.pokemonDetailsElement.fadeIn();
     }

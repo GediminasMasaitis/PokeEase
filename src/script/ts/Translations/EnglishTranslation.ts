@@ -30,23 +30,23 @@
 
     constructor() {
         this.pokemonTypes = [];
-        this.pokemonTypes[PokemonType.Bug] = "Bug";
-        this.pokemonTypes[PokemonType.Grass] = "Grass";
-        this.pokemonTypes[PokemonType.Dark] = "Dark";
-        this.pokemonTypes[PokemonType.Ground] = "Ground";
-        this.pokemonTypes[PokemonType.Dragon] = "Dragon";
-        this.pokemonTypes[PokemonType.Ice] = "Ice";
-        this.pokemonTypes[PokemonType.Electric] = "Electric";
-        this.pokemonTypes[PokemonType.Normal] = "Normal";
-        this.pokemonTypes[PokemonType.Fairy] = "Fairy";
-        this.pokemonTypes[PokemonType.Poison] = "Poison";
-        this.pokemonTypes[PokemonType.Fighting] = "Fighting";
-        this.pokemonTypes[PokemonType.Psychic] = "Psychic";
-        this.pokemonTypes[PokemonType.Fire] = "Fire";
-        this.pokemonTypes[PokemonType.Rock] = "Rock";
-        this.pokemonTypes[PokemonType.Flying] = "Flying";
-        this.pokemonTypes[PokemonType.Steel] = "Steel";
-        this.pokemonTypes[PokemonType.Ghost] = "Ghost";
-        this.pokemonTypes[PokemonType.Water] = "Water";
+        this.pokemonTypes[PokeElement.Bug] = "Bug";
+        this.pokemonTypes[PokeElement.Grass] = "Grass";
+        this.pokemonTypes[PokeElement.Dark] = "Dark";
+        this.pokemonTypes[PokeElement.Ground] = "Ground";
+        this.pokemonTypes[PokeElement.Dragon] = "Dragon";
+        this.pokemonTypes[PokeElement.Ice] = "Ice";
+        this.pokemonTypes[PokeElement.Electric] = "Electric";
+        this.pokemonTypes[PokeElement.Normal] = "Normal";
+        this.pokemonTypes[PokeElement.Fairy] = "Fairy";
+        this.pokemonTypes[PokeElement.Poison] = "Poison";
+        this.pokemonTypes[PokeElement.Fighting] = "Fighting";
+        this.pokemonTypes[PokeElement.Psychic] = "Psychic";
+        this.pokemonTypes[PokeElement.Fire] = "Fire";
+        this.pokemonTypes[PokeElement.Rock] = "Rock";
+        this.pokemonTypes[PokeElement.Flying] = "Flying";
+        this.pokemonTypes[PokeElement.Steel] = "Steel";
+        this.pokemonTypes[PokeElement.Ghost] = "Ghost";
+        this.pokemonTypes[PokeElement.Water] = "Water";
     }
 }

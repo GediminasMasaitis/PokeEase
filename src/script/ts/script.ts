@@ -5,6 +5,7 @@
 /// <reference path="../../external/typings/googlemaps/google.maps.d.ts" />
 
 $(() => {
+    StaticInfo.init();
     const client = new BotWSClient("ws://127.0.0.1:14252");
     const translationManager = new TranslationManager();
     const notificationManager = new NotificationManager({
