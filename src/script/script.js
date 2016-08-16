@@ -6367,10 +6367,12 @@ var InventoryMenuManager = (function () {
         };
         this.updateInventoryList = function (inventoryList) {
             var currentItems = _this.config.inventoryMenuElement.find(".product");
+            currentItems.removeClass("brighter");
             currentItems.find(".number").text(0);
             for (var i = 0; i < inventoryList.Items.length; i++) {
                 var item = inventoryList.Items[i];
                 var itemElement = _this.config.inventoryMenuElement.find(".product[data-item-id=\"" + item.ItemId + "\"]");
+                itemElement.addClass("brighter");
                 itemElement.find(".number").text(item.Count);
             }
             _this.config.inventoryLoadingSpinner.fadeOut(150);
