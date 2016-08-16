@@ -1178,3 +1178,47 @@ $event-incubator-status-color: #e9e1b5;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 }
+
+
+
+.content[data-category="eggs"] {
+    .egg {
+        width: 175px;
+        height: 175px;
+        border-radius: 100px;
+        background: white;
+        margin: 2em 3em;
+        display: inline-block;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+
+        p {
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.4);
+            margin: 0.5em 0;
+
+            b {
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+    }
+
+    .egg .incubator {
+        background-image: url("../images/items/ItemEgg.png");
+        background-size: 16%;
+        background-position: 50% 49%;
+        background-repeat: no-repeat;
+    }
+
+    .egg .incubator img {
+        height: 130px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .egg .incubator:before {
+        content: "";
+        height: 100%;
+        vertical-align: middle;
+        display: inline-block;
+    }
+}
