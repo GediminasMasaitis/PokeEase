@@ -12,7 +12,8 @@ body {
   color: white; }
 
 .menu {
-  background: rgba(38, 48, 58, 0.9);
+  /*background: rgba(38, 48, 58, 0.9); */
+  background: rgba(31, 37, 43, 0.9);
   z-index: 5; }
 
 #menu {
@@ -255,7 +256,8 @@ body {
   direction: ltr;
   margin: 0;
   /*  background: rgba(32, 41, 49, 0.8); */
-  background: rgba(12, 13, 14, 0.2);
+  /*background: rgba(12, 13, 14, 0.2); */
+  background: rgba(0, 0, 0, 0.2);
   cursor: pointer;
   position: relative;
   width: 100%;
@@ -482,7 +484,7 @@ body {
 #journal .clear-all {
   height: 60px;
   width: 100%;
-  background: #1c2329;
+  background: #161c21;
   text-transform: uppercase;
   display: table;
   color: #a8bcd1;
@@ -685,7 +687,8 @@ body {
 #profile.hidden .hide {
   transform: rotate(-180deg);
   top: -51px;
-  background: rgba(38, 48, 58, 0.9);
+  /*background: rgba(38, 48, 58, 0.9); */
+  background: rgba(18, 22, 27, 0.9);
   border-radius: 100%;
   box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.3); }
 

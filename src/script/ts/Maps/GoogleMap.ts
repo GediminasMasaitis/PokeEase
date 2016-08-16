@@ -156,7 +156,7 @@ class GoogleMap implements IMap {
                 "saturation": 30
             },
             {
-                "color": "#354251"
+                "color": "#344150"
             },
             {
                 "visibility": "on"
@@ -198,7 +198,10 @@ class GoogleMap implements IMap {
                 "visibility": "simplified"
             },
             {
-                "color": "#3d4957"
+                "color": "#344150"
+            },
+            {
+                "gamma": "0.92"
             }
         ]
     },
@@ -213,7 +216,7 @@ class GoogleMap implements IMap {
                 "saturation": -30
             },
             {
-                "color": "#283546"
+                "color": "#28323f"
             }
         ]
     },
@@ -231,7 +234,7 @@ class GoogleMap implements IMap {
                 "gamma": "0.00"
             },
             {
-                "color": "#2a3037"
+                "color": "#282f38"
             }
         ]
     },
@@ -279,7 +282,7 @@ class GoogleMap implements IMap {
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "color": "#212e40"
+                "color": "#232c37"
             },
             {
                 "visibility": "on"

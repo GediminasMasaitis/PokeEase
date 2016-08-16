@@ -1332,7 +1332,7 @@ var GoogleMap = (function () {
                         "saturation": 30
                     },
                     {
-                        "color": "#354251"
+                        "color": "#344150"
                     },
                     {
                         "visibility": "on"
@@ -1374,7 +1374,10 @@ var GoogleMap = (function () {
                         "visibility": "simplified"
                     },
                     {
-                        "color": "#3d4957"
+                        "color": "#344150"
+                    },
+                    {
+                        "gamma": "0.92"
                     }
                 ]
             },
@@ -1389,7 +1392,7 @@ var GoogleMap = (function () {
                         "saturation": -30
                     },
                     {
-                        "color": "#283546"
+                        "color": "#28323f"
                     }
                 ]
             },
@@ -1407,7 +1410,7 @@ var GoogleMap = (function () {
                         "gamma": "0.00"
                     },
                     {
-                        "color": "#2a3037"
+                        "color": "#282f38"
                     }
                 ]
             },
@@ -1455,7 +1458,7 @@ var GoogleMap = (function () {
                 "elementType": "geometry.fill",
                 "stylers": [
                     {
-                        "color": "#212e40"
+                        "color": "#232c37"
                     },
                     {
                         "visibility": "on"
