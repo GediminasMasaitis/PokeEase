@@ -175,4 +175,17 @@ $(window).ready(function() {
         $('.content[data-category="pokedex"]').append('<div class="pokemon"><h1 class="name">'+i+'. '+pokemonNames[i]+'</h1><div class="image-container"><img src="images/pokemon/' +i+ '.png"/></div><h3 class="caught">'+i+'</h3><h3 class="seen">'+i+'</h3></div>');
     }
 
+    $('.content[data-category="eggs"] .egg').each(function() {$(this).append('<div class="circle"></div>');});
+    $('.content[data-category="eggs"] .circle').circleProgress({
+        value: 0.75,
+        size: 180,
+        thickness: 5,
+        fill: {
+            gradient: ["red", "orange"]
+        },
+        emptyFill: {
+            color: "rgba(0, 0, 0, 0.1)"
+        }
+    });
+
 });
