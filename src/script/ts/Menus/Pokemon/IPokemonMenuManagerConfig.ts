@@ -3,4 +3,5 @@
     requestSender: IRequestSender;
     pokemonMenuElement: JQuery;
     pokemonDetailsElement: JQuery;
+    pokemonLoadingSpinner: JQuery;
 }

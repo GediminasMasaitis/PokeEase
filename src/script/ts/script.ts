@@ -22,7 +22,8 @@ $(() => {
         translationManager: translationManager,
         requestSender: client,
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
-        pokemonDetailsElement: $("#pokemon-info")
+        pokemonDetailsElement: $("#pokemon-info"),
+        pokemonLoadingSpinner: $(".spinner-overlay")
     });
 
     const profileInfoManager = new ProfileInfoManager({

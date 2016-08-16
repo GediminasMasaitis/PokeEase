@@ -11,7 +11,7 @@
     }
 
     public pokemonListRequested = (request: IRequest): void => {
-        this.config.pokemonMenuElement.find(".spinner-overlay").show();
+        this.config.pokemonLoadingSpinner.show();
     }
 
     public updatePokemonList = (pokemonList: IPokemonListEvent): void => {
@@ -35,7 +35,7 @@
             pokemonElement.click(this.pokemonClick);
             this.config.pokemonMenuElement.append(pokemonElement);
         }
-        this.config.pokemonMenuElement.find(".spinner-overlay").hide();
+        this.config.pokemonLoadingSpinner.hide();
     }
 
     private pokemonClick = (ev: JQueryEventObject) => {

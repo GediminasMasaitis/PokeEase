@@ -1463,7 +1463,7 @@ var PokemonMenuManager = (function () {
     function PokemonMenuManager(config) {
         var _this = this;
         this.pokemonListRequested = function (request) {
-            _this.config.pokemonMenuElement.find(".spinner-overlay").show();
+            _this.config.pokemonLoadingSpinner.show();
         };
         this.updatePokemonList = function (pokemonList) {
             _this.config.pokemonMenuElement.find(".pokemon").remove();
@@ -1478,7 +1478,7 @@ var PokemonMenuManager = (function () {
                 pokemonElement.click(_this.pokemonClick);
                 _this.config.pokemonMenuElement.append(pokemonElement);
             }
-            _this.config.pokemonMenuElement.find(".spinner-overlay").hide();
+            _this.config.pokemonLoadingSpinner.hide();
         };
         this.pokemonClick = function (ev) {
             var pokemonBox = $(ev.target).closest(".pokemon");
@@ -1890,7 +1890,8 @@ $(function () {
         translationManager: translationManager,
         requestSender: client,
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
-        pokemonDetailsElement: $("#pokemon-info")
+        pokemonDetailsElement: $("#pokemon-info"),
+        pokemonLoadingSpinner: $(".spinner-overlay")
     });
     var profileInfoManager = new ProfileInfoManager({
         hideUsername: false,
