@@ -231,7 +231,8 @@ body {
 #journal .title {
   height: 80px;
   width: 100%;
-  background: #34424f;
+  /* background: #34424f; */
+  background: rgba(90, 125, 146, 0.22);
   text-transform: uppercase;
   display: table;
   position: relative; }
@@ -253,7 +254,8 @@ body {
 #journal .items .event {
   direction: ltr;
   margin: 0;
-  background: rgba(32, 41, 49, 0.8);
+  /*  background: rgba(32, 41, 49, 0.8); */
+  background: rgba(12, 13, 14, 0.2);
   cursor: pointer;
   position: relative;
   width: 100%;
