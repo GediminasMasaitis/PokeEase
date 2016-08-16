@@ -35,7 +35,7 @@
             pokemonElement.click(this.pokemonClick);
             this.config.pokemonMenuElement.append(pokemonElement);
         }
-        this.config.pokemonLoadingSpinner.hide();
+        this.config.pokemonLoadingSpinner.fadeOut(150);
     }
 
     private pokemonClick = (ev: JQueryEventObject) => {

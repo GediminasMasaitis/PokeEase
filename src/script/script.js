@@ -1478,7 +1478,7 @@ var PokemonMenuManager = (function () {
                 pokemonElement.click(_this.pokemonClick);
                 _this.config.pokemonMenuElement.append(pokemonElement);
             }
-            _this.config.pokemonLoadingSpinner.hide();
+            _this.config.pokemonLoadingSpinner.fadeOut(150);
         };
         this.pokemonClick = function (ev) {
             var pokemonBox = $(ev.target).closest(".pokemon");
