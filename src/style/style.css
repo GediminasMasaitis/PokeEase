@@ -323,7 +323,7 @@ body {
   left: 0;
   right: 0;
   height: 160px;
-  background: linear-gradient(to bottom, #232d35 0%, rgba(35, 45, 53, 0) 100%);
+  background: linear-gradient(to bottom, #11171b 0%, rgba(35, 45, 53, 0) 100%);
   display: block;
   transition: 0.2s;
   opacity: 0.7; }
@@ -337,7 +337,7 @@ body {
   left: 0;
   right: 0;
   height: 160px;
-  background: linear-gradient(to top, #232d35 0%, rgba(35, 45, 53, 0) 100%);
+  background: linear-gradient(to top, #11171b 0%, rgba(35, 45, 53, 0) 100%);
   display: block;
   transition: 0.2s;
   opacity: 0.7; }
@@ -818,6 +818,59 @@ body {
       #pokemon-content #pokemon-iv div span {
         color: black;
         display: block; }
+  #pokemon-content #pokemon-type {
+    text-transform: uppercase;
+    margin: 1em 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: white; }
+    #pokemon-content #pokemon-type span {
+      border-radius: 20px;
+      margin: 3px;
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 3px 8px; }
+    #pokemon-content #pokemon-type .bug {
+      background-color: #a8b72a; }
+    #pokemon-content #pokemon-type .grass {
+      background-color: #91e283;
+      color: black; }
+    #pokemon-content #pokemon-type .dark {
+      background-color: #485b5f; }
+    #pokemon-content #pokemon-type .ground {
+      background-color: #c89c43; }
+    #pokemon-content #pokemon-type .dragon {
+      background-color: #d35400; }
+    #pokemon-content #pokemon-type .ice {
+      background-color: #bce3ea;
+      color: black; }
+    #pokemon-content #pokemon-type .electric {
+      background-color: #edce36;
+      color: black; }
+    #pokemon-content #pokemon-type .normal {
+      background-color: #aba693; }
+    #pokemon-content #pokemon-type .fairy {
+      background-color: #fdbafd;
+      color: black; }
+    #pokemon-content #pokemon-type .poison {
+      background-color: #a645a6; }
+    #pokemon-content #pokemon-type .fighting {
+      background-color: #b4352f; }
+    #pokemon-content #pokemon-type .psychic {
+      background-color: #f75ba2; }
+    #pokemon-content #pokemon-type .fire {
+      background-color: #f65038; }
+    #pokemon-content #pokemon-type .rock {
+      background-color: #886626; }
+    #pokemon-content #pokemon-type .flying {
+      background-color: #72cff0;
+      color: black; }
+    #pokemon-content #pokemon-type .steel {
+      background-color: #7f8c8d; }
+    #pokemon-content #pokemon-type .ghost {
+      background-color: #cbc7dc;
+      color: black; }
+    #pokemon-content #pokemon-type .water {
+      background-color: #349cf5; }
   #pokemon-content h1 {
     font-size: 24px;
     margin: 0;

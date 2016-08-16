@@ -369,7 +369,7 @@ body {
     left: 0;
     right: 0;
     height: 160px;
-    background: linear-gradient(to bottom, rgba(35,45,53,1) 0%,rgba(35,45,53,0) 100%);
+    background: linear-gradient(to bottom, rgba(17,23,27,1) 0%,rgba(35,45,53,0) 100%);
     display: block;
     transition: 0.2s;
     opacity: 0.7;
@@ -384,7 +384,7 @@ body {
     left: 0;
     right: 0;
     height: 160px;
-    background: linear-gradient(to top, rgba(35,45,53,1) 0%,rgba(35,45,53,0) 100%);
+    background: linear-gradient(to top, rgba(17,23,27,1) 0%,rgba(35,45,53,0) 100%);
     display: block;
     transition: 0.2s;
     opacity: 0.7;
@@ -913,6 +913,41 @@ $event-incubator-status-color: #e9e1b5;
                 display: block;
             }
         }
+    }
+
+    #pokemon-type {
+
+        text-transform: uppercase;
+        margin: 1em 0;
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+
+        span {
+            border-radius: 20px;
+            margin: 3px;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 3px 8px;
+        }
+
+        .bug        {background-color: #a8b72a;}
+        .grass      {background-color: #91e283; color: black;}
+        .dark       {background-color: #485b5f;}
+        .ground     {background-color: #c89c43;}
+        .dragon     {background-color: #d35400;}
+        .ice        {background-color: #bce3ea; color: black;}
+        .electric   {background-color: #edce36; color: black;}
+        .normal     {background-color: #aba693;}
+        .fairy      {background-color: #fdbafd; color: black;}
+        .poison     {background-color: #a645a6;}
+        .fighting   {background-color: #b4352f;}
+        .psychic    {background-color: #f75ba2;}
+        .fire       {background-color: #f65038;}
+        .rock       {background-color: #886626;}
+        .flying     {background-color: #72cff0; color: black;}
+        .steel      {background-color: #7f8c8d;}
+        .ghost      {background-color: #cbc7dc; color: black;}
+        .water      {background-color: #349cf5;}
     }
 
     h1 {
