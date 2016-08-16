@@ -1644,14 +1644,14 @@ var NotificationManager = (function () {
             var scrollTop = _this.config.container.scrollTop();
             var innerHeight = _this.config.container.innerHeight();
             var scrollHeight = _this.config.container[0].scrollHeight;
-            var atBottom = scrollTop + innerHeight === scrollHeight;
+            var atBottom = scrollTop + innerHeight > scrollHeight - 100;
             return atBottom;
         };
         this.scrollToBottom = function () {
             var animation = {
                 scrollTop: _this.config.container.prop("scrollHeight") - _this.config.container.height()
             };
-            _this.config.container.animate(animation, 100);
+            _this.config.container.finish().animate(animation, 100);
         };
         this.toggleExtendedInfo = function (ev) {
             var notificationElement = $(ev.target).closest(".event");

@@ -14,7 +14,7 @@ $(document).ready(function () {
 
     $("#menu .item").click(function() {
         var PopupTitle = $(this).attr('id');
-        $("#popup").fadeIn();
+        $("#popup").stop().fadeIn();
         $("#popup .title span").text($(this).attr('id'));
         $("#popup .title").css('background-color', $(this).css('background-color'));
         $("#popup .content").each(function() {
@@ -25,12 +25,8 @@ $(document).ready(function () {
         });
     });
 
-    $("#popup .overlay").click(function() {
-        $("#popup").fadeOut();
-    });
-
-    $("#popup .close-me").click(function() {
-        $("#popup").fadeOut();
+    $("#popup .overlay, #popup .close-me").click(function() {
+        $("#popup").stop().fadeOut();
     });
 
     //$(".content").on("click", ".pokemon", function() {
@@ -39,12 +35,12 @@ $(document).ready(function () {
     //});
 
     $("#pokemon-info").click(function() {
-        $(this).fadeOut();
+        $(this).stop().fadeOut();
         $("#content-wrap").removeClass('blurred');
     });
 
     $("#pokemon-info .close-button, #pokemon-content .controls div .confirm span").click(function() {
-        $("#pokemon-info").fadeOut();
+        $("#pokemon-info").stop().fadeOut();
         $("#content-wrap").removeClass('blurred');
     });
 
@@ -68,7 +64,7 @@ $(document).ready(function () {
     });
 
     $("#journal .items .event").click(function() {
-        $(this).find('.extended-info').slideToggle(300);
+        $(this).find('.extended-info').stop().slideToggle(300);
     });
 
     resizeItemContainer();
@@ -84,7 +80,7 @@ $(document).ready(function () {
     //});
 
     $("#journal .event .dismiss").click(function() {
-        $(this).closest(".event").slideUp(300, function() {$(this).remove();});
+        $(this).closest(".event").stop().slideUp(300, function() {$(this).remove();});
         /* $(this).parent(".event").animate({opacity: "0", "min-height": "0"}); */
     });
 

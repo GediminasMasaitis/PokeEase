@@ -160,7 +160,7 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
         extendedInfoHtml = extendedInfoHtml || "";
         const eventTypeName = this.config.translationManager.translation.eventTypes[eventType];
         const dateStr = moment().format("MMMM Do YYYY, HH:mm:ss");
-        const html = 
+        const html =
 `<div class="event ${eventType}">
     <div class="item-container">
         <i class="fa fa-times dismiss"></i>
@@ -196,7 +196,7 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
         const scrollTop = this.config.container.scrollTop();
         const innerHeight = this.config.container.innerHeight();
         const scrollHeight = this.config.container[0].scrollHeight;
-        const atBottom = scrollTop + innerHeight === scrollHeight;
+        const atBottom = scrollTop + innerHeight > scrollHeight - 100;
         return atBottom;
     }
 
@@ -204,7 +204,7 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
         const animation = {
             scrollTop: this.config.container.prop("scrollHeight") - this.config.container.height()
         };
-        this.config.container.animate(animation, 100);
+        this.config.container.finish().animate(animation, 100);
     }
 
     private toggleExtendedInfo = (ev: JQueryEventObject): void => {
