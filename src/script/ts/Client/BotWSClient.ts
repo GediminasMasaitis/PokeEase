@@ -150,6 +150,7 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonTransfer(pokemonTransfer));
         }
 
+        //#region Request response events
         else if (_.includes(type, "PokemonListEvent")) {
             const pokemonList: IPokemonListEvent = {
                 Pokemons: [],
@@ -166,6 +167,14 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
         }
 
+        else if (_.includes(type, "InventoryListEvent")) {
+            const inventoryList: IInventoryListEvent = {
+                Items: message.Items.$values,
+                Timestamp: timestamp
+            };
+            _.each(this.config.eventHandlers, eh => eh.onInventoryList(inventoryList));
+        }
+
         else if (_.includes(type, "PlayerStatsEvent")) {
             const originalStats = message.PlayerStats.$values[0];
             const playerStats = originalStats as IPlayerStatsEvent;
@@ -177,6 +186,8 @@
             _.each(this.config.eventHandlers, eh => eh.onPlayerStats(playerStats));
         }
 
+        //#endregion
+
         else {
             _.each(this.config.eventHandlers, eh => {
                 if (eh.onUnknownEvent) {
@@ -186,6 +197,9 @@
         }
         
     }
+
+
+
 
     public sendPokemonListRequest = (): void => {
         const request: IRequest = {

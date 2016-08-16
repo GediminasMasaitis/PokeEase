@@ -78,6 +78,10 @@
         this.config.mainMenuManager.updateProfileData(profile);
         this.config.profileInfoManager.setProfileData(profile);
         this.config.requestSender.sendPlayerStatsRequest();
+        this.config.requestSender.sendGetPokemonSettingsRequest();
+        this.config.requestSender.sendInventoryListRequest();
+        this.config.requestSender.sendPokemonListRequest();
+        this.config.requestSender.sendEggsListRequest();
     }
 
     public onUseBerry(berry: IUseBerryEvent): void {
@@ -157,10 +161,16 @@
         this.config.pokemonMenuManager.updatePokemonList(pokemonList);
     }
 
+    public onInventoryList(inventoryList: IInventoryListEvent): void {
+        //this.config.pokemonMenuManager.updatePokemonList(pokemonList);
+    }
+
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {
         this.exp = playerStats.Experience;
         this.config.profileInfoManager.setPlayerStats(playerStats);
     }
+
+
 
     public onSendPokemonListRequest(request: IRequest): void {
         this.config.pokemonMenuManager.pokemonListRequested(request);

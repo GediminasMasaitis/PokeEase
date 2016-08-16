@@ -316,6 +316,10 @@ var InterfaceHandler = (function () {
         this.config.mainMenuManager.updateProfileData(profile);
         this.config.profileInfoManager.setProfileData(profile);
         this.config.requestSender.sendPlayerStatsRequest();
+        this.config.requestSender.sendGetPokemonSettingsRequest();
+        this.config.requestSender.sendInventoryListRequest();
+        this.config.requestSender.sendPokemonListRequest();
+        this.config.requestSender.sendEggsListRequest();
     };
     InterfaceHandler.prototype.onUseBerry = function (berry) {
         var berryId = berry.BerryType || StaticInfo.berryIds[0];
