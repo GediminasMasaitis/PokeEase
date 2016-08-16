@@ -1013,7 +1013,9 @@ body {
       padding-left: 5%; }
       .content[data-category="items"] .product .product-info img {
         height: 48px;
-        vertical-align: middle; }
+        vertical-align: middle;
+        width: 64px;
+        object-fit: contain; }
       .content[data-category="items"] .product .product-info h1 {
         display: inline-block;
         font-size: 18px;

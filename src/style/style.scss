@@ -1136,6 +1136,8 @@ $event-incubator-status-color: #e9e1b5;
             img {
                 height: 48px;
                 vertical-align: middle;
+                width: 64px;
+                object-fit: contain;
             }
 
             h1 {
