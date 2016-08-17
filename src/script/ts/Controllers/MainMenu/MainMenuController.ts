@@ -16,6 +16,16 @@
     }
 
     public updateProfileData = (profile: IProfileEvent): void => {
-        
+        this.config.mainMenuElement.find("#pokemons .total").text(profile.PlayerData.MaxPokemonStorage);
+        this.config.mainMenuElement.find("#items .total").text(profile.PlayerData.MaxItemStorage);
+    }
+
+    public setPokemonCount = (pokemonCount: number): void => {
+        this.config.mainMenuElement.find("#pokemons .current").text(pokemonCount);
+    }
+
+    public setItemCount = (itemCount: number): void => {
+        this.config.mainMenuElement.find("#items .current").text(itemCount);
+
     }
 }

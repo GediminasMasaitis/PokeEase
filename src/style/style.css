@@ -62,9 +62,8 @@ body {
   color: rgba(0, 0, 0, 0.4);
   padding: 1px 6px 3px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
-
-#menu .item .counter span {
-  color: black; }
+  #menu .item .counter span.current {
+    color: black; }
 
 #menu .item#pokemons {
   background-color: #08c1c6;

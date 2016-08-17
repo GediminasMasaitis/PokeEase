@@ -7,6 +7,8 @@
     private stardust: number;
     private previousCaptureAttempts: IPokemonCaptureEvent[];
     private itemsUsedForCapture: number[];
+    private currentPokemonCount: number;
+    private currentItemCount: number;
 
     constructor(config: IInterfaceHandlerConfig) {
         this.config = config;
@@ -15,6 +17,8 @@
         this.previousCaptureAttempts = [];
         this.itemsUsedForCapture = [];
         this.exp = 0;
+        this.currentPokemonCount = 0;
+        this.currentItemCount = 0;
     }
 
     public onUpdatePosition = (location: IUpdatePositionEvent): void => {
@@ -67,6 +71,9 @@
     }
 
     public onFortUsed(fortUsed: IFortUsedEvent): void {
+        const itemsAddedCount = _.sum(_.map(fortUsed.ItemsList, item => item.Count));
+        this.currentItemCount += itemsAddedCount;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === fortUsed.Id);
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
@@ -86,11 +93,16 @@
     }
 
     public onUseBerry(berry: IUseBerryEvent): void {
+        this.currentItemCount--;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
+
         const berryId = berry.BerryType || StaticInfo.berryIds[0];
         this.itemsUsedForCapture.push(berryId);
     }
 
     public onPokemonCapture = (pokemonCapture: IPokemonCaptureEvent): void => {
+        this.currentItemCount--;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
         if (this.previousCaptureAttempts.length > 0 && this.previousCaptureAttempts[0].Id !== pokemonCapture.Id) {
             this.previousCaptureAttempts = [];
             if (this.itemsUsedForCapture.length > 0) {
@@ -107,6 +119,8 @@
             this.config.notificationController.addNotificationPokemonCapture(this.previousCaptureAttempts, this.itemsUsedForCapture);
             this.exp += pokemonCapture.Exp;
             this.config.profileInfoController.addExp(this.exp, pokemonCapture.Exp);
+            this.currentPokemonCount++;
+            this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
         }
     }
 
@@ -150,16 +164,20 @@
 
     public onItemRecycle(itemRecycle: IItemRecycleEvent): void {
         this.config.notificationController.addNotificationItemRecycle(itemRecycle);
+        this.currentItemCount--;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
     }
 
     public onPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void {
         this.config.notificationController.addNotificationPokemonTransfer(pokemonTransfer);
+        this.currentPokemonCount--;
+        this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     }
-
-
 
     public onPokemonList(pokemonList: IPokemonListEvent): void {
         this.config.pokemonMenuController.updatePokemonList(pokemonList);
+        this.currentPokemonCount = pokemonList.Pokemons.length;
+        this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     }
 
     public onEggList(eggList: IEggListEvent): void {
@@ -167,15 +185,16 @@
     }
 
     public onInventoryList(inventoryList: IInventoryListEvent): void {
+        const totalCount = _.sum(_.map(inventoryList.Items, item => item.Count));
         this.config.inventoryMenuController.updateInventoryList(inventoryList);
+        this.currentItemCount = totalCount;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
     }
 
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {
         this.exp = playerStats.Experience;
         this.config.profileInfoController.setPlayerStats(playerStats);
     }
-
-
 
     public onSendPokemonListRequest(request: IRequest): void {
         this.config.pokemonMenuController.pokemonListRequested(request);

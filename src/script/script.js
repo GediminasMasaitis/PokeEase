@@ -13,6 +13,14 @@ var MainMenuController = (function () {
             _this.config.requestSender.sendInventoryListRequest();
         };
         this.updateProfileData = function (profile) {
+            _this.config.mainMenuElement.find("#pokemons .total").text(profile.PlayerData.MaxPokemonStorage);
+            _this.config.mainMenuElement.find("#items .total").text(profile.PlayerData.MaxItemStorage);
+        };
+        this.setPokemonCount = function (pokemonCount) {
+            _this.config.mainMenuElement.find("#pokemons .current").text(pokemonCount);
+        };
+        this.setItemCount = function (itemCount) {
+            _this.config.mainMenuElement.find("#items .current").text(itemCount);
         };
         this.config = config;
         this.config.mainMenuElement.find("#pokemons").click(this.onPokemonMenuClick);
@@ -1024,6 +1032,8 @@ var InterfaceHandler = (function () {
             }
         };
         this.onPokemonCapture = function (pokemonCapture) {
+            _this.currentItemCount--;
+            _this.config.mainMenuController.setItemCount(_this.currentItemCount);
             if (_this.previousCaptureAttempts.length > 0 && _this.previousCaptureAttempts[0].Id !== pokemonCapture.Id) {
                 _this.previousCaptureAttempts = [];
                 if (_this.itemsUsedForCapture.length > 0) {
@@ -1040,6 +1050,8 @@ var InterfaceHandler = (function () {
                 _this.config.notificationController.addNotificationPokemonCapture(_this.previousCaptureAttempts, _this.itemsUsedForCapture);
                 _this.exp += pokemonCapture.Exp;
                 _this.config.profileInfoController.addExp(_this.exp, pokemonCapture.Exp);
+                _this.currentPokemonCount++;
+                _this.config.mainMenuController.setPokemonCount(_this.currentPokemonCount);
             }
         };
         this.config = config;
@@ -1048,10 +1060,15 @@ var InterfaceHandler = (function () {
         this.previousCaptureAttempts = [];
         this.itemsUsedForCapture = [];
         this.exp = 0;
+        this.currentPokemonCount = 0;
+        this.currentItemCount = 0;
     }
     InterfaceHandler.prototype.onFortTarget = function (fortTarget) {
     };
     InterfaceHandler.prototype.onFortUsed = function (fortUsed) {
+        var itemsAddedCount = _.sum(_.map(fortUsed.ItemsList, function (item) { return item.Count; }));
+        this.currentItemCount += itemsAddedCount;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === fortUsed.Id; });
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
@@ -1069,6 +1086,8 @@ var InterfaceHandler = (function () {
         this.config.requestSender.sendEggsListRequest();
     };
     InterfaceHandler.prototype.onUseBerry = function (berry) {
+        this.currentItemCount--;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
         var berryId = berry.BerryType || StaticInfo.berryIds[0];
         this.itemsUsedForCapture.push(berryId);
     };
@@ -1098,17 +1117,26 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
         this.config.notificationController.addNotificationItemRecycle(itemRecycle);
+        this.currentItemCount--;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
     };
     InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
         this.config.notificationController.addNotificationPokemonTransfer(pokemonTransfer);
+        this.currentPokemonCount--;
+        this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     };
     InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
         this.config.pokemonMenuController.updatePokemonList(pokemonList);
+        this.currentPokemonCount = pokemonList.Pokemons.length;
+        this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     };
     InterfaceHandler.prototype.onEggList = function (eggList) {
     };
     InterfaceHandler.prototype.onInventoryList = function (inventoryList) {
+        var totalCount = _.sum(_.map(inventoryList.Items, function (item) { return item.Count; }));
         this.config.inventoryMenuController.updateInventoryList(inventoryList);
+        this.currentItemCount = totalCount;
+        this.config.mainMenuController.setItemCount(this.currentItemCount);
     };
     InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
         this.exp = playerStats.Experience;
