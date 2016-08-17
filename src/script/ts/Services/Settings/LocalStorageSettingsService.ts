@@ -1,27 +1,38 @@
 ﻿class LocalStorageSettingsService implements ISettingsService {
 
-    private settings: ISettings;
+    public get settings(): ISettings {
+        return this.cloneSettings(this.currentSettings);
+    }
+    private currentSettings: ISettings;
     private settingsKey = "settings";
-    private subscribers: ISettingsSubscriber[];
+    private subscribers: ((settings: ISettings, previousSettings: ISettings) => void)[];
 
     constructor() {
-        
+        this.subscribers = [];
     }
     
     public load = (): void => {
         const settingsJson = localStorage.getItem(this.settingsKey);
-        if (!settingsJson) {
+        let loadedSettings: ISettings;
+
+        try {
+            loadedSettings = JSON.parse(settingsJson);
+        } catch (ex) {
             this.apply(DefaultSettings.settings);
-            this.save();
             return;
-        }
-        const loadedSettings = JSON.parse(settingsJson);
+        } 
+        
         this.apply(loadedSettings);
     }
 
-    private mergeSettings(allSettings: ISettings[]):ISettings {
+    private cloneSettings = (settings: ISettings): ISettings => {
+        return this.mergeSettings([settings]);
+    }
+
+    private mergeSettings = (allSettings: ISettings[]):ISettings => {
         return {
-            testNum: this.coalesceMap(allSettings, s => s.testNum)
+            mapFolllowPlayer: this.coalesceMap(allSettings, s => s.mapFolllowPlayer),
+            clientPort: this.coalesceMap(allSettings, s => s.clientPort)
         }
     }
 
@@ -30,7 +41,7 @@
         return this.coalesce(mapped);
     }
 
-    private coalesce<T>(inputs: T[]): T {
+    private coalesce = <T>(inputs: T[]): T => {
         for (let i = 0; i < inputs.length; i++) {
             if (typeof inputs[i] !== "undefined") {
                 return inputs[i];
@@ -39,23 +50,25 @@
         throw "No value found";
     }
 
-    private apply(settings: ISettings) {
-        const previousSettings = this.settings;
+    public apply = (settings: ISettings) => {
+        const previousSettings = this.currentSettings;
         const defaultSettings = DefaultSettings.settings;
         const mergedSettings = this.mergeSettings([settings, defaultSettings]);
-        this.settings = mergedSettings;
+        this.currentSettings = mergedSettings;
         for (let i = 0; i < this.subscribers.length; i++) {
-            // TODO: clone the merged settings to allow subscribers to change it how they please
-            this.subscribers[i].onSettingsChanged(mergedSettings, previousSettings);
+            const settingsClone = this.cloneSettings(mergedSettings);
+            const previousClone = this.cloneSettings(previousSettings);
+            this.subscribers[i](settingsClone, previousClone);
         }
+        this.save();
     }
 
-    public save = (): void => {
-        const settingsJson = JSON.stringify(this.settings);
+    private save = (): void => {
+        const settingsJson = JSON.stringify(this.currentSettings);
         localStorage.setItem(this.settingsKey, settingsJson);
     }
 
-    public subscribe(subscriber: ISettingsSubscriber): void {
-        this.subscribers.push(subscriber);
+    public subscribe(action: (settings: ISettings, previousSettings: ISettings) => void): void {
+        this.subscribers.push(action);
     }
 }

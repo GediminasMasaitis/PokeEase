@@ -1043,6 +1043,7 @@ var InterfaceHandler = (function () {
             }
         };
         this.config = config;
+        this.config.settingsService.subscribe(this.onSettingsChanged);
         this.currentlySniping = false;
         this.previousCaptureAttempts = [];
         this.itemsUsedForCapture = [];
@@ -1128,6 +1129,8 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onSendTransferPokemonRequest = function (request) {
     };
     InterfaceHandler.prototype.onSendEvolvePokemonRequest = function (request) {
+    };
+    InterfaceHandler.prototype.onSettingsChanged = function (settings, previousSettings) {
     };
     return InterfaceHandler;
 }());
@@ -6455,11 +6458,12 @@ var PlayerTeam;
     PlayerTeam[PlayerTeam["Instinct"] = 3] = "Instinct";
 })(PlayerTeam || (PlayerTeam = {}));
 var BotWSClient = (function () {
-    function BotWSClient(url) {
+    function BotWSClient() {
         var _this = this;
         this.start = function (config) {
             _this.config = config;
-            _this.webSocket = new WebSocket(_this.url);
+            var url = "ws://127.0.0.1:" + config.settingsService.settings.clientPort;
+            _this.webSocket = new WebSocket(url);
             _this.webSocket.onopen = _this.clientOnOpen;
             _this.webSocket.onmessage = _this.clientOnMessage;
             _this.webSocket.onclose = _this.clientOnClose;
@@ -6688,7 +6692,6 @@ var BotWSClient = (function () {
             var currency = _.find(currencies, function (x) { return x.Name === currencyName; });
             return currency.Amount;
         };
-        this.url = url;
         this.currentlySniping = false;
         this.running = false;
     }
@@ -6700,7 +6703,8 @@ var DefaultSettings = (function () {
     Object.defineProperty(DefaultSettings, "settings", {
         get: function () {
             return {
-                testNum: 42
+                mapFolllowPlayer: true,
+                clientPort: 14252
             };
         },
         enumerable: true,
@@ -6714,47 +6718,64 @@ var LocalStorageSettingsService = (function () {
         this.settingsKey = "settings";
         this.load = function () {
             var settingsJson = localStorage.getItem(_this.settingsKey);
-            if (!settingsJson) {
+            var loadedSettings;
+            try {
+                loadedSettings = JSON.parse(settingsJson);
+            }
+            catch (ex) {
                 _this.apply(DefaultSettings.settings);
-                _this.save();
                 return;
             }
-            var loadedSettings = JSON.parse(settingsJson);
             _this.apply(loadedSettings);
         };
+        this.cloneSettings = function (settings) {
+            return _this.mergeSettings([settings]);
+        };
+        this.mergeSettings = function (allSettings) {
+            return {
+                mapFolllowPlayer: _this.coalesceMap(allSettings, function (s) { return s.mapFolllowPlayer; }),
+                clientPort: _this.coalesceMap(allSettings, function (s) { return s.clientPort; })
+            };
+        };
+        this.coalesce = function (inputs) {
+            for (var i = 0; i < inputs.length; i++) {
+                if (typeof inputs[i] !== "undefined") {
+                    return inputs[i];
+                }
+            }
+            throw "No value found";
+        };
+        this.apply = function (settings) {
+            var previousSettings = _this.currentSettings;
+            var defaultSettings = DefaultSettings.settings;
+            var mergedSettings = _this.mergeSettings([settings, defaultSettings]);
+            _this.currentSettings = mergedSettings;
+            for (var i = 0; i < _this.subscribers.length; i++) {
+                var settingsClone = _this.cloneSettings(mergedSettings);
+                var previousClone = _this.cloneSettings(previousSettings);
+                _this.subscribers[i](settingsClone, previousClone);
+            }
+            _this.save();
+        };
         this.save = function () {
-            var settingsJson = JSON.stringify(_this.settings);
+            var settingsJson = JSON.stringify(_this.currentSettings);
             localStorage.setItem(_this.settingsKey, settingsJson);
         };
+        this.subscribers = [];
     }
-    LocalStorageSettingsService.prototype.mergeSettings = function (allSettings) {
-        return {
-            testNum: this.coalesceMap(allSettings, function (s) { return s.testNum; })
-        };
-    };
+    Object.defineProperty(LocalStorageSettingsService.prototype, "settings", {
+        get: function () {
+            return this.cloneSettings(this.currentSettings);
+        },
+        enumerable: true,
+        configurable: true
+    });
     LocalStorageSettingsService.prototype.coalesceMap = function (inputs, map) {
         var mapped = _.map(inputs, map);
         return this.coalesce(mapped);
     };
-    LocalStorageSettingsService.prototype.coalesce = function (inputs) {
-        for (var i = 0; i < inputs.length; i++) {
-            if (typeof inputs[i] !== "undefined") {
-                return inputs[i];
-            }
-        }
-        throw "No value found";
-    };
-    LocalStorageSettingsService.prototype.apply = function (settings) {
-        var previousSettings = this.settings;
-        var defaultSettings = DefaultSettings.settings;
-        var mergedSettings = this.mergeSettings([settings, defaultSettings]);
-        this.settings = mergedSettings;
-        for (var i = 0; i < this.subscribers.length; i++) {
-            this.subscribers[i].onSettingsChanged(mergedSettings, previousSettings);
-        }
-    };
-    LocalStorageSettingsService.prototype.subscribe = function (subscriber) {
-        this.subscribers.push(subscriber);
+    LocalStorageSettingsService.prototype.subscribe = function (action) {
+        this.subscribers.push(action);
     };
     return LocalStorageSettingsService;
 }());
@@ -6909,7 +6930,8 @@ var TimeUtils = (function () {
 $(function () {
     StaticInfo.init();
     var settingsService = new LocalStorageSettingsService();
-    var client = new BotWSClient("ws://127.0.0.1:14252");
+    settingsService.load();
+    var client = new BotWSClient();
     var translationController = new TranslationService();
     var notificationController = new NotificationController({
         container: $("#journal .items"),
@@ -6951,10 +6973,12 @@ $(function () {
         inventoryMenuController: inventoryMenuController,
         profileInfoController: profileInfoController,
         requestSender: client,
-        map: lMap
+        map: lMap,
+        settingsService: settingsService
     });
     client.start({
-        eventHandlers: [interfaceHandler]
+        eventHandlers: [interfaceHandler],
+        settingsService: settingsService
     });
 });
 //# sourceMappingURL=script.js.map

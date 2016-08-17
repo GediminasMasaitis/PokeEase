@@ -7,4 +7,5 @@
     profileInfoController: IProfileInfoController;
     requestSender: IRequestSender,
     map: IMap;
+    settingsService: ISettingsService;
 }

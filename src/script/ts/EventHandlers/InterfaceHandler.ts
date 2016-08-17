@@ -10,6 +10,7 @@
 
     constructor(config: IInterfaceHandlerConfig) {
         this.config = config;
+        this.config.settingsService.subscribe(this.onSettingsChanged);
         this.currentlySniping = false;
         this.previousCaptureAttempts = [];
         this.itemsUsedForCapture = [];
@@ -201,6 +202,10 @@
     }
 
     public onSendEvolvePokemonRequest(request: IRequest): void {
+        
+    }
+
+    public onSettingsChanged(settings: ISettings, previousSettings: ISettings) {
         
     }
 }

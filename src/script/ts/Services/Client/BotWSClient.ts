@@ -1,20 +1,19 @@
 ﻿class BotWSClient implements IBotClient, IRequestSender {
-    private url: string;
     private config: IBotClientConfig;
     private webSocket: WebSocket;
     private currentlySniping: boolean;
     private running: boolean;
     private monitorInterval: number;
 
-    constructor(url: string) {
-        this.url = url;
+    constructor() {
         this.currentlySniping = false;
         this.running = false;
     }
 
     public start = (config: IBotClientConfig): void => {
         this.config = config;
-        this.webSocket = new WebSocket(this.url);
+        const url = `ws://127.0.0.1:${config.settingsService.settings.clientPort}`;
+        this.webSocket = new WebSocket(url);
         this.webSocket.onopen = this.clientOnOpen;
         this.webSocket.onmessage = this.clientOnMessage;
         this.webSocket.onclose = this.clientOnClose;

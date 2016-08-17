@@ -1,5 +1,6 @@
 ﻿interface ISettingsService {
+    settings: ISettings;
     load(): void;
-    save(): void;
-    subscribe(subscriber: ISettingsSubscriber):void;
+    apply(settings:ISettings): void;
+    subscribe(action: (settings: ISettings, previousSettings: ISettings) => void):void;
 }

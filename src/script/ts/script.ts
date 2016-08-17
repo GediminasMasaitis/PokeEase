@@ -7,7 +7,8 @@
 $(() => {
     StaticInfo.init();
     const settingsService = new LocalStorageSettingsService();
-    const client = new BotWSClient("ws://127.0.0.1:14252");
+    settingsService.load();
+    const client = new BotWSClient();
     const translationController = new TranslationService();
     const notificationController = new NotificationController({
         container: $("#journal .items"),
@@ -56,11 +57,13 @@ $(() => {
         inventoryMenuController: inventoryMenuController,
         profileInfoController: profileInfoController,
         requestSender: client,
-        map: lMap
+        map: lMap,
+        settingsService: settingsService
     });
 
     client.start({
-        eventHandlers: [interfaceHandler]
+        eventHandlers: [interfaceHandler],
+        settingsService: settingsService
     });
 });
 

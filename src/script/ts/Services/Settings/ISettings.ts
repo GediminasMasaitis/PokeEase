@@ -1,3 +1,4 @@
 interface ISettings {
-    testNum: number;
+    mapFolllowPlayer: boolean;
+    clientPort: number;
 }
