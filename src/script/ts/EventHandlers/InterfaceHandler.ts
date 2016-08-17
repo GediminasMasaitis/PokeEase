@@ -182,7 +182,7 @@
     }
 
     public onEggList(eggList: IEggListEvent): void {
-        
+        this.config.eggMenuController.updateEggList(eggList);
     }
 
     public onInventoryList(inventoryList: IInventoryListEvent): void {
@@ -202,7 +202,7 @@
     }
 
     public onSendEggsListRequest(request: IRequest): void {
-        
+        this.config.eggMenuController.eggListRequested(request);
     }
 
     public onSendInventoryListRequest(request: IRequest): void {

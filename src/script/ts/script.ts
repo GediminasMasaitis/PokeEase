@@ -36,6 +36,13 @@ $(() => {
         inventoryLoadingSpinner: $(".spinner-overlay")
     });
 
+    const eggMenuController = new EggMenuController({
+        translationController: translationController,
+        requestSender: client,
+        eggMenuElement: $('body .content[data-category="eggs"]'),
+        eggLoadingSpinner: $(".spinner-overlay")
+    });
+
     const profileInfoController = new ProfileInfoController({
         hideUsername: false,
         profileInfoElement: $("#profile")
@@ -55,6 +62,7 @@ $(() => {
         mainMenuController: mainMenuController,
         pokemonMenuController: pokemonMenuController,
         inventoryMenuController: inventoryMenuController,
+        eggMenuController: eggMenuController,
         profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap,

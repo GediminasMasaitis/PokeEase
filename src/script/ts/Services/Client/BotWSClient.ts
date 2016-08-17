@@ -166,7 +166,7 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
         }
 
-        else if (_.includes(type, "EggListEvent")) {
+        else if (_.includes(type, "EggsListEvent")) {
             const eggList = message as IEggListEvent;
             eggList.Incubators = message.Incubators.$values;
             eggList.UnusedEggs = message.UnusedEggs.$values;

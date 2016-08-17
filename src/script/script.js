@@ -12,6 +12,9 @@ var MainMenuController = (function () {
         this.onItemsMenuClick = function (ev) {
             _this.config.requestSender.sendInventoryListRequest();
         };
+        this.onEggsMenuClick = function (ev) {
+            _this.config.requestSender.sendEggsListRequest();
+        };
         this.updateProfileData = function (profile) {
             _this.config.mainMenuElement.find("#pokemons .total").text(profile.PlayerData.MaxPokemonStorage);
             _this.config.mainMenuElement.find("#items .total").text(profile.PlayerData.MaxItemStorage);
@@ -25,6 +28,7 @@ var MainMenuController = (function () {
         this.config = config;
         this.config.mainMenuElement.find("#pokemons").click(this.onPokemonMenuClick);
         this.config.mainMenuElement.find("#items").click(this.onItemsMenuClick);
+        this.config.mainMenuElement.find("#eggs").click(this.onEggsMenuClick);
     }
     return MainMenuController;
 }());
@@ -700,6 +704,38 @@ var EggMenuController = (function () {
             _this.config.eggLoadingSpinner.show();
         };
         this.updateEggList = function (eggList) {
+            _this.config.eggMenuElement.find(".egg").remove();
+            for (var i = 0; i < eggList.Incubators.length; i++) {
+                var incubator = eggList.Incubators[i];
+                if (!incubator.PokemonId || incubator.PokemonId === "0") {
+                    continue;
+                }
+                var eggKm = Math.round(incubator.TargetKmWalked - incubator.StartKmWalked);
+                var eggKmRounded = eggKm.toFixed(1);
+                var kmWalked = eggList.PlayerKmWalked - incubator.StartKmWalked;
+                var kmWalkedRounded = (Math.round(kmWalked * 10) / 10).toFixed(1);
+                var html = "\n<div class=\"egg\">\n    <div class=\"incubator\"><img src=\"images/items/" + incubator.ItemId + ".png\"/></div>\n    <p> <b> " + kmWalkedRounded + " </b> / <i> " + eggKmRounded + " </i> km</p>\n    <div class=\"circle\"></div>\n</div>";
+                var incubatorElement = $(html);
+                _this.config.eggMenuElement.append(incubatorElement);
+                incubatorElement.find(".circle").circleProgress({
+                    value: (kmWalked / eggKm),
+                    size: 180,
+                    thickness: 5,
+                    startAngle: -Math.PI / 2,
+                    fill: {
+                        gradient: ["#b1ffaa", "#64f0d0"]
+                    },
+                    emptyFill: "rgba(0, 0, 0, 0)"
+                });
+            }
+            for (var i = 0; i < eggList.UnusedEggs.length; i++) {
+                var egg = eggList.UnusedEggs[i];
+                var eggKmRounded = egg.EggKmWalkedTarget.toFixed(1);
+                var html = "\n<div class=\"egg\">\n    <div class=\"incubator\"><img src=\"images/items/0.png\"/></div>\n    <p> <i> " + eggKmRounded + " </i> km</p>\n    <div class=\"circle\"></div>\n</div>";
+                var eggElement = $(html);
+                _this.config.eggMenuElement.append(eggElement);
+            }
+            _this.config.eggLoadingSpinner.fadeOut(150);
         };
         this.config = config;
     }
@@ -1137,6 +1173,7 @@ var InterfaceHandler = (function () {
         this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     };
     InterfaceHandler.prototype.onEggList = function (eggList) {
+        this.config.eggMenuController.updateEggList(eggList);
     };
     InterfaceHandler.prototype.onInventoryList = function (inventoryList) {
         var totalCount = _.sum(_.map(inventoryList.Items, function (item) { return item.Count; }));
@@ -1152,6 +1189,7 @@ var InterfaceHandler = (function () {
         this.config.pokemonMenuController.pokemonListRequested(request);
     };
     InterfaceHandler.prototype.onSendEggsListRequest = function (request) {
+        this.config.eggMenuController.eggListRequested(request);
     };
     InterfaceHandler.prototype.onSendInventoryListRequest = function (request) {
         this.config.inventoryMenuController.inventoryListRequested(request);
@@ -6619,7 +6657,7 @@ var BotWSClient = (function () {
                 });
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
             }
-            else if (_.includes(type, "EggListEvent")) {
+            else if (_.includes(type, "EggsListEvent")) {
                 var eggList_1 = message;
                 eggList_1.Incubators = message.Incubators.$values;
                 eggList_1.UnusedEggs = message.UnusedEggs.$values;
@@ -6993,6 +7031,12 @@ $(function () {
         inventoryMenuElement: $('body .content[data-category="items"]'),
         inventoryLoadingSpinner: $(".spinner-overlay")
     });
+    var eggMenuController = new EggMenuController({
+        translationController: translationController,
+        requestSender: client,
+        eggMenuElement: $('body .content[data-category="eggs"]'),
+        eggLoadingSpinner: $(".spinner-overlay")
+    });
     var profileInfoController = new ProfileInfoController({
         hideUsername: false,
         profileInfoElement: $("#profile")
@@ -7009,6 +7053,7 @@ $(function () {
         mainMenuController: mainMenuController,
         pokemonMenuController: pokemonMenuController,
         inventoryMenuController: inventoryMenuController,
+        eggMenuController: eggMenuController,
         profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap,
