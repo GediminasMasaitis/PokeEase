@@ -1293,4 +1293,75 @@ $event-incubator-status-color: #e9e1b5;
             pointer-events: none;
         }
     }
+
+    .tab-pages {
+
+        & > div {
+            text-align: center;
+            padding: 1em;
+            margin: 1em;
+            line-height: 2;
+            display: none;
+        }
+
+        .setting-topic {
+
+            background: white;
+            padding: 1em 2em;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+
+            .setting-name {
+                margin-top: 0;
+                margin-bottom: 1em;
+                font-size: 14px;
+                text-transform: uppercase;
+                color: rgba(0, 0, 0, 0.5);
+                padding: 0 2em;
+                display: inline-block;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            & ~ .setting-topic {
+                margin-top: 2em;
+            }
+        }
+
+        .setting-part {
+            display: table;
+            width: 100%;
+            text-align: left;
+            table-layout: fixed;
+
+            & > * {
+                display: table-cell;
+                vertical-align: top;
+            }
+
+            .setting-question span {
+                display: block;
+                font-size: 12px;
+                color: rgba(0, 0, 0, 0.5);
+            }
+
+            .setting-answer {
+                width: 30%;
+
+                input {
+                    padding: 6px 10px;
+                    border: 1px solid rgba(0, 0, 0, 0.2);
+                    border-radius: 3px;
+                    transition: 0.2s;
+                    outline: 0;
+                }
+
+                input:focus {
+                    border-color: rgba(0, 0, 0, 0.4);
+                }
+            }
+
+            & + .setting-part {
+                margin-top: 1em;
+            }
+        }
+    }
 }
