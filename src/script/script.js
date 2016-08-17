@@ -819,6 +819,7 @@ var PokemonMenuController = (function () {
             _this.config.pokemonDetailsElement.find(".stamina").text(pokemon.IndividualStamina);
             _this.config.pokemonDetailsElement.find(".total-iv").text(roundedIv + "%");
             _this.config.pokemonDetailsElement.find(".poke-cp").text("" + pokemon.Cp);
+            _this.config.pokemonDetailsElement.find(".pkm-candies").text("" + pokemon.FamilyCandies);
             var move1Name = StaticInfo.moveInfo[pokemon.Move1] ? StaticInfo.moveInfo[pokemon.Move1].name : "Unknown move";
             var move2Name = StaticInfo.moveInfo[pokemon.Move2] ? StaticInfo.moveInfo[pokemon.Move2].name : "Unknown move";
             var pokemonInfo = StaticInfo.pokemonInfo[pokemon.PokemonId];

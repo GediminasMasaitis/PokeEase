@@ -906,6 +906,8 @@ body {
     content: "Quick move"; }
   #pokemon-content .move2:before {
     content: "Charge move"; }
+  #pokemon-content .pkm-candies:before {
+    content: "Candies"; }
   #pokemon-content .controls {
     margin-top: 2em;
     padding: 2em;
