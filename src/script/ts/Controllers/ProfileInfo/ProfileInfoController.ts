@@ -19,8 +19,14 @@
     }
 
     public addStardust = (stardust: number, stardustAdded?: number): void => {
-        const stardustElement = this.config.profileInfoElement.find(".profile-stardust");
+        const stardustElement = this.config.profileInfoElement.find(".profile-stardust-current");
+        this.config.profileInfoElement.find(".profile-stardust-loading").remove();
+        this.config.profileInfoElement.find(".profile-stardust-loaded").show();
         this.animateTo(stardustElement, stardust);
+        if (stardustAdded) {
+            const stardustBubbleContainer = this.config.profileInfoElement.find(".profile-stardust");
+            this.bubble(stardustBubbleContainer, "stardust-bubble", stardustAdded);
+        }
     }
 
     public addExp = (totalExp: number, expAdded?: number): void => {
@@ -36,7 +42,8 @@
         this.config.profileInfoElement.find(".profile-exp-loaded").show();
         this.config.profileInfoElement.find(".xp-progress").show();
         if (expAdded) {
-            this.expBubble(expAdded);
+            const expBubbleContainer = this.config.profileInfoElement.find(".profile-exp");
+            this.bubble(expBubbleContainer, "xp-bubble", expAdded);
         }
     }
 
@@ -48,11 +55,10 @@
         });
     }
 
-    private expBubble = (expAdded: number): void => {
-        //$(".xp-bubble").remove();
-        const bubbleHtml = `<div class="xp-bubble">+${expAdded} XP</div>`;
+    private bubble = (container: JQuery, className: string, expAdded: number): void => {
+        const bubbleHtml = `<div class="${className}">+${expAdded}</div>`;
         const bubble = $(bubbleHtml);
-        this.config.profileInfoElement.find(".profile-exp").append(bubble);
+        container.append(bubble);
         setTimeout(() => { bubble.remove(); }, 1000);
     }
 

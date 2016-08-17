@@ -3,8 +3,8 @@
     private currentlySniping: boolean;
     private pokeStops: IPokeStopEvent[];
     private gyms: IGymEvent[];
-    private exp: number;
-    private stardust: number;
+    private currentExp: number;
+    private currentStardust: number;
     private previousCaptureAttempts: IPokemonCaptureEvent[];
     private itemsUsedForCapture: number[];
     private currentPokemonCount: number;
@@ -16,7 +16,8 @@
         this.currentlySniping = false;
         this.previousCaptureAttempts = [];
         this.itemsUsedForCapture = [];
-        this.exp = 0;
+        this.currentExp = 0;
+        this.currentStardust = 0;
         this.currentPokemonCount = 0;
         this.currentItemCount = 0;
     }
@@ -77,9 +78,9 @@
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === fortUsed.Id);
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
-        this.exp += fortUsed.Exp;
+        this.currentExp += fortUsed.Exp;
         this.config.notificationController.addNotificationPokeStopUsed(fortUsed);
-        this.config.profileInfoController.addExp(this.exp, fortUsed.Exp);
+        this.config.profileInfoController.addExp(this.currentExp, fortUsed.Exp);
     }
 
     public onProfile(profile: IProfileEvent): void {
@@ -117,9 +118,12 @@
         if (pokemonCapture.Status === PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
             this.config.notificationController.addNotificationPokemonCapture(this.previousCaptureAttempts, this.itemsUsedForCapture);
-            this.exp += pokemonCapture.Exp;
-            this.config.profileInfoController.addExp(this.exp, pokemonCapture.Exp);
-            this.config.profileInfoController.addStardust(pokemonCapture.Stardust);
+            this.currentExp += pokemonCapture.Exp;
+            this.config.profileInfoController.addExp(this.currentExp, pokemonCapture.Exp);
+            const previousStardust = this.currentStardust;
+            const stardustAdded = pokemonCapture.Stardust - previousStardust;
+            this.currentStardust = pokemonCapture.Stardust;
+            this.config.profileInfoController.addStardust(pokemonCapture.Stardust, 100);
             this.currentPokemonCount++;
             this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
         }
@@ -131,8 +135,8 @@
 
     public onPokemonEvolve(pokemonEvolve: IPokemonEvolveEvent): void {
         this.config.notificationController.addNotificationPokemonEvolved(pokemonEvolve);
-        this.exp += pokemonEvolve.Exp;
-        this.config.profileInfoController.addExp(this.exp, pokemonEvolve.Exp);
+        this.currentExp += pokemonEvolve.Exp;
+        this.config.profileInfoController.addExp(this.currentExp, pokemonEvolve.Exp);
     }
 
     public onSnipeScan(snipeScan: ISnipeScanEvent): void {
@@ -196,7 +200,7 @@
     }
 
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {
-        this.exp = playerStats.Experience;
+        this.currentExp = playerStats.Experience;
         this.config.profileInfoController.setPlayerStats(playerStats);
     }
 

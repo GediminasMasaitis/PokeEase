@@ -996,8 +996,14 @@ var ProfileInfoController = (function () {
             _this.addExp(playerStats.Experience);
         };
         this.addStardust = function (stardust, stardustAdded) {
-            var stardustElement = _this.config.profileInfoElement.find(".profile-stardust");
+            var stardustElement = _this.config.profileInfoElement.find(".profile-stardust-current");
+            _this.config.profileInfoElement.find(".profile-stardust-loading").remove();
+            _this.config.profileInfoElement.find(".profile-stardust-loaded").show();
             _this.animateTo(stardustElement, stardust);
+            if (stardustAdded) {
+                var stardustBubbleContainer = _this.config.profileInfoElement.find(".profile-stardust");
+                _this.bubble(stardustBubbleContainer, "stardust-bubble", stardustAdded);
+            }
         };
         this.addExp = function (totalExp, expAdded) {
             var currentLevel = _this.calculateCurrentLevel(totalExp);
@@ -1012,13 +1018,14 @@ var ProfileInfoController = (function () {
             _this.config.profileInfoElement.find(".profile-exp-loaded").show();
             _this.config.profileInfoElement.find(".xp-progress").show();
             if (expAdded) {
-                _this.expBubble(expAdded);
+                var expBubbleContainer = _this.config.profileInfoElement.find(".profile-exp");
+                _this.bubble(expBubbleContainer, "xp-bubble", expAdded);
             }
         };
-        this.expBubble = function (expAdded) {
-            var bubbleHtml = "<div class=\"xp-bubble\">+" + expAdded + " XP</div>";
+        this.bubble = function (container, className, expAdded) {
+            var bubbleHtml = "<div class=\"" + className + "\">+" + expAdded + "</div>";
             var bubble = $(bubbleHtml);
-            _this.config.profileInfoElement.find(".profile-exp").append(bubble);
+            container.append(bubble);
             setTimeout(function () { bubble.remove(); }, 1000);
         };
         this.calculateCurrentLevel = function (totalExp) {
@@ -1107,9 +1114,12 @@ var InterfaceHandler = (function () {
             if (pokemonCapture.Status === PokemonCatchStatus.Success) {
                 _this.config.map.onPokemonCapture(pokemonCapture);
                 _this.config.notificationController.addNotificationPokemonCapture(_this.previousCaptureAttempts, _this.itemsUsedForCapture);
-                _this.exp += pokemonCapture.Exp;
-                _this.config.profileInfoController.addExp(_this.exp, pokemonCapture.Exp);
-                _this.config.profileInfoController.addStardust(pokemonCapture.Stardust);
+                _this.currentExp += pokemonCapture.Exp;
+                _this.config.profileInfoController.addExp(_this.currentExp, pokemonCapture.Exp);
+                var previousStardust = _this.currentStardust;
+                var stardustAdded = pokemonCapture.Stardust - previousStardust;
+                _this.currentStardust = pokemonCapture.Stardust;
+                _this.config.profileInfoController.addStardust(pokemonCapture.Stardust, 100);
                 _this.currentPokemonCount++;
                 _this.config.mainMenuController.setPokemonCount(_this.currentPokemonCount);
             }
@@ -1119,7 +1129,8 @@ var InterfaceHandler = (function () {
         this.currentlySniping = false;
         this.previousCaptureAttempts = [];
         this.itemsUsedForCapture = [];
-        this.exp = 0;
+        this.currentExp = 0;
+        this.currentStardust = 0;
         this.currentPokemonCount = 0;
         this.currentItemCount = 0;
     }
@@ -1132,9 +1143,9 @@ var InterfaceHandler = (function () {
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === fortUsed.Id; });
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
-        this.exp += fortUsed.Exp;
+        this.currentExp += fortUsed.Exp;
         this.config.notificationController.addNotificationPokeStopUsed(fortUsed);
-        this.config.profileInfoController.addExp(this.exp, fortUsed.Exp);
+        this.config.profileInfoController.addExp(this.currentExp, fortUsed.Exp);
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
         this.config.mainMenuController.updateProfileData(profile);
@@ -1155,8 +1166,8 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onPokemonEvolve = function (pokemonEvolve) {
         this.config.notificationController.addNotificationPokemonEvolved(pokemonEvolve);
-        this.exp += pokemonEvolve.Exp;
-        this.config.profileInfoController.addExp(this.exp, pokemonEvolve.Exp);
+        this.currentExp += pokemonEvolve.Exp;
+        this.config.profileInfoController.addExp(this.currentExp, pokemonEvolve.Exp);
     };
     InterfaceHandler.prototype.onSnipeScan = function (snipeScan) {
     };
@@ -1203,7 +1214,7 @@ var InterfaceHandler = (function () {
         this.config.mainMenuController.setItemCount(this.currentItemCount);
     };
     InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
-        this.exp = playerStats.Experience;
+        this.currentExp = playerStats.Experience;
         this.config.profileInfoController.setPlayerStats(playerStats);
     };
     InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
