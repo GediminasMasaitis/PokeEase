@@ -714,11 +714,14 @@ var EggMenuController = (function () {
                 var eggKmRounded = eggKm.toFixed(1);
                 var kmWalked = eggList.PlayerKmWalked - incubator.StartKmWalked;
                 var kmWalkedRounded = (Math.round(kmWalked * 10) / 10).toFixed(1);
-                var html = "\n<div class=\"egg\">\n    <div class=\"incubator\"><img src=\"images/items/" + incubator.ItemId + ".png\"/></div>\n    <p> <b> " + kmWalkedRounded + " </b> / <i> " + eggKmRounded + " </i> km</p>\n    <div class=\"circle\"></div>\n</div>";
+                var progress = kmWalked / eggKm;
+                var html = "\n<div class=\"egg incubated-egg\">\n    <div class=\"incubator\"><img src=\"images/items/" + incubator.ItemId + ".png\"/></div>\n    <p> <b> " + kmWalkedRounded + " </b> / <i> " + eggKmRounded + " </i> km</p>\n    <div class=\"circle\"></div>\n</div>";
                 var incubatorElement = $(html);
                 _this.config.eggMenuElement.append(incubatorElement);
-                incubatorElement.find(".circle").circleProgress({
-                    value: (kmWalked / eggKm),
+                var previous = _this.previousProgress[incubator.PokemonId];
+                var hasPrevious = typeof previous === "number";
+                var options = {
+                    value: hasPrevious ? previous : progress,
                     size: 180,
                     thickness: 5,
                     startAngle: -Math.PI / 2,
@@ -726,7 +729,17 @@ var EggMenuController = (function () {
                         gradient: ["#b1ffaa", "#64f0d0"]
                     },
                     emptyFill: "rgba(0, 0, 0, 0)"
-                });
+                };
+                if (hasPrevious) {
+                    options.animation = { duration: 0 };
+                }
+                incubatorElement.find(".circle").circleProgress(options);
+                if (hasPrevious) {
+                    delete options.animation;
+                    options.value = progress;
+                    incubatorElement.find(".circle").circleProgress(options);
+                }
+                _this.previousProgress[incubator.PokemonId] = progress;
             }
             for (var i = 0; i < eggList.UnusedEggs.length; i++) {
                 var egg = eggList.UnusedEggs[i];
@@ -738,6 +751,7 @@ var EggMenuController = (function () {
             _this.config.eggLoadingSpinner.fadeOut(150);
         };
         this.config = config;
+        this.previousProgress = [];
     }
     return EggMenuController;
 }());

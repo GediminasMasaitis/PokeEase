@@ -1,8 +1,9 @@
 class EggMenuController implements IEggMenuController {
     private config: IEggMenuControllerConfig;
-
+    private previousProgress: number[];
     constructor(config: IEggMenuControllerConfig) {
         this.config = config;
+        this.previousProgress = [];
     }
 
     public eggListRequested = (request: IRequest): void => {
@@ -20,16 +21,20 @@ class EggMenuController implements IEggMenuController {
             const eggKmRounded = eggKm.toFixed(1);
             const kmWalked = eggList.PlayerKmWalked - incubator.StartKmWalked;
             const kmWalkedRounded = (Math.round(kmWalked * 10) / 10).toFixed(1);
+            const progress = kmWalked / eggKm;
             const html = `
-<div class="egg">
+<div class="egg incubated-egg">
     <div class="incubator"><img src="images/items/${incubator.ItemId}.png"/></div>
     <p> <b> ${kmWalkedRounded} </b> / <i> ${eggKmRounded} </i> km</p>
     <div class="circle"></div>
 </div>`;
             const incubatorElement = $(html);
             this.config.eggMenuElement.append(incubatorElement);
-            incubatorElement.find(".circle").circleProgress({
-                value: (kmWalked / eggKm),
+
+            const previous = this.previousProgress[incubator.PokemonId];
+            const hasPrevious = typeof previous === "number";
+            const options: ICircleProgressOptions = {
+                value: hasPrevious ? previous : progress,
                 size: 180,
                 thickness: 5,
                 startAngle: -Math.PI / 2,
@@ -40,7 +45,17 @@ class EggMenuController implements IEggMenuController {
                     gradient: ["#b1ffaa", "#64f0d0"]
                 },
                 emptyFill: "rgba(0, 0, 0, 0)"
-            });
+            };
+            if (hasPrevious) {
+                options.animation = { duration: 0 };
+            }
+            incubatorElement.find(".circle").circleProgress(options);
+            if (hasPrevious) {
+                delete options.animation;
+                options.value = progress;
+                incubatorElement.find(".circle").circleProgress(options);
+            }
+            this.previousProgress[incubator.PokemonId] = progress;
         }
         for (let i = 0; i < eggList.UnusedEggs.length; i++) {
             const egg = eggList.UnusedEggs[i];

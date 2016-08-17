@@ -3,7 +3,7 @@
 }
 
 interface ICircleProgressOptions {
-    value?: number;
+    value: number;
     size?: number;
     startAngle?: number;
     reverse?: boolean;
