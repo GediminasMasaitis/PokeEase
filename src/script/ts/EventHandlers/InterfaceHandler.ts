@@ -182,7 +182,10 @@
     }
 
     public onEggList(eggList: IEggListEvent): void {
+        const totalIncubated = _.filter(eggList.Incubators, inc => inc.PokemonId != "0").length;
+        const totalUnincubated = eggList.UnusedEggs.length;
         this.config.eggMenuController.updateEggList(eggList);
+        this.config.mainMenuController.setEggCount(totalIncubated + totalUnincubated);
     }
 
     public onInventoryList(inventoryList: IInventoryListEvent): void {

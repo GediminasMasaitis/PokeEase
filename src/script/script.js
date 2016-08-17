@@ -25,6 +25,9 @@ var MainMenuController = (function () {
         this.setItemCount = function (itemCount) {
             _this.config.mainMenuElement.find("#items .current").text(itemCount);
         };
+        this.setEggCount = function (eggCount) {
+            _this.config.mainMenuElement.find("#eggs .current").text(eggCount);
+        };
         this.config = config;
         this.config.mainMenuElement.find("#pokemons").click(this.onPokemonMenuClick);
         this.config.mainMenuElement.find("#items").click(this.onItemsMenuClick);
@@ -1188,7 +1191,10 @@ var InterfaceHandler = (function () {
         this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     };
     InterfaceHandler.prototype.onEggList = function (eggList) {
+        var totalIncubated = _.filter(eggList.Incubators, function (inc) { return inc.PokemonId != "0"; }).length;
+        var totalUnincubated = eggList.UnusedEggs.length;
         this.config.eggMenuController.updateEggList(eggList);
+        this.config.mainMenuController.setEggCount(totalIncubated + totalUnincubated);
     };
     InterfaceHandler.prototype.onInventoryList = function (inventoryList) {
         var totalCount = _.sum(_.map(inventoryList.Items, function (item) { return item.Count; }));
