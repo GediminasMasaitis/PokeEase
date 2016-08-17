@@ -213,3 +213,31 @@ function addCircleProgress() {
         });
     });
 }
+
+
+$(window).ready(function() {
+    var tabNameHolder = "";
+    $(".tab-buttons > div").click(function() {
+
+        // get the tab name
+        tabNameHolder = $(this).attr('class').split(' ')[0];
+
+        // show the right tab
+        $(".tab-pages > div").each(function() {
+            $(this).hide();
+            console.log($(this).attr('id'));
+            console.log(tabNameHolder);
+            if ($(this).attr('id') == tabNameHolder) {
+                $(this).show();
+            }
+        });
+
+        // remove selected class from current tab
+        $(".tab-buttons > div").each(function() {
+            $(this).removeClass('selected');
+        });
+
+        // add selected class to new tab
+        $(this).addClass('selected');
+    });
+});
