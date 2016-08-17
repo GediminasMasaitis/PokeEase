@@ -164,7 +164,7 @@
 
     public onItemRecycle(itemRecycle: IItemRecycleEvent): void {
         this.config.notificationController.addNotificationItemRecycle(itemRecycle);
-        this.currentItemCount--;
+        this.currentItemCount -= itemRecycle.Count;
         this.config.mainMenuController.setItemCount(this.currentItemCount);
     }
 

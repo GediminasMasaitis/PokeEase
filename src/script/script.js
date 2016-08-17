@@ -1117,7 +1117,7 @@ var InterfaceHandler = (function () {
     };
     InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
         this.config.notificationController.addNotificationItemRecycle(itemRecycle);
-        this.currentItemCount--;
+        this.currentItemCount -= itemRecycle.Count;
         this.config.mainMenuController.setItemCount(this.currentItemCount);
     };
     InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
