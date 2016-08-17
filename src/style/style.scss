@@ -1265,3 +1265,32 @@ $event-incubator-status-color: #e9e1b5;
         display: inline-block;
     }
 }
+
+
+.content[data-category="settings"] {
+    padding: 0 !important;
+
+    .tab-buttons {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border-spacing: 10px;
+
+        div {
+            display: table-cell;
+            padding: 1em;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+            transition: 0.2s;
+            background: rgba(255, 255, 255, 0.5);
+            color: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+        div.selected {
+            background: white;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+            color: black;
+            pointer-events: none;
+        }
+    }
+}
