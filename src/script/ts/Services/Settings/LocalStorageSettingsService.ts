@@ -13,6 +13,10 @@
     
     public load = (): void => {
         const settingsJson = localStorage.getItem(this.settingsKey);
+        if (!settingsJson) {
+            this.apply(DefaultSettings.settings);
+            return;
+        } 
         let loadedSettings: ISettings;
 
         try {
@@ -54,7 +58,7 @@
         const previousSettings = this.currentSettings;
         const defaultSettings = DefaultSettings.settings;
         const mergedSettings = this.mergeSettings([settings, defaultSettings]);
-        this.currentSettings = mergedSettings;
+        this.settings = mergedSettings;
         for (let i = 0; i < this.subscribers.length; i++) {
             const settingsClone = this.cloneSettings(mergedSettings);
             const previousClone = this.cloneSettings(previousSettings);

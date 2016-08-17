@@ -6718,6 +6718,10 @@ var LocalStorageSettingsService = (function () {
         this.settingsKey = "settings";
         this.load = function () {
             var settingsJson = localStorage.getItem(_this.settingsKey);
+            if (!settingsJson) {
+                _this.apply(DefaultSettings.settings);
+                return;
+            }
             var loadedSettings;
             try {
                 loadedSettings = JSON.parse(settingsJson);
@@ -6749,7 +6753,7 @@ var LocalStorageSettingsService = (function () {
             var previousSettings = _this.currentSettings;
             var defaultSettings = DefaultSettings.settings;
             var mergedSettings = _this.mergeSettings([settings, defaultSettings]);
-            _this.currentSettings = mergedSettings;
+            _this.settings = mergedSettings;
             for (var i = 0; i < _this.subscribers.length; i++) {
                 var settingsClone = _this.cloneSettings(mergedSettings);
                 var previousClone = _this.cloneSettings(previousSettings);
