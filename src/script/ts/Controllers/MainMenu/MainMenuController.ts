@@ -26,6 +26,5 @@
 
     public setItemCount = (itemCount: number): void => {
         this.config.mainMenuElement.find("#items .current").text(itemCount);
-
     }
 }

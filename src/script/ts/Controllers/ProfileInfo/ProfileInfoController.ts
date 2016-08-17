@@ -18,6 +18,11 @@
         this.addExp(playerStats.Experience);
     }
 
+    public addStardust = (stardust: number, stardustAdded?: number): void => {
+        const stardustElement = this.config.profileInfoElement.find(".profile-stardust");
+        this.animateTo(stardustElement, stardust);
+    }
+
     public addExp = (totalExp: number, expAdded?: number): void => {
         const currentLevel = this.calculateCurrentLevel(totalExp);
         const exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
@@ -36,7 +41,8 @@
     }
 
     private animateTo(element: JQuery, to: number) {
-        element.prop("number", parseInt(element.text()));
+        const current = parseInt(element.text());
+        element.prop("number", current);
         element.animateNumber({
             number: to
         });

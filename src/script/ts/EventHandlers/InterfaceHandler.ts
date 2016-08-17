@@ -119,6 +119,7 @@
             this.config.notificationController.addNotificationPokemonCapture(this.previousCaptureAttempts, this.itemsUsedForCapture);
             this.exp += pokemonCapture.Exp;
             this.config.profileInfoController.addExp(this.exp, pokemonCapture.Exp);
+            this.config.profileInfoController.addStardust(pokemonCapture.Stardust);
             this.currentPokemonCount++;
             this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
         }

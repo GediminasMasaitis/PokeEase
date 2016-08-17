@@ -941,6 +941,10 @@ var ProfileInfoController = (function () {
         this.setPlayerStats = function (playerStats) {
             _this.addExp(playerStats.Experience);
         };
+        this.addStardust = function (stardust, stardustAdded) {
+            var stardustElement = _this.config.profileInfoElement.find(".profile-stardust");
+            _this.animateTo(stardustElement, stardust);
+        };
         this.addExp = function (totalExp, expAdded) {
             var currentLevel = _this.calculateCurrentLevel(totalExp);
             var exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
@@ -977,7 +981,8 @@ var ProfileInfoController = (function () {
         }
     }
     ProfileInfoController.prototype.animateTo = function (element, to) {
-        element.prop("number", parseInt(element.text()));
+        var current = parseInt(element.text());
+        element.prop("number", current);
         element.animateNumber({
             number: to
         });
@@ -1050,6 +1055,7 @@ var InterfaceHandler = (function () {
                 _this.config.notificationController.addNotificationPokemonCapture(_this.previousCaptureAttempts, _this.itemsUsedForCapture);
                 _this.exp += pokemonCapture.Exp;
                 _this.config.profileInfoController.addExp(_this.exp, pokemonCapture.Exp);
+                _this.config.profileInfoController.addStardust(pokemonCapture.Stardust);
                 _this.currentPokemonCount++;
                 _this.config.mainMenuController.setPokemonCount(_this.currentPokemonCount);
             }
