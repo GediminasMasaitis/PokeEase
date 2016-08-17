@@ -58,7 +58,7 @@
         const previousSettings = this.currentSettings;
         const defaultSettings = DefaultSettings.settings;
         const mergedSettings = this.mergeSettings([settings, defaultSettings]);
-        this.settings = mergedSettings;
+        this.currentSettings = mergedSettings;
         for (let i = 0; i < this.subscribers.length; i++) {
             const settingsClone = this.cloneSettings(mergedSettings);
             const previousClone = this.cloneSettings(previousSettings);
