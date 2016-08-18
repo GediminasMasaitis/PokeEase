@@ -6607,7 +6607,19 @@ var BotWSClient = (function () {
             message.Timestamp = timestamp;
             console.log("%c<<< INCOMING", "color: green", message);
             var type = message.$type;
-            if (_.includes(type, ".UpdatePositionEvent,")) {
+            if (_.includes(type, ".ProfileEvent,")) {
+                if (_this.currentBotFamily === BotFamily.Undetermined) {
+                    if (_.startsWith(type, "PoGo.NecroBot.")) {
+                        _this.currentBotFamily = BotFamily.Necro;
+                    }
+                }
+                var profile_1 = message.Profile;
+                profile_1.Timestamp = timestamp;
+                profile_1.PlayerData.PokeCoin = _this.getCurrency(message, "POKECOIN");
+                profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
+            }
+            else if (_.includes(type, ".UpdatePositionEvent,")) {
                 var mapLocation_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdatePosition(mapLocation_1); });
             }
@@ -6624,13 +6636,6 @@ var BotWSClient = (function () {
                 var fortUsed_1 = message;
                 fortUsed_1.ItemsList = _this.parseItemString(fortUsed_1.Items);
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onFortUsed(fortUsed_1); });
-            }
-            else if (_.includes(type, ".ProfileEvent,")) {
-                var profile_1 = message.Profile;
-                profile_1.Timestamp = timestamp;
-                profile_1.PlayerData.PokeCoin = _this.getCurrency(message, "POKECOIN");
-                profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
-                _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
             }
             else if (_.includes(type, ".UseBerry,")) {
                 var useBerry_1 = message;
@@ -6722,7 +6727,7 @@ var BotWSClient = (function () {
                 eggList_1.Timestamp = timestamp;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_1); });
             }
-            else if (_.includes(type, ".InventoryListEvent,")) {
+            else if (_.includes(type, ".InventoryListEvent,") || _.includes(type, ".ItemListResponce,")) {
                 var inventoryList_1 = message;
                 inventoryList_1.Items = message.Items.$values;
                 inventoryList_1.Timestamp = timestamp;
@@ -6757,7 +6762,7 @@ var BotWSClient = (function () {
         this.sendPokemonListRequest = function () {
             var pmbRequest = { Command: "PokemonList" };
             var necroRequest = { Command: "GetPokemonList" };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(pmbRequest); });
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(pmbRequest); });
             if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
                 _this.sendRequest(pmbRequest);
             }
@@ -6766,18 +6771,26 @@ var BotWSClient = (function () {
             }
         };
         this.sendEggsListRequest = function () {
-            var request = {
-                Command: "EggsList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEggsListRequest(request); });
-            _this.sendRequest(request);
+            var pmbRequest = { Command: "EggsList" };
+            var necroRequest = { Command: "GetEggList" };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEggsListRequest(pmbRequest); });
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
+                _this.sendRequest(pmbRequest);
+            }
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
+                _this.sendRequest(necroRequest);
+            }
         };
         this.sendInventoryListRequest = function () {
-            var request = {
-                Command: "InventoryList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendInventoryListRequest(request); });
-            _this.sendRequest(request);
+            var pmbRequest = { Command: "InventoryList" };
+            var necroRequest = { Command: "GetItemsList" };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendInventoryListRequest(pmbRequest); });
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
+                _this.sendRequest(pmbRequest);
+            }
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
+                _this.sendRequest(necroRequest);
+            }
         };
         this.sendPlayerStatsRequest = function () {
             var pmbRequest = { Command: "PlayerStats" };

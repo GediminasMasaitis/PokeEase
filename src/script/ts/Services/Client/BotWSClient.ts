@@ -54,7 +54,22 @@
 
         const type = message.$type as string;
 
-        if (_.includes(type, ".UpdatePositionEvent,")) {
+        if (_.includes(type, ".ProfileEvent,")) {
+            if (this.currentBotFamily === BotFamily.Undetermined) {
+                if (_.startsWith(type, "PoGo.NecroBot.")) {
+                    this.currentBotFamily = BotFamily.Necro;
+                }
+            }
+
+            const profile = message.Profile as IProfileEvent;
+            profile.Timestamp = timestamp;
+            profile.PlayerData.PokeCoin = this.getCurrency(message, "POKECOIN");
+            profile.PlayerData.StarDust = this.getCurrency(message, "STARDUST");
+            _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
+        }
+
+
+        else if (_.includes(type, ".UpdatePositionEvent,")) {
             const mapLocation = message as IUpdatePositionEvent;
             _.each(this.config.eventHandlers, eh => eh.onUpdatePosition(mapLocation));
         }
@@ -75,14 +90,6 @@
             const fortUsed = message as IFortUsedEvent;
             fortUsed.ItemsList = this.parseItemString(fortUsed.Items);
             _.each(this.config.eventHandlers, eh => eh.onFortUsed(fortUsed));
-        }
-
-        else if (_.includes(type, ".ProfileEvent,")) {
-            const profile = message.Profile as IProfileEvent;
-            profile.Timestamp = timestamp;
-            profile.PlayerData.PokeCoin = this.getCurrency(message, "POKECOIN");
-            profile.PlayerData.StarDust = this.getCurrency(message, "STARDUST");
-            _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
 
         else if (_.includes(type, ".UseBerry,")) {
@@ -193,7 +200,7 @@
             _.each(this.config.eventHandlers, eh => eh.onEggList(eggList));
         }
 
-        else if (_.includes(type, ".InventoryListEvent,")) {
+        else if (_.includes(type, ".InventoryListEvent,") || _.includes(type, ".ItemListResponce,")) {
             const inventoryList = message as IInventoryListEvent;
             inventoryList.Items = message.Items.$values;
             inventoryList.Timestamp = timestamp;
@@ -237,7 +244,7 @@
     public sendPokemonListRequest = (): void => {
         const pmbRequest: IRequest = { Command: "PokemonList" };
         const necroRequest: IRequest = { Command: "GetPokemonList" };
-        _.each(this.config.eventHandlers, eh => eh.onSendPlayerStatsRequest(pmbRequest));
+        _.each(this.config.eventHandlers, eh => eh.onSendPokemonListRequest(pmbRequest));
         if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
             this.sendRequest(pmbRequest);
         }
@@ -247,19 +254,27 @@
     };
 
     public sendEggsListRequest = (): void => {
-        const request: IRequest = {
-             Command: "EggsList"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendEggsListRequest(request));
-        this.sendRequest(request);
+        const pmbRequest: IRequest = { Command: "EggsList" };
+        const necroRequest: IRequest = { Command: "GetEggList" };
+        _.each(this.config.eventHandlers, eh => eh.onSendEggsListRequest(pmbRequest));
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
+            this.sendRequest(pmbRequest);
+        }
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
+            this.sendRequest(necroRequest);
+        }
     };
 
     public sendInventoryListRequest = (): void => {
-        const request: IRequest = {
-             Command: "InventoryList"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendInventoryListRequest(request));
-        this.sendRequest(request);
+        const pmbRequest: IRequest = { Command: "InventoryList" };
+        const necroRequest: IRequest = { Command: "GetItemsList" };
+        _.each(this.config.eventHandlers, eh => eh.onSendInventoryListRequest(pmbRequest));
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
+            this.sendRequest(pmbRequest);
+        }
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
+            this.sendRequest(necroRequest);
+        }
     };
 
     public sendPlayerStatsRequest = (): void => {
