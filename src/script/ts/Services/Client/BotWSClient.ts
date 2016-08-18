@@ -3,12 +3,15 @@
     private webSocket: WebSocket;
     private currentlySniping: boolean;
     private running: boolean;
-    private monitorInterval: number;
+    private restarting: boolean;
+    private profileSent: boolean;
+    private verifyProfileTimeout: number;
     public currentBotFamily: BotFamily;
 
     constructor() {
         this.currentlySniping = false;
         this.running = false;
+        this.profileSent = false;
         this.currentBotFamily = BotFamily.Undetermined;
     }
 
@@ -23,6 +26,11 @@
         this.running = true;
     }
 
+    public restart = (): void => {
+        this.restarting = true;
+        this.stop();
+    }
+
     public stop = (): void => {
         this.running = false;
         this.webSocket.close();
@@ -30,14 +38,28 @@
 
     private clientOnOpen = (event: Event): void => {
         console.log(`WebSocket connected to ${this.webSocket.url}`);
+        this.verifyProfileTimeout = setTimeout(this.verifyProfileSent, 5000);
+    }
+
+    private verifyProfileSent = (): void => {
+        if (!this.profileSent) {
+            console.log("Profile event not received. Reconnecting...");
+            this.restart();
+        }
     }
 
     private clientOnClose = (event: CloseEvent): void => {
         console.log("WebSocket closed", event);
+        clearTimeout(this.verifyProfileTimeout);
+        this.profileSent = false;
         if (this.running) {
             setTimeout(() => {
                 this.start(this.config);
-            }, 2000);
+            }, 1000);
+        }
+        if (this.restarting) {
+            this.restarting = false;
+            this.start(this.config);
         }
     }
 
@@ -67,6 +89,7 @@
             profile.Timestamp = timestamp;
             profile.PlayerData.PokeCoin = this.getCurrency(message, "POKECOIN");
             profile.PlayerData.StarDust = this.getCurrency(message, "STARDUST");
+            this.profileSent = true;
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
 

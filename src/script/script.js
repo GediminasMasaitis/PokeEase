@@ -6595,19 +6595,36 @@ var BotWSClient = (function () {
             _this.webSocket.onerror = _this.clientOnError;
             _this.running = true;
         };
+        this.restart = function () {
+            _this.restarting = true;
+            _this.stop();
+        };
         this.stop = function () {
             _this.running = false;
             _this.webSocket.close();
         };
         this.clientOnOpen = function (event) {
             console.log("WebSocket connected to " + _this.webSocket.url);
+            _this.verifyProfileTimeout = setTimeout(_this.verifyProfileSent, 5000);
+        };
+        this.verifyProfileSent = function () {
+            if (!_this.profileSent) {
+                console.log("Profile event not received. Reconnecting...");
+                _this.restart();
+            }
         };
         this.clientOnClose = function (event) {
             console.log("WebSocket closed", event);
+            clearTimeout(_this.verifyProfileTimeout);
+            _this.profileSent = false;
             if (_this.running) {
                 setTimeout(function () {
                     _this.start(_this.config);
-                }, 2000);
+                }, 1000);
+            }
+            if (_this.restarting) {
+                _this.restarting = false;
+                _this.start(_this.config);
             }
         };
         this.clientOnError = function (event) {
@@ -6631,6 +6648,7 @@ var BotWSClient = (function () {
                 profile_1.Timestamp = timestamp;
                 profile_1.PlayerData.PokeCoin = _this.getCurrency(message, "POKECOIN");
                 profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
+                _this.profileSent = true;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
             }
             else if (_.includes(type, ".UpdatePositionEvent,")) {
@@ -6881,6 +6899,7 @@ var BotWSClient = (function () {
         };
         this.currentlySniping = false;
         this.running = false;
+        this.profileSent = false;
         this.currentBotFamily = BotFamily.Undetermined;
     }
     return BotWSClient;
