@@ -599,7 +599,7 @@ body {
   content: "%"; }
 
 #content-wrap {
-  overflow-y: auto;
+  overflow-y: scroll;
   height: calc(100% - 36px);
   position: relative;
   transition: 0.3s; }

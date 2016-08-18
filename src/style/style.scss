@@ -665,7 +665,7 @@ $event-incubator-status-color: #e9e1b5;
     content: "%";
 }
 
-#content-wrap {overflow-y: auto; height: calc(100% - 36px); position: relative; transition: 0.3s;}
+#content-wrap {overflow-y: scroll; height: calc(100% - 36px); position: relative; transition: 0.3s;}
 
 #popup .inner-wrap .content[data-category="pokemons"] {
     margin: .5em 0;
