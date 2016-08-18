@@ -153,17 +153,33 @@
         }
 
         //#region Request response events
-        else if (_.includes(type, ".PokemonListEvent,")) {
+        else if (_.includes(type, ".PokemonListEvent,") || _.includes(type, ".PokemonListResponce,")) {
+
+            let originalList: any;
+            if (_.includes(type, ".PokemonListEvent,")) {
+                originalList = message.PokemonList.$values;
+                this.currentBotFamily = BotFamily.PMB;
+            } else {
+                originalList = message.Data.$values;
+                this.currentBotFamily = BotFamily.Necro;
+            }
+
             const pokemonList: IPokemonListEvent = {
                 Pokemons: [],
                 Timestamp: timestamp
             };
-
-            _.each(message.PokemonList.$values, val => {
-                const pokemon = val.Item1 as IPokemonListEntry;
-                pokemon.Perfection = val.Item2;
-                pokemon.FamilyCandies = val.Item3;
-                pokemonList.Pokemons.push(pokemon);
+            
+            _.each(originalList, val => {
+                if (this.currentBotFamily === BotFamily.PMB) {
+                    const pokemon = val.Item1 as IPokemonListEntry;
+                    pokemon.Perfection = val.Item2;
+                    pokemon.FamilyCandies = val.Item3;
+                    pokemonList.Pokemons.push(pokemon);
+                } else {
+                    const pokemon = val.Base as IPokemonListEntry;
+                    pokemon.Perfection = val.IvPerfection;
+                    pokemonList.Pokemons.push(pokemon);
+                }
             });
 
             _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
@@ -219,11 +235,15 @@
 
 
     public sendPokemonListRequest = (): void => {
-        const request: IRequest = {
-             Command: "PokemonList"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendPokemonListRequest(request));
-        this.sendRequest(request);
+        const pmbRequest: IRequest = { Command: "PokemonList" };
+        const necroRequest: IRequest = { Command: "GetPokemonList" };
+        _.each(this.config.eventHandlers, eh => eh.onSendPlayerStatsRequest(pmbRequest));
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
+            this.sendRequest(pmbRequest);
+        }
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
+            this.sendRequest(necroRequest);
+        }
     };
 
     public sendEggsListRequest = (): void => {

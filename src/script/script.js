@@ -6686,16 +6686,32 @@ var BotWSClient = (function () {
                 var pokemonTransfer_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
             }
-            else if (_.includes(type, ".PokemonListEvent,")) {
+            else if (_.includes(type, ".PokemonListEvent,") || _.includes(type, ".PokemonListResponce,")) {
+                var originalList = void 0;
+                if (_.includes(type, ".PokemonListEvent,")) {
+                    originalList = message.PokemonList.$values;
+                    _this.currentBotFamily = BotFamily.PMB;
+                }
+                else {
+                    originalList = message.Data.$values;
+                    _this.currentBotFamily = BotFamily.Necro;
+                }
                 var pokemonList_1 = {
                     Pokemons: [],
                     Timestamp: timestamp
                 };
-                _.each(message.PokemonList.$values, function (val) {
-                    var pokemon = val.Item1;
-                    pokemon.Perfection = val.Item2;
-                    pokemon.FamilyCandies = val.Item3;
-                    pokemonList_1.Pokemons.push(pokemon);
+                _.each(originalList, function (val) {
+                    if (_this.currentBotFamily === BotFamily.PMB) {
+                        var pokemon = val.Item1;
+                        pokemon.Perfection = val.Item2;
+                        pokemon.FamilyCandies = val.Item3;
+                        pokemonList_1.Pokemons.push(pokemon);
+                    }
+                    else {
+                        var pokemon = val.Base;
+                        pokemon.Perfection = val.IvPerfection;
+                        pokemonList_1.Pokemons.push(pokemon);
+                    }
                 });
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
             }
@@ -6739,11 +6755,15 @@ var BotWSClient = (function () {
             }
         };
         this.sendPokemonListRequest = function () {
-            var request = {
-                Command: "PokemonList"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(request); });
-            _this.sendRequest(request);
+            var pmbRequest = { Command: "PokemonList" };
+            var necroRequest = { Command: "GetPokemonList" };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(pmbRequest); });
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
+                _this.sendRequest(pmbRequest);
+            }
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
+                _this.sendRequest(necroRequest);
+            }
         };
         this.sendEggsListRequest = function () {
             var request = {
