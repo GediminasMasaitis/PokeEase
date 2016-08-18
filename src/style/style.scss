@@ -1312,7 +1312,8 @@ $event-incubator-status-color: #e9e1b5;
 
             .setting-name {
                 margin-top: 0;
-                margin-bottom: 1em;
+                margin-bottom: 2em;
+                letter-spacing: 1px;
                 font-size: 14px;
                 text-transform: uppercase;
                 color: rgba(0, 0, 0, 0.5);
@@ -1334,7 +1335,7 @@ $event-incubator-status-color: #e9e1b5;
 
             & > * {
                 display: table-cell;
-                vertical-align: top;
+                vertical-align: middle;
             }
 
             .setting-question span {
@@ -1345,14 +1346,19 @@ $event-incubator-status-color: #e9e1b5;
 
             .setting-answer {
                 width: 30%;
+
             }
 
             & + .setting-part {
+                padding-top: 1em;
                 margin-top: 1em;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
             }
         }
     }
 }
+
+$toggle-color: #2196f3;
 
 input[type="radio"] {
     outline: 0;
@@ -1368,7 +1374,7 @@ input[type="radio"]:before {
     position: absolute;
     top: 6px;
     left: 2px;
-    background-color: #2196f3;
+    background-color: $toggle-color;
     -webkit-transform: scale(0);
     -ms-transform: scale(0);
     -o-transform: scale(0);
@@ -1393,7 +1399,7 @@ input[type="radio"]:after {
 }
 
 input[type="radio"]:checked:after {
-    border-color: #2196f3;
+    border-color: $toggle-color;
 }
 
 input[type="radio"]:checked:before {
@@ -1429,8 +1435,8 @@ input[type="checkbox"]:after {
 }
 
 input[type="checkbox"]:checked:after {
-    background-color: #2196f3;
-    border-color: #2196f3;
+    background-color: $toggle-color;
+    border-color: $toggle-color;
 }
 
 input[type="checkbox"]:checked:before {
@@ -1450,7 +1456,7 @@ input[type="checkbox"]:checked:before {
     transform: rotate(45deg);
 }
 
-input[type="text"], input[type="number"], input[type="password"] {
+input[type="text"], input[type="number"], input[type="password"], select {
     padding: 6px 10px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 3px;
@@ -1458,6 +1464,52 @@ input[type="text"], input[type="number"], input[type="password"] {
     outline: 0;
 }
 
-input[type="text"]:focus, input[type="number"]:focus, input[type="password"]:focus {
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
     border-color: rgba(0, 0, 0, 0.4);
+}
+
+.option-toggle {
+    width: 60px;
+    border-radius: 20px;
+    height: 20px;
+    position: relative;
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25), inset 10px 0 0 0 $toggle-color;
+    transition: 0.7s cubic-bezier(0.2, 0, 0, 1);
+    cursor: pointer;
+
+    &.active {
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25), inset 46px 0 0 0 $toggle-color;
+
+        .toggle-circle {
+            left: 36px;
+        }
+    }
+}
+
+.option-toggle .toggle-circle {
+    position: absolute;
+    top: -3px;
+    left: 0px;
+    width: 26px;
+    height: 26px;
+    border-radius: 100%;
+    background: white;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25);
+    transition: 0.5s cubic-bezier(0.2, 0, 0, 1);
+
+
+}
+
+select {
+    -webkit-appearance: none;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Angle_down_font_awesome.svg/512px-Angle_down_font_awesome.svg.png");
+    background-size: 16px 16px;
+    background-position: 95% center;
+    background-repeat: no-repeat;
+    min-width: 171px;
+}
+
+select option {
+    padding: 0.5em;
 }
