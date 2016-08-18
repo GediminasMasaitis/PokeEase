@@ -39,7 +39,7 @@ body {
 #menu .item {
   width: 100px;
   height: 100px;
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3), inset 0 0 0 60px transparent;
   display: inline-block;
   border-radius: 100%;
   position: relative;
@@ -50,7 +50,10 @@ body {
   transition: 0.15s; }
 
 #menu .item:hover {
-  transform: scale(0.9); }
+  -webkit-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transform: scale(0.9);
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3), inset 0 0 0 60px rgba(0, 0, 0, 0.15); }
 
 #menu .item .counter {
   position: absolute;
