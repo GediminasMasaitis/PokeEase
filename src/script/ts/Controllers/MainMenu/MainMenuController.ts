@@ -17,9 +17,6 @@
     }
 
     private onEggsMenuClick = (ev: JQueryEventObject): void => {
-        if (this.config.requestSender.currentBotFamily === BotFamily.Necro) {
-            this.config.requestSender.sendPlayerStatsRequest();
-        }
         this.config.requestSender.sendEggsListRequest();
     }
 

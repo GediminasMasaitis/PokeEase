@@ -240,9 +240,4 @@ $(window).ready(function() {
         // add selected class to new tab
         $(this).addClass('selected');
     });
-
-
-    $(".option-toggle").click(function() {
-        $(this).toggleClass('active');
-    })
 });

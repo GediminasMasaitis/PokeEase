@@ -400,17 +400,14 @@ class GoogleMap implements IMap {
                 }
             });
         }
-		
-        // Setup the location history line.		
+        // Setup the location history line.
         this.locationHistory.push({ lat: posArr[0], lng: posArr[1] });
 
         // Cap the amount of location points.
         /*while(this.locationHistory.length > 300) {
             this.locationHistory.splice(0, 1);
         }*/
-		
-		if(this.locationLine != null)
-			this.locationLine.setMap(null);
+
         this.locationLine = new google.maps.Polyline({
             path: this.locationHistory,
             geodesic: true,

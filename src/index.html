@@ -25,11 +25,11 @@
                             <span class="current">0</span>/<span class="total">250</span>
                         </div>
                     </div>
-                    <!-- <div class="item" id="pokedex">
+                    <div class="item" id="pokedex">
                         <div class="counter">
                             <span class="current">0</span>/<span class="total">151</span>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="item" id="items">
                         <div class="counter">
                             <span class="current">0</span>/<span class="total">350</span>
@@ -327,29 +327,24 @@
                             <!-- S E T T I N G S -->
                             <div class="content" data-category="settings">
                                 <div class="tab-buttons">
-                                    <div class="settings-1 selected">One</div>
+                                    <div class="settings-1">One</div>
                                     <div class="settings-2">two</div>
                                     <div class="settings-3">Three</div>
                                 </div>
                                 <div class="tab-pages">
 
 
-                                    <div id="settings-1" style="display: block;">
+                                    <div id="settings-1">
                                         <div class="setting-topic">
                                             <h6 class="setting-name"> Map type </h6>
 
                                             <div class="setting-part">
-                                                <div class="setting-question">Your hobby
-                                                    <span>What u do in yer free time?</span>
+                                                <div class="setting-question">Map Service Provider
+                                                    <span>You can choose your map provider!</span>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <select>
-                                                        <option> Sleeping </option>
-                                                        <option> Eating </option>
-                                                        <option> Drinking </option>
-                                                        <option> Coding </option>
-                                                        <option> Catching Pokemens </option>
-                                                    </select>
+                                                    <input type="radio" name="map-type" value="OSM"> OSM <br/>
+                                                    <input type="radio" name="map-type" value="Gmaps" checked> Google Maps
                                                 </div>
                                             </div>
 
@@ -358,8 +353,8 @@
                                                     <span>How much do you love us?</span>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="checkbox" name="map-type" value="p15" id="p15"> <label for="p15">1-5</label> <br/>
-                                                    <input type="checkbox" name="map-type" value="p511" id="p511" checked> <label for="p511">6-12</label>
+                                                    <input type="checkbox" name="map-type" value="OSM"> 1-5 <br/>
+                                                    <input type="checkbox" name="map-type" value="Gmaps" checked> 5-11
                                                 </div>
                                             </div>
 
@@ -383,19 +378,27 @@
                                                     <span>You can choose your map provider!</span>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="radio" name="map-type" value="OSM" id="OSM"> <label for="OSM">OSM</label> <br/>
-                                                    <input type="radio" name="map-type" value="Gmaps" checked id="Gmaps"> <label for="Gmaps">Google Maps</label>
+                                                    <input type="radio" name="map-type" value="OSM"> OSM <br/>
+                                                    <input type="radio" name="map-type" value="Gmaps" checked> Google Maps
                                                 </div>
                                             </div>
 
                                             <div class="setting-part">
-                                                <div class="setting-question">True or false
-                                                    <span>Just tell us..</span>
+                                                <div class="setting-question">Love rate
+                                                    <span>How much do you love us?</span>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <div class="option-toggle">
-                                                        <div class="toggle-circle"></div>
-                                                    </div>
+                                                    <input type="checkbox" name="map-type" value="OSM"> 1-5 <br/>
+                                                    <input type="checkbox" name="map-type" value="Gmaps" checked> 5-11
+                                                </div>
+                                            </div>
+
+                                            <div class="setting-part">
+                                                <div class="setting-question">Your Name
+                                                    <span>How they call you in da hood?</span>
+                                                </div>
+                                                <div class="setting-answer">
+                                                    <input type="text" value="meh name"/>
                                                 </div>
                                             </div>
 

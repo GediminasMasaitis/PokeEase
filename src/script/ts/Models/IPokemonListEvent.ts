@@ -35,5 +35,5 @@ interface IPokemonListEntry {
     WeightKg: number;
 
     Perfection: number;
-    FamilyCandies?: number;
+    FamilyCandies: number;
 }
