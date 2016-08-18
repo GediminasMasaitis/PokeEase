@@ -4,10 +4,12 @@
     private currentlySniping: boolean;
     private running: boolean;
     private monitorInterval: number;
+    private currentBotFamily: BotFamily;
 
     constructor() {
         this.currentlySniping = false;
         this.running = false;
+        this.currentBotFamily = BotFamily.Undetermined;
     }
 
     public start = (config: IBotClientConfig): void => {
@@ -52,29 +54,30 @@
 
         const type = message.$type as string;
 
-        if (_.includes(type, "UpdatePositionEvent")) {
+        if (_.includes(type, ".UpdatePositionEvent,")) {
             const mapLocation = message as IUpdatePositionEvent;
             _.each(this.config.eventHandlers, eh => eh.onUpdatePosition(mapLocation));
         }
 
-        else if (_.includes(type, "PokeStopListEvent")) {
+        else if (_.includes(type, ".PokeStopListEvent,")) {
             const forts = message.Forts.$values as IFortEvent[];
             _.each(forts, fort => fort.Timestamp = timestamp);
             _.each(this.config.eventHandlers, eh => eh.onPokeStopList(forts));
         }
 
-        else if (_.includes(type, "FortTargetEvent")) {
+
+        else if (_.includes(type, ".FortTargetEvent,")) {
             const fortTarget = message as IFortTargetEvent;
             _.each(this.config.eventHandlers, eh => eh.onFortTarget(fortTarget));
         }
 
-        else if (_.includes(type, "FortUsedEvent")) {
+        else if (_.includes(type, ".FortUsedEvent,")) {
             const fortUsed = message as IFortUsedEvent;
             fortUsed.ItemsList = this.parseItemString(fortUsed.Items);
             _.each(this.config.eventHandlers, eh => eh.onFortUsed(fortUsed));
         }
 
-        else if (_.includes(type, "ProfileEvent")) {
+        else if (_.includes(type, ".ProfileEvent,")) {
             const profile = message.Profile as IProfileEvent;
             profile.Timestamp = timestamp;
             profile.PlayerData.PokeCoin = this.getCurrency(message, "POKECOIN");
@@ -82,75 +85,75 @@
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
 
-        else if (_.includes(type, "UseBerry")) {
+        else if (_.includes(type, ".UseBerry,")) {
             const useBerry = message as IUseBerryEvent;
             _.each(this.config.eventHandlers, eh => eh.onUseBerry(useBerry));
         }
 
-        else if (_.includes(type, "PokemonCaptureEvent")) {
+        else if (_.includes(type, ".PokemonCaptureEvent,")) {
             const pokemonCapture = message as IPokemonCaptureEvent;
             pokemonCapture.IsSnipe = this.currentlySniping;
             _.each(this.config.eventHandlers, eh => eh.onPokemonCapture(pokemonCapture));
         }
 
-        else if (_.includes(type, "EvolveCountEvent")) {
+        else if (_.includes(type, ".EvolveCountEvent,")) {
             const evolveCount = message as IEvolveCountEvent;
             _.each(this.config.eventHandlers, eh => eh.onEvolveCount(evolveCount));
         }
 
-        else if (_.includes(type, "PokemonEvolveEvent")) {
+        else if (_.includes(type, ".PokemonEvolveEvent,")) {
             const pokemonEvolve = message as IPokemonEvolveEvent;
             _.each(this.config.eventHandlers, eh => eh.onPokemonEvolve(pokemonEvolve));
         }
 
-        else if (_.includes(type, "SnipeScanEvent")) {
+        else if (_.includes(type, ".SnipeScanEvent,")) {
             const snipeScan = message as ISnipeScanEvent;
             _.each(this.config.eventHandlers, eh => eh.onSnipeScan(snipeScan));
         }
 
-        else if (_.includes(type, "SnipeModeEvent")) {
+        else if (_.includes(type, ".SnipeModeEvent,")) {
             const snipeMode = message as ISnipeModeEvent;
             this.currentlySniping = snipeMode.Active;
             _.each(this.config.eventHandlers, eh => eh.onSnipeMode(snipeMode));
         }
 
-        else if (_.includes(type, "SnipeEvent")) {
+        else if (_.includes(type, ".SnipeEvent,")) {
             const snipeMessage = message as ISnipeMessageEvent;
             _.each(this.config.eventHandlers, eh => eh.onSnipeMessage(snipeMessage));
         }
 
-        else if (_.includes(type, "UpdateEvent")) {
+        else if (_.includes(type, ".UpdateEvent,")) {
             const updateEvent = message as IUpdateEvent;
             _.each(this.config.eventHandlers, eh => eh.onUpdate(updateEvent));
         }
 
-        else if (_.includes(type, "WarnEvent")) {
+        else if (_.includes(type, ".WarnEvent,")) {
             const warnEvent = message as IWarnEvent;
             _.each(this.config.eventHandlers, eh => eh.onWarn(warnEvent));
         }
 
-        else if (_.includes(type, "EggHatchedEvent")) {
+        else if (_.includes(type, ".EggHatchedEvent,")) {
             const eggHatched = message as IEggHatchedEvent;
             _.each(this.config.eventHandlers, eh => eh.onEggHatched(eggHatched));
         }
 
-        else if (_.includes(type, "EggIncubatorStatusEvent")) {
+        else if (_.includes(type, ".EggIncubatorStatusEvent,")) {
             const incubatorStatus = message as IIncubatorStatusEvent;
             _.each(this.config.eventHandlers, eh => eh.onIncubatorStatus(incubatorStatus));
         }
 
-        else if (_.includes(type, "ItemRecycledEvent")) {
+        else if (_.includes(type, ".ItemRecycledEvent,")) {
             const itemRecycle = message as IItemRecycleEvent;
             _.each(this.config.eventHandlers, eh => eh.onItemRecycle(itemRecycle));
         }
 
-        else if (_.includes(type, "TransferPokemonEvent")) {
+        else if (_.includes(type, ".TransferPokemonEvent,")) {
             const pokemonTransfer = message as IPokemonTransferEvent;
             _.each(this.config.eventHandlers, eh => eh.onPokemonTransfer(pokemonTransfer));
         }
 
         //#region Request response events
-        else if (_.includes(type, "PokemonListEvent")) {
+        else if (_.includes(type, ".PokemonListEvent,")) {
             const pokemonList: IPokemonListEvent = {
                 Pokemons: [],
                 Timestamp: timestamp
@@ -166,7 +169,7 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
         }
 
-        else if (_.includes(type, "EggsListEvent")) {
+        else if (_.includes(type, ".EggsListEvent,")) {
             const eggList = message as IEggListEvent;
             eggList.Incubators = message.Incubators.$values;
             eggList.UnusedEggs = message.UnusedEggs.$values;
@@ -174,15 +177,23 @@
             _.each(this.config.eventHandlers, eh => eh.onEggList(eggList));
         }
 
-        else if (_.includes(type, "InventoryListEvent")) {
+        else if (_.includes(type, ".InventoryListEvent,")) {
             const inventoryList = message as IInventoryListEvent;
             inventoryList.Items = message.Items.$values;
             inventoryList.Timestamp = timestamp;
             _.each(this.config.eventHandlers, eh => eh.onInventoryList(inventoryList));
         }
 
-        else if (_.includes(type, "PlayerStatsEvent")) {
-            const originalStats = message.PlayerStats.$values[0];
+        else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
+            let originalStats: any;
+            if(_.includes(type, ".PlayerStatsEvent,")) {
+                originalStats = message.PlayerStats.$values[0];
+                this.currentBotFamily = BotFamily.PMB;
+            } else {
+                originalStats = message.Data.Stats;
+                this.currentBotFamily = BotFamily.Necro;
+            }
+            
             const playerStats = originalStats as IPlayerStatsEvent;
             playerStats.Experience = parseInt(originalStats.Experience);
             playerStats.NextLevelXp = parseInt(originalStats.NextLevelXp);
@@ -191,7 +202,7 @@
             playerStats.Timestamp = timestamp;
             _.each(this.config.eventHandlers, eh => eh.onPlayerStats(playerStats));
         }
-
+        
         //#endregion
 
         else {
@@ -232,11 +243,15 @@
     };
 
     public sendPlayerStatsRequest = (): void => {
-        const request: IRequest = {
-             Command: "PlayerStats"
-        };
-        _.each(this.config.eventHandlers, eh => eh.onSendPlayerStatsRequest(request));
-        this.sendRequest(request);
+        const pmbRequest: IRequest = { Command: "PlayerStats" };
+        const necroRequest: IRequest = { Command: "GetTrainerProfile" };
+        _.each(this.config.eventHandlers, eh => eh.onSendPlayerStatsRequest(pmbRequest));
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
+            this.sendRequest(pmbRequest);
+        }
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
+            this.sendRequest(necroRequest);
+        }
     };
 
     public sendGetPokemonSettingsRequest = (): void => {

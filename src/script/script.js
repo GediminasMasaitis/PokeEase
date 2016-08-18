@@ -6565,6 +6565,12 @@ var PlayerTeam;
     PlayerTeam[PlayerTeam["Valor"] = 2] = "Valor";
     PlayerTeam[PlayerTeam["Instinct"] = 3] = "Instinct";
 })(PlayerTeam || (PlayerTeam = {}));
+var BotFamily;
+(function (BotFamily) {
+    BotFamily[BotFamily["Undetermined"] = 0] = "Undetermined";
+    BotFamily[BotFamily["Necro"] = 1] = "Necro";
+    BotFamily[BotFamily["PMB"] = 2] = "PMB";
+})(BotFamily || (BotFamily = {}));
 var BotWSClient = (function () {
     function BotWSClient() {
         var _this = this;
@@ -6601,86 +6607,86 @@ var BotWSClient = (function () {
             message.Timestamp = timestamp;
             console.log("%c<<< INCOMING", "color: green", message);
             var type = message.$type;
-            if (_.includes(type, "UpdatePositionEvent")) {
+            if (_.includes(type, ".UpdatePositionEvent,")) {
                 var mapLocation_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdatePosition(mapLocation_1); });
             }
-            else if (_.includes(type, "PokeStopListEvent")) {
+            else if (_.includes(type, ".PokeStopListEvent,")) {
                 var forts_1 = message.Forts.$values;
                 _.each(forts_1, function (fort) { return fort.Timestamp = timestamp; });
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokeStopList(forts_1); });
             }
-            else if (_.includes(type, "FortTargetEvent")) {
+            else if (_.includes(type, ".FortTargetEvent,")) {
                 var fortTarget_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onFortTarget(fortTarget_1); });
             }
-            else if (_.includes(type, "FortUsedEvent")) {
+            else if (_.includes(type, ".FortUsedEvent,")) {
                 var fortUsed_1 = message;
                 fortUsed_1.ItemsList = _this.parseItemString(fortUsed_1.Items);
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onFortUsed(fortUsed_1); });
             }
-            else if (_.includes(type, "ProfileEvent")) {
+            else if (_.includes(type, ".ProfileEvent,")) {
                 var profile_1 = message.Profile;
                 profile_1.Timestamp = timestamp;
                 profile_1.PlayerData.PokeCoin = _this.getCurrency(message, "POKECOIN");
                 profile_1.PlayerData.StarDust = _this.getCurrency(message, "STARDUST");
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
             }
-            else if (_.includes(type, "UseBerry")) {
+            else if (_.includes(type, ".UseBerry,")) {
                 var useBerry_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onUseBerry(useBerry_1); });
             }
-            else if (_.includes(type, "PokemonCaptureEvent")) {
+            else if (_.includes(type, ".PokemonCaptureEvent,")) {
                 var pokemonCapture_1 = message;
                 pokemonCapture_1.IsSnipe = _this.currentlySniping;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonCapture(pokemonCapture_1); });
             }
-            else if (_.includes(type, "EvolveCountEvent")) {
+            else if (_.includes(type, ".EvolveCountEvent,")) {
                 var evolveCount_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onEvolveCount(evolveCount_1); });
             }
-            else if (_.includes(type, "PokemonEvolveEvent")) {
+            else if (_.includes(type, ".PokemonEvolveEvent,")) {
                 var pokemonEvolve_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonEvolve(pokemonEvolve_1); });
             }
-            else if (_.includes(type, "SnipeScanEvent")) {
+            else if (_.includes(type, ".SnipeScanEvent,")) {
                 var snipeScan_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeScan(snipeScan_1); });
             }
-            else if (_.includes(type, "SnipeModeEvent")) {
+            else if (_.includes(type, ".SnipeModeEvent,")) {
                 var snipeMode_1 = message;
                 _this.currentlySniping = snipeMode_1.Active;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMode(snipeMode_1); });
             }
-            else if (_.includes(type, "SnipeEvent")) {
+            else if (_.includes(type, ".SnipeEvent,")) {
                 var snipeMessage_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onSnipeMessage(snipeMessage_1); });
             }
-            else if (_.includes(type, "UpdateEvent")) {
+            else if (_.includes(type, ".UpdateEvent,")) {
                 var updateEvent_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdate(updateEvent_1); });
             }
-            else if (_.includes(type, "WarnEvent")) {
+            else if (_.includes(type, ".WarnEvent,")) {
                 var warnEvent_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onWarn(warnEvent_1); });
             }
-            else if (_.includes(type, "EggHatchedEvent")) {
+            else if (_.includes(type, ".EggHatchedEvent,")) {
                 var eggHatched_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onEggHatched(eggHatched_1); });
             }
-            else if (_.includes(type, "EggIncubatorStatusEvent")) {
+            else if (_.includes(type, ".EggIncubatorStatusEvent,")) {
                 var incubatorStatus_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onIncubatorStatus(incubatorStatus_1); });
             }
-            else if (_.includes(type, "ItemRecycledEvent")) {
+            else if (_.includes(type, ".ItemRecycledEvent,")) {
                 var itemRecycle_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onItemRecycle(itemRecycle_1); });
             }
-            else if (_.includes(type, "TransferPokemonEvent")) {
+            else if (_.includes(type, ".TransferPokemonEvent,")) {
                 var pokemonTransfer_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
             }
-            else if (_.includes(type, "PokemonListEvent")) {
+            else if (_.includes(type, ".PokemonListEvent,")) {
                 var pokemonList_1 = {
                     Pokemons: [],
                     Timestamp: timestamp
@@ -6693,21 +6699,29 @@ var BotWSClient = (function () {
                 });
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
             }
-            else if (_.includes(type, "EggsListEvent")) {
+            else if (_.includes(type, ".EggsListEvent,")) {
                 var eggList_1 = message;
                 eggList_1.Incubators = message.Incubators.$values;
                 eggList_1.UnusedEggs = message.UnusedEggs.$values;
                 eggList_1.Timestamp = timestamp;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_1); });
             }
-            else if (_.includes(type, "InventoryListEvent")) {
+            else if (_.includes(type, ".InventoryListEvent,")) {
                 var inventoryList_1 = message;
                 inventoryList_1.Items = message.Items.$values;
                 inventoryList_1.Timestamp = timestamp;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onInventoryList(inventoryList_1); });
             }
-            else if (_.includes(type, "PlayerStatsEvent")) {
-                var originalStats = message.PlayerStats.$values[0];
+            else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
+                var originalStats = void 0;
+                if (_.includes(type, ".PlayerStatsEvent,")) {
+                    originalStats = message.PlayerStats.$values[0];
+                    _this.currentBotFamily = BotFamily.PMB;
+                }
+                else {
+                    originalStats = message.Data.Stats;
+                    _this.currentBotFamily = BotFamily.Necro;
+                }
                 var playerStats_1 = originalStats;
                 playerStats_1.Experience = parseInt(originalStats.Experience);
                 playerStats_1.NextLevelXp = parseInt(originalStats.NextLevelXp);
@@ -6746,11 +6760,15 @@ var BotWSClient = (function () {
             _this.sendRequest(request);
         };
         this.sendPlayerStatsRequest = function () {
-            var request = {
-                Command: "PlayerStats"
-            };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(request); });
-            _this.sendRequest(request);
+            var pmbRequest = { Command: "PlayerStats" };
+            var necroRequest = { Command: "GetTrainerProfile" };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(pmbRequest); });
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
+                _this.sendRequest(pmbRequest);
+            }
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
+                _this.sendRequest(necroRequest);
+            }
         };
         this.sendGetPokemonSettingsRequest = function () {
             var request = {
@@ -6802,6 +6820,7 @@ var BotWSClient = (function () {
         };
         this.currentlySniping = false;
         this.running = false;
+        this.currentBotFamily = BotFamily.Undetermined;
     }
     return BotWSClient;
 }());
