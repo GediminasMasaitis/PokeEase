@@ -1,7 +1,7 @@
 interface IEggListEvent extends IEvent {
     Incubators: IEggListIncubatorEntry[];
+    PlayerKmWalked: number;
     UnusedEggs: IPokemonListEntry[];
-    PlayerKmWalked?: number;
 }
 
 interface IEggListIncubatorEntry {

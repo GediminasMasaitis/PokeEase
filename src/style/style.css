@@ -50,7 +50,9 @@ body {
   transition: 0.15s; }
 
 #menu .item:hover {
-  transform: scale(0.9); }
+  transform: scale(0.9);
+  transition: background-color .25s ease;
+}
 
 #menu .item .counter {
   position: absolute;
@@ -60,30 +62,65 @@ body {
   font-size: 14px;
   border-radius: 20px;
   color: rgba(0, 0, 0, 0.4);
-  padding: 1px 6px 3px;
+  padding: 3px 6px 3px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
   #menu .item .counter span.current {
     color: black; }
 
 #menu .item#pokemons {
-  background-color: #08c1c6;
-  background-image: url("../images/pokemons.png"); }
+    background-color: #2ecc71;
+    background-image: url("../images/pokemons.png");
+    transition: background-color .25s ease;
+}
+
+#menu .item#pokemons:hover {
+    background-color: #24a35a;
+    transition: background-color .25s ease;
+}
 
 #menu .item#pokedex {
-  background-color: #bfe358;
-  background-image: url("../images/pokedex.png"); }
+    background-color: #34495e;
+    background-image: url("../images/pokedex.png");
+    transition: background-color .25s ease;
+}
+
+#menu .item#pokedex:hover {
+    background-color: #293a4b;
+    transition: background-color .25s ease;
+}
 
 #menu .item#items {
-  background-color: #fe7676;
-  background-image: url("../images/items.png"); }
+    background-color: #e74c3c;
+    background-image: url("../images/items.png");
+    transition: background-color .25s ease;
+}
+
+#menu .item#items:hover {
+    background-color: #b83c30;
+    transition: background-color .25s ease;
+}
 
 #menu .item#eggs {
-  background-color: #9b59b6;
-  background-image: url("../images/eggs.png"); }
+    background-color: #3498db;
+    background-image: url("../images/eggs.png");
+    transition: background-color .25s ease;
+}
+
+#menu .item#eggs:hover {
+    background-color: #2979af;
+    transition: background-color .25s ease;
+}
 
 #menu .item#settings {
-  background-color: #7f8c8d;
-  background-image: url("../images/settings.png"); }
+    background-color: #7f8c8d;
+    background-image: url("../images/settings.png");
+    transition: background-color .25s ease;
+}
+
+#menu .item#settings:hover {
+    background-color: #657070;
+    transition: background-color .25s ease;
+}
 
 #menu .close-button {
   width: 50px;
@@ -1135,8 +1172,7 @@ body {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); }
     .content[data-category="settings"] .tab-pages .setting-topic .setting-name {
       margin-top: 0;
-      margin-bottom: 2em;
-      letter-spacing: 1px;
+      margin-bottom: 1em;
       font-size: 14px;
       text-transform: uppercase;
       color: rgba(0, 0, 0, 0.5);
@@ -1152,147 +1188,22 @@ body {
     table-layout: fixed; }
     .content[data-category="settings"] .tab-pages .setting-part > * {
       display: table-cell;
-      vertical-align: middle; }
+      vertical-align: top; }
     .content[data-category="settings"] .tab-pages .setting-part .setting-question span {
       display: block;
       font-size: 12px;
       color: rgba(0, 0, 0, 0.5); }
     .content[data-category="settings"] .tab-pages .setting-part .setting-answer {
-      width: 40%; }
+      width: 30%; }
+      .content[data-category="settings"] .tab-pages .setting-part .setting-answer input {
+        padding: 6px 10px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        transition: 0.2s;
+        outline: 0; }
+      .content[data-category="settings"] .tab-pages .setting-part .setting-answer input:focus {
+        border-color: rgba(0, 0, 0, 0.4); }
     .content[data-category="settings"] .tab-pages .setting-part + .setting-part {
-      padding-top: 1em;
-      margin-top: 1em;
-      border-top: 1px solid rgba(0, 0, 0, 0.1); }
-
-input[type="radio"] {
-  outline: 0;
-  position: relative;
-  border: none;
-  background-color: transparent;
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer; }
-
-input[type="radio"]:before {
-  position: absolute;
-  top: 6px;
-  left: 2px;
-  background-color: #2196f3;
-  -webkit-transform: scale(0);
-  -ms-transform: scale(0);
-  -o-transform: scale(0);
-  transform: scale(0); }
-
-input[type="radio"]:before, input[type="radio"]:after {
-  content: "";
-  display: block;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  -webkit-transition: 240ms;
-  -o-transition: 240ms;
-  transition: 240ms; }
-
-input[type="radio"]:after {
-  position: relative;
-  top: 4px;
-  border: 2px solid #666666; }
-
-input[type="radio"]:checked:after {
-  border-color: #2196f3; }
-
-input[type="radio"]:checked:before {
-  -webkit-transform: scale(0.7);
-  -ms-transform: scale(0.7);
-  -o-transform: scale(0.7);
-  transform: scale(0.7); }
-
-input[type="checkbox"] {
-  position: relative;
-  border: none;
-  margin-bottom: -5px;
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  outline: 0; }
-
-input[type="checkbox"]:after {
-  content: "";
-  display: block;
-  width: 16px;
-  height: 16px;
-  margin-top: -2px;
-  margin-right: 5px;
-  border: 2px solid #666666;
-  border-radius: 2px;
-  -webkit-transition: 240ms;
-  -o-transition: 240ms;
-  transition: 240ms; }
-
-input[type="checkbox"]:checked:after {
-  background-color: #2196f3;
-  border-color: #2196f3; }
-
-input[type="checkbox"]:checked:before {
-  content: "";
-  position: absolute;
-  top: 1px;
-  left: 7px;
-  display: table;
-  width: 4px;
-  height: 9px;
-  border: 2px solid #fff;
-  border-top-width: 0;
-  border-left-width: 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg); }
-
-input[type="text"], input[type="number"], input[type="password"], select {
-  padding: 6px 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
-  transition: 0.2s;
-  outline: 0; }
-
-input[type="text"]:focus, input[type="number"]:focus, select:focus {
-  border-color: rgba(0, 0, 0, 0.4); }
-
-.option-toggle {
-  width: 60px;
-  border-radius: 20px;
-  height: 20px;
-  position: relative;
-  background: rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25), inset 10px 0 0 0 #2196f3;
-  transition: 0.7s cubic-bezier(0.2, 0, 0, 1);
-  cursor: pointer; }
-  .option-toggle.active {
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25), inset 46px 0 0 0 #2196f3; }
-    .option-toggle.active .toggle-circle {
-      left: 36px; }
-
-.option-toggle .toggle-circle {
-  position: absolute;
-  top: -3px;
-  left: 0px;
-  width: 26px;
-  height: 26px;
-  border-radius: 100%;
-  background: white;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
-  transition: 0.5s cubic-bezier(0.2, 0, 0, 1); }
-
-select {
-  -webkit-appearance: none;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Angle_down_font_awesome.svg/512px-Angle_down_font_awesome.svg.png");
-  background-size: 16px 16px;
-  background-position: 95% center;
-  background-repeat: no-repeat;
-  min-width: 171px; }
-
-select option {
-  padding: 0.5em; }
+      margin-top: 1em; }
 
 /*# sourceMappingURL=style.css.map */

@@ -6,5 +6,4 @@ interface IRequestSender {
     sendGetPokemonSettingsRequest();
     sendTransferPokemonRequest(pokemonId: number);
     sendEvolvePokemonRequest(pokemonId: number);
-    currentBotFamily: BotFamily;
 }
