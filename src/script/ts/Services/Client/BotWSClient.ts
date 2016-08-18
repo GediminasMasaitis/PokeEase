@@ -58,7 +58,7 @@
             if (this.currentBotFamily === BotFamily.Undetermined) {
                 if (_.startsWith(type, "PoGo.NecroBot.")) {
                     this.currentBotFamily = BotFamily.Necro;
-                } else {
+                } else if (_.startsWith(type, "PoGo.PokeMobBot.")) {
                     this.currentBotFamily = BotFamily.PMB;
                 }
             }
@@ -257,7 +257,7 @@
         const pmbRequest: IRequest = { Command: "PokemonList" };
         const necroRequest: IRequest = { Command: "GetPokemonList" };
         _.each(this.config.eventHandlers, eh => eh.onSendPokemonListRequest(pmbRequest));
-        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.PMB) {
             this.sendRequest(pmbRequest);
         }
         if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
@@ -269,7 +269,7 @@
         const pmbRequest: IRequest = { Command: "EggsList" };
         const necroRequest: IRequest = { Command: "GetEggList" };
         _.each(this.config.eventHandlers, eh => eh.onSendEggsListRequest(pmbRequest));
-        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.PMB) {
             this.sendRequest(pmbRequest);
         }
         if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
@@ -281,7 +281,7 @@
         const pmbRequest: IRequest = { Command: "InventoryList" };
         const necroRequest: IRequest = { Command: "GetItemsList" };
         _.each(this.config.eventHandlers, eh => eh.onSendInventoryListRequest(pmbRequest));
-        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.PMB) {
             this.sendRequest(pmbRequest);
         }
         if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
@@ -293,7 +293,7 @@
         const pmbRequest: IRequest = { Command: "PlayerStats" };
         const necroRequest: IRequest = { Command: "GetTrainerProfile" };
         _.each(this.config.eventHandlers, eh => eh.onSendPlayerStatsRequest(pmbRequest));
-        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Undetermined) {
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.PMB) {
             this.sendRequest(pmbRequest);
         }
         if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {

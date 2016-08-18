@@ -6623,7 +6623,7 @@ var BotWSClient = (function () {
                     if (_.startsWith(type, "PoGo.NecroBot.")) {
                         _this.currentBotFamily = BotFamily.Necro;
                     }
-                    else {
+                    else if (_.startsWith(type, "PoGo.PokeMobBot.")) {
                         _this.currentBotFamily = BotFamily.PMB;
                     }
                 }
@@ -6789,7 +6789,7 @@ var BotWSClient = (function () {
             var pmbRequest = { Command: "PokemonList" };
             var necroRequest = { Command: "GetPokemonList" };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(pmbRequest); });
-            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.PMB) {
                 _this.sendRequest(pmbRequest);
             }
             if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
@@ -6800,7 +6800,7 @@ var BotWSClient = (function () {
             var pmbRequest = { Command: "EggsList" };
             var necroRequest = { Command: "GetEggList" };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEggsListRequest(pmbRequest); });
-            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.PMB) {
                 _this.sendRequest(pmbRequest);
             }
             if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
@@ -6811,7 +6811,7 @@ var BotWSClient = (function () {
             var pmbRequest = { Command: "InventoryList" };
             var necroRequest = { Command: "GetItemsList" };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendInventoryListRequest(pmbRequest); });
-            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.PMB) {
                 _this.sendRequest(pmbRequest);
             }
             if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
@@ -6822,7 +6822,7 @@ var BotWSClient = (function () {
             var pmbRequest = { Command: "PlayerStats" };
             var necroRequest = { Command: "GetTrainerProfile" };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPlayerStatsRequest(pmbRequest); });
-            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Undetermined) {
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.PMB) {
                 _this.sendRequest(pmbRequest);
             }
             if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
