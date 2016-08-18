@@ -224,11 +224,11 @@ $(window).ready(function() {
 
         // show the right tab
         $(".tab-pages > div").each(function() {
-            $(this).hide();
+            $(this).fadeOut(150);
             console.log($(this).attr('id'));
             console.log(tabNameHolder);
             if ($(this).attr('id') == tabNameHolder) {
-                $(this).show();
+                $(this).delay(150).fadeIn(150);
             }
         });
 

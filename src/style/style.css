@@ -599,7 +599,7 @@ body {
   content: "%"; }
 
 #content-wrap {
-  overflow-y: auto;
+  overflow-y: scroll;
   height: calc(100% - 36px);
   position: relative;
   transition: 0.3s; }
@@ -1123,5 +1123,50 @@ body {
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
       color: black;
       pointer-events: none; }
+  .content[data-category="settings"] .tab-pages > div {
+    text-align: center;
+    padding: 1em;
+    margin: 1em;
+    line-height: 2;
+    display: none; }
+  .content[data-category="settings"] .tab-pages .setting-topic {
+    background: white;
+    padding: 1em 2em;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); }
+    .content[data-category="settings"] .tab-pages .setting-topic .setting-name {
+      margin-top: 0;
+      margin-bottom: 1em;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.5);
+      padding: 0 2em;
+      display: inline-block;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+    .content[data-category="settings"] .tab-pages .setting-topic ~ .setting-topic {
+      margin-top: 2em; }
+  .content[data-category="settings"] .tab-pages .setting-part {
+    display: table;
+    width: 100%;
+    text-align: left;
+    table-layout: fixed; }
+    .content[data-category="settings"] .tab-pages .setting-part > * {
+      display: table-cell;
+      vertical-align: top; }
+    .content[data-category="settings"] .tab-pages .setting-part .setting-question span {
+      display: block;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.5); }
+    .content[data-category="settings"] .tab-pages .setting-part .setting-answer {
+      width: 30%; }
+      .content[data-category="settings"] .tab-pages .setting-part .setting-answer input {
+        padding: 6px 10px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        transition: 0.2s;
+        outline: 0; }
+      .content[data-category="settings"] .tab-pages .setting-part .setting-answer input:focus {
+        border-color: rgba(0, 0, 0, 0.4); }
+    .content[data-category="settings"] .tab-pages .setting-part + .setting-part {
+      margin-top: 1em; }
 
 /*# sourceMappingURL=style.css.map */
