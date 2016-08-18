@@ -6839,7 +6839,8 @@ var BotWSClient = (function () {
         this.sendTransferPokemonRequest = function (pokemonId) {
             var request = {
                 Command: "TransferPokemon",
-                Data: pokemonId.toString()
+                Data: pokemonId.toString(),
+                PokemonId: pokemonId
             };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendTransferPokemonRequest(request); });
             _this.sendRequest(request);
@@ -6847,7 +6848,8 @@ var BotWSClient = (function () {
         this.sendEvolvePokemonRequest = function (pokemonId) {
             var request = {
                 Command: "EvolvePokemon",
-                Data: pokemonId.toString()
+                Data: pokemonId.toString(),
+                PokemonId: pokemonId
             };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEvolvePokemonRequest(request); });
             _this.sendRequest(request);

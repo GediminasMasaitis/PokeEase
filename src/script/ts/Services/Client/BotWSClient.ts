@@ -312,7 +312,8 @@
     public sendTransferPokemonRequest = (pokemonId: number): void => {
         const request: IRequest = {
              Command: "TransferPokemon",
-             Data: pokemonId.toString()
+             Data: pokemonId.toString(),
+             PokemonId: pokemonId
         };
         _.each(this.config.eventHandlers, eh => eh.onSendTransferPokemonRequest(request));
         this.sendRequest(request);
@@ -321,7 +322,8 @@
     public sendEvolvePokemonRequest = (pokemonId: number): void => {
         const request: IRequest = {
              Command: "EvolvePokemon",
-             Data: pokemonId.toString()
+             Data: pokemonId.toString(),
+             PokemonId: pokemonId
         };
         _.each(this.config.eventHandlers, eh => eh.onSendEvolvePokemonRequest(request));
         this.sendRequest(request);
