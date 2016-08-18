@@ -112,6 +112,8 @@ var GoogleMap = (function () {
                 });
             }
             _this.locationHistory.push({ lat: posArr[0], lng: posArr[1] });
+            if (_this.locationLine != null)
+                _this.locationLine.setMap(null);
             _this.locationLine = new google.maps.Polyline({
                 path: _this.locationHistory,
                 geodesic: true,
