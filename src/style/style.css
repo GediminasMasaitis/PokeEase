@@ -1158,14 +1158,6 @@ body {
       color: rgba(0, 0, 0, 0.5); }
     .content[data-category="settings"] .tab-pages .setting-part .setting-answer {
       width: 30%; }
-      .content[data-category="settings"] .tab-pages .setting-part .setting-answer input[type="text"] {
-        padding: 6px 10px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 3px;
-        transition: 0.2s;
-        outline: 0; }
-      .content[data-category="settings"] .tab-pages .setting-part .setting-answer input[type="text"]:focus {
-        border-color: rgba(0, 0, 0, 0.4); }
     .content[data-category="settings"] .tab-pages .setting-part + .setting-part {
       margin-top: 1em; }
 
@@ -1253,5 +1245,15 @@ input[type="checkbox"]:checked:before {
   -ms-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   transform: rotate(45deg); }
+
+input[type="text"], input[type="number"], input[type="password"] {
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  transition: 0.2s;
+  outline: 0; }
+
+input[type="text"]:focus, input[type="number"]:focus, input[type="password"]:focus {
+  border-color: rgba(0, 0, 0, 0.4); }
 
 /*# sourceMappingURL=style.css.map */
