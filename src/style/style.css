@@ -1286,7 +1286,6 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus {
 
 select {
   -webkit-appearance: none;
-  appearance: none;
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Angle_down_font_awesome.svg/512px-Angle_down_font_awesome.svg.png");
   background-size: 16px 16px;
   background-position: 95% center;
