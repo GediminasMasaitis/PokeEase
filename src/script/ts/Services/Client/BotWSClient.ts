@@ -201,9 +201,18 @@
         }
 
         else if (_.includes(type, ".InventoryListEvent,") || _.includes(type, ".ItemListResponce,")) {
-            const inventoryList = message as IInventoryListEvent;
-            inventoryList.Items = message.Items.$values;
-            inventoryList.Timestamp = timestamp;
+            let originalList: any;
+            if (_.includes(type, ".PokemonListEvent,")) {
+                originalList = message.Items.$values;
+                this.currentBotFamily = BotFamily.PMB;
+            } else {
+                originalList = message.Data.$values;
+                this.currentBotFamily = BotFamily.Necro;
+            }
+            const inventoryList: IInventoryListEvent = {
+                Items: originalList,
+                Timestamp: timestamp
+            };
             _.each(this.config.eventHandlers, eh => eh.onInventoryList(inventoryList));
         }
 

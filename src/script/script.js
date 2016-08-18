@@ -6728,9 +6728,19 @@ var BotWSClient = (function () {
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_1); });
             }
             else if (_.includes(type, ".InventoryListEvent,") || _.includes(type, ".ItemListResponce,")) {
-                var inventoryList_1 = message;
-                inventoryList_1.Items = message.Items.$values;
-                inventoryList_1.Timestamp = timestamp;
+                var originalList = void 0;
+                if (_.includes(type, ".PokemonListEvent,")) {
+                    originalList = message.Items.$values;
+                    _this.currentBotFamily = BotFamily.PMB;
+                }
+                else {
+                    originalList = message.Data.$values;
+                    _this.currentBotFamily = BotFamily.Necro;
+                }
+                var inventoryList_1 = {
+                    Items: originalList,
+                    Timestamp: timestamp
+                };
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onInventoryList(inventoryList_1); });
             }
             else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
