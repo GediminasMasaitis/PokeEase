@@ -990,7 +990,9 @@ var ProfileInfoController = (function () {
         this.setProfileData = function (profile) {
             _this.config.profileInfoElement.find(".profile-username").text(" " + profile.PlayerData.Username + " ");
             _this.config.profileInfoElement.find(".profile-pokecoin").text(profile.PlayerData.PokeCoin);
-            _this.config.profileInfoElement.find(".profile-stardust").text(profile.PlayerData.StarDust);
+            _this.config.profileInfoElement.find(".profile-stardust-current").text(profile.PlayerData.StarDust);
+            _this.config.profileInfoElement.find(".profile-stardust-loading").remove();
+            _this.config.profileInfoElement.find(".profile-stardust-loaded").show();
         };
         this.setPlayerStats = function (playerStats) {
             _this.addExp(playerStats.Experience);

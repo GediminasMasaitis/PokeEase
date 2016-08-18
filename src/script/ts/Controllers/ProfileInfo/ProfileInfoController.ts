@@ -11,7 +11,9 @@
     public setProfileData = (profile: IProfileEvent):void => {
         this.config.profileInfoElement.find(".profile-username").text(` ${profile.PlayerData.Username} `);
         this.config.profileInfoElement.find(".profile-pokecoin").text(profile.PlayerData.PokeCoin);
-        this.config.profileInfoElement.find(".profile-stardust").text(profile.PlayerData.StarDust);
+        this.config.profileInfoElement.find(".profile-stardust-current").text(profile.PlayerData.StarDust);
+        this.config.profileInfoElement.find(".profile-stardust-loading").remove();
+        this.config.profileInfoElement.find(".profile-stardust-loaded").show();
     }
 
     public setPlayerStats = (playerStats: IPlayerStatsEvent):void => {
