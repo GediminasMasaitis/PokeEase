@@ -1,4 +1,4 @@
 ﻿interface IEggMenuController {
     eggListRequested(request: IRequest): void;
-    updateEggList(eggList: IEggListEvent): void;
+    updateEggList(eggList: IEggListEvent, currentTotalKmWalked?: number): void;
 }

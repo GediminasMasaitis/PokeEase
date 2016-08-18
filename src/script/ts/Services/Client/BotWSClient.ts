@@ -4,7 +4,7 @@
     private currentlySniping: boolean;
     private running: boolean;
     private monitorInterval: number;
-    private currentBotFamily: BotFamily;
+    public currentBotFamily: BotFamily;
 
     constructor() {
         this.currentlySniping = false;
@@ -58,6 +58,8 @@
             if (this.currentBotFamily === BotFamily.Undetermined) {
                 if (_.startsWith(type, "PoGo.NecroBot.")) {
                     this.currentBotFamily = BotFamily.Necro;
+                } else {
+                    this.currentBotFamily = BotFamily.PMB;
                 }
             }
 
@@ -163,12 +165,10 @@
         else if (_.includes(type, ".PokemonListEvent,") || _.includes(type, ".PokemonListResponce,")) {
 
             let originalList: any;
-            if (_.includes(type, ".PokemonListEvent,")) {
+            if (this.currentBotFamily === BotFamily.PMB) {
                 originalList = message.PokemonList.$values;
-                this.currentBotFamily = BotFamily.PMB;
             } else {
                 originalList = message.Data.$values;
-                this.currentBotFamily = BotFamily.Necro;
             }
 
             const pokemonList: IPokemonListEvent = {
@@ -192,22 +192,27 @@
             _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
         }
 
-        else if (_.includes(type, ".EggsListEvent,")) {
-            const eggList = message as IEggListEvent;
-            eggList.Incubators = message.Incubators.$values;
-            eggList.UnusedEggs = message.UnusedEggs.$values;
+        else if (_.includes(type, ".EggsListEvent,") || _.includes(type, ".EggListResponce,")) {
+            let eggList: IEggListEvent;
+            if (this.currentBotFamily === BotFamily.PMB) {
+                eggList = message;
+                eggList.Incubators = message.Incubators.$values;
+                eggList.UnusedEggs = message.UnusedEggs.$values;
+            } else {
+                eggList = message.Data;
+                eggList.Incubators = message.Data.Incubators.$values;
+                eggList.UnusedEggs = message.Data.UnusedEggs.$values;
+            }
             eggList.Timestamp = timestamp;
             _.each(this.config.eventHandlers, eh => eh.onEggList(eggList));
         }
 
         else if (_.includes(type, ".InventoryListEvent,") || _.includes(type, ".ItemListResponce,")) {
             let originalList: any;
-            if (_.includes(type, ".PokemonListEvent,")) {
+            if (this.currentBotFamily === BotFamily.PMB) {
                 originalList = message.Items.$values;
-                this.currentBotFamily = BotFamily.PMB;
             } else {
                 originalList = message.Data.$values;
-                this.currentBotFamily = BotFamily.Necro;
             }
             const inventoryList: IInventoryListEvent = {
                 Items: originalList,
@@ -218,12 +223,10 @@
 
         else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
             let originalStats: any;
-            if(_.includes(type, ".PlayerStatsEvent,")) {
+            if (this.currentBotFamily === BotFamily.PMB) {
                 originalStats = message.PlayerStats.$values[0];
-                this.currentBotFamily = BotFamily.PMB;
             } else {
                 originalStats = message.Data.Stats;
-                this.currentBotFamily = BotFamily.Necro;
             }
             
             const playerStats = originalStats as IPlayerStatsEvent;

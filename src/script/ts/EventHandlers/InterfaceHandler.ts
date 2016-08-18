@@ -9,6 +9,7 @@
     private itemsUsedForCapture: number[];
     private currentPokemonCount: number;
     private currentItemCount: number;
+    private latestPlayerStats: IPlayerStatsEvent;
 
     constructor(config: IInterfaceHandlerConfig) {
         this.config = config;
@@ -20,6 +21,7 @@
         this.currentStardust = 0;
         this.currentPokemonCount = 0;
         this.currentItemCount = 0;
+        this.latestPlayerStats = null;
     }
 
     public onUpdatePosition = (location: IUpdatePositionEvent): void => {
@@ -188,7 +190,11 @@
     public onEggList(eggList: IEggListEvent): void {
         const totalIncubated = _.filter(eggList.Incubators, inc => inc.PokemonId != "0").length;
         const totalUnincubated = eggList.UnusedEggs.length;
-        this.config.eggMenuController.updateEggList(eggList);
+        if (this.config.requestSender.currentBotFamily === BotFamily.Necro) {
+            this.config.eggMenuController.updateEggList(eggList, this.latestPlayerStats.KmWalked);
+        } else {
+            this.config.eggMenuController.updateEggList(eggList);
+        }
         this.config.mainMenuController.setEggCount(totalIncubated + totalUnincubated);
     }
 
@@ -202,6 +208,7 @@
     public onPlayerStats(playerStats: IPlayerStatsEvent): void {
         this.currentExp = playerStats.Experience;
         this.config.profileInfoController.setPlayerStats(playerStats);
+        this.latestPlayerStats = playerStats;
     }
 
     public onSendPokemonListRequest(request: IRequest): void {

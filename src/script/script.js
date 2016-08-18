@@ -13,6 +13,9 @@ var MainMenuController = (function () {
             _this.config.requestSender.sendInventoryListRequest();
         };
         this.onEggsMenuClick = function (ev) {
+            if (_this.config.requestSender.currentBotFamily === BotFamily.Necro) {
+                _this.config.requestSender.sendPlayerStatsRequest();
+            }
             _this.config.requestSender.sendEggsListRequest();
         };
         this.updateProfileData = function (profile) {
@@ -708,16 +711,17 @@ var EggMenuController = (function () {
         this.eggListRequested = function (request) {
             _this.config.eggLoadingSpinner.show();
         };
-        this.updateEggList = function (eggList) {
+        this.updateEggList = function (eggList, currentTotalKmWalked) {
             _this.config.eggMenuElement.find(".egg").remove();
             for (var i = 0; i < eggList.Incubators.length; i++) {
                 var incubator = eggList.Incubators[i];
                 if (!incubator.PokemonId || incubator.PokemonId === "0") {
                     continue;
                 }
+                var totalKmWalked = eggList.PlayerKmWalked || currentTotalKmWalked;
                 var eggKm = Math.round(incubator.TargetKmWalked - incubator.StartKmWalked);
                 var eggKmRounded = eggKm.toFixed(1);
-                var kmWalked = eggList.PlayerKmWalked - incubator.StartKmWalked;
+                var kmWalked = totalKmWalked - incubator.StartKmWalked;
                 var kmWalkedRounded = (Math.round(kmWalked * 10) / 10).toFixed(1);
                 var progress = kmWalked / eggKm;
                 var html = "\n<div class=\"egg incubated-egg\">\n    <div class=\"incubator\"><img src=\"images/items/" + incubator.ItemId + ".png\"/></div>\n    <p> <b> " + kmWalkedRounded + " </b> / <i> " + eggKmRounded + " </i> km</p>\n    <div class=\"circle\"></div>\n</div>";
@@ -1137,6 +1141,7 @@ var InterfaceHandler = (function () {
         this.currentStardust = 0;
         this.currentPokemonCount = 0;
         this.currentItemCount = 0;
+        this.latestPlayerStats = null;
     }
     InterfaceHandler.prototype.onFortTarget = function (fortTarget) {
     };
@@ -1208,7 +1213,12 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onEggList = function (eggList) {
         var totalIncubated = _.filter(eggList.Incubators, function (inc) { return inc.PokemonId != "0"; }).length;
         var totalUnincubated = eggList.UnusedEggs.length;
-        this.config.eggMenuController.updateEggList(eggList);
+        if (this.config.requestSender.currentBotFamily === BotFamily.Necro) {
+            this.config.eggMenuController.updateEggList(eggList, this.latestPlayerStats.KmWalked);
+        }
+        else {
+            this.config.eggMenuController.updateEggList(eggList);
+        }
         this.config.mainMenuController.setEggCount(totalIncubated + totalUnincubated);
     };
     InterfaceHandler.prototype.onInventoryList = function (inventoryList) {
@@ -1220,6 +1230,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onPlayerStats = function (playerStats) {
         this.currentExp = playerStats.Experience;
         this.config.profileInfoController.setPlayerStats(playerStats);
+        this.latestPlayerStats = playerStats;
     };
     InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
         this.config.pokemonMenuController.pokemonListRequested(request);
@@ -6612,6 +6623,9 @@ var BotWSClient = (function () {
                     if (_.startsWith(type, "PoGo.NecroBot.")) {
                         _this.currentBotFamily = BotFamily.Necro;
                     }
+                    else {
+                        _this.currentBotFamily = BotFamily.PMB;
+                    }
                 }
                 var profile_1 = message.Profile;
                 profile_1.Timestamp = timestamp;
@@ -6693,13 +6707,11 @@ var BotWSClient = (function () {
             }
             else if (_.includes(type, ".PokemonListEvent,") || _.includes(type, ".PokemonListResponce,")) {
                 var originalList = void 0;
-                if (_.includes(type, ".PokemonListEvent,")) {
+                if (_this.currentBotFamily === BotFamily.PMB) {
                     originalList = message.PokemonList.$values;
-                    _this.currentBotFamily = BotFamily.PMB;
                 }
                 else {
                     originalList = message.Data.$values;
-                    _this.currentBotFamily = BotFamily.Necro;
                 }
                 var pokemonList_1 = {
                     Pokemons: [],
@@ -6720,22 +6732,28 @@ var BotWSClient = (function () {
                 });
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
             }
-            else if (_.includes(type, ".EggsListEvent,")) {
-                var eggList_1 = message;
-                eggList_1.Incubators = message.Incubators.$values;
-                eggList_1.UnusedEggs = message.UnusedEggs.$values;
+            else if (_.includes(type, ".EggsListEvent,") || _.includes(type, ".EggListResponce,")) {
+                var eggList_1;
+                if (_this.currentBotFamily === BotFamily.PMB) {
+                    eggList_1 = message;
+                    eggList_1.Incubators = message.Incubators.$values;
+                    eggList_1.UnusedEggs = message.UnusedEggs.$values;
+                }
+                else {
+                    eggList_1 = message.Data;
+                    eggList_1.Incubators = message.Data.Incubators.$values;
+                    eggList_1.UnusedEggs = message.Data.UnusedEggs.$values;
+                }
                 eggList_1.Timestamp = timestamp;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_1); });
             }
             else if (_.includes(type, ".InventoryListEvent,") || _.includes(type, ".ItemListResponce,")) {
                 var originalList = void 0;
-                if (_.includes(type, ".PokemonListEvent,")) {
+                if (_this.currentBotFamily === BotFamily.PMB) {
                     originalList = message.Items.$values;
-                    _this.currentBotFamily = BotFamily.PMB;
                 }
                 else {
                     originalList = message.Data.$values;
-                    _this.currentBotFamily = BotFamily.Necro;
                 }
                 var inventoryList_1 = {
                     Items: originalList,
@@ -6745,13 +6763,11 @@ var BotWSClient = (function () {
             }
             else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
                 var originalStats = void 0;
-                if (_.includes(type, ".PlayerStatsEvent,")) {
+                if (_this.currentBotFamily === BotFamily.PMB) {
                     originalStats = message.PlayerStats.$values[0];
-                    _this.currentBotFamily = BotFamily.PMB;
                 }
                 else {
                     originalStats = message.Data.Stats;
-                    _this.currentBotFamily = BotFamily.Necro;
                 }
                 var playerStats_1 = originalStats;
                 playerStats_1.Experience = parseInt(originalStats.Experience);

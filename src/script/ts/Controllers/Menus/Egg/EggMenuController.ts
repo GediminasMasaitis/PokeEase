@@ -10,16 +10,17 @@ class EggMenuController implements IEggMenuController {
         this.config.eggLoadingSpinner.show();
     }
 
-    public updateEggList = (eggList: IEggListEvent): void => {
+    public updateEggList = (eggList: IEggListEvent, currentTotalKmWalked?: number): void => {
         this.config.eggMenuElement.find(".egg").remove();
         for (let i = 0; i < eggList.Incubators.length; i++) {
             const incubator = eggList.Incubators[i];
             if (!incubator.PokemonId || incubator.PokemonId === "0") {
                 continue;
             }
+            const totalKmWalked = eggList.PlayerKmWalked || currentTotalKmWalked;
             const eggKm = Math.round(incubator.TargetKmWalked - incubator.StartKmWalked);
             const eggKmRounded = eggKm.toFixed(1);
-            const kmWalked = eggList.PlayerKmWalked - incubator.StartKmWalked;
+            const kmWalked = totalKmWalked - incubator.StartKmWalked;
             const kmWalkedRounded = (Math.round(kmWalked * 10) / 10).toFixed(1);
             const progress = kmWalked / eggKm;
             const html = `
