@@ -266,5 +266,25 @@ $(window).ready(function() {
 
     $(".option-toggle").click(function() {
         $(this).toggleClass('active');
-    })
+    });
+
+    // sendNotification("hello world", "#7db620", "#ffffff", "10000");
 });
+
+function sendNotification(text, bgColor, textColor, delay) {
+
+    $("#notification").text(text);
+
+    $("#notification").append("<div class='countdown'></div>");
+
+    $("#notification").css({
+        'background-color': bgColor,
+        'color': textColor
+    });
+
+    $("#notification").animate({'top': '5px'}, 500);
+
+    $("#notification .countdown").animate({'width': '0'}, parseInt(delay), 'linear');
+
+    $("#notification").delay(delay).animate({'top': -($("#notification").outerHeight() + 2)}, 500);
+}
