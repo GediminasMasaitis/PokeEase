@@ -6,6 +6,7 @@ class SettingsMenuController implements ISettingsMenuController {
     constructor(config: ISettingsMenuControllerConfig) {
         this.config = config;
         this.config.settingsButtonsElement.find("#save-changes").click(this.saveClicked);
+        this.config.settingsButtonsElement.find("#cancel-changes").click(this.cancelClicked);
         this.config.settingsMenuElement.find(":input, .option-toggle").change(this.inputChanged);
         this.settingsElements = {
             mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
@@ -55,6 +56,12 @@ class SettingsMenuController implements ISettingsMenuController {
         }
         const settings = this.getSettings();
         this.config.settingsService.apply(settings);
+        this.enableDisableButtons();
+    };
+
+    private cancelClicked = (event: JQueryEventObject): void => {
+        const currentSettings = this.config.settingsService.settings;
+        this.setSettings(currentSettings);
         this.enableDisableButtons();
     };
 }

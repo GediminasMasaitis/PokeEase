@@ -917,8 +917,14 @@ var SettingsMenuController = (function () {
             _this.config.settingsService.apply(settings);
             _this.enableDisableButtons();
         };
+        this.cancelClicked = function (event) {
+            var currentSettings = _this.config.settingsService.settings;
+            _this.setSettings(currentSettings);
+            _this.enableDisableButtons();
+        };
         this.config = config;
         this.config.settingsButtonsElement.find("#save-changes").click(this.saveClicked);
+        this.config.settingsButtonsElement.find("#cancel-changes").click(this.cancelClicked);
         this.config.settingsMenuElement.find(":input, .option-toggle").change(this.inputChanged);
         this.settingsElements = {
             mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
