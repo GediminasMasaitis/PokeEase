@@ -266,6 +266,7 @@ $(window).ready(function() {
 
     $(".option-toggle").click(function() {
         $(this).toggleClass('active');
+        $(this).trigger("change");
     });
 
     // sendNotification("hello world", "#7db620", "#ffffff", "10000");
