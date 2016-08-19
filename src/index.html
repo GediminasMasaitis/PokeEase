@@ -9,65 +9,65 @@
     </head>
 <body class="live-version">
     <div id="map" style="width: 100%; height: 100%"></div>
-    <div id="wrap">
-        <div class="open-menu">
-            Menu
+<div id="wrap">
+<div class="open-menu">
+    Menu
+    <i class="fa fa-angle-right fa-lg"></i>
+</div>
+<div id="menu" class="menu">
+    <div class="container center">
+        <div>
+            <div class="close-button">
+                <i class="fa fa-angle-left fa-lg"></i>
+            </div>
+            <div class="item" id="pokemons">
+                <div class="counter">
+                    <span class="current">0</span>/<span class="total">250</span>
+                </div>
+            </div>
+            <!-- <div class="item" id="pokedex">
+                <div class="counter">
+                    <span class="current">0</span>/<span class="total">151</span>
+                </div>
+            </div> -->
+            <div class="item" id="items">
+                <div class="counter">
+                    <span class="current">0</span>/<span class="total">350</span>
+                </div>
+            </div>
+            <div class="item" id="eggs">
+                <div class="counter">
+                    <span class="current">0</span>/<span class="total">9</span>
+                </div>
+            </div>
+            <div class="item" id="settings">
+            </div>
+
+            <a href="https://github.com/GediminasMasaitis/PokeEase/wiki" target="_blank">
+                <div class="help">
+                    <i class="fa fa-info"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="open-journal">
+    <i class="fa fa-angle-left fa-lg"></i>
+    Journal
+</div>
+<div id="journal" class="menu">
+    <div class="title">
+        <span>journal</span>
+        <div class="close-button">
             <i class="fa fa-angle-right fa-lg"></i>
         </div>
-        <div id="menu" class="menu">
-            <div class="container center">
-                <div>
-                    <div class="close-button">
-                        <i class="fa fa-angle-left fa-lg"></i>
-                    </div>
-                    <div class="item" id="pokemons">
-                        <div class="counter">
-                            <span class="current">0</span>/<span class="total">250</span>
-                        </div>
-                    </div>
-                    <!-- <div class="item" id="pokedex">
-                        <div class="counter">
-                            <span class="current">0</span>/<span class="total">151</span>
-                        </div>
-                    </div> -->
-                    <div class="item" id="items">
-                        <div class="counter">
-                            <span class="current">0</span>/<span class="total">350</span>
-                        </div>
-                    </div>
-                    <div class="item" id="eggs">
-                        <div class="counter">
-                            <span class="current">0</span>/<span class="total">9</span>
-                        </div>
-                    </div>
-                    <div class="item" id="settings">
-                    </div>
-
-                    <a href="https://github.com/GediminasMasaitis/PokeEase/wiki" target="_blank">
-                        <div class="help">
-                            <i class="fa fa-info"></i>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="open-journal">
-            <i class="fa fa-angle-left fa-lg"></i>
-            Journal
-        </div>
-        <div id="journal" class="menu">
-            <div class="title">
-                <span>journal</span>
-                <div class="close-button">
-                    <i class="fa fa-angle-right fa-lg"></i>
-                </div>
-            </div>
-            <div class="items">
-            </div>
-            <div class="clear-all">
-                <span>
+    </div>
+    <div class="items">
+    </div>
+    <div class="clear-all">
+        <span>
                     <div class="delete-icon">
                         <div class="bar1"></div>
                         <div class="bar2"></div>
@@ -75,470 +75,509 @@
                     </div>
                     Clear All
                 </span>
+    </div>
+</div>
+
+<div id="popup">
+<div class="container center">
+<div>
+<div class="inner-wrap">
+<div class="title">
+    <i class="fa fa-times close-me"></i>
+    <span> who is it? </span>
+</div>
+<div id="content-wrap">
+<div class="content" data-category="pokemons"></div>
+<div class="content" data-category="pokedex">Pokedex</div>
+<div class="content" data-category="items">
+
+
+    <div class="product" data-item-id="1">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/1.png" alt="Poke Ball"/>
+                <h1>Pokeball</h1>
             </div>
         </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+        <!-- <div class="recycle-action">
+            <input type="number" placeholder="0"/>
+            <div class="recycle-product" tabindex="-1">
+                <div class="confirm">are you sure? <span class="confirm-recycle">yes</span></div>
+                <i class="fa fa-trash fa-lg"></i> recycle
+            </div>
+        </div> -->
+    </div>
 
-        <div id="popup">
-            <div class="container center">
-                <div>
-                    <div class="inner-wrap">
-                        <div class="title">
-                            <i class="fa fa-times close-me"></i>
-                            <span> who is it? </span>
-                        </div>
-                        <div id="content-wrap">
-                            <div class="content" data-category="pokemons"></div>
-                            <div class="content" data-category="pokedex">Pokedex</div>
-                            <div class="content" data-category="items">
+    <div class="product" data-item-id="2">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/2.png" alt="greatball"/>
+                <h1>Great Ball</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
+    <div class="product" data-item-id="3">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/3.png" alt="Ultra Ball"/>
+                <h1>Ultra Ball</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product" data-item-id="1">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/1.png" alt="Poke Ball"/>
-                                            <h1>Pokeball</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                    <!-- <div class="recycle-action">
-                                        <input type="number" placeholder="0"/>
-                                        <div class="recycle-product" tabindex="-1">
-                                            <div class="confirm">are you sure? <span class="confirm-recycle">yes</span></div>
-                                            <i class="fa fa-trash fa-lg"></i> recycle
-                                        </div>
-                                    </div> -->
-                                </div>
-
-                                <div class="product" data-item-id="2">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/2.png" alt="greatball"/>
-                                            <h1>Great Ball</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
-
-                                <div class="product" data-item-id="3">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/3.png" alt="Ultra Ball"/>
-                                            <h1>Ultra Ball</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
-
-                                <div class="product" data-item-id="4">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/4.png" alt="Master Ball"/>
-                                            <h1>Master Ball</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product" data-item-id="4">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/4.png" alt="Master Ball"/>
+                <h1>Master Ball</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
 
-                                <div class="product brighter" data-item-id="101">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/101.png" alt="Potion"/>
-                                            <h1>Potion</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product brighter" data-item-id="101">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/101.png" alt="Potion"/>
+                <h1>Potion</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product brighter" data-item-id="102">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/102.png" alt="Super Potion"/>
-                                            <h1>Super Potion</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product brighter" data-item-id="102">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/102.png" alt="Super Potion"/>
+                <h1>Super Potion</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product brighter" data-item-id="103">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/103.png" alt="Hyper Potion"/>
-                                            <h1>Hyper Potion</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product brighter" data-item-id="103">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/103.png" alt="Hyper Potion"/>
+                <h1>Hyper Potion</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product brighter" data-item-id="104">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/104.png" alt="Max Potion"/>
-                                            <h1>Max Potion</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product brighter" data-item-id="104">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/104.png" alt="Max Potion"/>
+                <h1>Max Potion</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product" data-item-id="201">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/201.png" alt="Revive"/>
-                                            <h1>Revive</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product" data-item-id="201">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/201.png" alt="Revive"/>
+                <h1>Revive</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product" data-item-id="202">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/202.png" alt="Max Revive"/>
-                                            <h1>Max Revive</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product" data-item-id="202">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/202.png" alt="Max Revive"/>
+                <h1>Max Revive</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product" data-item-id="301">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/301.png" alt="Lucky Egg"/>
-                                            <h1>Lucky Egg</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product" data-item-id="301">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/301.png" alt="Lucky Egg"/>
+                <h1>Lucky Egg</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product" data-item-id="401">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/401.png" alt="Incense"/>
-                                            <h1>Incense</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product" data-item-id="401">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/401.png" alt="Incense"/>
+                <h1>Incense</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product brighter" data-item-id="501">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/501.png"  alt="Lure Module"/>
-                                            <h1>Lure Module</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product brighter" data-item-id="501">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/501.png" alt="Lure Module"/>
+                <h1>Lure Module</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product brighter" data-item-id="701">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/701.png" alt="Razzberry"/>
-                                            <h1>Razzberry</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product brighter" data-item-id="701">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/701.png" alt="Razzberry"/>
+                <h1>Razzberry</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product" data-item-id="801">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/801.png" alt="Camera"/>
-                                            <h1>Camera</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product" data-item-id="801">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/801.png" alt="Camera"/>
+                <h1>Camera</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                                <div class="product brighter" data-item-id="901">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/901.png" alt="Unlimited Egg Incubator"/>
-                                            <h1>Unlimited Egg Incubator</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number">∞</div>
-                                </div>
+    <div class="product brighter" data-item-id="901">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/901.png" alt="Unlimited Egg Incubator"/>
+                <h1>Unlimited Egg Incubator</h1>
+            </div>
+        </div>
+        <div class="number">∞</div>
+    </div>
 
-                                <div class="product brighter" data-item-id="202">
-                                    <div class="product-info">
-                                        <div class="wrapper">
-                                            <img src="images/items/902.png" alt="Egg Incubator"/>
-                                            <h1>Egg Incubator</h1>
-                                        </div>
-                                    </div>
-                                    <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i></div>
-                                </div>
+    <div class="product brighter" data-item-id="202">
+        <div class="product-info">
+            <div class="wrapper">
+                <img src="images/items/902.png" alt="Egg Incubator"/>
+                <h1>Egg Incubator</h1>
+            </div>
+        </div>
+        <div class="number"><i class="fa fa-circle-o-notch fa-spin"></i>
+        </div>
+    </div>
 
-                            </div>
+</div>
 
 
 
-                            <!--- E G G S -->
-                            <div class="content" data-category="eggs">
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/901.png"/></div>
-                                    <p> <b> 1.2 </b> / <i> 2.0 </i> km</p>
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/902.png"/></div>
-                                    <p> <b> 1.2 </b> / <i> 3.0 </i> km</p>
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/902.png"/></div>
-                                    <p> <b> 1.2 </b> / <i> 4.0 </i> km</p>
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/901.png"/></div>
-                                    <p> <b> 1.2 </b> / <i> 5.0 </i> km</p>
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/901.png"/></div>
-                                    <p> <b> 1.2 </b> / <i> 6.0 </i> km</p>
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/901.png"/></div>
-                                    <p> <b> 1.2 </b> / <i> 7.0 </i> km</p>
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/901.png"/></div>
-                                    <p> <b> 1.2 </b> / <i> 8.0 </i> km</p>
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/901.png"/></div>
-                                    <p> <b> 1.2 </b> / <i> 9.0 </i> km</p>
-                                    <div class="circle"></div>
-                                </div>
-                                <div class="egg">
-                                    <div class="incubator"><img src="images/items/0.png"/></div>
-                                    <p> <i> 10.0 </i> km</p>
-                                </div>
+<!--- E G G S -->
+<div class="content" data-category="eggs">
+    <div class="egg">
+        <div class="incubator"><img src="images/items/901.png"/>
+        </div>
+        <p> <b> 1.2 </b> / <i> 2.0 </i> km
+        </p>
+        <div class="circle"></div>
+    </div>
+    <div class="egg">
+        <div class="incubator"><img src="images/items/902.png"/>
+        </div>
+        <p> <b> 1.2 </b> / <i> 3.0 </i> km
+        </p>
+        <div class="circle"></div>
+    </div>
+    <div class="egg">
+        <div class="incubator"><img src="images/items/902.png"/>
+        </div>
+        <p> <b> 1.2 </b> / <i> 4.0 </i> km
+        </p>
+        <div class="circle"></div>
+    </div>
+    <div class="egg">
+        <div class="incubator"><img src="images/items/901.png"/>
+        </div>
+        <p> <b> 1.2 </b> / <i> 5.0 </i> km
+        </p>
+        <div class="circle"></div>
+    </div>
+    <div class="egg">
+        <div class="incubator"><img src="images/items/901.png"/>
+        </div>
+        <p> <b> 1.2 </b> / <i> 6.0 </i> km
+        </p>
+        <div class="circle"></div>
+    </div>
+    <div class="egg">
+        <div class="incubator"><img src="images/items/901.png"/>
+        </div>
+        <p> <b> 1.2 </b> / <i> 7.0 </i> km
+        </p>
+        <div class="circle"></div>
+    </div>
+    <div class="egg">
+        <div class="incubator"><img src="images/items/901.png"/>
+        </div>
+        <p> <b> 1.2 </b> / <i> 8.0 </i> km
+        </p>
+        <div class="circle"></div>
+    </div>
+    <div class="egg">
+        <div class="incubator"><img src="images/items/901.png"/>
+        </div>
+        <p> <b> 1.2 </b> / <i> 9.0 </i> km
+        </p>
+        <div class="circle"></div>
+    </div>
+    <div class="egg">
+        <div class="incubator"><img src="images/items/0.png"/>
+        </div>
+        <p> <i> 10.0 </i> km
+        </p>
+    </div>
 
-                            </div>
-
-
-                            <!-- S E T T I N G S -->
-                            <div class="content" data-category="settings">
-                                <div class="tab-buttons">
-                                    <div class="settings-1 selected">One</div>
-                                    <div class="settings-2">two</div>
-                                    <div class="settings-3">Three</div>
-                                </div>
-                                <div class="tab-pages">
-
-
-                                    <div id="settings-1" style="display: block;">
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Map type </h6>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">Your hobby
-                                                    <span>What u do in yer free time?</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <select>
-                                                        <option> Sleeping </option>
-                                                        <option> Eating </option>
-                                                        <option> Drinking </option>
-                                                        <option> Coding </option>
-                                                        <option> Catching Pokemens </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">Love rate
-                                                    <span>How much do you love us?</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="checkbox" name="map-type" value="p15" id="p15"> <label for="p15">1-5</label> <br/>
-                                                    <input type="checkbox" name="map-type" value="p511" id="p511" checked> <label for="p511">6-12</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">Your Name
-                                                    <span>How they call you in da hood?</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="text" value="meh name"/>
-                                                </div>
-                                            </div>
-
-                                        </div>
+</div>
 
 
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Map type </h6>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">Map Service Provider
-                                                    <span>You can choose your map provider!</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="radio" name="map-type" value="OSM" id="OSM"> <label for="OSM">OSM</label> <br/>
-                                                    <input type="radio" name="map-type" value="Gmaps" checked id="Gmaps"> <label for="Gmaps">Google Maps</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">True or false
-                                                    <span>Just tell us..</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <div class="option-toggle">
-                                                        <div class="toggle-circle"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
+<!-- S E T T I N G S -->
+<div class="content" data-category="settings">
+    <div class="tab-buttons">
+        <div class="settings-1 selected">One</div>
+        <div class="settings-2">two</div>
+        <div class="settings-3">Three</div>
+    </div>
+    <div class="tab-pages">
 
 
+        <div id="settings-1" style="display: block;">
+            <div class="setting-topic">
+                <h6 class="setting-name"> Map type </h6>
 
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Map type </h6>
+                <div class="setting-part">
+                    <div class="setting-question">Your hobby
+                        <span>What u do in yer free time?</span>
+                    </div>
+                    <div class="setting-answer">
+                        <select>
+                            <option> Sleeping </option>
+                            <option> Eating </option>
+                            <option> Drinking </option>
+                            <option> Coding </option>
+                            <option> Catching Pokemens </option>
+                        </select>
+                    </div>
+                </div>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">Map Service Provider
-                                                    <span>You can choose your map provider!</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="radio" name="map-type" value="OSM"> OSM <br/>
-                                                    <input type="radio" name="map-type" value="Gmaps" checked> Google Maps
-                                                </div>
-                                            </div>
+                <div class="setting-part">
+                    <div class="setting-question">Love rate
+                        <span>How much do you love us?</span>
+                    </div>
+                    <div class="setting-answer">
+                        <input type="checkbox" name="map-type" value="p15" id="p15"> <label for="p15">1-5</label> <br/>
+                        <input type="checkbox" name="map-type" value="p511" id="p511" checked> <label for="p511">6-12</label>
+                    </div>
+                </div>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">Love rate
-                                                    <span>How much do you love us?</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="checkbox" name="map-type" value="OSM"> 1-5 <br/>
-                                                    <input type="checkbox" name="map-type" value="Gmaps" checked> 5-11
-                                                </div>
-                                            </div>
+                <div class="setting-part">
+                    <div class="setting-question">Your Name
+                        <span>How they call you in da hood?</span>
+                    </div>
+                    <div class="setting-answer">
+                        <input type="text" value="meh name"/>
+                    </div>
+                </div>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">Your Name
-                                                    <span>How they call you in da hood?</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="text" value="meh name"/>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div id="settings-2">
-                                        two
-                                    </div>
+            </div>
 
 
-                                    <div id="settings-3">
-                                        three
-                                    </div>
+            <div class="setting-topic">
+                <h6 class="setting-name"> Map type </h6>
 
+                <div class="setting-part">
+                    <div class="setting-question">Map Service Provider
+                        <span>You can choose your map provider!</span>
+                    </div>
+                    <div class="setting-answer">
+                        <input type="radio" name="map-type" value="OSM" id="OSM"> <label for="OSM">OSM</label> <br/>
+                        <input type="radio" name="map-type" value="Gmaps" checked id="Gmaps"> <label for="Gmaps">Google Maps</label>
+                    </div>
+                </div>
 
-                                </div>
-                            </div>
-
-
-
-
-                        </div>
-
-                        <div id="pokemon-info">
-                            <div class="vertical-align-helper"></div>
-                            <div id="pokemon-content">
-                                <i class="fa fa-times close-button"></i>
-                                <h1 id="pokemon-info-name">Gyarados</h1>
-                                <img id="pokemon-info-image" src="images/pokemon/130.png"/>
-                                <div id="pokemon-type"></div>
-                                <div id="pokemon-iv">
-                                    <div> Attack    <span class="attack">13</span> </div>
-                                    <div> Defense <span class="defense">15</span> </div>
-                                    <div> Stamina <span class="stamina">10</span> </div>
-                                </div>
-                                <div class="total-iv">67.43%</div>
-                                <div class="poke-cp">1524</div>
-                                <div class="move move1"></div>
-                                <div class="move move2"></div>
-                                <div class="pkm-candies"></div>
-
-                                <div class="controls">
-                                    <div id="transfer-pokemon-button" tabindex="-1">
-                                        <div class="confirm">are you sure? <span id="confirm-transfer">yes</span></div>
-                                        <i class="fa fa-trash fa-lg"></i> transfer
-                                    </div>
-                                    <div id="evolve-pokemon-button" tabindex="-1">
-                                        <div class="confirm">are you sure? <span id="confirm-evolve">yes</span></div>
-                                        <i class="fa fa-arrow-circle-up fa-lg"></i> evolve
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="container center spinner-overlay" style="background-color: rgba(237, 237, 237, 0.7); display: none;">
-                            <div>
-                                <i class="fa fa-circle-o-notch fa-3x fa-spin"></i>
-                            </div>
+                <div class="setting-part">
+                    <div class="setting-question">True or false
+                        <span>Just tell us..</span>
+                    </div>
+                    <div class="setting-answer">
+                        <div class="option-toggle">
+                            <div class="toggle-circle"></div>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="overlay"></div>
-        </div>
-        <div id="profile" class="menu">
-            <i class="fa fa-angle-down hide"></i>
-            <div class="user-info">
-                <h1 class="profile-username"> <i class="fa fa-circle-o-notch fa-spin"></i> </h1>
-                <h6 class="profile-lvl"> <i class="fa fa-circle-o-notch fa-spin"></i> </h6>
-                <div class="profile-exp">
-                    <div class="profile-exp-loading"> <i class="fa fa-circle-o-notch fa-spin"></i> </div>
-                    <div class="profile-exp-loaded" style="display: none">
-                        <span class="profile-exp-current">0</span> / <span class="profile-exp-next">1000</span>
+
+
+
+            <div class="setting-topic">
+                <h6 class="setting-name"> Map type </h6>
+
+                <div class="setting-part">
+                    <div class="setting-question">Map Service Provider
+                        <span>You can choose your map provider!</span>
+                    </div>
+                    <div class="setting-answer">
+                        <input type="radio" name="map-type" value="OSM"> OSM <br/>
+                        <input type="radio" name="map-type" value="Gmaps" checked> Google Maps
                     </div>
                 </div>
-                <div class="xp-progress"><div class="current-xp"></div></div>
+
+                <div class="setting-part">
+                    <div class="setting-question">Love rate
+                        <span>How much do you love us?</span>
+                    </div>
+                    <div class="setting-answer">
+                        <input type="checkbox" name="map-type" value="OSM"> 1-5 <br/>
+                        <input type="checkbox" name="map-type" value="Gmaps" checked> 5-11
+                    </div>
+                </div>
+
+                <div class="setting-part">
+                    <div class="setting-question">Your Name
+                        <span>How they call you in da hood?</span>
+                    </div>
+                    <div class="setting-answer">
+                        <input type="text" value="meh name"/>
+                    </div>
+                </div>
+
             </div>
-            <div class="user-items">
-                <div>
-                    <img src="images/items/Stardust.png" alt="Stardust"/>
-                    <span class="profile-stardust">
+
+        </div>
+
+
+        <div id="settings-2">
+            two
+        </div>
+
+
+        <div id="settings-3">
+            three
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+</div>
+
+<div id="pokemon-info">
+    <div class="vertical-align-helper"></div>
+    <div id="pokemon-content">
+        <i class="fa fa-times close-button"></i>
+        <h1 id="pokemon-info-name">Gyarados</h1>
+        <img id="pokemon-info-image" src="images/pokemon/130.png"/>
+        <div id="pokemon-type"></div>
+        <div id="pokemon-iv">
+            <div> Attack <span class="attack">13</span> </div>
+            <div> Defense <span class="defense">15</span> </div>
+            <div> Stamina <span class="stamina">10</span> </div>
+        </div>
+        <div class="total-iv">67.43%</div>
+        <div class="poke-cp">1524</div>
+        <div class="move move1"></div>
+        <div class="move move2"></div>
+        <div class="pkm-candies"></div>
+
+        <div class="controls">
+            <div id="transfer-pokemon-button" tabindex="-1">
+                <div class="confirm">are you sure? <span id="confirm-transfer">yes</span></div>
+                <i class="fa fa-trash fa-lg"></i> transfer
+            </div>
+            <div id="evolve-pokemon-button" tabindex="-1">
+                <div class="confirm">are you sure? <span id="confirm-evolve">yes</span></div>
+                <i class="fa fa-arrow-circle-up fa-lg"></i> evolve
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container center spinner-overlay" style="background-color: rgba(237, 237, 237, 0.7); display: none;">
+    <div>
+        <i class="fa fa-circle-o-notch fa-3x fa-spin"></i>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<div class="overlay"></div>
+</div>
+<div id="profile" class="menu">
+    <i class="fa fa-angle-down hide"></i>
+    <div class="user-info">
+        <h1 class="profile-username"> <i class="fa fa-circle-o-notch fa-spin"></i>
+        </h1>
+        <h6 class="profile-lvl"> <i class="fa fa-circle-o-notch fa-spin"></i> </h6>
+        <div class="profile-exp">
+            <div class="profile-exp-loading"> <i class="fa fa-circle-o-notch fa-spin"></i>
+            </div>
+            <div class="profile-exp-loaded" style="display: none">
+                <span class="profile-exp-current">0</span> / <span class="profile-exp-next">1000</span>
+            </div>
+        </div>
+        <div class="xp-progress">
+            <div class="current-xp"></div>
+        </div>
+    </div>
+    <div class="user-items">
+        <div>
+            <img src="images/items/Stardust.png" alt="Stardust"/>
+            <span class="profile-stardust">
                         <span class="profile-stardust-loading"> <i class="fa fa-circle-o-notch fa-spin"></i> </span>
                         <span class="profile-stardust-loaded" style="display: none">
                             <span class="profile-stardust-current">0</span>
                         </span>
                     </span>
-                </div>
-                <div>
-                    <img src="images/items/PokeCoin.png" alt="Pokecoin"/>
-                    <span class="profile-pokecoin"><i class="fa fa-circle-o-notch fa-spin"></i></span>
-                </div>
-            </div>
+        </div>
+        <div>
+            <img src="images/items/PokeCoin.png" alt="Pokecoin"/>
+            <span class="profile-pokecoin"><i class="fa fa-circle-o-notch fa-spin"></i></span>
         </div>
     </div>
-    <script src="external/jquery-3.1.0.js"></script>
-    <script src="external/lodash.js"></script>
-    <script src="external/leaflet.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-    <script src="external/jquery.animateNumber.js"></script>
-    <script src="external/jquery.qtip.min.js"></script>
-    <script src="external/moment-with-locales.js"></script>
-    <script src="external/circle-progress.js"></script>
-    <script src="script/interface-scripts.js"></script>
-    <script src="script/script.js"></script>
+</div>
+</div>
+    <script type="text/javascript" src="external/localStoragePolyfill.js"></script>
+    <script type="text/javascript" src="external/jquery-3.1.0.js"></script>
+    <script type="text/javascript" src="external/lodash.js"></script>
+    <script type="text/javascript" src="external/leaflet.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    <script type="text/javascript" src="external/jquery.animateNumber.js"></script>
+    <script type="text/javascript" src="external/jquery.qtip.min.js"></script>
+    <script type="text/javascript" src="external/moment-with-locales.js"></script>
+    <script type="text/javascript" src="external/circle-progress.js"></script>
+    <script type="text/javascript" src="script/interface-scripts.js"></script>
+    <script type="text/javascript" src="script/script.js"></script>
 </body>
 </html>
