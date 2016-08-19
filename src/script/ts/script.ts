@@ -57,7 +57,7 @@ $(() => {
     });
 
     const mapConfig: IMapConfig = {
-        followPlayer: true,
+        followPlayer: settings.mapFolllowPlayer,
         translationController: translationController,
         mapElement: $("#map")
     };

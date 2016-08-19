@@ -881,12 +881,19 @@ var SettingsMenuController = (function () {
         };
         this.setSettings = function (settings) {
             _this.settingsElements.mapProvider.filter("[value='" + settings.mapProvider + "']").prop("checked", true);
+            if (settings.mapFolllowPlayer) {
+                _this.settingsElements.mapFolllowPlayer.addClass("active");
+            }
+            else {
+                _this.settingsElements.mapFolllowPlayer.removeClass("active");
+            }
+            _this.settingsElements.mapClearing.val(settings.mapClearing);
         };
         this.getSettings = function () {
             var settings = {
                 mapProvider: parseInt(_this.settingsElements.mapProvider.filter(":checked").val()),
-                mapFolllowPlayer: true,
-                mapClearing: 0,
+                mapFolllowPlayer: _this.settingsElements.mapFolllowPlayer.hasClass("active"),
+                mapClearing: parseInt(_this.settingsElements.mapClearing.val()),
                 clientPort: DefaultSettings.settings.clientPort
             };
             return settings;
@@ -900,7 +907,7 @@ var SettingsMenuController = (function () {
         };
         this.config = config;
         this.config.settingsButtonsElement.find("#save-changes").click(this.saveClicked);
-        this.config.settingsMenuElement.find(":input").change(this.inputChanged);
+        this.config.settingsMenuElement.find(":input, .option-toggle").change(this.inputChanged);
         this.settingsElements = {
             mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
             mapFolllowPlayer: this.config.settingsMenuElement.find("[name='settings-map-follow-player']"),
@@ -1176,6 +1183,9 @@ var InterfaceHandler = (function () {
                 _this.config.mainMenuController.setPokemonCount(_this.currentPokemonCount);
             }
         };
+        this.onSettingsChanged = function (settings, previousSettings) {
+            _this.config.map.config.followPlayer = settings.mapFolllowPlayer;
+        };
         this.config = config;
         this.config.settingsService.subscribe(this.onSettingsChanged);
         this.currentlySniping = false;
@@ -1292,8 +1302,6 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onSendTransferPokemonRequest = function (request) {
     };
     InterfaceHandler.prototype.onSendEvolvePokemonRequest = function (request) {
-    };
-    InterfaceHandler.prototype.onSettingsChanged = function (settings, previousSettings) {
     };
     return InterfaceHandler;
 }());
@@ -7237,7 +7245,7 @@ $(function () {
         profileInfoElement: $("#profile")
     });
     var mapConfig = {
-        followPlayer: true,
+        followPlayer: settings.mapFolllowPlayer,
         translationController: translationController,
         mapElement: $("#map")
     };

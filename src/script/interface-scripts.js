@@ -266,5 +266,6 @@ $(window).ready(function() {
 
     $(".option-toggle").click(function() {
         $(this).toggleClass('active');
-    })
+        $(this).trigger("change");
+    });
 });
