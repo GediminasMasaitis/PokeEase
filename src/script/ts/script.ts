@@ -62,7 +62,7 @@ $(() => {
         mapElement: $("#map")
     };
 
-    const useGoogleMap = true;
+    const useGoogleMap = settings.mapProvider === MapProvider.GMaps;
     const lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
 
     const interfaceHandler = new InterfaceHandler({

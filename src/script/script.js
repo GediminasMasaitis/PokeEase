@@ -876,12 +876,15 @@ var PokemonMenuController = (function () {
 var SettingsMenuController = (function () {
     function SettingsMenuController(config) {
         var _this = this;
+        this.inputChanged = function (ev) {
+            _this.config.settingsButtonsElement.removeClass("disabled");
+        };
         this.setSettings = function (settings) {
-            _this.settingsElements.mapProvider.val(MapProvider[settings.mapProvider]);
+            _this.settingsElements.mapProvider.filter("[value='" + settings.mapProvider + "']").prop("checked", true);
         };
         this.getSettings = function () {
             var settings = {
-                mapProvider: MapProvider[_this.settingsElements.mapProvider.filter(":checked").val()],
+                mapProvider: parseInt(_this.settingsElements.mapProvider.filter(":checked").val()),
                 mapFolllowPlayer: true,
                 mapClearing: 0,
                 clientPort: DefaultSettings.settings.clientPort
@@ -897,6 +900,7 @@ var SettingsMenuController = (function () {
         };
         this.config = config;
         this.config.settingsButtonsElement.find("#save-changes").click(this.saveClicked);
+        this.config.settingsMenuElement.find(":input").change(this.inputChanged);
         this.settingsElements = {
             mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
             mapFolllowPlayer: this.config.settingsMenuElement.find("[name='settings-map-follow-player']"),
@@ -7237,7 +7241,7 @@ $(function () {
         translationController: translationController,
         mapElement: $("#map")
     };
-    var useGoogleMap = true;
+    var useGoogleMap = settings.mapProvider === MapProvider.GMaps;
     var lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
     var interfaceHandler = new InterfaceHandler({
         translationController: translationController,

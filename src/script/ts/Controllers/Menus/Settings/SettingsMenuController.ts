@@ -6,6 +6,7 @@ class SettingsMenuController implements ISettingsMenuController {
     constructor(config: ISettingsMenuControllerConfig) {
         this.config = config;
         this.config.settingsButtonsElement.find("#save-changes").click(this.saveClicked);
+        this.config.settingsMenuElement.find(":input").change(this.inputChanged);
         this.settingsElements = {
             mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
             mapFolllowPlayer: this.config.settingsMenuElement.find("[name='settings-map-follow-player']"),
@@ -13,13 +14,17 @@ class SettingsMenuController implements ISettingsMenuController {
         }
     }
 
+    private inputChanged = (ev: JQueryEventObject): void => {
+        this.config.settingsButtonsElement.removeClass("disabled");
+    }
+
     public setSettings = (settings: ISettings): void => {
-        this.settingsElements.mapProvider.val(MapProvider[settings.mapProvider]);
+        this.settingsElements.mapProvider.filter(`[value='${settings.mapProvider}']`).prop("checked", true);
     }
 
     public getSettings = (): ISettings => {
         const settings: ISettings = {
-            mapProvider: MapProvider[this.settingsElements.mapProvider.filter(":checked").val()] as any as MapProvider,
+            mapProvider: parseInt(this.settingsElements.mapProvider.filter(":checked").val()),
             mapFolllowPlayer: true,
             mapClearing: 0,
             clientPort: DefaultSettings.settings.clientPort
