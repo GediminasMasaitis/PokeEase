@@ -77,4 +77,13 @@
     public subscribe(action: (settings: ISettings, previousSettings: ISettings) => void): void {
         this.subscribers.push(action);
     }
+
+    public settingsEqual(settings: ISettings, to: ISettings):boolean {
+        let equal = true;
+        equal = equal && settings.mapProvider === to.mapProvider;
+        equal = equal && settings.mapFolllowPlayer === to.mapFolllowPlayer;
+        equal = equal && settings.mapClearing === to.mapClearing;
+        equal = equal && settings.clientPort === to.clientPort;
+        return equal;
+    }
 }

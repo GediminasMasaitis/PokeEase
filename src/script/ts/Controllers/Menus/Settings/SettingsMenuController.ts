@@ -15,7 +15,18 @@ class SettingsMenuController implements ISettingsMenuController {
     }
 
     private inputChanged = (ev: JQueryEventObject): void => {
-        this.config.settingsButtonsElement.removeClass("disabled");
+        this.enableDisableButtons();
+    }
+
+    private enableDisableButtons = (): void => {
+        const currentSettings = this.config.settingsService.settings;
+        const changedSettings = this.getSettings();
+        const areEqual = this.config.settingsService.settingsEqual(currentSettings, changedSettings);
+        if (areEqual) {
+            this.config.settingsButtonsElement.addClass("disabled");
+        } else {
+            this.config.settingsButtonsElement.removeClass("disabled");
+        }
     }
 
     public setSettings = (settings: ISettings): void => {
@@ -44,5 +55,6 @@ class SettingsMenuController implements ISettingsMenuController {
         }
         const settings = this.getSettings();
         this.config.settingsService.apply(settings);
+        this.enableDisableButtons();
     };
 }

@@ -877,7 +877,18 @@ var SettingsMenuController = (function () {
     function SettingsMenuController(config) {
         var _this = this;
         this.inputChanged = function (ev) {
-            _this.config.settingsButtonsElement.removeClass("disabled");
+            _this.enableDisableButtons();
+        };
+        this.enableDisableButtons = function () {
+            var currentSettings = _this.config.settingsService.settings;
+            var changedSettings = _this.getSettings();
+            var areEqual = _this.config.settingsService.settingsEqual(currentSettings, changedSettings);
+            if (areEqual) {
+                _this.config.settingsButtonsElement.addClass("disabled");
+            }
+            else {
+                _this.config.settingsButtonsElement.removeClass("disabled");
+            }
         };
         this.setSettings = function (settings) {
             _this.settingsElements.mapProvider.filter("[value='" + settings.mapProvider + "']").prop("checked", true);
@@ -904,6 +915,7 @@ var SettingsMenuController = (function () {
             }
             var settings = _this.getSettings();
             _this.config.settingsService.apply(settings);
+            _this.enableDisableButtons();
         };
         this.config = config;
         this.config.settingsButtonsElement.find("#save-changes").click(this.saveClicked);
@@ -7048,6 +7060,14 @@ var LocalStorageSettingsService = (function () {
     };
     LocalStorageSettingsService.prototype.subscribe = function (action) {
         this.subscribers.push(action);
+    };
+    LocalStorageSettingsService.prototype.settingsEqual = function (settings, to) {
+        var equal = true;
+        equal = equal && settings.mapProvider === to.mapProvider;
+        equal = equal && settings.mapFolllowPlayer === to.mapFolllowPlayer;
+        equal = equal && settings.mapClearing === to.mapClearing;
+        equal = equal && settings.clientPort === to.clientPort;
+        return equal;
     };
     return LocalStorageSettingsService;
 }());
