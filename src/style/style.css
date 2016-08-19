@@ -103,8 +103,7 @@ body {
   height: 50px;
   transition: 0.3s;
   border-radius: 100%;
-  margin: auto;
-  margin-bottom: 2.5em;
+  margin: 2.5em auto;
   text-align: center;
   background: rgba(0, 0, 0, 0.4);
   cursor: pointer; }
@@ -118,8 +117,7 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 100%;
-  margin: auto;
-  margin-top: 2.5em;
+  margin: 2.5em auto;
   text-align: center;
   background: rgba(0, 0, 0, 0.4);
   cursor: pointer;
@@ -1121,28 +1119,29 @@ body {
   padding: 0 !important;
   padding-bottom: 2em !important; }
   .content[data-category="settings"] .tab-buttons {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-    border-spacing: 10px; }
+    display: block;
+    padding: 1em 0; }
     .content[data-category="settings"] .tab-buttons div {
-      display: table-cell;
-      padding: 1em;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+      display: inline-block;
+      padding: 1em 2em;
+      box-shadow: inset 0 -2px rgba(0, 0, 0, 0.2);
       transition: 0.2s;
-      background: rgba(255, 255, 255, 0.5);
-      color: rgba(0, 0, 0, 0.5);
-      cursor: pointer; }
+      color: rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 1em; }
     .content[data-category="settings"] .tab-buttons div.selected {
-      background: white;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
-      color: black;
+      box-shadow: inset 0 -2px #2196f3;
+      color: #2196f3;
       pointer-events: none; }
   .content[data-category="settings"] .tab-pages > div {
     text-align: center;
     padding: 1em;
     margin: 1em;
     line-height: 2;
+    margin-top: 0;
     display: none; }
   .content[data-category="settings"] .tab-pages .setting-topic {
     background: white;
@@ -1174,6 +1173,8 @@ body {
       color: rgba(0, 0, 0, 0.5); }
     .content[data-category="settings"] .tab-pages .setting-part .setting-answer {
       width: 40%; }
+      .content[data-category="settings"] .tab-pages .setting-part .setting-answer input[type="text"], .content[data-category="settings"] .tab-pages .setting-part .setting-answer input[type="number"], .content[data-category="settings"] .tab-pages .setting-part .setting-answer input[type="password"], .content[data-category="settings"] .tab-pages .setting-part .setting-answer select {
+        margin-right: 0.5em; }
     .content[data-category="settings"] .tab-pages .setting-part + .setting-part {
       padding-top: 1em;
       margin-top: 1em;
