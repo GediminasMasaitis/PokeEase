@@ -1186,8 +1186,7 @@ body {
   bottom: 0px;
   margin: 0 auto;
   background: rgba(237, 237, 237, 0.85);
-  padding: 1em;
-  display: none; }
+  padding: 1em; }
   #settings-buttons .button {
     margin: 0 0.5em;
     border-radius: 3px;
@@ -1205,7 +1204,7 @@ body {
   #settings-buttons.disabled .button {
     pointer-events: auto;
     cursor: auto;
-    background: rgba(0, 0, 0, 0.1) !important;
+    background: #d8d8d8 !important;
     color: rgba(0, 0, 0, 0.6); }
 
 input[type="radio"] {
