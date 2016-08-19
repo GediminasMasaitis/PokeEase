@@ -101,16 +101,22 @@ var GoogleMap = (function () {
             if (_this.config.followPlayer) {
                 var from = { lat: _this.map.getCenter().lat(), lng: _this.map.getCenter().lng() };
                 var to = { lat: posArr[0], lng: posArr[1] };
-                var currentMap = _this.map;
+                var currentMap_1 = _this.map;
                 $(from).animate(to, {
                     duration: 200,
                     step: function (cs, t) {
                         var newPos;
-                        if (t.prop === "lat")
-                            newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
-                        if (t.prop === "lng")
-                            newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
-                        currentMap.setCenter(newPos);
+                        switch (t.prop) {
+                            case "lat":
+                                newPos = new google.maps.LatLng(cs, currentMap_1.getCenter().lng());
+                                break;
+                            case "lng":
+                                newPos = new google.maps.LatLng(currentMap_1.getCenter().lat(), cs);
+                                break;
+                            default:
+                                throw "Unknown t.prop";
+                        }
+                        currentMap_1.setCenter(newPos);
                     }
                 });
             }
@@ -488,7 +494,8 @@ var GoogleMap = (function () {
             scaleControl: false,
             zoomControl: false,
         };
-        this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        var mapElement = this.config.mapElement.get(0);
+        this.map = new google.maps.Map(mapElement, mapOptions);
         this.playerMarker = new google.maps.Marker({
             map: this.map,
             position: new google.maps.LatLng(51.5073509, -0.12775829999998223),
@@ -619,7 +626,7 @@ var LeafletMap = (function () {
             });
         };
         this.config = config;
-        this.map = L.map("map", {
+        this.map = L.map(this.config.mapElement.get(0), {
             zoomControl: false
         }).setView([0, 0], 16);
         var mainLayer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png");
@@ -7185,7 +7192,8 @@ $(function () {
     });
     var mapConfig = {
         followPlayer: true,
-        translationController: translationController
+        translationController: translationController,
+        mapElement: $("#map")
     };
     var useGoogleMap = true;
     var lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);

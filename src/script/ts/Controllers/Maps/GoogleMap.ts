@@ -15,27 +15,6 @@ class GoogleMap implements IMap {
     constructor(config: IMapConfig) {
         this.config = config;
 
-        //var mapStyleOld = [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2e5d4"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#acbcc9"}]}];
-        //var mapStyle = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#000000"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":17}]}];
-        //var mapStyle = [{"featureType":"all","elementType":"all","stylers":[{"invert_lightness":true},{"saturation":10},{"lightness":30},{"gamma":0.5},{"hue":"#435158"}]}];
-        /* var mapStyle: any = [{ "featureType": "all", "elementType": "geometry", "stylers": [{ "color": "#262c33" }] },
-        { "featureType": "all", "elementType": "labels.text.fill", "stylers": [{ "gamma": 0.01 }, { "lightness": 20 }, { "color": "#949aa6" }] },
-        { "featureType": "all", "elementType": "labels.text.stroke", "stylers": [{ "saturation": -31 }, { "lightness": -33 }, { "weight": 2 }, { "gamma": "0.00" }, { "visibility": "off" }] },
-        { "featureType": "all", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.country", "elementType": "all", "stylers": [{ "visibility": "off" }] },
-        { "featureType": "administrative.province", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.locality", "elementType": "all", "stylers": [{ "visibility": "simplified" }] },
-        { "featureType": "administrative.locality", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] }, { "featureType": "administrative.neighborhood", "elementType": "all", "stylers": [{ "visibility": "off" }] },
-        { "featureType": "administrative.land_parcel", "elementType": "all", "stylers": [{ "visibility": "off" }] },
-        { "featureType": "landscape", "elementType": "geometry", "stylers": [{ "lightness": 30 }, { "saturation": 30 }, { "color": "#323c47" }, { "visibility": "on" }] },
-        { "featureType": "poi", "elementType": "geometry", "stylers": [{ "saturation": "0" }, { "lightness": "0" }, { "gamma": "0.30" }, { "weight": "0.01" }, { "visibility": "off" }] },
-        { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "lightness": "100" }, { "saturation": -20 }, { "visibility": "simplified" }, { "color": "#303a45" }] },
-        { "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 10 }, { "saturation": -30 }, { "color": "#282e36" }] },
-        { "featureType": "road", "elementType": "geometry.stroke", "stylers": [{ "saturation": "-100" }, { "lightness": "-100" }, { "gamma": "0.00" }, { "color": "#2a3037" }] },
-        { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "on" }] }, { "featureType": "road", "elementType": "labels.text", "stylers": [{ "visibility": "on" }, { "color": "#575e6b" }] },
-        { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
-        { "featureType": "road.highway", "elementType": "geometry.fill", "stylers": [{ "color": "#424f61" }, { "visibility": "on" }] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [{ "visibility": "off" }] },
-        { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit", "elementType": "geometry", "stylers": [{ "visibility": "simplified" }, { "color": "#2c3440" }] },
-        { "featureType": "transit.station.airport", "elementType": "all", "stylers": [{ "visibility": "off" }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "lightness": -20 }, { "color": "#252a31" }] }]; */
-
         var mapStyle: any =[
     {
         "featureType": "all",
@@ -355,7 +334,8 @@ class GoogleMap implements IMap {
             scaleControl: false,
             zoomControl: false,
         };
-        this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        const mapElement = this.config.mapElement.get(0);
+        this.map = new google.maps.Map(mapElement, mapOptions);
 
         this.playerMarker = new google.maps.Marker({
             map: this.map,
@@ -383,18 +363,23 @@ class GoogleMap implements IMap {
 
         if(this.config.followPlayer) {
             // Animate the map centering.
-            var from    = {lat: this.map.getCenter().lat(), lng: this.map.getCenter().lng()};
-            var to      = {lat: posArr[0], lng: posArr[1]};
-            var currentMap: google.maps.Map = this.map;
+            const from    = {lat: this.map.getCenter().lat(), lng: this.map.getCenter().lng()};
+            const to      = {lat: posArr[0], lng: posArr[1]};
+            const currentMap: google.maps.Map = this.map;
             $(from).animate(to, {
                 duration: 200,
                 step(cs, t) {
-                    let newPos: any;
-
-                    if(t.prop === "lat")
-                        newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
-                    if(t.prop === "lng")
-                        newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
+                    let newPos: google.maps.LatLng;
+                    switch (t.prop) {
+                        case "lat":
+                            newPos = new google.maps.LatLng(cs, currentMap.getCenter().lng());
+                            break;
+                        case "lng":
+                            newPos = new google.maps.LatLng(currentMap.getCenter().lat(), cs);
+                            break;
+                        default:
+                            throw "Unknown t.prop";
+                    }
 
                     currentMap.setCenter(newPos);
                 }

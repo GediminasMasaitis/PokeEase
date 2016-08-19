@@ -50,7 +50,8 @@ $(() => {
 
     const mapConfig: IMapConfig = {
         followPlayer: true,
-        translationController: translationController
+        translationController: translationController,
+        mapElement: $("#map")
     };
 
     const useGoogleMap = true;

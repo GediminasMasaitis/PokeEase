@@ -15,7 +15,7 @@
 
     constructor(config: IMapConfig) {
         this.config = config;
-        this.map = L.map("map",
+        this.map = L.map(this.config.mapElement.get(0),
         {
             zoomControl: false
         }).setView([0,0], 16);
