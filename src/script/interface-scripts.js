@@ -272,7 +272,7 @@ $(window).ready(function() {
     // sendNotification("hello world", "#7db620", "#ffffff", "10000");
 });
 
-function sendNotification(text, bgColor, textColor, delay) {
+function sendNotification(text, bgColor, textColor, delay, description) {
 
     $("#notification").text(text);
 
@@ -282,6 +282,10 @@ function sendNotification(text, bgColor, textColor, delay) {
         'background-color': bgColor,
         'color': textColor
     });
+
+    if(description.length > 0) {
+        $("#notification").append("<div class='description'>"+description+"</div>");
+    }
 
     $("#notification").animate({'top': '5px'}, 500);
 
