@@ -45,7 +45,9 @@ $(() => {
     });
 
     const settingsMenuController = new SettingsMenuController({
-        settingsMenuElement: $('body.live-version .content[data-category="settings"]')
+        settingsMenuElement: $('body.live-version .content[data-category="settings"]'),
+        settingsButtonsElement: $("#settings-buttons"),
+        settingsService: settingsService
     });
     settingsMenuController.setSettings(settings);
 

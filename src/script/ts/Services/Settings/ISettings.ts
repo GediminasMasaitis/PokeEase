@@ -6,6 +6,6 @@ interface ISettings {
 }
 
 enum MapProvider {
-    GMaps,
-    OSM
+    GMaps = 0,
+    OSM = 1
 }

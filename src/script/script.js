@@ -879,7 +879,24 @@ var SettingsMenuController = (function () {
         this.setSettings = function (settings) {
             _this.settingsElements.mapProvider.val(MapProvider[settings.mapProvider]);
         };
+        this.getSettings = function () {
+            var settings = {
+                mapProvider: MapProvider[_this.settingsElements.mapProvider.filter(":checked").val()],
+                mapFolllowPlayer: true,
+                mapClearing: 0,
+                clientPort: DefaultSettings.settings.clientPort
+            };
+            return settings;
+        };
+        this.saveClicked = function (event) {
+            if (_this.config.settingsButtonsElement.hasClass("disabled")) {
+                return;
+            }
+            var settings = _this.getSettings();
+            _this.config.settingsService.apply(settings);
+        };
         this.config = config;
+        this.config.settingsButtonsElement.find("#save-changes").click(this.saveClicked);
         this.settingsElements = {
             mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
             mapFolllowPlayer: this.config.settingsMenuElement.find("[name='settings-map-follow-player']"),
@@ -7206,7 +7223,9 @@ $(function () {
         eggLoadingSpinner: $(".spinner-overlay")
     });
     var settingsMenuController = new SettingsMenuController({
-        settingsMenuElement: $('body.live-version .content[data-category="settings"]')
+        settingsMenuElement: $('body.live-version .content[data-category="settings"]'),
+        settingsButtonsElement: $("#settings-buttons"),
+        settingsService: settingsService
     });
     settingsMenuController.setSettings(settings);
     var profileInfoController = new ProfileInfoController({
