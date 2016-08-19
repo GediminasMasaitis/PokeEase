@@ -21,6 +21,9 @@ $(document).ready(function () {
             $(this).hide();
             if ($(this).attr('data-category') == PopupTitle) {
                 $(this).show();
+                $("#settings-buttons").show();
+            } else {
+                $("#settings-buttons").hide();
             }
         });
     });

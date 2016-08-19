@@ -1198,9 +1198,15 @@ body {
     font-size: 12px;
     text-transform: uppercase;
     cursor: pointer;
-    width: 10ch; }
+    width: 10ch;
+    transition: 0.3s; }
   #settings-buttons .button#cancel-changes {
     background: #8f8f8f; }
+  #settings-buttons.disabled .button {
+    pointer-events: auto;
+    cursor: auto;
+    background: rgba(0, 0, 0, 0.1) !important;
+    color: rgba(0, 0, 0, 0.6); }
 
 input[type="radio"] {
   outline: 0;
