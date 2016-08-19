@@ -875,7 +875,16 @@ var PokemonMenuController = (function () {
 }());
 var SettingsMenuController = (function () {
     function SettingsMenuController(config) {
+        var _this = this;
+        this.setSettings = function (settings) {
+            _this.settingsElements.mapProvider.val(MapProvider[settings.mapProvider]);
+        };
         this.config = config;
+        this.settingsElements = {
+            mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
+            mapFolllowPlayer: this.config.settingsMenuElement.find("[name='settings-map-follow-player']"),
+            mapClearing: this.config.settingsMenuElement.find("[name='settings-map-clearing']")
+        };
     }
     return SettingsMenuController;
 }());
@@ -6924,7 +6933,9 @@ var DefaultSettings = (function () {
     Object.defineProperty(DefaultSettings, "settings", {
         get: function () {
             return {
+                mapProvider: MapProvider.GMaps,
                 mapFolllowPlayer: true,
+                mapClearing: 0,
                 clientPort: 14252
             };
         },
@@ -6933,6 +6944,11 @@ var DefaultSettings = (function () {
     });
     return DefaultSettings;
 }());
+var MapProvider;
+(function (MapProvider) {
+    MapProvider[MapProvider["GMaps"] = 0] = "GMaps";
+    MapProvider[MapProvider["OSM"] = 1] = "OSM";
+})(MapProvider || (MapProvider = {}));
 var LocalStorageSettingsService = (function () {
     function LocalStorageSettingsService() {
         var _this = this;
@@ -6958,7 +6974,9 @@ var LocalStorageSettingsService = (function () {
         };
         this.mergeSettings = function (allSettings) {
             return {
+                mapProvider: _this.coalesceMap(allSettings, function (s) { return s.mapProvider; }),
                 mapFolllowPlayer: _this.coalesceMap(allSettings, function (s) { return s.mapFolllowPlayer; }),
+                mapClearing: _this.coalesceMap(allSettings, function (s) { return s.mapClearing; }),
                 clientPort: _this.coalesceMap(allSettings, function (s) { return s.clientPort; })
             };
         };
@@ -7156,6 +7174,7 @@ $(function () {
     StaticInfo.init();
     var settingsService = new LocalStorageSettingsService();
     settingsService.load();
+    var settings = settingsService.settings;
     var client = new BotWSClient();
     var translationController = new TranslationService();
     var notificationController = new NotificationController({
@@ -7186,6 +7205,10 @@ $(function () {
         eggMenuElement: $('body .content[data-category="eggs"]'),
         eggLoadingSpinner: $(".spinner-overlay")
     });
+    var settingsMenuController = new SettingsMenuController({
+        settingsMenuElement: $('body.live-version .content[data-category="settings"]')
+    });
+    settingsMenuController.setSettings(settings);
     var profileInfoController = new ProfileInfoController({
         hideUsername: false,
         profileInfoElement: $("#profile")

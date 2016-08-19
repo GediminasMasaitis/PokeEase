@@ -8,6 +8,7 @@ $(() => {
     StaticInfo.init();
     const settingsService = new LocalStorageSettingsService();
     settingsService.load();
+    const settings = settingsService.settings;
     const client = new BotWSClient();
     const translationController = new TranslationService();
     const notificationController = new NotificationController({
@@ -42,6 +43,11 @@ $(() => {
         eggMenuElement: $('body .content[data-category="eggs"]'),
         eggLoadingSpinner: $(".spinner-overlay")
     });
+
+    const settingsMenuController = new SettingsMenuController({
+        settingsMenuElement: $('body.live-version .content[data-category="settings"]')
+    });
+    settingsMenuController.setSettings(settings);
 
     const profileInfoController = new ProfileInfoController({
         hideUsername: false,

@@ -35,7 +35,9 @@
 
     private mergeSettings = (allSettings: ISettings[]):ISettings => {
         return {
+            mapProvider: this.coalesceMap(allSettings, s => s.mapProvider),
             mapFolllowPlayer: this.coalesceMap(allSettings, s => s.mapFolllowPlayer),
+            mapClearing: this.coalesceMap(allSettings, s => s.mapClearing),
             clientPort: this.coalesceMap(allSettings, s => s.clientPort)
         }
     }

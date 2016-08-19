@@ -1,2 +1,3 @@
 ﻿interface ISettingsMenuControllerConfig {
+    settingsMenuElement: JQuery;
 }
