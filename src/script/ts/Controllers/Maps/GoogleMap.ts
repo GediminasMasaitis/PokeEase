@@ -445,7 +445,10 @@ class GoogleMap implements IMap {
 
         // Check for any markers that need to be updated.
         _.each(pokeStops, pstop => {
-            if (pstop.LastModifiedTimestampMs > this.pokestopEvents[pstop.Id].LastModifiedTimestampMs) {
+            var isModified = pstop.LastModifiedTimestampMs > this.pokestopEvents[pstop.Id].LastModifiedTimestampMs;
+            var isDifferentStatus = pstop.Status != this.pokestopEvents[pstop.Id].Status;
+            
+            if (isModified || isDifferentStatus) {
                 this.pokestopMarkers[pstop.Id].setIcon(this.getStopIconData(pstop.Status));
                 this.pokestopEvents[pstop.Id] = pstop;
             }
@@ -460,7 +463,7 @@ class GoogleMap implements IMap {
         // Check for any markers that need to be removed.
         _.each(this.gymEvents, g => {
             if (!(g.Id in incomingGyms)) {
-                this.pokestopMarkers[g.Id].setMap(null);
+                this.gymMarkers[g.Id].setMap(null);
                 delete this.gymMarkers[g.Id];
                 delete this.gymEvents[g.Id];
             }
@@ -468,6 +471,13 @@ class GoogleMap implements IMap {
 
         // Check for any markers that need to be added.
         _.each(incomingGyms, g => {
+            // If the gym ownership has changed, remove it so it can be readded as the new team.
+            if((g.Id in this.gymEvents) && this.gymEvents[g.Id].OwnedByTeam != g.OwnedByTeam) {
+                this.gymMarkers[g.Id].setMap(null);
+                delete this.gymMarkers[g.Id];
+                delete this.gymEvents[g.Id];                
+            }
+
             if (!(g.Id in this.gymEvents)) {
                 this.gymEvents[g.Id] = g;
                 this.gymMarkers[g.Id] = this.createGymMarker(g);

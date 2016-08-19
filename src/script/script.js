@@ -143,7 +143,9 @@ var GoogleMap = (function () {
                 }
             });
             _.each(pokeStops, function (pstop) {
-                if (pstop.LastModifiedTimestampMs > _this.pokestopEvents[pstop.Id].LastModifiedTimestampMs) {
+                var isModified = pstop.LastModifiedTimestampMs > _this.pokestopEvents[pstop.Id].LastModifiedTimestampMs;
+                var isDifferentStatus = pstop.Status != _this.pokestopEvents[pstop.Id].Status;
+                if (isModified || isDifferentStatus) {
                     _this.pokestopMarkers[pstop.Id].setIcon(_this.getStopIconData(pstop.Status));
                     _this.pokestopEvents[pstop.Id] = pstop;
                 }
@@ -154,12 +156,17 @@ var GoogleMap = (function () {
             _.each(gyms, function (g) { incomingGyms[g.Id] = g; });
             _.each(_this.gymEvents, function (g) {
                 if (!(g.Id in incomingGyms)) {
-                    _this.pokestopMarkers[g.Id].setMap(null);
+                    _this.gymMarkers[g.Id].setMap(null);
                     delete _this.gymMarkers[g.Id];
                     delete _this.gymEvents[g.Id];
                 }
             });
             _.each(incomingGyms, function (g) {
+                if ((g.Id in _this.gymEvents) && _this.gymEvents[g.Id].OwnedByTeam != g.OwnedByTeam) {
+                    _this.gymMarkers[g.Id].setMap(null);
+                    delete _this.gymMarkers[g.Id];
+                    delete _this.gymEvents[g.Id];
+                }
                 if (!(g.Id in _this.gymEvents)) {
                     _this.gymEvents[g.Id] = g;
                     _this.gymMarkers[g.Id] = _this.createGymMarker(g);
