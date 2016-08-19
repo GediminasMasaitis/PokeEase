@@ -71,6 +71,7 @@ $(document).ready(function () {
     });
 
     resizeItemContainer();
+    resizePopupMargins();
 
     //$("#journal .clear-all").click(function() {
     //    var delay = 0;
@@ -139,10 +140,28 @@ $(document).ready(function () {
 
 $(window).resize(function() {
     resizeItemContainer();
+    resizePopupMargins();
 });
 
 function resizeItemContainer() {
     $("#journal .items").css('height', ($(window).height() - $("#journal .title").height() - $("#journal .clear-all").height()));
+}
+
+function resizePopupMargins() {
+
+    var popup = $("#popup .inner-wrap");
+
+    if($(window).width() < 1040) {
+        popup.css("width", ($(window).width() - 40));
+    } else {
+        popup.css("width", "");
+    }
+
+    if($(window).height() < 840) {
+        popup.css("height", ($(window).height() - 40));
+    } else {
+        popup.css("height", "");
+    }
 }
 
 
