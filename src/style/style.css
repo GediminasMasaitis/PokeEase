@@ -1186,7 +1186,8 @@ body {
   bottom: 0px;
   margin: 0 auto;
   background: rgba(237, 237, 237, 0.85);
-  padding: 1em; }
+  padding: 1em;
+  display: none; }
   #settings-buttons .button {
     margin: 0 0.5em;
     border-radius: 3px;
