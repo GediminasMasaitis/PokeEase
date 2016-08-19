@@ -1118,7 +1118,8 @@ body {
   display: inline-block; }
 
 .content[data-category="settings"] {
-  padding: 0 !important; }
+  padding: 0 !important;
+  padding-bottom: 2em !important; }
   .content[data-category="settings"] .tab-buttons {
     display: table;
     width: 100%;
@@ -1177,6 +1178,29 @@ body {
       padding-top: 1em;
       margin-top: 1em;
       border-top: 1px solid rgba(0, 0, 0, 0.1); }
+
+#settings-buttons {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 0px;
+  margin: 0 auto;
+  background: rgba(237, 237, 237, 0.85);
+  padding: 1em;
+  display: none; }
+  #settings-buttons .button {
+    margin: 0 0.5em;
+    border-radius: 3px;
+    padding: 0.5em 1em;
+    display: inline-block;
+    background: #2196f3;
+    color: white;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 10ch; }
+  #settings-buttons .button#cancel-changes {
+    background: #8f8f8f; }
 
 input[type="radio"] {
   outline: 0;

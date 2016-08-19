@@ -1284,6 +1284,7 @@ $event-incubator-status-color: #e9e1b5;
 
 .content[data-category="settings"] {
     padding: 0 !important;
+    padding-bottom: 2em !important;
 
     .tab-buttons {
         display: table;
@@ -1374,6 +1375,34 @@ $event-incubator-status-color: #e9e1b5;
 }
 
 $toggle-color: #2196f3;
+
+#settings-buttons {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 0px;
+    margin: 0 auto;
+    background: rgba(237,237,237,0.85);
+    padding: 1em;
+    display: none;
+
+    .button {
+        margin: 0 0.5em;
+        border-radius: 3px;
+        padding: 0.5em 1em;
+        display: inline-block;
+        background: $toggle-color;
+        color: white;
+        font-size: 12px;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 10ch;
+    }
+
+    .button#cancel-changes {
+        background: #8f8f8f;
+    }
+}
 
 input[type="radio"] {
     outline: 0;
