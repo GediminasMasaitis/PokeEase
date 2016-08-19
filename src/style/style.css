@@ -79,7 +79,7 @@ body {
     color: black; }
 
 #menu .item#pokemons {
-  background-color: #08c1c6;
+  background-color: #7db620;
   background-image: url("../images/pokemons.png"); }
 
 #menu .item#pokedex {
@@ -95,7 +95,7 @@ body {
   background-image: url("../images/eggs.png"); }
 
 #menu .item#settings {
-  background-color: #7f8c8d;
+  background-color: #2196f3;
   background-image: url("../images/settings.png"); }
 
 #menu .close-button {

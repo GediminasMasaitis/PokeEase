@@ -30,6 +30,8 @@ body {
     z-index: 5;
 }
 
+$toggle-color: #2196f3;
+
 #menu {
     position: fixed;
     left: -200px;
@@ -91,7 +93,7 @@ body {
 }
 
 #menu .item#pokemons {
-    background-color: #08c1c6;
+    background-color: #7db620;
     background-image: url("../images/pokemons.png");
 }
 
@@ -111,7 +113,7 @@ body {
 }
 
 #menu .item#settings {
-    background-color: #7f8c8d;
+    background-color: $toggle-color;
     background-image: url("../images/settings.png");
 }
 
@@ -1278,8 +1280,6 @@ $event-incubator-status-color: #e9e1b5;
         display: inline-block;
     }
 }
-
-$toggle-color: #2196f3;
 
 .content[data-category="settings"] {
     padding: 0 !important;
