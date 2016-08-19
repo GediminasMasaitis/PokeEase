@@ -3,21 +3,19 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         ts: {
-            default : {
+            default: {
                 src: ["src/script/ts/**/*.ts", "!node_modules/**"],
                 dest: "src/script/script.js"
             }
         },
 
         sass: {
-            default: {
-                options: {
-                    sourceMap: true
-                },
-                dist: {
-                    files: {
-                        'src/style/style.css': 'src/style/style.scss'
-                    }
+            options: {
+                sourceMap: true
+            },
+            dist: {
+                files: {
+                    'src/style/style.css': 'src/style/style.scss'
                 }
             }
         }
