@@ -91,6 +91,7 @@ var GoogleMap = (function () {
         this.locationHistory = [];
         this.pokestopMarkers = {};
         this.pokestopEvents = {};
+        this.pokestopInfoWindows = {};
         this.gymMarkers = {};
         this.gymEvents = {};
         this.capMarkers = [];
@@ -178,6 +179,28 @@ var GoogleMap = (function () {
                     _this.gymMarkers[g.Id] = _this.createGymMarker(g);
                 }
             });
+        };
+        this.createStopMarker = function (pstop) {
+            var psMarker = new google.maps.Marker({
+                map: _this.map,
+                position: new google.maps.LatLng(pstop.Latitude, pstop.Longitude),
+                icon: _this.getStopIconData(pstop.Status),
+                zIndex: 100
+            });
+            var infoWindow = _this.createStopInfoWindow(pstop);
+            _this.pokestopInfoWindows[pstop.Id] = infoWindow;
+            psMarker.addListener("click", function () {
+                infoWindow.open(_this.map, psMarker);
+            });
+            return psMarker;
+        };
+        this.createStopInfoWindow = function (pstop) {
+            var pstopName = pstop.Name || "Unknown";
+            var html = "\n<div class=\"info-window pokestop-info-window\">\n    <div class=\"info-window-detail info-window-pokestop-name\">\n        <span class=\"info-window-detail-header\">Name:</span>\n        <span class=\"info-window-detail-value\">" + pstopName + "</span>\n    </div>\n    <div class=\"info-window-detail info-window-pokestop-latitude\">\n        <span class=\"info-window-detail-header\">Latitude:</span>\n        <span class=\"info-window-detail-value\">" + pstop.Latitude + "</span>\n    </div>\n    <div class=\"info-window-detail info-window-pokestop-longitude\">\n        <span class=\"info-window-detail-header\">Longitude:</span>\n        <span class=\"info-window-detail-value\">" + pstop.Longitude + "</span>\n    </div>\n</div>\n";
+            var infoWindow = new google.maps.InfoWindow({
+                content: html
+            });
+            return infoWindow;
         };
         this.config = config;
         var mapStyle = [
@@ -519,15 +542,6 @@ var GoogleMap = (function () {
             PokemonId: pokemonCapture.Id
         });
         this.capMarkers.push(captureMarker);
-    };
-    GoogleMap.prototype.createStopMarker = function (pstop) {
-        var psMarker = new google.maps.Marker({
-            map: this.map,
-            position: new google.maps.LatLng(pstop.Latitude, pstop.Longitude),
-            icon: this.getStopIconData(pstop.Status),
-            zIndex: 100
-        });
-        return psMarker;
     };
     GoogleMap.prototype.getStopIconData = function (status) {
         var stopImage = "images/markers/";

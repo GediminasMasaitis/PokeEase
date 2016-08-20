@@ -6,8 +6,10 @@ class GoogleMap implements IMap {
     private locationHistory: Array<any> = [];
     private locationLine: google.maps.Polyline;
 
+    // TODO: refactor this big time
     private pokestopMarkers: { [id: string]: google.maps.Marker } = {};
     private pokestopEvents: { [id: string]: IPokeStopEvent } = {};
+    private pokestopInfoWindows: { [id: string]: google.maps.InfoWindow } = {};
     private gymMarkers: { [id: string]: google.maps.Marker } = {};
     private gymEvents: { [id: string]: IGymEvent } = {};
     private capMarkers: Array<CaptureMarker> = [];
@@ -492,15 +494,47 @@ class GoogleMap implements IMap {
         this.capMarkers.push(captureMarker);
     }
 
-    private createStopMarker(pstop: IPokeStopEvent): google.maps.Marker {
-        var psMarker: google.maps.Marker = new google.maps.Marker({
+    private createStopMarker = (pstop: IPokeStopEvent): google.maps.Marker => {
+        const psMarker: google.maps.Marker = new google.maps.Marker({
             map: this.map,
             position: new google.maps.LatLng(pstop.Latitude, pstop.Longitude),
             icon: this.getStopIconData(pstop.Status),
             zIndex: 100
         });
 
+        const infoWindow = this.createStopInfoWindow(pstop);
+        this.pokestopInfoWindows[pstop.Id] = infoWindow;
+
+        psMarker.addListener("click", () => {
+            infoWindow.open(this.map, psMarker);
+        });
+
         return psMarker;
+    }
+
+    private createStopInfoWindow = (pstop: IPokeStopEvent): google.maps.InfoWindow => {
+        const pstopName = pstop.Name || "Unknown";
+        const html = `
+<div class="info-window pokestop-info-window">
+    <div class="info-window-detail info-window-pokestop-name">
+        <span class="info-window-detail-header">Name:</span>
+        <span class="info-window-detail-value">${pstopName}</span>
+    </div>
+    <div class="info-window-detail info-window-pokestop-latitude">
+        <span class="info-window-detail-header">Latitude:</span>
+        <span class="info-window-detail-value">${pstop.Latitude}</span>
+    </div>
+    <div class="info-window-detail info-window-pokestop-longitude">
+        <span class="info-window-detail-header">Longitude:</span>
+        <span class="info-window-detail-value">${pstop.Longitude}</span>
+    </div>
+</div>
+`;
+        const infoWindow = new google.maps.InfoWindow({
+            content: html
+        });
+        
+        return infoWindow;
     }
 
     private getStopIconData(status: PokeStopStatus): any {
