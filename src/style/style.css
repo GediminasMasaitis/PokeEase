@@ -1463,7 +1463,7 @@ select option {
 .iw-close-button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); }
   .iw-close-button:hover i {
-    transform: rotate(45deg); }
+    transform: rotate(89.99deg); }
 
 .iw-content {
   padding: 1em;
@@ -1533,7 +1533,7 @@ select option {
     margin: 1em auto; }
 
 .gm-iw-popup {
-  animation: SlideandLargeIn 0.5s 1 cubic-bezier(0, 0, 0, 1), fadeIn 0.5s 1;
+  animation: SlideandLargeIn 0.3s 1 cubic-bezier(0, 0, 0, 1), fadeIn 0.35s 1;
   transform-origin: 57% 105%; }
 
 @keyframes SlideandLargeIn {
