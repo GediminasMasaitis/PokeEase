@@ -1756,6 +1756,13 @@ $map-popup-width: 250px;
             background: $valor;
         }
     }
+
+    &.iw-pokestop-visited {
+
+        .iw-status {
+            background: $valor;
+        }
+    }
 }
 
 .gm-iw-popup {

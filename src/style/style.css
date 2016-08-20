@@ -1475,6 +1475,9 @@ select option {
 .iw-wrap.iw-gym-valor .iw-status {
   background: #d95753; }
 
+.iw-wrap.iw-pokestop-visited .iw-status {
+  background: #d95753; }
+
 .gm-iw-popup {
   animation: SlideIn 0.5s 1 cubic-bezier(0, 0, 0, 1), fadeIn 0.5s 1; }
 
