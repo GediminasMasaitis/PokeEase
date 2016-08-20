@@ -1167,6 +1167,8 @@ body {
     .content[data-category="settings"] .tab-pages .setting-part > * {
       display: table-cell;
       vertical-align: middle; }
+    .content[data-category="settings"] .tab-pages .setting-part .setting-question {
+      padding-right: 6em; }
     .content[data-category="settings"] .tab-pages .setting-part .setting-question span {
       display: block;
       font-size: 12px;
