@@ -344,5 +344,7 @@ function setIwStyles() {
         iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
 
         gmIW.parent().css({'left': '8px', 'top': '25px'});
+
+        $('.gm-style-iw div[style="display: inline-block; overflow: auto; max-height: 850px; max-width: 654px;"]').each(function() {$(this).css('width', '350px');});
     });
 }
