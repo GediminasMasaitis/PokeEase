@@ -1467,13 +1467,17 @@ select option {
   padding: 12px; }
 
 .iw-wrap.iw-gym-instinct .iw-status {
-  background: #fbd208; }
+  background: #fbd208;
+  color: black; }
 
 .iw-wrap.iw-gym-mystic .iw-status {
   background: #0677ee; }
 
 .iw-wrap.iw-gym-valor .iw-status {
   background: #d95753; }
+
+.iw-wrap.iw-gym-neutral .iw-status {
+  background: #bdc3c7; }
 
 .iw-wrap.iw-pokestop-visited .iw-status {
   background: #9b59b4; }
