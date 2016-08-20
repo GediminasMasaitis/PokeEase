@@ -646,11 +646,23 @@ class GoogleMap implements IMap {
 
         wrap.find(".iw-gym-level").show();
         wrap.find(".iw-gym-xp").show();
+        wrap.find(".iw-gym-hr-general").show();
         wrap.find(".iw-gym-level .iw-detail-value").text(gymLevel);
         wrap.find(".iw-gym-xp .iw-detail-value").text(`${gymExp} / ${nextGymLevelRequired}`);
 
         wrap.find(".iw-latitude .iw-detail-value").text(roundedLat);
         wrap.find(".iw-longitude .iw-detail-value").text(roundedLng);
+
+        if (gym.OwnedByTeam !== PlayerTeam.Neutral) {
+            wrap.find(".iw-gym-defender").show();
+            wrap.find(".iw-gym-defender-cp").show();
+            wrap.find(".iw-gym-hr-defender").show();
+            wrap.find(".iw-gym-defender-icon").attr("src", `images/pokemon/${gym.GuardPokemonId}.png`);
+            const pokemonName = this.config.translationController.translation.pokemonNames[gym.GuardPokemonId];
+            wrap.find(".iw-gym-defender-name").text(pokemonName);
+            wrap.find(".iw-gym-defender-cp .iw-detail-value").text(gym.GuardPokemonCp);
+        }
+
         const html = template.html();
         const window = new google.maps.InfoWindow({
             content: html
