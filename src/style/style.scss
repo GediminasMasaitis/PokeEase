@@ -1639,7 +1639,7 @@ $map-popup-width: 250px;
 .gm-style-iw .iw-header {
    font-size: 18px;
    padding: 12px;
-   height: 40px;
+   min-height: 40px;
 
    .iw-detail-value {
        display: block;
