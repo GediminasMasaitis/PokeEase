@@ -1,3 +1,7 @@
+interface Window {
+    setIwStyles();
+}
+
 class GoogleMap implements IMap {
     public config: IMapConfig;
 
@@ -511,6 +515,7 @@ class GoogleMap implements IMap {
         psMarker.addListener("click", () => {
             //infoBubble.open(this.map, psMarker);
             infoWindow.open(this.map, psMarker);
+            window.setIwStyles();
         });
 
         return psMarker;

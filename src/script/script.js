@@ -192,6 +192,7 @@ var GoogleMap = (function () {
             _this.pokestopInfoWindows[pstop.Id] = infoWindow;
             psMarker.addListener("click", function () {
                 infoWindow.open(_this.map, psMarker);
+                window.setIwStyles();
             });
             return psMarker;
         };
