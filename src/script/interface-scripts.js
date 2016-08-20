@@ -272,7 +272,6 @@ $(window).ready(function() {
     // sendNotification("hello world", "#7db620", "#ffffff", "10000");
 
     //
-<<<<<<< HEAD
     $(".setting-part.not-implemented").each(function() {
         $(this).find('span').before('<div class="not-implemented-error">not implemented</div>');
     });
@@ -280,11 +279,6 @@ $(window).ready(function() {
     setInterval(function() {
         $("#journal-counter").text($('#journal .event').length);
     }, 100);
-=======
-    //$(".setting-part.not-implemented").each(function() {
-    //    $(this).find('span').before('<div class="not-implemented-error">not implemented</div>');
-    //});
->>>>>>> origin/master
 });
 
 function sendNotification(text, bgColor, textColor, delay, description) {
