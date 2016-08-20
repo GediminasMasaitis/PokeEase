@@ -40,6 +40,12 @@ $pokestop: #4faed4;
 $visited-pokestop: #9b59b4;
 $lure: #f52d60;
 
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
 #menu {
     position: fixed;
     left: -200px;
@@ -1751,6 +1757,8 @@ $map-popup-width: 250px;
         width: 75px;
         object-fit: contain;
         pointer-events: none;
+        @include opacity(0.3);
+        //-webkit-filter: contrast(0);
     }
 
     &.iw-gym-instinct {
@@ -1758,6 +1766,9 @@ $map-popup-width: 250px;
         .iw-status {
             background: $instinct;
             color: rgba(0, 0, 0, 0.7);
+        }
+        img.iw-gym-team-emblem {
+            @include opacity(0.45);
         }
     }
 
@@ -1780,6 +1791,9 @@ $map-popup-width: 250px;
         .iw-status {
             background: $unoccupied;
             color: rgba(0, 0, 0, 0.7);
+        }
+        img.iw-gym-team-emblem {
+            @include opacity(0.4);
         }
     }
 

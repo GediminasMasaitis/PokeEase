@@ -201,29 +201,36 @@ var GoogleMap = (function () {
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
             var status = wrap.find(".iw-status");
+            var icon = wrap.find(".iw-icon");
             wrap.addClass("iw-pokestop");
             switch (pstop.Status) {
                 case PokeStopStatus.Normal:
+                    icon.attr("src", "images/gui/pokestop.png");
                     status.text("ready");
                     break;
                 case PokeStopStatus.Visited:
+                    icon.attr("src", "images/gui/visited-pokestop.png");
                     status.text("visited");
                     wrap.addClass("iw-pokestop-visited");
                     break;
                 case PokeStopStatus.Lure:
+                    icon.attr("src", "images/gui/lured-okestop.png");
                     status.text("ready");
                     wrap.addClass("iw-pokestop-lure");
                     break;
                 case PokeStopStatus.VisitedLure:
+                    icon.attr("src", "images/gui/lured-visited-pokestop.png");
                     status.text("visited");
                     wrap.addClass("iw-pokestop-visited");
                     wrap.addClass("iw-pokestop-lure");
                     break;
             }
+            var roundedLat = Math.round(pstop.Latitude * 10000000) / 10000000;
+            var roundedLng = Math.round(pstop.Longitude * 10000000) / 10000000;
             wrap.find(".iw-name .iw-detail-header").text("Pokestop");
             wrap.find(".iw-name .iw-detail-value").text(pstopName);
-            wrap.find(".iw-latitude .iw-detail-value").text(pstop.Latitude);
-            wrap.find(".iw-longitude .iw-detail-value").text(pstop.Longitude);
+            wrap.find(".iw-latitude .iw-detail-value").text(roundedLat);
+            wrap.find(".iw-longitude .iw-detail-value").text(roundedLng);
             var html = template.html();
             var window = new google.maps.InfoWindow({
                 content: html
@@ -235,35 +242,42 @@ var GoogleMap = (function () {
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
             var status = wrap.find(".iw-status");
+            var icon = wrap.find(".iw-icon");
             var emblem = wrap.find(".iw-gym-team-emblem");
             emblem.show();
             wrap.addClass("iw-gym");
             switch (gym.OwnedByTeam) {
                 case PlayerTeam.Neutral:
                     status.text("neutral");
+                    icon.attr("src", "images/gui/unoccupied-icon.png");
                     emblem.attr("src", "images/gui/unoccupied.png");
                     wrap.addClass("iw-gym-neutral");
                     break;
                 case PlayerTeam.Instinct:
                     status.text("instinct");
                     wrap.addClass("iw-gym-instinct");
+                    icon.attr("src", "images/gui/instinct-icon.png");
                     emblem.attr("src", "images/gui/instinct.png");
                     break;
                 case PlayerTeam.Mystic:
                     status.text("mystic");
                     wrap.addClass("iw-gym-mystic");
+                    icon.attr("src", "images/gui/mystic-icon.png");
                     emblem.attr("src", "images/gui/mystic.png");
                     break;
                 case PlayerTeam.Valor:
                     status.text("valor");
                     wrap.addClass("iw-gym-valor");
+                    icon.attr("src", "images/gui/valor-icon.png");
                     emblem.attr("src", "images/gui/valor.png");
                     break;
             }
+            var roundedLat = Math.round(gym.Latitude * 10000000) / 10000000;
+            var roundedLng = Math.round(gym.Longitude * 10000000) / 10000000;
             wrap.find(".iw-name .iw-detail-header").text("Gym");
             wrap.find(".iw-name .iw-detail-value").text(gymName);
-            wrap.find(".iw-latitude .iw-detail-value").text(gym.Latitude);
-            wrap.find(".iw-longitude .iw-detail-value").text(gym.Longitude);
+            wrap.find(".iw-latitude .iw-detail-value").text(roundedLat);
+            wrap.find(".iw-longitude .iw-detail-value").text(roundedLng);
             var html = template.html();
             var window = new google.maps.InfoWindow({
                 content: html

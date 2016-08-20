@@ -1477,10 +1477,15 @@ select option {
     height: 65%;
     width: 75px;
     object-fit: contain;
-    pointer-events: none; }
+    pointer-events: none;
+    opacity: 0.3;
+    filter: alpha(opacity=30); }
   .iw-wrap.iw-gym-instinct .iw-status {
     background: #fbd208;
     color: rgba(0, 0, 0, 0.7); }
+  .iw-wrap.iw-gym-instinct img.iw-gym-team-emblem {
+    opacity: 0.45;
+    filter: alpha(opacity=45); }
   .iw-wrap.iw-gym-mystic .iw-status {
     background: #0677ee; }
   .iw-wrap.iw-gym-valor .iw-status {
@@ -1488,6 +1493,9 @@ select option {
   .iw-wrap.iw-gym-neutral .iw-status {
     background: #bdc3c7;
     color: rgba(0, 0, 0, 0.7); }
+  .iw-wrap.iw-gym-neutral img.iw-gym-team-emblem {
+    opacity: 0.4;
+    filter: alpha(opacity=40); }
   .iw-wrap.iw-pokestop-visited .iw-status {
     background: #9b59b4; }
 
