@@ -9,7 +9,7 @@ class GoogleMap implements IMap {
     // TODO: refactor this big time
     private pokestopMarkers: { [id: string]: google.maps.Marker } = {};
     private pokestopEvents: { [id: string]: IPokeStopEvent } = {};
-    private pokestopInfoWindows: { [id: string]: google.maps.InfoWindow } = {};
+    private pokestopInfoBubbles: { [id: string]: InfoBubble } = {};
     private gymMarkers: { [id: string]: google.maps.Marker } = {};
     private gymEvents: { [id: string]: IGymEvent } = {};
     private capMarkers: Array<CaptureMarker> = [];
@@ -502,39 +502,22 @@ class GoogleMap implements IMap {
             zIndex: 100
         });
 
-        const infoWindow = this.createStopInfoWindow(pstop);
-        this.pokestopInfoWindows[pstop.Id] = infoWindow;
+        const infoBubble = this.createStopInfoBubble(pstop);
+        this.pokestopInfoBubbles[pstop.Id] = infoBubble;
 
         psMarker.addListener("click", () => {
-            infoWindow.open(this.map, psMarker);
+            infoBubble.open(this.map, psMarker);
         });
 
         return psMarker;
     }
 
-    private createStopInfoWindow = (pstop: IPokeStopEvent): google.maps.InfoWindow => {
+    private createStopInfoBubble = (pstop: IPokeStopEvent): InfoBubble => {
         const pstopName = pstop.Name || "Unknown";
-        const html = `
-<div class="info-window pokestop-info-window">
-    <div class="info-window-detail info-window-pokestop-name">
-        <span class="info-window-detail-header">Name:</span>
-        <span class="info-window-detail-value">${pstopName}</span>
-    </div>
-    <div class="info-window-detail info-window-pokestop-latitude">
-        <span class="info-window-detail-header">Latitude:</span>
-        <span class="info-window-detail-value">${pstop.Latitude}</span>
-    </div>
-    <div class="info-window-detail info-window-pokestop-longitude">
-        <span class="info-window-detail-header">Longitude:</span>
-        <span class="info-window-detail-value">${pstop.Longitude}</span>
-    </div>
-</div>
-`;
-        const infoWindow = new google.maps.InfoWindow({
-            content: html
+        const bubble = new InfoBubble({
+            
         });
-        
-        return infoWindow;
+        return bubble;
     }
 
     private getStopIconData(status: PokeStopStatus): any {

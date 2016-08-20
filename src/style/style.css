@@ -1306,7 +1306,8 @@ input[type="text"], input[type="number"], input[type="password"], select {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   transition: 0.2s;
-  outline: 0; }
+  outline: 0;
+  box-sizing: border-box; }
 
 input[type="text"]:focus, input[type="number"]:focus, select:focus {
   border-color: rgba(0, 0, 0, 0.4); }
