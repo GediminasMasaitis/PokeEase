@@ -59,7 +59,8 @@ $(() => {
     const mapConfig: IMapConfig = {
         followPlayer: settings.mapFolllowPlayer,
         translationController: translationController,
-        mapElement: $("#map")
+        mapElement: $("#map"),
+        infoBubbleTemplate: $("#info-bubble-template")
     };
 
     const useGoogleMap = settings.mapProvider === MapProvider.GMaps;

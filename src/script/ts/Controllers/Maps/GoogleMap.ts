@@ -514,8 +514,16 @@ class GoogleMap implements IMap {
 
     private createStopInfoBubble = (pstop: IPokeStopEvent): InfoBubble => {
         const pstopName = pstop.Name || "Unknown";
+        const template = this.config.infoBubbleTemplate.clone();
+        template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
+        template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
+        template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
+        const html = template.html();
         const bubble = new InfoBubble({
-            
+            content: html,
+            backgroundClassName: "info-bubble-content",
+            backgroundColor: "rgba(255,255,255,1)",
+            borderColor: "rgba(0,0,0,1)"
         });
         return bubble;
     }

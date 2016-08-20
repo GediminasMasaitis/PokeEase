@@ -7,10 +7,15 @@ declare class InfoBubble {
 }
 
 interface InfoBubbleOptions {
+    map?: google.maps.Map;
+    content?: string;
+    position?: google.maps.LatLng;
+    hideCloseButton?: boolean;
     arrowPosition?: number;
     arrowSize?: number;
     arrowStyle?: number;
     backgroundColor?: string;
+    backgroundClassName?: string;
     borderColor?: string;
     borderRadius?: number;
     borderWidth?: number;

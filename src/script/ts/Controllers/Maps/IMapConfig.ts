@@ -1,5 +1,6 @@
 ﻿interface IMapConfig {
     translationController: ITranslationService;
-    followPlayer?: boolean;
+    followPlayer: boolean;
     mapElement: JQuery;
+    infoBubbleTemplate: JQuery;
 }

@@ -196,7 +196,17 @@ var GoogleMap = (function () {
         };
         this.createStopInfoBubble = function (pstop) {
             var pstopName = pstop.Name || "Unknown";
-            var bubble = new InfoBubble({});
+            var template = _this.config.infoBubbleTemplate.clone();
+            template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
+            template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
+            template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
+            var html = template.html();
+            var bubble = new InfoBubble({
+                content: html,
+                backgroundClassName: "info-bubble-content",
+                backgroundColor: "rgba(255,255,255,1)",
+                borderColor: "rgba(0,0,0,1)"
+            });
             return bubble;
         };
         this.config = config;
@@ -7284,7 +7294,8 @@ $(function () {
     var mapConfig = {
         followPlayer: settings.mapFolllowPlayer,
         translationController: translationController,
-        mapElement: $("#map")
+        mapElement: $("#map"),
+        infoBubbleTemplate: $("#info-bubble-template")
     };
     var useGoogleMap = settings.mapProvider === MapProvider.GMaps;
     var lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
