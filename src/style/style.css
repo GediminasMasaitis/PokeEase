@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:400,700,900,300,100);
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css);
 * {
   font-family: Lato; }
 
@@ -1385,28 +1385,88 @@ select option {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2); }
 
 .gm-iw-popup .left div {
-  transform: skewX(45deg) !important; }
+  transform: skewX(45deg) !important;
+  background-color: #f3f3f3 !important;
+  box-shadow: none !important; }
 
 .gm-iw-popup .right div {
-  transform: skewX(-45deg) !important; }
+  transform: skewX(-45deg) !important;
+  background-color: #f3f3f3 !important;
+  box-shadow: none !important; }
 
 .gm-style-iw .iw-header {
-  font-family: 'Open Sans Condensed', sans-serif;
-  font-size: 22px;
-  font-weight: 400;
-  padding: 10px;
+  font-size: 18px;
+  padding: 12px;
+  height: 40px; }
+  .gm-style-iw .iw-header .iw-detail-value {
+    display: block; }
+  .gm-style-iw .iw-header .iw-detail-header {
+    display: block;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5); }
+
+.gm-style-iw .iw-status {
+  padding: 0.5em 1em;
+  font-size: 14px;
+  text-align: center;
   background-color: #4faed4;
-  color: white; }
+  color: white;
+  text-transform: uppercase; }
 
 .gm-style-iw {
-  width: 350px !important;
+  width: 250px !important;
   top: 15px !important;
   left: 0 !important;
   background-color: #fff;
   box-shadow: 0 5px 20px 2px rgba(0, 0, 0, 0.3);
-  border-radius: 3px; }
+  border-radius: 3px;
+  overflow: hidden;
+  font-weight: 400 !important;
+  font-size: 14px !important; }
 
-.gm-style-iw > div {
-  width: 350px !important; }
+.gm-style-iw > div, .gm-iw-popup {
+  width: 250px !important;
+  display: block !important; }
+
+.iw-close-button {
+  right: -1.4em;
+  left: auto !important;
+  padding: 0.75em;
+  top: -0.1em !important;
+  background: #ffffff;
+  opacity: 1 !important;
+  border-radius: 35px;
+  width: 15px !important;
+  height: 15px !important;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: 0.2s; }
+  .iw-close-button i {
+    transition: 0.2s; }
+
+.iw-close-button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); }
+  .iw-close-button:hover i {
+    transform: rotate(45deg); }
+
+.iw-content {
+  padding: 1em;
+  background: rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 12px; }
+  .iw-content .iw-detail + .iw-detail {
+    margin-top: .5em; }
+  .iw-content .iw-detail-header {
+    color: rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-right: 0.5em; }
+
+.iw-pokestop img {
+  float: left;
+  height: 40px;
+  padding: 12px; }
+
+.gm-iw-popup {
+  animation: SlideIn 0.5s 1 cubic-bezier(0, 0, 0, 1), fadeIn 0.5s 1; }
 
 /*# sourceMappingURL=style.css.map */
