@@ -1730,10 +1730,23 @@ $map-popup-width: 250px;
 }
 
 .iw-wrap {
+    position: relative;
+
     img {
         float: left;
         height: 40px;
         padding: 12px;
+    }
+
+    img.iw-gym-team-emblem {
+        float: none;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 65%;
+        width: 75px;
+        object-fit: contain;
+        pointer-events: none;
     }
 
     &.iw-gym-instinct {

@@ -1461,27 +1461,33 @@ select option {
     text-transform: uppercase;
     margin-right: 0.5em; }
 
-.iw-wrap img {
-  float: left;
-  height: 40px;
-  padding: 12px; }
-
-.iw-wrap.iw-gym-instinct .iw-status {
-  background: #fbd208;
-  color: rgba(0, 0, 0, 0.7); }
-
-.iw-wrap.iw-gym-mystic .iw-status {
-  background: #0677ee; }
-
-.iw-wrap.iw-gym-valor .iw-status {
-  background: #d95753; }
-
-.iw-wrap.iw-gym-neutral .iw-status {
-  background: #bdc3c7;
-  color: rgba(0, 0, 0, 0.7); }
-
-.iw-wrap.iw-pokestop-visited .iw-status {
-  background: #9b59b4; }
+.iw-wrap {
+  position: relative; }
+  .iw-wrap img {
+    float: left;
+    height: 40px;
+    padding: 12px; }
+  .iw-wrap img.iw-gym-team-emblem {
+    float: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 65%;
+    width: 75px;
+    object-fit: contain;
+    pointer-events: none; }
+  .iw-wrap.iw-gym-instinct .iw-status {
+    background: #fbd208;
+    color: rgba(0, 0, 0, 0.7); }
+  .iw-wrap.iw-gym-mystic .iw-status {
+    background: #0677ee; }
+  .iw-wrap.iw-gym-valor .iw-status {
+    background: #d95753; }
+  .iw-wrap.iw-gym-neutral .iw-status {
+    background: #bdc3c7;
+    color: rgba(0, 0, 0, 0.7); }
+  .iw-wrap.iw-pokestop-visited .iw-status {
+    background: #9b59b4; }
 
 .gm-iw-popup {
   animation: SlideIn 0.5s 1 cubic-bezier(0, 0, 0, 1), fadeIn 0.5s 1; }
