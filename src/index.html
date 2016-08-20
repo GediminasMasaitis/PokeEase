@@ -397,8 +397,8 @@
                             <div class="content" data-category="settings">
                                 <div class="tab-buttons">
                                     <div class="map-settings selected">Map</div>
-                                    <div class="performance-settings">Performance</div>
-                                    <div class="notifications-settings">Notifications</div>
+                                    <div class="client-settings">Client</div>
+                                    <div class="other-settings">Other</div>
                                 </div>
                                 <div class="tab-pages">
 
@@ -436,7 +436,7 @@
                                                     <span>How long until old events get removed from the map. 0 = never</span>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="text" name="settings-map-clearing" value="0" /> minutes
+                                                    <input type="number" name="settings-map-clearing" value="0" /> minutes
                                                 </div>
                                             </div>
 
@@ -444,8 +444,57 @@
 
 
                                         <div class="setting-topic">
-                                            <h6 class="setting-name"> Map type </h6>
+                                            <h6 class="setting-name"> Google Maps </h6>
 
+                                            <div class="setting-part">
+                                                <div class="setting-question">
+                                                    API key
+                                                    <span>Not required</span>
+                                                </div>
+                                                <div class="setting-answer">
+                                                    <input type="text" name="settings-gmaps-api-key" value="" style="min-width: 330px" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="setting-topic">
+                                            <h6 class="setting-name"> Open Street Map </h6>
+
+                                            <div class="setting-part">
+                                                <div class="setting-question">
+                                                    API key
+                                                    <span>Not required</span>
+                                                </div>
+                                                <div class="setting-answer">
+                                                    <input type="text" name="settings-gmaps-api-key" value="" style="min-width: 330px"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div id="client-settings">
+                                        <div class="setting-topic">
+                                            <h6 class="setting-name"> Client settings </h6>
+                                            <div class="setting-part">
+                                                <div class="setting-question">
+                                                    Port
+                                                </div>
+                                                <div class="setting-answer">
+                                                    <input type="number" name="settings-client-port" value="0" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="other-settings">
+                                        <div class="setting-topic">
+                                            <h6 class="setting-name"> Foo </h6>
                                             <div class="setting-part">
                                                 <div class="setting-question">
                                                     Your hobby
@@ -461,59 +510,16 @@
                                                     </select>
                                                 </div>
                                             </div>
-
-
-                                        </div>
-
-
-
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Map type </h6>
-
                                             <div class="setting-part">
                                                 <div class="setting-question">
-                                                    Map Service Provider
-                                                    <span>You can choose your map provider!</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="radio" name="map-type" value="OSM"> OSM <br />
-                                                    <input type="radio" name="map-type" value="Gmaps" checked> Google Maps
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Love rate
-                                                    <span>How much do you love us?</span>
+                                                    Lorem ipsum
                                                 </div>
                                                 <div class="setting-answer">
                                                     <input type="checkbox" name="map-type" value="OSM"> 1-5 <br />
                                                     <input type="checkbox" name="map-type" value="Gmaps" checked> 5-11
                                                 </div>
                                             </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Your Name
-                                                    <span>How they call you in da hood?</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="text" value="meh name" />
-                                                </div>
-                                            </div>
-
                                         </div>
-
-                                    </div>
-
-
-                                    <div id="performance-settings">
-                                        performance-settings
-                                    </div>
-
-
-                                    <div id="notifications-settings">
-                                        notifications-settings
                                     </div>
 
 
@@ -608,7 +614,7 @@
                 </div>
             </div>
         </div>
-        <div id="notification"><i class="fa fa-circle-o-notch fa-spin"></div>
+    <div id="notification"><i class="fa fa-circle-o-notch fa-spin"></i></div>
     </div>
     <script type="text/javascript" src="external/localStoragePolyfill.js"></script>
     <script type="text/javascript" src="external/jquery-3.1.0.js"></script>
