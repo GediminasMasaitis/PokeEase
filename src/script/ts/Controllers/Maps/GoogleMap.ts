@@ -522,17 +522,22 @@ class GoogleMap implements IMap {
         const pstopName = pstop.Name || "Unknown";
         const template = this.config.infoWindowTemplate.clone();
         const wrap = template.find(".iw-wrap");
+        const status = wrap.find(".iw-status");
         wrap.addClass("iw-pokestop");
         switch (pstop.Status) {
             case PokeStopStatus.Normal:
+                status.text("ready");
                 break;
             case PokeStopStatus.Visited:
+                status.text("visited");
                 wrap.addClass("iw-pokestop-visited");
                 break;
             case PokeStopStatus.Lure:
+                status.text("ready");
                 wrap.addClass("iw-pokestop-lure");
                 break;
             case PokeStopStatus.VisitedLure:
+                status.text("visited");
                 wrap.addClass("iw-pokestop-visited");
                 wrap.addClass("iw-pokestop-lure");
                 break;
@@ -591,18 +596,23 @@ class GoogleMap implements IMap {
         const gymName = gym.Name || "Unknown";
         const template = this.config.infoWindowTemplate.clone();
         const wrap = template.find(".iw-wrap");
+        const status = wrap.find(".iw-status");
         wrap.addClass("iw-gym");
         switch (gym.OwnedByTeam) {
             case PlayerTeam.Neutral:
+                status.text("neutral");
                 wrap.addClass("iw-gym-neutral");
                 break;
             case PlayerTeam.Instinct:
+                status.text("instinct");
                 wrap.addClass("iw-gym-instinct");
                 break;
             case PlayerTeam.Mystic:
+                status.text("mystic");
                 wrap.addClass("iw-gym-mystic");
                 break;
             case PlayerTeam.Valor:
+                status.text("valor");
                 wrap.addClass("iw-gym-valor");
                 break;
         }

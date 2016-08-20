@@ -200,17 +200,22 @@ var GoogleMap = (function () {
             var pstopName = pstop.Name || "Unknown";
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
+            var status = wrap.find(".iw-status");
             wrap.addClass("iw-pokestop");
             switch (pstop.Status) {
                 case PokeStopStatus.Normal:
+                    status.text("ready");
                     break;
                 case PokeStopStatus.Visited:
+                    status.text("visited");
                     wrap.addClass("iw-pokestop-visited");
                     break;
                 case PokeStopStatus.Lure:
+                    status.text("ready");
                     wrap.addClass("iw-pokestop-lure");
                     break;
                 case PokeStopStatus.VisitedLure:
+                    status.text("visited");
                     wrap.addClass("iw-pokestop-visited");
                     wrap.addClass("iw-pokestop-lure");
                     break;
@@ -229,18 +234,23 @@ var GoogleMap = (function () {
             var gymName = gym.Name || "Unknown";
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
+            var status = wrap.find(".iw-status");
             wrap.addClass("iw-gym");
             switch (gym.OwnedByTeam) {
                 case PlayerTeam.Neutral:
+                    status.text("neutral");
                     wrap.addClass("iw-gym-neutral");
                     break;
                 case PlayerTeam.Instinct:
+                    status.text("instinct");
                     wrap.addClass("iw-gym-instinct");
                     break;
                 case PlayerTeam.Mystic:
+                    status.text("mystic");
                     wrap.addClass("iw-gym-mystic");
                     break;
                 case PlayerTeam.Valor:
+                    status.text("valor");
                     wrap.addClass("iw-gym-valor");
                     break;
             }
