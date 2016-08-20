@@ -303,3 +303,23 @@ function sendNotification(text, bgColor, textColor, delay, description) {
     $("#notification").delay(delay).animate({'top': -($("#notification").outerHeight() + 2)}, 500);
 
 }
+
+function setIwStyles() {
+
+    var gmIW;
+    var counterIW = 0;
+
+    $(".gm-style-iw").each(function() {
+        gmIW = $(this).parent();
+        gmIW.addClass("gm-iw-popup");
+        $('.gm-iw-popup > div[style="position: absolute; left: 0px; top: 0px;"] > div > div').each(function() {
+            if(counterIW == 0) {
+                $(this).addClass('left');
+                counterIW++;
+            } else if (counterIW == 1) {
+                $(this).addClass('right');
+                counterIW = 0;
+            }
+        });
+    });
+}
