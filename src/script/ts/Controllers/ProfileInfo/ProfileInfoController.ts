@@ -32,7 +32,7 @@
     }
 
     public addExp = (totalExp: number, expAdded?: number): void => {
-        const currentLevel = this.calculateCurrentLevel(totalExp);
+        const currentLevel = StaticInfo.calculateCurrentLevel(totalExp);
         const exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
         const expForNextLvl = StaticInfo.expForLevel[currentLevel + 1];
         const expPercent = 100 * exp / expForNextLvl;
@@ -62,14 +62,5 @@
         const bubble = $(bubbleHtml);
         container.append(bubble);
         setTimeout(() => { bubble.remove(); }, 1000);
-    }
-
-    private calculateCurrentLevel = (totalExp: number) => {
-        for (let i = 0; i < StaticInfo.totalExpForLevel.length; i++) {
-            if (StaticInfo.totalExpForLevel[i + 1] >= totalExp) {
-                return i;
-            }
-        }
-        throw "Unable to determine level";
     }
 }

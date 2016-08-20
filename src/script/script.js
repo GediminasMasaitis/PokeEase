@@ -274,8 +274,15 @@ var GoogleMap = (function () {
             }
             var roundedLat = Math.round(gym.Latitude * 10000000) / 10000000;
             var roundedLng = Math.round(gym.Longitude * 10000000) / 10000000;
+            var gymExp = parseInt(gym.GymPoints);
+            var gymLevel = StaticInfo.calculateCurrentGymLevel(gymExp);
+            var nextGymLevelRequired = StaticInfo.totalExpForGymLevel[gymLevel + 1];
             wrap.find(".iw-name .iw-detail-header").text("Gym");
             wrap.find(".iw-name .iw-detail-value").text(gymName);
+            wrap.find(".iw-gym-level").show();
+            wrap.find(".iw-gym-xp").show();
+            wrap.find(".iw-gym-level .iw-detail-value").text(gymLevel);
+            wrap.find(".iw-gym-xp .iw-detail-value").text(gymExp + " / " + nextGymLevelRequired);
             wrap.find(".iw-latitude .iw-detail-value").text(roundedLat);
             wrap.find(".iw-longitude .iw-detail-value").text(roundedLng);
             var html = template.html();
@@ -1208,7 +1215,7 @@ var ProfileInfoController = (function () {
             }
         };
         this.addExp = function (totalExp, expAdded) {
-            var currentLevel = _this.calculateCurrentLevel(totalExp);
+            var currentLevel = StaticInfo.calculateCurrentLevel(totalExp);
             var exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
             var expForNextLvl = StaticInfo.expForLevel[currentLevel + 1];
             var expPercent = 100 * exp / expForNextLvl;
@@ -1229,14 +1236,6 @@ var ProfileInfoController = (function () {
             var bubble = $(bubbleHtml);
             container.append(bubble);
             setTimeout(function () { bubble.remove(); }, 1000);
-        };
-        this.calculateCurrentLevel = function (totalExp) {
-            for (var i = 0; i < StaticInfo.totalExpForLevel.length; i++) {
-                if (StaticInfo.totalExpForLevel[i + 1] >= totalExp) {
-                    return i;
-                }
-            }
-            throw "Unable to determine level";
         };
         this.config = config;
         if (this.config.hideUsername) {
@@ -1478,6 +1477,22 @@ var MoveType;
 var StaticInfo = (function () {
     function StaticInfo() {
     }
+    StaticInfo.calculateCurrentLevel = function (totalExp) {
+        for (var i = 0; i < StaticInfo.totalExpForLevel.length; i++) {
+            if (StaticInfo.totalExpForLevel[i + 1] >= totalExp) {
+                return i;
+            }
+        }
+        throw "Unable to determine level";
+    };
+    StaticInfo.calculateCurrentGymLevel = function (totalExp) {
+        for (var i = 0; i < StaticInfo.totalExpForGymLevel.length; i++) {
+            if (StaticInfo.totalExpForGymLevel[i + 1] >= totalExp) {
+                return i;
+            }
+        }
+        throw "Unable to determine gym level";
+    };
     StaticInfo.init = function () {
         var itemCodes = [];
         itemCodes[1] = "ItemPokeBall";
@@ -1554,6 +1569,20 @@ var StaticInfo = (function () {
         for (var i = 1; i < totalExpForLevel.length; i++) {
             StaticInfo.expForLevel[i] = StaticInfo.totalExpForLevel[i] - StaticInfo.totalExpForLevel[i - 1];
         }
+        var totalExpForGymLevel = [];
+        totalExpForGymLevel[0] = -Infinity;
+        totalExpForGymLevel[1] = 0;
+        totalExpForGymLevel[2] = 2000;
+        totalExpForGymLevel[3] = 4000;
+        totalExpForGymLevel[4] = 8000;
+        totalExpForGymLevel[5] = 12000;
+        totalExpForGymLevel[6] = 16000;
+        totalExpForGymLevel[7] = 20000;
+        totalExpForGymLevel[8] = 30000;
+        totalExpForGymLevel[9] = 40000;
+        totalExpForGymLevel[10] = 50000;
+        totalExpForGymLevel[11] = Infinity;
+        StaticInfo.totalExpForGymLevel = totalExpForGymLevel;
         var moveInfo = [];
         moveInfo[13] = {
             moveId: 13,

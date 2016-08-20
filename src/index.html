@@ -9,50 +9,52 @@
     <link rel="icon" sizes="16x16" href="images/favicon.png">
 </head>
 <body class="live-version">
-<div id="iw-template" style="display: none">
-    <div class="iw-wrap">
-        <div class="iw-status">ready</div>
-        <img src="#" alt="Fort icon" class="iw-icon"/>
-        <div class="iw-header iw-name">
-            <span class="iw-detail-value"></span>
-            <span class="iw-detail-header">Pokestop</span>
-        </div>
-        <div class="iw-content">
-
-            <div class="iw-detail iw-gym-level">
-                <span class="iw-detail-header">Level</span>
-                <span class="iw-detail-value">4</span>
-            </div>
-            <div class="iw-detail iw-gym-xp">
-                <span class="iw-detail-header">XP</span>
-                <span class="iw-detail-value">8994 / 10000</span>
-            </div>
-
-            <hr/>
-
-            <div class="iw-detail iw-gym-defender">
-                <span class="iw-detail-header">Defender</span>
-                <span class="iw-detail-value"><img src="images/pokemon/25.png"/>Pikachu</span>
-            </div>
-            <div class="iw-detail iw-gym-defender-cp">
-                <span class="iw-detail-header">CP</span>
-                <span class="iw-detail-value">1234</span>
-            </div>
-
-            <hr/>
-
-            <div class="iw-detail iw-latitude">
-                <span class="iw-detail-header">Latitude</span>
+    <div id="iw-template" style="display: none">
+        <div class="iw-wrap">
+            <div class="iw-status">ready</div>
+            <img src="#" alt="Fort icon" class="iw-icon" />
+            <div class="iw-header iw-name">
                 <span class="iw-detail-value"></span>
+                <span class="iw-detail-header">Pokestop</span>
             </div>
-            <div class="iw-detail iw-longitude">
-                <span class="iw-detail-header">Longitude</span>
-                <span class="iw-detail-value"></span>
+            <div class="iw-content">
+
+                <div class="iw-detail iw-gym-level" style="display: none">
+                    <span class="iw-detail-header">Level</span>
+                    <span class="iw-detail-value">4</span>
+                </div>
+                <div class="iw-detail iw-gym-xp" style="display: none">
+                    <span class="iw-detail-header">XP</span>
+                    <span class="iw-detail-value">8994 / 10000</span>
+                </div>
+
+                <hr class="iw-gym-hr-general" style="display: none" />
+
+                <div class="iw-detail iw-gym-defender" style="display: none">
+                    <span class="iw-detail-header">Defender</span>
+                    <span class="iw-detail-value">
+                        <img alt="Defender pokemon" src="images/pokemon/25.png" class="iw-gym-defender-icon"/>
+                        <span class="iw-gym-defender-name"></span>
+                    </span>
+                </div>
+                <div class="iw-detail iw-gym-defender-cp" style="display: none">
+                    <span class="iw-detail-header">CP</span>
+                    <span class="iw-detail-value">1234</span>
+                </div>
+                <hr class="iw-gym-hr-defended" style="display: none" />
+
+                <div class="iw-detail iw-latitude">
+                    <span class="iw-detail-header">Latitude</span>
+                    <span class="iw-detail-value"></span>
+                </div>
+                <div class="iw-detail iw-longitude">
+                    <span class="iw-detail-header">Longitude</span>
+                    <span class="iw-detail-value"></span>
+                </div>
             </div>
+            <img src="#" alt="Gym team emblem" class="iw-gym-team-emblem" style="display: none" />
         </div>
-        <img src="#" alt="Gym team emblem" class="iw-gym-team-emblem" style="display: none"/>
     </div>
-</div>
     <div id="map" style="width: 100%; height: 100%"></div>
     <div id="wrap">
         <div class="open-menu">

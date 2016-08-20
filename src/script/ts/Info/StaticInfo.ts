@@ -52,14 +52,34 @@ interface IPokemonInfo {
     evolvesInto: number[];
     possibleMoves: IMoveInfo[];
 }
+
 class StaticInfo {
     public static itemCodes: string[];
     public static itemIds: number[];
     public static totalExpForLevel: number[];
     public static expForLevel: number[];
+    public static totalExpForGymLevel: number[];
     public static berryIds: number[];
     public static pokemonInfo: IPokemonInfo[];
     public static moveInfo: IMoveInfo[];
+
+    public static calculateCurrentLevel = (totalExp: number) => {
+        for (let i = 0; i < StaticInfo.totalExpForLevel.length; i++) {
+            if (StaticInfo.totalExpForLevel[i + 1] >= totalExp) {
+                return i;
+            }
+        }
+        throw "Unable to determine level";
+    }
+
+    public static calculateCurrentGymLevel = (totalExp: number) => {
+        for (let i = 0; i < StaticInfo.totalExpForGymLevel.length; i++) {
+            if (StaticInfo.totalExpForGymLevel[i + 1] >= totalExp) {
+                return i;
+            }
+        }
+        throw "Unable to determine gym level";
+    }
 
     public static init = () => {
         //#region Items
@@ -146,6 +166,20 @@ class StaticInfo {
         }
         //#endregion
 
+        const totalExpForGymLevel = [];
+        totalExpForGymLevel[0] = -Infinity;
+        totalExpForGymLevel[1] = 0;
+        totalExpForGymLevel[2] = 2000;
+        totalExpForGymLevel[3] = 4000;
+        totalExpForGymLevel[4] = 8000;
+        totalExpForGymLevel[5] = 12000;
+        totalExpForGymLevel[6] = 16000;
+        totalExpForGymLevel[7] = 20000;
+        totalExpForGymLevel[8] = 30000;
+        totalExpForGymLevel[9] = 40000;
+        totalExpForGymLevel[10] = 50000;
+        totalExpForGymLevel[11] = Infinity;
+        StaticInfo.totalExpForGymLevel = totalExpForGymLevel;
         //#region Move info
 
         const moveInfo: IMoveInfo[] = [];
