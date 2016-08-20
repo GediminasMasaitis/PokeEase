@@ -272,9 +272,9 @@ $(window).ready(function() {
     // sendNotification("hello world", "#7db620", "#ffffff", "10000");
 
     //
-    $(".setting-part.not-implemented").each(function() {
-        $(this).find('span').before('<div class="not-implemented-error">not implemented</div>');
-    });
+    //$(".setting-part.not-implemented").each(function() {
+    //    $(this).find('span').before('<div class="not-implemented-error">not implemented</div>');
+    //});
 
     setInterval(function() {
         $("#journal-counter").text($('#journal .event').length);
