@@ -1397,7 +1397,7 @@ select option {
 .gm-style-iw .iw-header {
   font-size: 18px;
   padding: 12px;
-  height: 40px; }
+  min-height: 40px; }
   .gm-style-iw .iw-header .iw-detail-value {
     display: block; }
   .gm-style-iw .iw-header .iw-detail-header {
