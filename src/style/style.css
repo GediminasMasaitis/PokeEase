@@ -1124,14 +1124,14 @@ body {
     .content[data-category="settings"] .tab-buttons div {
       display: inline-block;
       padding: 1em 2em;
-      box-shadow: inset 0 -2px rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2);
       transition: 0.2s;
       color: rgba(0, 0, 0, 0.4);
       cursor: pointer;
       text-transform: uppercase;
       font-size: 14px;
       font-weight: 600;
-      margin: 0 1em; }
+      margin: 0 .5em; }
     .content[data-category="settings"] .tab-buttons div.selected {
       box-shadow: inset 0 -2px #2196f3;
       color: #2196f3;
@@ -1168,7 +1168,8 @@ body {
       display: table-cell;
       vertical-align: middle; }
     .content[data-category="settings"] .tab-pages .setting-part .setting-question {
-      padding-right: 6em; }
+      padding-right: 6em;
+      vertical-align: top; }
     .content[data-category="settings"] .tab-pages .setting-part .setting-question span {
       display: block;
       font-size: 12px;
@@ -1283,13 +1284,14 @@ input[type="checkbox"]:after {
   border-radius: 2px;
   -webkit-transition: 240ms;
   -o-transition: 240ms;
-  transition: 240ms; }
+  transition: 240ms;
+  box-shadow: inset 0 0 0 0 #2196f3; }
 
 input[type="checkbox"]:checked:after {
-  background-color: #2196f3;
-  border-color: #2196f3; }
+  border-color: #2196f3;
+  box-shadow: inset 0 0 0 8px #2196f3; }
 
-input[type="checkbox"]:checked:before {
+input[type="checkbox"]:before {
   content: "";
   position: absolute;
   top: 1px;
@@ -1300,10 +1302,20 @@ input[type="checkbox"]:checked:before {
   border: 2px solid #fff;
   border-top-width: 0;
   border-left-width: 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg); }
+  -webkit-transition: 240ms;
+  -o-transition: 240ms;
+  transition: 240ms;
+  -webkit-transform: rotate(45deg) scale(0);
+  -ms-transform: rotate(45deg) scale(0);
+  -o-transform: rotate(45deg) scale(0);
+  transform: rotate(45deg) scale(0); }
+
+input[type="checkbox"]:checked:before {
+  -webkit-transform: rotate(45deg) scale(1);
+  -ms-transform: rotate(45deg) scale(1);
+  -o-transform: rotate(45deg) scale(1);
+  transform: rotate(45deg) scale(1);
+  transition-delay: .05s; }
 
 input[type="text"], input[type="number"], input[type="password"], select {
   padding: 6px 10px;
