@@ -1477,12 +1477,21 @@ select option {
     text-transform: uppercase;
     margin-right: 0.5em; }
 
+@keyframes rotateY {
+  0% {
+    transform: rotateY(0deg); }
+  100% {
+    transform: rotateY(180deg); } }
+
 .iw-wrap {
   position: relative; }
   .iw-wrap .iw-icon {
     float: left;
     height: 40px;
     padding: 12px; }
+  .iw-wrap.iw-pokestop .iw-icon {
+    animation: rotateY 2s infinite linear;
+    animation-direction: alternate; }
   .iw-wrap img.iw-gym-team-emblem {
     float: none;
     position: absolute;
