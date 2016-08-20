@@ -235,23 +235,29 @@ var GoogleMap = (function () {
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
             var status = wrap.find(".iw-status");
+            var emblem = wrap.find(".iw-gym-team-emblem");
+            emblem.show();
             wrap.addClass("iw-gym");
             switch (gym.OwnedByTeam) {
                 case PlayerTeam.Neutral:
                     status.text("neutral");
+                    emblem.attr("src", "images/gui/unoccupied.png");
                     wrap.addClass("iw-gym-neutral");
                     break;
                 case PlayerTeam.Instinct:
                     status.text("instinct");
                     wrap.addClass("iw-gym-instinct");
+                    emblem.attr("src", "images/gui/instinct.png");
                     break;
                 case PlayerTeam.Mystic:
                     status.text("mystic");
                     wrap.addClass("iw-gym-mystic");
+                    emblem.attr("src", "images/gui/mystic.png");
                     break;
                 case PlayerTeam.Valor:
                     status.text("valor");
                     wrap.addClass("iw-gym-valor");
+                    emblem.attr("src", "images/gui/valor.png");
                     break;
             }
             wrap.find(".iw-name .iw-detail-header").text("Gym");
