@@ -1179,6 +1179,13 @@ body {
       padding-top: 1em;
       margin-top: 1em;
       border-top: 1px solid rgba(0, 0, 0, 0.1); }
+    .content[data-category="settings"] .tab-pages .setting-part.not-implemented .not-implemented-error {
+      font-size: 12px;
+      font-weight: 600;
+      color: #d95753;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-left: 1ch; }
 
 #settings-buttons {
   position: absolute;
