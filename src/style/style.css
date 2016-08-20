@@ -1177,6 +1177,8 @@ body {
       width: 40%; }
       .content[data-category="settings"] .tab-pages .setting-part .setting-answer input[type="text"], .content[data-category="settings"] .tab-pages .setting-part .setting-answer input[type="number"], .content[data-category="settings"] .tab-pages .setting-part .setting-answer input[type="password"], .content[data-category="settings"] .tab-pages .setting-part .setting-answer select {
         margin-right: 0.5em; }
+      .content[data-category="settings"] .tab-pages .setting-part .setting-answer .settings-client-connection-string {
+        font-family: Courier New, Courier, monospace; }
     .content[data-category="settings"] .tab-pages .setting-part + .setting-part {
       padding-top: 1em;
       margin-top: 1em;

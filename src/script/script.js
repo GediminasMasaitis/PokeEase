@@ -214,7 +214,7 @@ var GoogleMap = (function () {
                     wrap.addClass("iw-pokestop-visited");
                     break;
                 case PokeStopStatus.Lure:
-                    icon.attr("src", "images/gui/lured-okestop.png");
+                    icon.attr("src", "images/gui/lured-pokestop.png");
                     status.text("ready");
                     wrap.addClass("iw-pokestop-lure");
                     break;
@@ -980,11 +980,20 @@ var SettingsMenuController = (function () {
     function SettingsMenuController(config) {
         var _this = this;
         this.inputChanged = function (ev) {
-            _this.enableDisableButtons();
-        };
-        this.enableDisableButtons = function () {
             var currentSettings = _this.config.settingsService.settings;
             var changedSettings = _this.getSettings();
+            _this.enableDisableButtons(currentSettings, changedSettings);
+            _this.updateConnectionStr(changedSettings);
+        };
+        this.updateConnectionStr = function (settings) {
+            var connStr = _this.buildConnectionString(settings.clientAddress, settings.clientPort, settings.clientUseSSL);
+            _this.config.settingsMenuElement.find(".settings-client-connection-string").text(connStr);
+        };
+        this.buildConnectionString = function (address, port, useSSL) {
+            var protocol = useSSL ? "wss" : "ws";
+            return protocol + "://" + address + ":" + port;
+        };
+        this.enableDisableButtons = function (currentSettings, changedSettings) {
             var areEqual = _this.config.settingsService.settingsEqual(currentSettings, changedSettings);
             if (areEqual) {
                 _this.config.settingsButtonsElement.addClass("disabled");
@@ -994,21 +1003,30 @@ var SettingsMenuController = (function () {
             }
         };
         this.setSettings = function (settings) {
+            _this.updateConnectionStr(settings);
             _this.settingsElements.mapProvider.filter("[value='" + settings.mapProvider + "']").prop("checked", true);
-            if (settings.mapFolllowPlayer) {
-                _this.settingsElements.mapFolllowPlayer.addClass("active");
+            _this.setToggleSetting(_this.settingsElements.mapFolllowPlayer, settings.mapFolllowPlayer);
+            _this.settingsElements.mapClearing.val(settings.mapClearing);
+            _this.settingsElements.clientAddress.val(settings.clientAddress);
+            _this.settingsElements.clientPort.val(settings.clientPort);
+            _this.setToggleSetting(_this.settingsElements.clientUseSSL, settings.clientUseSSL);
+        };
+        this.setToggleSetting = function (settingElement, value) {
+            if (value) {
+                settingElement.addClass("active");
             }
             else {
-                _this.settingsElements.mapFolllowPlayer.removeClass("active");
+                settingElement.removeClass("active");
             }
-            _this.settingsElements.mapClearing.val(settings.mapClearing);
         };
         this.getSettings = function () {
             var settings = {
                 mapProvider: parseInt(_this.settingsElements.mapProvider.filter(":checked").val()),
                 mapFolllowPlayer: _this.settingsElements.mapFolllowPlayer.hasClass("active"),
                 mapClearing: parseInt(_this.settingsElements.mapClearing.val()),
-                clientPort: DefaultSettings.settings.clientPort
+                clientAddress: _this.settingsElements.clientAddress.val(),
+                clientPort: parseInt(_this.settingsElements.clientPort.val()),
+                clientUseSSL: _this.settingsElements.clientUseSSL.hasClass("active")
             };
             return settings;
         };
@@ -1016,14 +1034,15 @@ var SettingsMenuController = (function () {
             if (_this.config.settingsButtonsElement.hasClass("disabled")) {
                 return;
             }
-            var settings = _this.getSettings();
-            _this.config.settingsService.apply(settings);
-            _this.enableDisableButtons();
+            var changedSettings = _this.getSettings();
+            _this.config.settingsService.apply(changedSettings);
+            _this.updateConnectionStr(changedSettings);
+            _this.enableDisableButtons(changedSettings, changedSettings);
         };
         this.cancelClicked = function (event) {
             var currentSettings = _this.config.settingsService.settings;
             _this.setSettings(currentSettings);
-            _this.enableDisableButtons();
+            _this.enableDisableButtons(currentSettings, currentSettings);
         };
         this.config = config;
         this.config.settingsButtonsElement.find("#save-changes").click(this.saveClicked);
@@ -1032,7 +1051,10 @@ var SettingsMenuController = (function () {
         this.settingsElements = {
             mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
             mapFolllowPlayer: this.config.settingsMenuElement.find("[name='settings-map-follow-player']"),
-            mapClearing: this.config.settingsMenuElement.find("[name='settings-map-clearing']")
+            mapClearing: this.config.settingsMenuElement.find("[name='settings-map-clearing']"),
+            clientAddress: this.config.settingsMenuElement.find("[name='settings-client-address']"),
+            clientPort: this.config.settingsMenuElement.find("[name='settings-client-port']"),
+            clientUseSSL: this.config.settingsMenuElement.find("[name='settings-client-use-ssl']"),
         };
     }
     return SettingsMenuController;
@@ -6760,13 +6782,18 @@ var BotWSClient = (function () {
         var _this = this;
         this.start = function (config) {
             _this.config = config;
-            var url = "ws://127.0.0.1:" + config.settingsService.settings.clientPort;
+            var settings = _this.config.settingsService.settings;
+            var url = _this.buildConnectionString(settings.clientAddress, settings.clientPort, settings.clientUseSSL);
             _this.webSocket = new WebSocket(url);
             _this.webSocket.onopen = _this.clientOnOpen;
             _this.webSocket.onmessage = _this.clientOnMessage;
             _this.webSocket.onclose = _this.clientOnClose;
             _this.webSocket.onerror = _this.clientOnError;
             _this.running = true;
+        };
+        this.buildConnectionString = function (address, port, useSSL) {
+            var protocol = useSSL ? "wss" : "ws";
+            return protocol + "://" + address + ":" + port;
         };
         this.restart = function () {
             _this.restarting = true;
@@ -7086,7 +7113,9 @@ var DefaultSettings = (function () {
                 mapProvider: MapProvider.GMaps,
                 mapFolllowPlayer: true,
                 mapClearing: 0,
-                clientPort: 14252
+                clientAddress: "127.0.0.1",
+                clientPort: 14252,
+                clientUseSSL: false
             };
         },
         enumerable: true,
@@ -7127,7 +7156,9 @@ var LocalStorageSettingsService = (function () {
                 mapProvider: _this.coalesceMap(allSettings, function (s) { return s.mapProvider; }),
                 mapFolllowPlayer: _this.coalesceMap(allSettings, function (s) { return s.mapFolllowPlayer; }),
                 mapClearing: _this.coalesceMap(allSettings, function (s) { return s.mapClearing; }),
-                clientPort: _this.coalesceMap(allSettings, function (s) { return s.clientPort; })
+                clientAddress: _this.coalesceMap(allSettings, function (s) { return s.clientAddress; }),
+                clientPort: _this.coalesceMap(allSettings, function (s) { return s.clientPort; }),
+                clientUseSSL: _this.coalesceMap(allSettings, function (s) { return s.clientUseSSL; })
             };
         };
         this.coalesce = function (inputs) {
@@ -7175,7 +7206,9 @@ var LocalStorageSettingsService = (function () {
         equal = equal && settings.mapProvider === to.mapProvider;
         equal = equal && settings.mapFolllowPlayer === to.mapFolllowPlayer;
         equal = equal && settings.mapClearing === to.mapClearing;
+        equal = equal && settings.clientAddress === to.clientAddress;
         equal = equal && settings.clientPort === to.clientPort;
+        equal = equal && settings.clientUseSSL === to.clientUseSSL;
         return equal;
     };
     return LocalStorageSettingsService;

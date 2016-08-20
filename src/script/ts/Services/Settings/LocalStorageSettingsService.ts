@@ -38,7 +38,9 @@
             mapProvider: this.coalesceMap(allSettings, s => s.mapProvider),
             mapFolllowPlayer: this.coalesceMap(allSettings, s => s.mapFolllowPlayer),
             mapClearing: this.coalesceMap(allSettings, s => s.mapClearing),
-            clientPort: this.coalesceMap(allSettings, s => s.clientPort)
+            clientAddress: this.coalesceMap(allSettings, s => s.clientAddress),
+            clientPort: this.coalesceMap(allSettings, s => s.clientPort),
+            clientUseSSL: this.coalesceMap(allSettings, s => s.clientUseSSL)
         }
     }
 
@@ -83,7 +85,9 @@
         equal = equal && settings.mapProvider === to.mapProvider;
         equal = equal && settings.mapFolllowPlayer === to.mapFolllowPlayer;
         equal = equal && settings.mapClearing === to.mapClearing;
+        equal = equal && settings.clientAddress === to.clientAddress;
         equal = equal && settings.clientPort === to.clientPort;
+        equal = equal && settings.clientUseSSL === to.clientUseSSL;
         return equal;
     }
 }

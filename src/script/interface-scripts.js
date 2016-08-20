@@ -247,8 +247,8 @@ $(window).ready(function() {
         // show the right tab
         $(".tab-pages > div").each(function() {
             $(this).fadeOut(150);
-            console.log($(this).attr('id'));
-            console.log(tabNameHolder);
+            //console.log($(this).attr('id'));
+            //console.log(tabNameHolder);
             if ($(this).attr('id') == tabNameHolder) {
                 $(this).delay(150).fadeIn(150);
             }

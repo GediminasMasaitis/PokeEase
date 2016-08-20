@@ -5,7 +5,9 @@
             mapFolllowPlayer: true,
             mapClearing: 0,
 
-            clientPort: 14252
+            clientAddress: "127.0.0.1",
+            clientPort: 14252,
+            clientUseSSL: false
         }
     }
 }

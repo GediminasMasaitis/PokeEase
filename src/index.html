@@ -507,35 +507,42 @@
                                         <div class="setting-topic">
                                             <h6 class="setting-name"> Client settings </h6>
 
-                                            <div class="setting-part not-implemented">
+                                            <div class="setting-part">
                                                 <div class="setting-question">
                                                     Address
-                                                    <div class="not-implemented-error">not implemented</div>
                                                 </div>
                                                 <div class="setting-answer">
                                                     <input type="text" name="settings-client-address" value="" required />
                                                 </div>
                                             </div>
 
-                                            <div class="setting-part not-implemented">
+                                            <div class="setting-part">
                                                 <div class="setting-question">
                                                     Port
-                                                    <div class="not-implemented-error">not implemented</div>
                                                 </div>
                                                 <div class="setting-answer">
                                                     <input type="number" name="settings-client-port" value="0" min="0" max="65535" required />
                                                 </div>
                                             </div>
 
-                                            <div class="setting-part not-implemented">
+                                            <div class="setting-part">
                                                 <div class="setting-question">
-                                                    SSL connection
-                                                    <div class="not-implemented-error">not implemented</div>
+                                                    Use SSL
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <div class="option-toggle active" name="settings-client-ssl">
+                                                    <div class="option-toggle active" name="settings-client-use-ssl">
                                                         <div class="toggle-circle"></div>
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="setting-part">
+                                                <div class="setting-question">
+                                                    Connection string
+                                                    <span>Preview only</span>
+                                                </div>
+                                                <div class="setting-answer">
+                                                    <span class="settings-client-connection-string"></span>
                                                 </div>
                                             </div>
                                         </div>

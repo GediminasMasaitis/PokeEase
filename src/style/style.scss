@@ -1384,6 +1384,9 @@ $event-incubator-status-color: #e9e1b5;
                 input[type="text"], input[type="number"], input[type="password"], select {
                     margin-right: 0.5em;
                 }
+                .settings-client-connection-string{
+                    font-family:Courier New, Courier, monospace
+                }
             }
 
             & + .setting-part {

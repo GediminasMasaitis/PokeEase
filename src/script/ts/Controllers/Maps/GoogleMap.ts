@@ -536,7 +536,7 @@ class GoogleMap implements IMap {
                 wrap.addClass("iw-pokestop-visited");
                 break;
             case PokeStopStatus.Lure:
-                icon.attr("src", "images/gui/lured-okestop.png");
+                icon.attr("src", "images/gui/lured-pokestop.png");
                 status.text("ready");
                 wrap.addClass("iw-pokestop-lure");
                 break;

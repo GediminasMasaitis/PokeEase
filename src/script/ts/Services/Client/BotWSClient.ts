@@ -17,13 +17,19 @@
 
     public start = (config: IBotClientConfig): void => {
         this.config = config;
-        const url = `ws://127.0.0.1:${config.settingsService.settings.clientPort}`;
+        const settings = this.config.settingsService.settings;
+        const url = this.buildConnectionString(settings.clientAddress, settings.clientPort, settings.clientUseSSL);
         this.webSocket = new WebSocket(url);
         this.webSocket.onopen = this.clientOnOpen;
         this.webSocket.onmessage = this.clientOnMessage;
         this.webSocket.onclose = this.clientOnClose;
         this.webSocket.onerror = this.clientOnError;
         this.running = true;
+    }
+
+    private buildConnectionString = (address: string, port: number, useSSL: boolean): string => {
+        const protocol = useSSL ? "wss" : "ws";
+        return `${protocol}://${address}:${port}`;
     }
 
     public restart = (): void => {
