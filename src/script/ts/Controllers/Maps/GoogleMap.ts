@@ -519,9 +519,26 @@ class GoogleMap implements IMap {
     private createStopInfoWindow = (pstop: IPokeStopEvent): google.maps.InfoWindow => {
         const pstopName = pstop.Name || "Unknown";
         const template = this.config.infoWindowTemplate.clone();
-        template.find(".iw-pokestop-name .iw-detail-value").text(pstopName);
-        template.find(".iw-pokestop-latitude .iw-detail-value").text(pstop.Latitude);
-        template.find(".iw-pokestop-longitude .iw-detail-value").text(pstop.Longitude);
+        const wrap = template.find(".iw-wrap");
+        wrap.addClass("iw-pokestop");
+        switch (pstop.Status) {
+            case PokeStopStatus.Normal:
+                break;
+            case PokeStopStatus.Visited:
+                wrap.addClass("iw-pokestop-visited");
+                break;
+            case PokeStopStatus.Lure:
+                wrap.addClass("iw-pokestop-lure");
+                break;
+            case PokeStopStatus.VisitedLure:
+                wrap.addClass("iw-pokestop-visited");
+                wrap.addClass("iw-pokestop-lure");
+                break;
+        }
+       
+        wrap.find(".iw-pokestop-name .iw-detail-value").text(pstopName);
+        wrap.find(".iw-pokestop-latitude .iw-detail-value").text(pstop.Latitude);
+        wrap.find(".iw-pokestop-longitude .iw-detail-value").text(pstop.Longitude);
         const html = template.html();
         const window = new google.maps.InfoWindow({
             content: html
