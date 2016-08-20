@@ -1519,14 +1519,15 @@ input[type="checkbox"]:after {
     -webkit-transition: 240ms;
     -o-transition: 240ms;
     transition: 240ms;
+    box-shadow: inset 0 0 0 0 $toggle-color;
 }
 
 input[type="checkbox"]:checked:after {
-    background-color: $toggle-color;
     border-color: $toggle-color;
+    box-shadow: inset 0 0 0 8px $toggle-color;
 }
 
-input[type="checkbox"]:checked:before {
+input[type="checkbox"]:before {
     content: "";
     position: absolute;
     top: 1px;
@@ -1537,10 +1538,21 @@ input[type="checkbox"]:checked:before {
     border: 2px solid #fff;
     border-top-width: 0;
     border-left-width: 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    transform: rotate(45deg);
+    -webkit-transition: 240ms;
+    -o-transition: 240ms;
+    transition: 240ms;
+    -webkit-transform: rotate(45deg) scale(0);
+    -ms-transform: rotate(45deg) scale(0);
+    -o-transform: rotate(45deg) scale(0);
+    transform: rotate(45deg) scale(0);
+}
+
+input[type="checkbox"]:checked:before {
+    -webkit-transform: rotate(45deg) scale(1);
+    -ms-transform: rotate(45deg) scale(1);
+    -o-transform: rotate(45deg) scale(1);
+    transform: rotate(45deg) scale(1);
+    transition-delay: .05s;
 }
 
 input[type="text"], input[type="number"], input[type="password"], select {
