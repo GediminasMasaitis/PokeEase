@@ -1390,4 +1390,23 @@ select option {
 .gm-iw-popup .right div {
   transform: skewX(-45deg) !important; }
 
+.gm-style-iw .iw-header {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  padding: 10px;
+  background-color: #48b5e9;
+  color: white;
+  margin: 1px;
+  border-radius: 2px 2px 0 0;
+  /* In accordance with the rounding of the default infowindow corners. */ }
+
+.gm-style-iw {
+  width: 350px !important;
+  top: 15px !important;
+  left: 0 !important;
+  background-color: #fff;
+  box-shadow: 0 5px 20px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 2px 2px 0 0; }
+
 /*# sourceMappingURL=style.css.map */

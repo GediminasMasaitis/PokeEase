@@ -308,6 +308,7 @@ function setIwStyles() {
 
     var gmIW;
     var counterIW = 0;
+    var iwOuter = $(".gm-style-iw");
 
     $(".gm-style-iw").each(function() {
         gmIW = $(this).parent();
@@ -321,5 +322,27 @@ function setIwStyles() {
                 counterIW = 0;
             }
         });
+
+        var iwBackground = iwOuter.prev();
+
+        // Remove the background shadow DIV
+        iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+        // Remove the white background DIV
+        iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+        // iwOuter.parent().parent().css({left: '115px'});
+
+        iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+
+        // Moves the arrow 76px to the left margin
+        iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+
+        // Changes the desired color for the tail outline.
+        // The outline of the tail is composed of two descendants of div which contains the tail.
+        // The .find('div').children() method refers to all the div which are direct descendants of the previous div.
+        iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
+
+        gmIW.parent().css({'left': '8px', 'top': '25px'});
     });
 }
