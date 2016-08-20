@@ -197,10 +197,10 @@ var GoogleMap = (function () {
         };
         this.createStopInfoWindow = function (pstop) {
             var pstopName = pstop.Name || "Unknown";
-            var template = _this.config.infoBubbleTemplate.clone();
-            template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
-            template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
-            template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
+            var template = _this.config.infoWindowTemplate.clone();
+            template.find(".iw-pokestop-name .iw-detail-value").text(pstopName);
+            template.find(".iw-pokestop-latitude .iw-detail-value").text(pstop.Latitude);
+            template.find(".iw-pokestop-longitude .iw-detail-value").text(pstop.Longitude);
             var html = template.html();
             var window = new google.maps.InfoWindow({
                 content: html
@@ -209,7 +209,7 @@ var GoogleMap = (function () {
         };
         this.createStopInfoBubble = function (pstop) {
             var pstopName = pstop.Name || "Unknown";
-            var template = _this.config.infoBubbleTemplate.clone();
+            var template = _this.config.infoWindowTemplate.clone();
             template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
             template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
             template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
@@ -7308,7 +7308,7 @@ $(function () {
         followPlayer: settings.mapFolllowPlayer,
         translationController: translationController,
         mapElement: $("#map"),
-        infoBubbleTemplate: $("#info-bubble-template")
+        infoWindowTemplate: $("#iw-template")
     };
     var useGoogleMap = settings.mapProvider === MapProvider.GMaps;
     var lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);

@@ -60,7 +60,7 @@ $(() => {
         followPlayer: settings.mapFolllowPlayer,
         translationController: translationController,
         mapElement: $("#map"),
-        infoBubbleTemplate: $("#info-bubble-template")
+        infoWindowTemplate: $("#iw-template")
     };
 
     const useGoogleMap = settings.mapProvider === MapProvider.GMaps;

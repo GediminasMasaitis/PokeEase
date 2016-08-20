@@ -518,10 +518,10 @@ class GoogleMap implements IMap {
 
     private createStopInfoWindow = (pstop: IPokeStopEvent): google.maps.InfoWindow => {
         const pstopName = pstop.Name || "Unknown";
-        const template = this.config.infoBubbleTemplate.clone();
-        template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
-        template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
-        template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
+        const template = this.config.infoWindowTemplate.clone();
+        template.find(".iw-pokestop-name .iw-detail-value").text(pstopName);
+        template.find(".iw-pokestop-latitude .iw-detail-value").text(pstop.Latitude);
+        template.find(".iw-pokestop-longitude .iw-detail-value").text(pstop.Longitude);
         const html = template.html();
         const window = new google.maps.InfoWindow({
             content: html
@@ -531,7 +531,7 @@ class GoogleMap implements IMap {
 
     private createStopInfoBubble = (pstop: IPokeStopEvent): InfoBubble => {
         const pstopName = pstop.Name || "Unknown";
-        const template = this.config.infoBubbleTemplate.clone();
+        const template = this.config.infoWindowTemplate.clone();
         template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
         template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
         template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);

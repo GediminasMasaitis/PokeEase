@@ -2,5 +2,5 @@
     translationController: ITranslationService;
     followPlayer: boolean;
     mapElement: JQuery;
-    infoBubbleTemplate: JQuery;
+    infoWindowTemplate: JQuery;
 }

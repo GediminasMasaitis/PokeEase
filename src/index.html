@@ -9,18 +9,21 @@
     <link rel="icon" sizes="16x16" href="images/favicon.png">
 </head>
 <body class="live-version">
-    <div id="info-bubble-template" style="display: none">
-        <div class="info-bubble-detail info-bubble-pokestop-name">
-            <span class="info-bubble-detail-header">Name:</span>
-            <span class="info-bubble-detail-value"></span>
-        </div>
-        <div class="info-bubble-detail info-bubble-pokestop-latitude">
-            <span class="info-bubble-detail-header">Latitude:</span>
-            <span class="info-bubble-detail-value"></span>
-        </div>
-        <div class="info-bubble-detail info-bubble-pokestop-longitude">
-            <span class="info-bubble-detail-header">Longitude:</span>
-            <span class="info-bubble-detail-value"></span>
+    <div id="iw-template" style="display: none">
+        <div class="iw-header">Pokestop</div>
+        <div class="iw-content">
+            <div class="iw-detail iw-pokestop-name">
+                <span class="iw-detail-header">Name:</span>
+                <span class="iw-detail-value"></span>
+            </div>
+            <div class="iw-detail iw-pokestop-latitude">
+                <span class="iw-detail-header">Latitude:</span>
+                <span class="iw-detail-value"></span>
+            </div>
+            <div class="iw-detail iw-pokestop-longitude">
+                <span class="iw-detail-header">Longitude:</span>
+                <span class="iw-detail-value"></span>
+            </div>
         </div>
     </div>
     <div id="map" style="width: 100%; height: 100%"></div>
@@ -506,7 +509,7 @@
                                                     <div class="not-implemented-error">not implemented</div>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="text" name="settings-client-address" value="" required/>
+                                                    <input type="text" name="settings-client-address" value="" required />
                                                 </div>
                                             </div>
 
@@ -516,7 +519,7 @@
                                                     <div class="not-implemented-error">not implemented</div>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="number" name="settings-client-port" value="0" min="0" max="65535" required/>
+                                                    <input type="number" name="settings-client-port" value="0" min="0" max="65535" required />
                                                 </div>
                                             </div>
 
