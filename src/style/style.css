@@ -1468,7 +1468,7 @@ select option {
 
 .iw-wrap.iw-gym-instinct .iw-status {
   background: #fbd208;
-  color: black; }
+  color: rgba(0, 0, 0, 0.7); }
 
 .iw-wrap.iw-gym-mystic .iw-status {
   background: #0677ee; }
@@ -1477,7 +1477,8 @@ select option {
   background: #d95753; }
 
 .iw-wrap.iw-gym-neutral .iw-status {
-  background: #bdc3c7; }
+  background: #bdc3c7;
+  color: rgba(0, 0, 0, 0.7); }
 
 .iw-wrap.iw-pokestop-visited .iw-status {
   background: #9b59b4; }

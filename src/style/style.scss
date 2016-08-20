@@ -1740,7 +1740,7 @@ $map-popup-width: 250px;
 
         .iw-status {
             background: $instinct;
-            color: black;
+            color: rgba(0, 0, 0, 0.7);
         }
     }
 
@@ -1762,6 +1762,7 @@ $map-popup-width: 250px;
 
         .iw-status {
             background: $unoccupied;
+            color: rgba(0, 0, 0, 0.7);
         }
     }
 

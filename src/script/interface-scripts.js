@@ -346,6 +346,9 @@ function setIwStyles() {
 
         gmIW.parent().css({'left': '8px', 'top': '25px'});
 
+        iwBackground.children(':nth-child(1)').hide();
+        iwBackground.children(':nth-child(2)').hide();
+
         iwBackground.children(':nth-child(3)').each(function() {
             if(!$(this).hasClass('done')) {
                 $(this).css('left', (parseFloat($(this).css('left')) - 8));
