@@ -292,7 +292,7 @@ function sendNotification(text, bgColor, textColor, delay, description) {
         $("#notification").append("<div class='description'>"+description+"</div>");
     }
 
-    $("#notification").animate({'top': '5px'}, 500);
+    $("#notification").animate({'top': '25px'}, 500);
 
     $("#notification .countdown").animate({'width': '0'}, parseInt(delay), 'linear');
 

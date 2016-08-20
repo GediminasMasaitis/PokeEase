@@ -1355,12 +1355,13 @@ select option {
   margin: 0 auto;
   padding: 1em 2em;
   border-radius: 3px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
   color: black;
   text-align: center;
   display: inline-block;
   width: 250px;
-  background: #ffffff; }
+  background: #ffffff;
+  z-index: 101; }
   #notification .countdown {
     position: absolute;
     left: 0;
