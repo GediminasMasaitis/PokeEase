@@ -1836,5 +1836,11 @@ $map-popup-width: 250px;
 }
 
 .gm-iw-popup {
-    animation: SlideIn .5s 1 cubic-bezier(0, 0, 0, 1), fadeIn .5s 1;
+    animation: SlideandLargeIn .5s 1 cubic-bezier(0, 0, 0, 1), fadeIn .5s 1;
+    transform-origin: 57% 105%;
+}
+
+@keyframes SlideandLargeIn {
+    0% {transform: scale(0) translateY(-20px);}
+    100% {transform: scale(1) translateY(0px);}
 }
