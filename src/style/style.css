@@ -1374,4 +1374,13 @@ select option {
     opacity: 0.8;
     font-size: 12px; }
 
+#journal-counter {
+  background: #d95753;
+  color: white;
+  padding: 3px 7px 4px;
+  margin-left: 0.3em;
+  border-radius: 50px;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2); }
+
 /*# sourceMappingURL=style.css.map */
