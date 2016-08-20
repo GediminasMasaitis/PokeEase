@@ -1745,7 +1745,7 @@ $map-popup-width: 250px;
 .iw-wrap {
     position: relative;
 
-    img {
+    .iw-icon {
         float: left;
         height: 40px;
         padding: 12px;
@@ -1805,6 +1805,20 @@ $map-popup-width: 250px;
         .iw-status {
             background: $visited-pokestop;
         }
+    }
+
+    .iw-gym-defender img {
+        height: 16px;
+        vertical-align: middle;
+        margin-right: .5em;
+    }
+
+    hr {
+        border: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.1);
+        height: 1px;
+        margin: 1em auto;
     }
 }
 

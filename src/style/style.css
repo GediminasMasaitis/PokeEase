@@ -1467,7 +1467,7 @@ select option {
 
 .iw-wrap {
   position: relative; }
-  .iw-wrap img {
+  .iw-wrap .iw-icon {
     float: left;
     height: 40px;
     padding: 12px; }
@@ -1500,6 +1500,16 @@ select option {
     filter: alpha(opacity=40); }
   .iw-wrap.iw-pokestop-visited .iw-status {
     background: #9b59b4; }
+  .iw-wrap .iw-gym-defender img {
+    height: 16px;
+    vertical-align: middle;
+    margin-right: .5em; }
+  .iw-wrap hr {
+    border: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    height: 1px;
+    margin: 1em auto; }
 
 .gm-iw-popup {
   animation: SlideIn 0.5s 1 cubic-bezier(0, 0, 0, 1), fadeIn 0.5s 1; }
