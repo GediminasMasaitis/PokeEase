@@ -91,6 +91,7 @@ var GoogleMap = (function () {
         this.locationHistory = [];
         this.pokestopMarkers = {};
         this.pokestopEvents = {};
+        this.pokestopInfoWindows = {};
         this.pokestopInfoBubbles = {};
         this.gymMarkers = {};
         this.gymEvents = {};
@@ -187,12 +188,24 @@ var GoogleMap = (function () {
                 icon: _this.getStopIconData(pstop.Status),
                 zIndex: 100
             });
-            var infoBubble = _this.createStopInfoBubble(pstop);
-            _this.pokestopInfoBubbles[pstop.Id] = infoBubble;
+            var infoWindow = _this.createStopInfoWindow(pstop);
+            _this.pokestopInfoWindows[pstop.Id] = infoWindow;
             psMarker.addListener("click", function () {
-                infoBubble.open(_this.map, psMarker);
+                infoWindow.open(_this.map, psMarker);
             });
             return psMarker;
+        };
+        this.createStopInfoWindow = function (pstop) {
+            var pstopName = pstop.Name || "Unknown";
+            var template = _this.config.infoBubbleTemplate.clone();
+            template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
+            template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
+            template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
+            var html = template.html();
+            var window = new google.maps.InfoWindow({
+                content: html
+            });
+            return window;
         };
         this.createStopInfoBubble = function (pstop) {
             var pstopName = pstop.Name || "Unknown";

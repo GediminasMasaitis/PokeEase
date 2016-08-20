@@ -9,6 +9,7 @@ class GoogleMap implements IMap {
     // TODO: refactor this big time
     private pokestopMarkers: { [id: string]: google.maps.Marker } = {};
     private pokestopEvents: { [id: string]: IPokeStopEvent } = {};
+    private pokestopInfoWindows: { [id: string]: google.maps.InfoWindow } = {};
     private pokestopInfoBubbles: { [id: string]: InfoBubble } = {};
     private gymMarkers: { [id: string]: google.maps.Marker } = {};
     private gymEvents: { [id: string]: IGymEvent } = {};
@@ -502,14 +503,30 @@ class GoogleMap implements IMap {
             zIndex: 100
         });
 
-        const infoBubble = this.createStopInfoBubble(pstop);
-        this.pokestopInfoBubbles[pstop.Id] = infoBubble;
+        //const infoBubble = this.createStopInfoBubble(pstop);
+        //this.pokestopInfoBubbles[pstop.Id] = infoBubble;
+        const infoWindow = this.createStopInfoWindow(pstop);
+        this.pokestopInfoWindows[pstop.Id] = infoWindow;
 
         psMarker.addListener("click", () => {
-            infoBubble.open(this.map, psMarker);
+            //infoBubble.open(this.map, psMarker);
+            infoWindow.open(this.map, psMarker);
         });
 
         return psMarker;
+    }
+
+    private createStopInfoWindow = (pstop: IPokeStopEvent): google.maps.InfoWindow => {
+        const pstopName = pstop.Name || "Unknown";
+        const template = this.config.infoBubbleTemplate.clone();
+        template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
+        template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
+        template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
+        const html = template.html();
+        const window = new google.maps.InfoWindow({
+            content: html
+        });
+        return window;
     }
 
     private createStopInfoBubble = (pstop: IPokeStopEvent): InfoBubble => {
