@@ -14,9 +14,9 @@ class GoogleMap implements IMap {
     private pokestopMarkers: { [id: string]: google.maps.Marker } = {};
     private pokestopEvents: { [id: string]: IPokeStopEvent } = {};
     private pokestopInfoWindows: { [id: string]: google.maps.InfoWindow } = {};
-    private pokestopInfoBubbles: { [id: string]: InfoBubble } = {};
     private gymMarkers: { [id: string]: google.maps.Marker } = {};
     private gymEvents: { [id: string]: IGymEvent } = {};
+    private gymInfoWindows: { [id: string]: google.maps.InfoWindow } = {};
     private capMarkers: Array<CaptureMarker> = [];
 
     constructor(config: IMapConfig) {
@@ -507,13 +507,10 @@ class GoogleMap implements IMap {
             zIndex: 100
         });
 
-        //const infoBubble = this.createStopInfoBubble(pstop);
-        //this.pokestopInfoBubbles[pstop.Id] = infoBubble;
         const infoWindow = this.createStopInfoWindow(pstop);
         this.pokestopInfoWindows[pstop.Id] = infoWindow;
 
         psMarker.addListener("click", () => {
-            //infoBubble.open(this.map, psMarker);
             infoWindow.open(this.map, psMarker);
             window.setIwStyles();
         });
@@ -541,30 +538,15 @@ class GoogleMap implements IMap {
                 break;
         }
        
-        wrap.find(".iw-pokestop-name .iw-detail-value").text(pstopName);
-        wrap.find(".iw-pokestop-latitude .iw-detail-value").text(pstop.Latitude);
-        wrap.find(".iw-pokestop-longitude .iw-detail-value").text(pstop.Longitude);
+        wrap.find(".iw-name .iw-detail-header").text("Pokestop");
+        wrap.find(".iw-name .iw-detail-value").text(pstopName);
+        wrap.find(".iw-latitude .iw-detail-value").text(pstop.Latitude);
+        wrap.find(".iw-longitude .iw-detail-value").text(pstop.Longitude);
         const html = template.html();
         const window = new google.maps.InfoWindow({
             content: html
         });
         return window;
-    }
-
-    private createStopInfoBubble = (pstop: IPokeStopEvent): InfoBubble => {
-        const pstopName = pstop.Name || "Unknown";
-        const template = this.config.infoWindowTemplate.clone();
-        template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
-        template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
-        template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
-        const html = template.html();
-        const bubble = new InfoBubble({
-            content: html,
-            backgroundClassName: "info-bubble-content",
-            backgroundColor: "rgba(255,255,255,1)",
-            borderColor: "rgba(0,0,0,1)"
-        });
-        return bubble;
     }
 
     private getStopIconData(status: PokeStopStatus): any {
@@ -594,7 +576,45 @@ class GoogleMap implements IMap {
             zIndex: 100
         });
 
+        const infoWindow = this.createGymInfoWindow(gym);
+        this.gymInfoWindows[gym.Id] = infoWindow;
+
+        gMarker.addListener("click", () => {
+            infoWindow.open(this.map, gMarker);
+            window.setIwStyles();
+        });
+
         return gMarker;
+    }
+
+    private createGymInfoWindow = (gym: IGymEvent): google.maps.InfoWindow => {
+        const gymName = gym.Name || "Unknown";
+        const template = this.config.infoWindowTemplate.clone();
+        const wrap = template.find(".iw-wrap");
+        wrap.addClass("iw-gym");
+        switch (gym.OwnedByTeam) {
+            case PlayerTeam.Neutral:
+                wrap.addClass("iw-gym-neutral");
+                break;
+            case PlayerTeam.Instinct:
+                wrap.addClass("iw-gym-instinct");
+                break;
+            case PlayerTeam.Mystic:
+                wrap.addClass("iw-gym-mystic");
+                break;
+            case PlayerTeam.Valor:
+                wrap.addClass("iw-gym-valor");
+                break;
+        }
+        wrap.find(".iw-name .iw-detail-header").text("Gym");
+        wrap.find(".iw-name .iw-detail-value").text(gymName);
+        wrap.find(".iw-latitude .iw-detail-value").text(gym.Latitude);
+        wrap.find(".iw-longitude .iw-detail-value").text(gym.Longitude);
+        const html = template.html();
+        const window = new google.maps.InfoWindow({
+            content: html
+        });
+        return window;
     }
 
     private getGymIconData(gym: IGymEvent) {

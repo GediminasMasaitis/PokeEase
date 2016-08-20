@@ -92,9 +92,9 @@ var GoogleMap = (function () {
         this.pokestopMarkers = {};
         this.pokestopEvents = {};
         this.pokestopInfoWindows = {};
-        this.pokestopInfoBubbles = {};
         this.gymMarkers = {};
         this.gymEvents = {};
+        this.gymInfoWindows = {};
         this.capMarkers = [];
         this.movePlayer = function (position) {
             var posArr = [position.Latitude, position.Longitude];
@@ -215,29 +215,44 @@ var GoogleMap = (function () {
                     wrap.addClass("iw-pokestop-lure");
                     break;
             }
-            wrap.find(".iw-pokestop-name .iw-detail-value").text(pstopName);
-            wrap.find(".iw-pokestop-latitude .iw-detail-value").text(pstop.Latitude);
-            wrap.find(".iw-pokestop-longitude .iw-detail-value").text(pstop.Longitude);
+            wrap.find(".iw-name .iw-detail-header").text("Pokestop");
+            wrap.find(".iw-name .iw-detail-value").text(pstopName);
+            wrap.find(".iw-latitude .iw-detail-value").text(pstop.Latitude);
+            wrap.find(".iw-longitude .iw-detail-value").text(pstop.Longitude);
             var html = template.html();
             var window = new google.maps.InfoWindow({
                 content: html
             });
             return window;
         };
-        this.createStopInfoBubble = function (pstop) {
-            var pstopName = pstop.Name || "Unknown";
+        this.createGymInfoWindow = function (gym) {
+            var gymName = gym.Name || "Unknown";
             var template = _this.config.infoWindowTemplate.clone();
-            template.find(".info-bubble-pokestop-name .info-bubble-detail-value").text(pstopName);
-            template.find(".info-bubble-pokestop-latitude .info-bubble-detail-value").text(pstop.Latitude);
-            template.find(".info-bubble-pokestop-longitude .info-bubble-detail-value").text(pstop.Longitude);
+            var wrap = template.find(".iw-wrap");
+            wrap.addClass("iw-gym");
+            switch (gym.OwnedByTeam) {
+                case PlayerTeam.Neutral:
+                    wrap.addClass("iw-gym-neutral");
+                    break;
+                case PlayerTeam.Instinct:
+                    wrap.addClass("iw-gym-instinct");
+                    break;
+                case PlayerTeam.Mystic:
+                    wrap.addClass("iw-gym-mystic");
+                    break;
+                case PlayerTeam.Valor:
+                    wrap.addClass("iw-gym-valor");
+                    break;
+            }
+            wrap.find(".iw-name .iw-detail-header").text("Gym");
+            wrap.find(".iw-name .iw-detail-value").text(gymName);
+            wrap.find(".iw-latitude .iw-detail-value").text(gym.Latitude);
+            wrap.find(".iw-longitude .iw-detail-value").text(gym.Longitude);
             var html = template.html();
-            var bubble = new InfoBubble({
-                content: html,
-                backgroundClassName: "info-bubble-content",
-                backgroundColor: "rgba(255,255,255,1)",
-                borderColor: "rgba(0,0,0,1)"
+            var window = new google.maps.InfoWindow({
+                content: html
             });
-            return bubble;
+            return window;
         };
         this.config = config;
         var mapStyle = [
@@ -605,11 +620,18 @@ var GoogleMap = (function () {
         };
     };
     GoogleMap.prototype.createGymMarker = function (gym) {
+        var _this = this;
         var gMarker = new google.maps.Marker({
             map: this.map,
             position: new google.maps.LatLng(gym.Latitude, gym.Longitude),
             icon: this.getGymIconData(gym),
             zIndex: 100
+        });
+        var infoWindow = this.createGymInfoWindow(gym);
+        this.gymInfoWindows[gym.Id] = infoWindow;
+        gMarker.addListener("click", function () {
+            infoWindow.open(_this.map, gMarker);
+            window.setIwStyles();
         });
         return gMarker;
     };
