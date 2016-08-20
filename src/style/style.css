@@ -1461,10 +1461,19 @@ select option {
     text-transform: uppercase;
     margin-right: 0.5em; }
 
-.iw-pokestop img {
+.iw-wrap img {
   float: left;
   height: 40px;
   padding: 12px; }
+
+.iw-wrap.iw-gym-instinct .iw-status {
+  background: #fbd208; }
+
+.iw-wrap.iw-gym-mystic .iw-status {
+  background: #0677ee; }
+
+.iw-wrap.iw-gym-valor .iw-status {
+  background: #d95753; }
 
 .gm-iw-popup {
   animation: SlideIn 0.5s 1 cubic-bezier(0, 0, 0, 1), fadeIn 0.5s 1; }

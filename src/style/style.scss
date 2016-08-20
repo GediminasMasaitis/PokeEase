@@ -1729,11 +1729,32 @@ $map-popup-width: 250px;
 
 }
 
-.iw-pokestop {
+.iw-wrap {
     img {
         float: left;
         height: 40px;
         padding: 12px;
+    }
+
+    &.iw-gym-instinct {
+
+        .iw-status {
+            background: $instinct;
+        }
+    }
+
+    &.iw-gym-mystic {
+
+        .iw-status {
+            background: $mystic;
+        }
+    }
+
+    &.iw-gym-valor {
+
+        .iw-status {
+            background: $valor;
+        }
     }
 }
 
