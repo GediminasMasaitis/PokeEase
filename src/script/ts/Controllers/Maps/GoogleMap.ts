@@ -2,6 +2,19 @@ interface Window {
     setIwStyles();
 }
 
+interface IGoogleMapMarkerInfo {
+    marker: google.maps.Marker;
+    infoWindow: google.maps.InfoWindow;
+}
+
+interface IGoogleMapPokestopInfo extends IGoogleMapMarkerInfo {
+    event: IPokeStopEvent;
+}
+
+interface IGoogleMapGymInfo extends IGoogleMapMarkerInfo {
+    event: IGymEvent;
+}
+
 class GoogleMap implements IMap {
     public config: IMapConfig;
 
@@ -11,12 +24,8 @@ class GoogleMap implements IMap {
     private locationLine: google.maps.Polyline;
 
     // TODO: refactor this big time
-    private pokestopMarkers: { [id: string]: google.maps.Marker } = {};
-    private pokestopEvents: { [id: string]: IPokeStopEvent } = {};
-    private pokestopInfoWindows: { [id: string]: google.maps.InfoWindow } = {};
-    private gymMarkers: { [id: string]: google.maps.Marker } = {};
-    private gymEvents: { [id: string]: IGymEvent } = {};
-    private gymInfoWindows: { [id: string]: google.maps.InfoWindow } = {};
+    private pokestops: { [id: string]: IGoogleMapPokestopInfo } = {};
+    private gyms: { [id: string]: IGoogleMapGymInfo } = {};
     private capMarkers: Array<CaptureMarker> = [];
 
     constructor(config: IMapConfig) {
@@ -420,77 +429,102 @@ class GoogleMap implements IMap {
         _.each(pokeStops, stop => { incomingPokestops[stop.Id] = stop; });
 
         // Check for any markers that need to be removed.
-        _.each(this.pokestopEvents, stop => {
-            if (!(stop.Id in incomingPokestops)) {
-                this.pokestopMarkers[stop.Id].setMap(null);
-                delete this.pokestopMarkers[stop.Id];
-                delete this.pokestopEvents[stop.Id];
+        _.each(this.pokestops, stop => {
+            const stopId = stop.event.Id;
+            if (!(stopId in incomingPokestops)) {
+                stop.marker.setMap(null);
+                delete stop.event;
+                delete stop.marker;
+                delete stop.infoWindow;
+                delete this.pokestops[stopId];
             }
         });
 
         // Check for any markers that need to be added.
         _.each(incomingPokestops, stop => {
-            if (!(stop.Id in this.pokestopEvents)) {
-                this.pokestopEvents[stop.Id] = stop;
-                this.pokestopMarkers[stop.Id] = this.createStopMarker(stop);
+            const stopId = stop.Id;
+            const currentEvents = _.map(this.pokestops, ps => ps.event) as IPokeStopEvent[];
+            if (!(stopId in currentEvents)) {
+                const marker = this.createStopMarker(stop);
+                const infoWindow = this.createStopInfoWindow(stop, marker);
+                this.pokestops[stopId] = {
+                    event: stop,
+                    marker: marker,
+                    infoWindow: infoWindow
+                };
             }
         });
 
         // Check for any markers that need to be updated.
         _.each(pokeStops, pstop => {
-            var isModified = pstop.LastModifiedTimestampMs > this.pokestopEvents[pstop.Id].LastModifiedTimestampMs;
-            var isDifferentStatus = pstop.Status != this.pokestopEvents[pstop.Id].Status;
+            var isModified = pstop.LastModifiedTimestampMs > this.pokestops[pstop.Id].event.LastModifiedTimestampMs;
+            var isDifferentStatus = pstop.Status != this.pokestops[pstop.Id].event.Status;
             
             if (isModified || isDifferentStatus) {
-                this.pokestopMarkers[pstop.Id].setIcon(this.getStopIconData(pstop.Status));
-                this.pokestopEvents[pstop.Id] = pstop;
+                this.pokestops[pstop.Id].marker.setIcon(this.getStopIconData(pstop.Status));
+                this.pokestops[pstop.Id].event = pstop;
             }
         });
     }
 
     public setGyms = (gyms: IGymEvent[]) => {
         // Translate list of incoming pokestops into id -> event dictionary.
-        var incomingGyms: { [id: string]: IGymEvent } = {};
+        const incomingGyms: { [id: string]: IGymEvent } = {};
         _.each(gyms, g => { incomingGyms[g.Id] = g; });
 
         // Check for any markers that need to be removed.
-        _.each(this.gymEvents, g => {
-            if (!(g.Id in incomingGyms)) {
-                this.gymMarkers[g.Id].setMap(null);
-                delete this.gymMarkers[g.Id];
-                delete this.gymEvents[g.Id];
+        _.each(this.gyms, g => {
+            const gymId = g.event.Id;
+            if (!(gymId in incomingGyms)) {
+                g.marker.setMap(null);
+                delete g.marker;
+                delete g.infoWindow;
+                delete g.event;
+                delete this.gyms[gymId];
             }
         });
 
         // Check for any markers that need to be added.
+        let currentGymEvents = _.map(this.gyms, g => g.event) as IGymEvent[];
         _.each(incomingGyms, g => {
             // If the gym ownership has changed, remove it so it can be readded as the new team.
-            if((g.Id in this.gymEvents) && this.gymEvents[g.Id].OwnedByTeam != g.OwnedByTeam) {
-                this.gymMarkers[g.Id].setMap(null);
-                delete this.gymMarkers[g.Id];
-                delete this.gymEvents[g.Id];                
+            const gymId = g.Id;
+            if ((gymId in currentGymEvents) && this.gyms[gymId].event.OwnedByTeam !== g.OwnedByTeam) {
+                this.gyms[gymId].marker.setMap(null);
+                delete this.gyms[gymId].marker;
+                delete this.gyms[gymId].infoWindow;
+                delete this.gyms[gymId].event;
+                delete this.gyms[gymId];
             }
 
-            if (!(g.Id in this.gymEvents)) {
-                this.gymEvents[g.Id] = g;
-                this.gymMarkers[g.Id] = this.createGymMarker(g);
+            currentGymEvents = _.map(this.gyms, g => g.event) as IGymEvent[];
+            if (!(g.Id in currentGymEvents)) {
+                const marker = this.createGymMarker(g);
+                const infoWindow = this.createGymInfoWindow(g, marker);
+                this.gyms[g.Id] = {
+                    event: g,
+                    marker: marker,
+                    infoWindow: infoWindow
+                };
             }
         });
     }
 
     public usePokeStop(pokeStopUsed: IFortUsedEvent): void {
-        var setStatus: PokeStopStatus = PokeStopStatus.Visited;
-        if (this.pokestopEvents[pokeStopUsed.Id].Status === PokeStopStatus.Lure)
+        let setStatus = PokeStopStatus.Visited;
+        const stopId = pokeStopUsed.Id;
+        if (this.pokestops[stopId].event.Status === PokeStopStatus.Lure) {
             setStatus = PokeStopStatus.VisitedLure;
+        }
 
-        this.pokestopMarkers[pokeStopUsed.Id].setIcon(this.getStopIconData(setStatus));
-        this.pokestopEvents[pokeStopUsed.Id].Status = setStatus;
+        this.pokestops[stopId].marker.setIcon(this.getStopIconData(setStatus));
+        this.pokestops[stopId].event.Status = setStatus;
     }
 
     public onPokemonCapture(pokemonCapture: IPokemonCaptureEvent): void {
         console.log(pokemonCapture);
 
-        var captureMarker: CaptureMarker = new CaptureMarker(
+        const captureMarker = new CaptureMarker (
             new google.maps.LatLng(pokemonCapture.Latitude, pokemonCapture.Longitude),
             this.map,
             {
@@ -508,18 +542,10 @@ class GoogleMap implements IMap {
             zIndex: 100
         });
 
-        const infoWindow = this.createStopInfoWindow(pstop);
-        this.pokestopInfoWindows[pstop.Id] = infoWindow;
-
-        psMarker.addListener("click", () => {
-            infoWindow.open(this.map, psMarker);
-            window.setIwStyles();
-        });
-
         return psMarker;
     }
 
-    private createStopInfoWindow = (pstop: IPokeStopEvent): google.maps.InfoWindow => {
+    private createStopInfoWindow = (pstop: IPokeStopEvent, marker: google.maps.Marker): google.maps.InfoWindow => {
         const pstopName = pstop.Name || "Unknown";
         const template = this.config.infoWindowTemplate.clone();
         const wrap = template.find(".iw-wrap");
@@ -556,10 +582,16 @@ class GoogleMap implements IMap {
         wrap.find(".iw-latitude .iw-detail-value").text(roundedLat);
         wrap.find(".iw-longitude .iw-detail-value").text(roundedLng);
         const html = template.html();
-        const window = new google.maps.InfoWindow({
+        const infoWindow = new google.maps.InfoWindow({
             content: html
         });
-        return window;
+
+        marker.addListener("click", () => {
+            infoWindow.open(this.map, marker);
+            window.setIwStyles();
+        });
+
+        return infoWindow;
     }
 
     private getStopIconData(status: PokeStopStatus): any {
@@ -590,18 +622,10 @@ class GoogleMap implements IMap {
             zIndex: 100
         });
 
-        const infoWindow = this.createGymInfoWindow(gym);
-        this.gymInfoWindows[gym.Id] = infoWindow;
-
-        gMarker.addListener("click", () => {
-            infoWindow.open(this.map, gMarker);
-            window.setIwStyles();
-        });
-
         return gMarker;
     }
 
-    private createGymInfoWindow = (gym: IGymEvent): google.maps.InfoWindow => {
+    private createGymInfoWindow = (gym: IGymEvent, marker: google.maps.Marker): google.maps.InfoWindow => {
         const gymName = gym.Name || "Unknown";
         const template = this.config.infoWindowTemplate.clone();
         const wrap = template.find(".iw-wrap");
@@ -666,10 +690,16 @@ class GoogleMap implements IMap {
         }
 
         const html = template.html();
-        const window = new google.maps.InfoWindow({
+        const infoWindow = new google.maps.InfoWindow({
             content: html
         });
-        return window;
+
+        marker.addListener("click", () => {
+            infoWindow.open(this.map, marker);
+            window.setIwStyles();
+        });
+
+        return infoWindow;
     }
 
     private getGymIconData(gym: IGymEvent) {

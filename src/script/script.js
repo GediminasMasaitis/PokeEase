@@ -89,12 +89,8 @@ var GoogleMap = (function () {
     function GoogleMap(config) {
         var _this = this;
         this.locationHistory = [];
-        this.pokestopMarkers = {};
-        this.pokestopEvents = {};
-        this.pokestopInfoWindows = {};
-        this.gymMarkers = {};
-        this.gymEvents = {};
-        this.gymInfoWindows = {};
+        this.pokestops = {};
+        this.gyms = {};
         this.capMarkers = [];
         this.movePlayer = function (position) {
             var posArr = [position.Latitude, position.Longitude];
@@ -137,47 +133,70 @@ var GoogleMap = (function () {
         this.setPokeStops = function (pokeStops) {
             var incomingPokestops = {};
             _.each(pokeStops, function (stop) { incomingPokestops[stop.Id] = stop; });
-            _.each(_this.pokestopEvents, function (stop) {
-                if (!(stop.Id in incomingPokestops)) {
-                    _this.pokestopMarkers[stop.Id].setMap(null);
-                    delete _this.pokestopMarkers[stop.Id];
-                    delete _this.pokestopEvents[stop.Id];
+            _.each(_this.pokestops, function (stop) {
+                var stopId = stop.event.Id;
+                if (!(stopId in incomingPokestops)) {
+                    stop.marker.setMap(null);
+                    delete stop.event;
+                    delete stop.marker;
+                    delete stop.infoWindow;
+                    delete _this.pokestops[stopId];
                 }
             });
             _.each(incomingPokestops, function (stop) {
-                if (!(stop.Id in _this.pokestopEvents)) {
-                    _this.pokestopEvents[stop.Id] = stop;
-                    _this.pokestopMarkers[stop.Id] = _this.createStopMarker(stop);
+                var stopId = stop.Id;
+                var currentEvents = _.map(_this.pokestops, function (ps) { return ps.event; });
+                if (!(stopId in currentEvents)) {
+                    var marker = _this.createStopMarker(stop);
+                    var infoWindow = _this.createStopInfoWindow(stop, marker);
+                    _this.pokestops[stopId] = {
+                        event: stop,
+                        marker: marker,
+                        infoWindow: infoWindow
+                    };
                 }
             });
             _.each(pokeStops, function (pstop) {
-                var isModified = pstop.LastModifiedTimestampMs > _this.pokestopEvents[pstop.Id].LastModifiedTimestampMs;
-                var isDifferentStatus = pstop.Status != _this.pokestopEvents[pstop.Id].Status;
+                var isModified = pstop.LastModifiedTimestampMs > _this.pokestops[pstop.Id].event.LastModifiedTimestampMs;
+                var isDifferentStatus = pstop.Status != _this.pokestops[pstop.Id].event.Status;
                 if (isModified || isDifferentStatus) {
-                    _this.pokestopMarkers[pstop.Id].setIcon(_this.getStopIconData(pstop.Status));
-                    _this.pokestopEvents[pstop.Id] = pstop;
+                    _this.pokestops[pstop.Id].marker.setIcon(_this.getStopIconData(pstop.Status));
+                    _this.pokestops[pstop.Id].event = pstop;
                 }
             });
         };
         this.setGyms = function (gyms) {
             var incomingGyms = {};
             _.each(gyms, function (g) { incomingGyms[g.Id] = g; });
-            _.each(_this.gymEvents, function (g) {
-                if (!(g.Id in incomingGyms)) {
-                    _this.gymMarkers[g.Id].setMap(null);
-                    delete _this.gymMarkers[g.Id];
-                    delete _this.gymEvents[g.Id];
+            _.each(_this.gyms, function (g) {
+                var gymId = g.event.Id;
+                if (!(gymId in incomingGyms)) {
+                    g.marker.setMap(null);
+                    delete g.marker;
+                    delete g.infoWindow;
+                    delete g.event;
+                    delete _this.gyms[gymId];
                 }
             });
+            var currentGymEvents = _.map(_this.gyms, function (g) { return g.event; });
             _.each(incomingGyms, function (g) {
-                if ((g.Id in _this.gymEvents) && _this.gymEvents[g.Id].OwnedByTeam != g.OwnedByTeam) {
-                    _this.gymMarkers[g.Id].setMap(null);
-                    delete _this.gymMarkers[g.Id];
-                    delete _this.gymEvents[g.Id];
+                var gymId = g.Id;
+                if ((gymId in currentGymEvents) && _this.gyms[gymId].event.OwnedByTeam !== g.OwnedByTeam) {
+                    _this.gyms[gymId].marker.setMap(null);
+                    delete _this.gyms[gymId].marker;
+                    delete _this.gyms[gymId].infoWindow;
+                    delete _this.gyms[gymId].event;
+                    delete _this.gyms[gymId];
                 }
-                if (!(g.Id in _this.gymEvents)) {
-                    _this.gymEvents[g.Id] = g;
-                    _this.gymMarkers[g.Id] = _this.createGymMarker(g);
+                currentGymEvents = _.map(_this.gyms, function (g) { return g.event; });
+                if (!(g.Id in currentGymEvents)) {
+                    var marker = _this.createGymMarker(g);
+                    var infoWindow = _this.createGymInfoWindow(g, marker);
+                    _this.gyms[g.Id] = {
+                        event: g,
+                        marker: marker,
+                        infoWindow: infoWindow
+                    };
                 }
             });
         };
@@ -188,15 +207,9 @@ var GoogleMap = (function () {
                 icon: _this.getStopIconData(pstop.Status),
                 zIndex: 100
             });
-            var infoWindow = _this.createStopInfoWindow(pstop);
-            _this.pokestopInfoWindows[pstop.Id] = infoWindow;
-            psMarker.addListener("click", function () {
-                infoWindow.open(_this.map, psMarker);
-                window.setIwStyles();
-            });
             return psMarker;
         };
-        this.createStopInfoWindow = function (pstop) {
+        this.createStopInfoWindow = function (pstop, marker) {
             var pstopName = pstop.Name || "Unknown";
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
@@ -232,12 +245,16 @@ var GoogleMap = (function () {
             wrap.find(".iw-latitude .iw-detail-value").text(roundedLat);
             wrap.find(".iw-longitude .iw-detail-value").text(roundedLng);
             var html = template.html();
-            var window = new google.maps.InfoWindow({
+            var infoWindow = new google.maps.InfoWindow({
                 content: html
             });
-            return window;
+            marker.addListener("click", function () {
+                infoWindow.open(_this.map, marker);
+                window.setIwStyles();
+            });
+            return infoWindow;
         };
-        this.createGymInfoWindow = function (gym) {
+        this.createGymInfoWindow = function (gym, marker) {
             var gymName = gym.Name || "Unknown";
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
@@ -296,10 +313,14 @@ var GoogleMap = (function () {
                 wrap.find(".iw-gym-defender-cp .iw-detail-value").text(gym.GuardPokemonCp);
             }
             var html = template.html();
-            var window = new google.maps.InfoWindow({
+            var infoWindow = new google.maps.InfoWindow({
                 content: html
             });
-            return window;
+            marker.addListener("click", function () {
+                infoWindow.open(_this.map, marker);
+                window.setIwStyles();
+            });
+            return infoWindow;
         };
         this.config = config;
         var mapStyle = [
@@ -631,10 +652,12 @@ var GoogleMap = (function () {
     }
     GoogleMap.prototype.usePokeStop = function (pokeStopUsed) {
         var setStatus = PokeStopStatus.Visited;
-        if (this.pokestopEvents[pokeStopUsed.Id].Status === PokeStopStatus.Lure)
+        var stopId = pokeStopUsed.Id;
+        if (this.pokestops[stopId].event.Status === PokeStopStatus.Lure) {
             setStatus = PokeStopStatus.VisitedLure;
-        this.pokestopMarkers[pokeStopUsed.Id].setIcon(this.getStopIconData(setStatus));
-        this.pokestopEvents[pokeStopUsed.Id].Status = setStatus;
+        }
+        this.pokestops[stopId].marker.setIcon(this.getStopIconData(setStatus));
+        this.pokestops[stopId].event.Status = setStatus;
     };
     GoogleMap.prototype.onPokemonCapture = function (pokemonCapture) {
         console.log(pokemonCapture);
@@ -669,18 +692,11 @@ var GoogleMap = (function () {
         };
     };
     GoogleMap.prototype.createGymMarker = function (gym) {
-        var _this = this;
         var gMarker = new google.maps.Marker({
             map: this.map,
             position: new google.maps.LatLng(gym.Latitude, gym.Longitude),
             icon: this.getGymIconData(gym),
             zIndex: 100
-        });
-        var infoWindow = this.createGymInfoWindow(gym);
-        this.gymInfoWindows[gym.Id] = infoWindow;
-        gMarker.addListener("click", function () {
-            infoWindow.open(_this.map, gMarker);
-            window.setIwStyles();
         });
         return gMarker;
     };
