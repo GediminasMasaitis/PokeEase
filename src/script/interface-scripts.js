@@ -276,9 +276,9 @@ $(window).ready(function() {
     //    $(this).find('span').before('<div class="not-implemented-error">not implemented</div>');
     //});
 
-    setInterval(function() {
-        $("#journal-counter").text($('#journal .event').length);
-    }, 100);
+    //setInterval(function() {
+    //    $("#journal-counter").text($('#journal .event').length);
+    //}, 100);
 });
 
 function sendNotification(text, bgColor, textColor, delay, description) {

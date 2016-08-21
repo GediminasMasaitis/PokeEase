@@ -16,6 +16,7 @@ $(() => {
     const notificationController = new NotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
+        notificationCounter: $("#journal-counter"),
         translationController: translationController
     });
 

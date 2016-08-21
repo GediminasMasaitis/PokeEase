@@ -17,6 +17,8 @@ class NotificationController implements INotificationController {
             const notificationElement = $(notification);
             notificationElement.delay(delay).slideUp(300, () => {
                 notificationElement.remove();
+                const currentCount = this.config.container.children(".event").length;
+                this.config.notificationCounter.text(currentCount);
             });
             delay += 50;
         });
@@ -174,7 +176,6 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
         ${extendedInfoHtml}
     </div>
 </div>`;
-
         const element = $(html);
         element.click(this.toggleExtendedInfo);
         element.find(".dismiss").click(this.closeNotification);
@@ -190,6 +191,8 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
         if (scroll) {
             this.scrollToBottom();
         }
+
+        this.config.notificationCounter.text(this.notifications.length);
     }
 
     private isAtBottom = (): boolean => {
@@ -218,6 +221,7 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
         element.slideUp(300, () => {
             element.remove();
             _.remove(this.notifications, n => n.element.is(element));
+            this.config.notificationCounter.text(this.notifications.length);
         });
     }
 }

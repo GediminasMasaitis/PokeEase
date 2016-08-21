@@ -1183,6 +1183,8 @@ var NotificationController = (function () {
                 var notificationElement = $(notification);
                 notificationElement.delay(delay).slideUp(300, function () {
                     notificationElement.remove();
+                    var currentCount = _this.config.container.children(".event").length;
+                    _this.config.notificationCounter.text(currentCount);
                 });
                 delay += 50;
             });
@@ -1265,6 +1267,7 @@ var NotificationController = (function () {
             if (scroll) {
                 _this.scrollToBottom();
             }
+            _this.config.notificationCounter.text(_this.notifications.length);
         };
         this.isAtBottom = function () {
             var scrollTop = _this.config.container.scrollTop();
@@ -1289,6 +1292,7 @@ var NotificationController = (function () {
             element.slideUp(300, function () {
                 element.remove();
                 _.remove(_this.notifications, function (n) { return n.element.is(element); });
+                _this.config.notificationCounter.text(_this.notifications.length);
             });
         };
         this.config = config;
@@ -7642,6 +7646,7 @@ $(function () {
     var notificationController = new NotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
+        notificationCounter: $("#journal-counter"),
         translationController: translationController
     });
     var mainMenuController = new MainMenuController({
