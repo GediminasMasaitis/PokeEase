@@ -623,7 +623,8 @@ var GoogleMap = (function () {
             position: new google.maps.LatLng(51.5073509, -0.12775829999998223),
             icon: {
                 url: "images/markers/location.png",
-                scaledSize: new google.maps.Size(50, 55)
+                scaledSize: new google.maps.Size(50, 55),
+                anchor: new google.maps.Point(25, 45)
             },
             zIndex: 300
         });
