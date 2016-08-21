@@ -70,7 +70,7 @@
     }
 
     public onFortTarget(fortTarget: IFortTargetEvent): void {
-        
+        this.config.map.targetFort(fortTarget);
     }
 
     public onFortUsed(fortUsed: IFortUsedEvent): void {

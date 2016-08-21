@@ -510,15 +510,24 @@ class GoogleMap implements IMap {
         });
     }
 
+    public targetFort(target: IFortTargetEvent): void {
+        
+    }
+
     public usePokeStop(pokeStopUsed: IFortUsedEvent): void {
         let setStatus = PokeStopStatus.Visited;
         const stopId = pokeStopUsed.Id;
-        if (this.pokestops[stopId].event.Status === PokeStopStatus.Lure) {
+        const pStop = this.pokestops[stopId];
+        if (pStop.event.Status === PokeStopStatus.Lure) {
             setStatus = PokeStopStatus.VisitedLure;
         }
 
-        this.pokestops[stopId].marker.setIcon(this.getStopIconData(setStatus));
-        this.pokestops[stopId].event.Status = setStatus;
+        pStop.event.Status = setStatus;
+        pStop.marker.setIcon(this.getStopIconData(setStatus));
+        const newContent = this.getStopInfoWindowContent(pStop.event);
+        const newContentHtml = newContent.html();
+        pStop.infoWindow.setContent(newContentHtml);
+       
     }
 
     public onPokemonCapture(pokemonCapture: IPokemonCaptureEvent): void {
@@ -545,7 +554,7 @@ class GoogleMap implements IMap {
         return psMarker;
     }
 
-    private createStopInfoWindow = (pstop: IPokeStopEvent, marker: google.maps.Marker): google.maps.InfoWindow => {
+    private getStopInfoWindowContent = (pstop: IPokeStopEvent): JQuery => {
         const pstopName = pstop.Name || "Unknown";
         const template = this.config.infoWindowTemplate.clone();
         const wrap = template.find(".iw-wrap");
@@ -581,7 +590,12 @@ class GoogleMap implements IMap {
         wrap.find(".iw-name .iw-detail-value").text(pstopName);
         wrap.find(".iw-latitude .iw-detail-value").text(roundedLat);
         wrap.find(".iw-longitude .iw-detail-value").text(roundedLng);
-        const html = template.html();
+        return template;
+    }
+
+    private createStopInfoWindow = (pstop: IPokeStopEvent, marker: google.maps.Marker): google.maps.InfoWindow => {
+        const content = this.getStopInfoWindowContent(pstop);
+        const html = content.html();
         const infoWindow = new google.maps.InfoWindow({
             content: html
         });
@@ -625,7 +639,7 @@ class GoogleMap implements IMap {
         return gMarker;
     }
 
-    private createGymInfoWindow = (gym: IGymEvent, marker: google.maps.Marker): google.maps.InfoWindow => {
+    private getGymInfoWindowContent = (gym: IGymEvent): JQuery => {
         const gymName = gym.Name || "Unknown";
         const template = this.config.infoWindowTemplate.clone();
         const wrap = template.find(".iw-wrap");
@@ -688,8 +702,12 @@ class GoogleMap implements IMap {
             wrap.find(".iw-gym-defender-name").text(pokemonName);
             wrap.find(".iw-gym-defender-cp .iw-detail-value").text(gym.GuardPokemonCp);
         }
+        return template;
+    }
 
-        const html = template.html();
+    private createGymInfoWindow = (gym: IGymEvent, marker: google.maps.Marker): google.maps.InfoWindow => {
+        const content = this.getGymInfoWindowContent(gym);
+        const html = content.html();
         const infoWindow = new google.maps.InfoWindow({
             content: html
         });
@@ -721,5 +739,4 @@ class GoogleMap implements IMap {
             anchor: new google.maps.Point(25, 25)
         };
     }
-
 }

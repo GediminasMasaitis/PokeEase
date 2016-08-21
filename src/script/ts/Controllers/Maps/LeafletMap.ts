@@ -115,6 +115,10 @@
         });
     }
 
+    public targetFort(target: IFortTargetEvent): void {
+
+    }
+
     public usePokeStop(pokeStopUsed: IFortUsedEvent): void {
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === pokeStopUsed.Id);
         const icon = pokeStop.LureInfo === null
@@ -152,4 +156,6 @@
         };
         img.src = imgUrl;
     }
+
+    
 }

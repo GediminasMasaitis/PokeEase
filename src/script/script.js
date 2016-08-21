@@ -209,7 +209,7 @@ var GoogleMap = (function () {
             });
             return psMarker;
         };
-        this.createStopInfoWindow = function (pstop, marker) {
+        this.getStopInfoWindowContent = function (pstop) {
             var pstopName = pstop.Name || "Unknown";
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
@@ -244,7 +244,11 @@ var GoogleMap = (function () {
             wrap.find(".iw-name .iw-detail-value").text(pstopName);
             wrap.find(".iw-latitude .iw-detail-value").text(roundedLat);
             wrap.find(".iw-longitude .iw-detail-value").text(roundedLng);
-            var html = template.html();
+            return template;
+        };
+        this.createStopInfoWindow = function (pstop, marker) {
+            var content = _this.getStopInfoWindowContent(pstop);
+            var html = content.html();
             var infoWindow = new google.maps.InfoWindow({
                 content: html
             });
@@ -254,7 +258,7 @@ var GoogleMap = (function () {
             });
             return infoWindow;
         };
-        this.createGymInfoWindow = function (gym, marker) {
+        this.getGymInfoWindowContent = function (gym) {
             var gymName = gym.Name || "Unknown";
             var template = _this.config.infoWindowTemplate.clone();
             var wrap = template.find(".iw-wrap");
@@ -312,7 +316,11 @@ var GoogleMap = (function () {
                 wrap.find(".iw-gym-defender-name").text(pokemonName);
                 wrap.find(".iw-gym-defender-cp .iw-detail-value").text(gym.GuardPokemonCp);
             }
-            var html = template.html();
+            return template;
+        };
+        this.createGymInfoWindow = function (gym, marker) {
+            var content = _this.getGymInfoWindowContent(gym);
+            var html = content.html();
             var infoWindow = new google.maps.InfoWindow({
                 content: html
             });
@@ -650,14 +658,20 @@ var GoogleMap = (function () {
             zIndex: 300
         });
     }
+    GoogleMap.prototype.targetFort = function (target) {
+    };
     GoogleMap.prototype.usePokeStop = function (pokeStopUsed) {
         var setStatus = PokeStopStatus.Visited;
         var stopId = pokeStopUsed.Id;
-        if (this.pokestops[stopId].event.Status === PokeStopStatus.Lure) {
+        var pStop = this.pokestops[stopId];
+        if (pStop.event.Status === PokeStopStatus.Lure) {
             setStatus = PokeStopStatus.VisitedLure;
         }
-        this.pokestops[stopId].marker.setIcon(this.getStopIconData(setStatus));
-        this.pokestops[stopId].event.Status = setStatus;
+        pStop.event.Status = setStatus;
+        pStop.marker.setIcon(this.getStopIconData(setStatus));
+        var newContent = this.getStopInfoWindowContent(pStop.event);
+        var newContentHtml = newContent.html();
+        pStop.infoWindow.setContent(newContentHtml);
     };
     GoogleMap.prototype.onPokemonCapture = function (pokemonCapture) {
         console.log(pokemonCapture);
@@ -821,6 +835,8 @@ var LeafletMap = (function () {
             iconSize: [48, 48]
         });
     }
+    LeafletMap.prototype.targetFort = function (target) {
+    };
     LeafletMap.prototype.usePokeStop = function (pokeStopUsed) {
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === pokeStopUsed.Id; });
         var icon = pokeStop.LureInfo === null
@@ -1369,6 +1385,7 @@ var InterfaceHandler = (function () {
         this.latestPlayerStats = null;
     }
     InterfaceHandler.prototype.onFortTarget = function (fortTarget) {
+        this.config.map.targetFort(fortTarget);
     };
     InterfaceHandler.prototype.onFortUsed = function (fortUsed) {
         var itemsAddedCount = _.sum(_.map(fortUsed.ItemsList, function (item) { return item.Count; }));
