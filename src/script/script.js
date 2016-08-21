@@ -664,6 +664,7 @@ var GoogleMap = (function () {
         var setStatus = PokeStopStatus.Visited;
         var stopId = pokeStopUsed.Id;
         var pStop = this.pokestops[stopId];
+        pStop.event.Name = pokeStopUsed.Name;
         if (pStop.event.Status === PokeStopStatus.Lure) {
             setStatus = PokeStopStatus.VisitedLure;
         }
@@ -874,6 +875,11 @@ var LeafletMap = (function () {
     };
     return LeafletMap;
 }());
+var MapProvider;
+(function (MapProvider) {
+    MapProvider[MapProvider["GMaps"] = 0] = "GMaps";
+    MapProvider[MapProvider["OSM"] = 1] = "OSM";
+})(MapProvider || (MapProvider = {}));
 var EggMenuController = (function () {
     function EggMenuController(config) {
         var _this = this;
@@ -1059,9 +1065,24 @@ var SettingsMenuController = (function () {
             _this.settingsElements.mapProvider.filter("[value='" + settings.mapProvider + "']").prop("checked", true);
             _this.setToggleSetting(_this.settingsElements.mapFolllowPlayer, settings.mapFolllowPlayer);
             _this.settingsElements.mapClearing.val(settings.mapClearing);
+            _this.settingsElements.mapGoogleApiKey.val(settings.mapGoogleApiKey);
+            _this.settingsElements.mapOsmApiKey.val(settings.mapOsmApiKey);
             _this.settingsElements.clientAddress.val(settings.clientAddress);
             _this.settingsElements.clientPort.val(settings.clientPort);
             _this.setToggleSetting(_this.settingsElements.clientUseSSL, settings.clientUseSSL);
+            _this.setNotificationSettings(_this.settingsElements.notificationsJournal, settings.notificationsJournal);
+            _this.setNotificationSettings(_this.settingsElements.notificationsDesktop, settings.notificationsDesktop);
+            _this.setToggleSetting(_this.settingsElements.notificationsJournalClearingAnimation, settings.notificationsJournalClearingAnimation);
+        };
+        this.setNotificationSettings = function (elements, settings) {
+            elements.pokestopUsed.prop("checked", settings.pokestopUsed);
+            elements.pokemonCapture.prop("checked", settings.pokemonCapture);
+            elements.pokemonSnipe.prop("checked", settings.pokemonSnipe);
+            elements.pokemonEvolved.prop("checked", settings.pokemonEvolved);
+            elements.eggHatched.prop("checked", settings.eggHatched);
+            elements.incubatorStatus.prop("checked", settings.incubatorStatus);
+            elements.itemRecycle.prop("checked", settings.itemRecycle);
+            elements.pokemonTransfer.prop("checked", settings.pokemonTransfer);
         };
         this.setToggleSetting = function (settingElement, value) {
             if (value) {
@@ -1076,11 +1097,29 @@ var SettingsMenuController = (function () {
                 mapProvider: parseInt(_this.settingsElements.mapProvider.filter(":checked").val()),
                 mapFolllowPlayer: _this.settingsElements.mapFolllowPlayer.hasClass("active"),
                 mapClearing: parseInt(_this.settingsElements.mapClearing.val()),
+                mapGoogleApiKey: _this.settingsElements.mapGoogleApiKey.val(),
+                mapOsmApiKey: _this.settingsElements.mapOsmApiKey.val(),
                 clientAddress: _this.settingsElements.clientAddress.val(),
                 clientPort: parseInt(_this.settingsElements.clientPort.val()),
-                clientUseSSL: _this.settingsElements.clientUseSSL.hasClass("active")
+                clientUseSSL: _this.settingsElements.clientUseSSL.hasClass("active"),
+                notificationsJournal: _this.getNotificationSettings(_this.settingsElements.notificationsJournal),
+                notificationsDesktop: _this.getNotificationSettings(_this.settingsElements.notificationsDesktop),
+                notificationsJournalClearingAnimation: _this.settingsElements.notificationsJournalClearingAnimation.hasClass("active")
             };
             return settings;
+        };
+        this.getNotificationSettings = function (elements) {
+            var notificationSettings = {
+                pokestopUsed: elements.pokestopUsed.is(":checked"),
+                pokemonCapture: elements.pokemonCapture.is(":checked"),
+                pokemonSnipe: elements.pokemonSnipe.is(":checked"),
+                pokemonEvolved: elements.pokemonEvolved.is(":checked"),
+                eggHatched: elements.eggHatched.is(":checked"),
+                incubatorStatus: elements.incubatorStatus.is(":checked"),
+                itemRecycle: elements.itemRecycle.is(":checked"),
+                pokemonTransfer: elements.pokemonTransfer.is(":checked")
+            };
+            return notificationSettings;
         };
         this.saveClicked = function (event) {
             if (_this.config.settingsButtonsElement.hasClass("disabled")) {
@@ -1104,9 +1143,32 @@ var SettingsMenuController = (function () {
             mapProvider: this.config.settingsMenuElement.find("[name='settings-map-provider']"),
             mapFolllowPlayer: this.config.settingsMenuElement.find("[name='settings-map-follow-player']"),
             mapClearing: this.config.settingsMenuElement.find("[name='settings-map-clearing']"),
+            mapGoogleApiKey: this.config.settingsMenuElement.find("[name='settings-map-google-api-key']"),
+            mapOsmApiKey: this.config.settingsMenuElement.find("[name='settings-map-osm-api-key']"),
             clientAddress: this.config.settingsMenuElement.find("[name='settings-client-address']"),
             clientPort: this.config.settingsMenuElement.find("[name='settings-client-port']"),
             clientUseSSL: this.config.settingsMenuElement.find("[name='settings-client-use-ssl']"),
+            notificationsJournal: {
+                pokestopUsed: this.config.settingsMenuElement.find("[name='settings-notifications-journal-pokestop-used']"),
+                pokemonCapture: this.config.settingsMenuElement.find("[name='settings-notifications-journal-pokemon-capture']"),
+                pokemonSnipe: this.config.settingsMenuElement.find("[name='settings-notifications-journal-pokemon-snipe']"),
+                pokemonEvolved: this.config.settingsMenuElement.find("[name='settings-notifications-journal-pokemon-evolved']"),
+                eggHatched: this.config.settingsMenuElement.find("[name='settings-notifications-journal-egg-hatched']"),
+                incubatorStatus: this.config.settingsMenuElement.find("[name='settings-notifications-journal-incubator-status']"),
+                itemRecycle: this.config.settingsMenuElement.find("[name='settings-notifications-journal-item-recycle']"),
+                pokemonTransfer: this.config.settingsMenuElement.find("[name='settings-notifications-journal-pokemon-transfer']")
+            },
+            notificationsDesktop: {
+                pokestopUsed: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-pokestop-used']"),
+                pokemonCapture: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-pokemon-capture']"),
+                pokemonSnipe: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-pokemon-snipe']"),
+                pokemonEvolved: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-pokemon-evolved']"),
+                eggHatched: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-egg-hatched']"),
+                incubatorStatus: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-incubator-status']"),
+                itemRecycle: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-item-recycle']"),
+                pokemonTransfer: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-pokemon-transfer']")
+            },
+            notificationsJournalClearingAnimation: this.config.settingsMenuElement.find("[name='settings-notifications-journal-clearing-animation']")
         };
     }
     return SettingsMenuController;
@@ -1236,6 +1298,17 @@ var NotificationController = (function () {
     }
     return NotificationController;
 }());
+var NotificationType;
+(function (NotificationType) {
+    NotificationType[NotificationType["PokestopUsed"] = 0] = "PokestopUsed";
+    NotificationType[NotificationType["PokemonCapture"] = 1] = "PokemonCapture";
+    NotificationType[NotificationType["PokemonSnipe"] = 2] = "PokemonSnipe";
+    NotificationType[NotificationType["PokemonEvolved"] = 3] = "PokemonEvolved";
+    NotificationType[NotificationType["EggHatched"] = 4] = "EggHatched";
+    NotificationType[NotificationType["IncubatorStatus"] = 5] = "IncubatorStatus";
+    NotificationType[NotificationType["ItemRecycle"] = 6] = "ItemRecycle";
+    NotificationType[NotificationType["PokemonTransfer"] = 7] = "PokemonTransfer";
+})(NotificationType || (NotificationType = {}));
 var ProfileInfoController = (function () {
     function ProfileInfoController(config) {
         var _this = this;
@@ -7257,9 +7330,32 @@ var DefaultSettings = (function () {
                 mapProvider: MapProvider.GMaps,
                 mapFolllowPlayer: true,
                 mapClearing: 0,
+                mapGoogleApiKey: "",
+                mapOsmApiKey: "",
                 clientAddress: "127.0.0.1",
                 clientPort: 14252,
-                clientUseSSL: false
+                clientUseSSL: false,
+                notificationsJournal: {
+                    pokestopUsed: true,
+                    pokemonCapture: true,
+                    pokemonSnipe: true,
+                    pokemonEvolved: true,
+                    eggHatched: true,
+                    incubatorStatus: true,
+                    itemRecycle: true,
+                    pokemonTransfer: true,
+                },
+                notificationsDesktop: {
+                    pokestopUsed: false,
+                    pokemonCapture: false,
+                    pokemonSnipe: false,
+                    pokemonEvolved: false,
+                    eggHatched: false,
+                    incubatorStatus: false,
+                    itemRecycle: false,
+                    pokemonTransfer: false,
+                },
+                notificationsJournalClearingAnimation: true
             };
         },
         enumerable: true,
@@ -7267,11 +7363,6 @@ var DefaultSettings = (function () {
     });
     return DefaultSettings;
 }());
-var MapProvider;
-(function (MapProvider) {
-    MapProvider[MapProvider["GMaps"] = 0] = "GMaps";
-    MapProvider[MapProvider["OSM"] = 1] = "OSM";
-})(MapProvider || (MapProvider = {}));
 var SettingsService = (function () {
     function SettingsService(dataStorage) {
         var _this = this;
@@ -7288,13 +7379,38 @@ var SettingsService = (function () {
             return _this.mergeSettings([settings]);
         };
         this.mergeSettings = function (allSettings) {
+            var notificationsJournal = {
+                pokestopUsed: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournal && s.notificationsJournal.pokestopUsed; }),
+                pokemonCapture: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournal && s.notificationsJournal.pokemonCapture; }),
+                pokemonSnipe: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournal && s.notificationsJournal.pokemonSnipe; }),
+                pokemonEvolved: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournal && s.notificationsJournal.pokemonEvolved; }),
+                eggHatched: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournal && s.notificationsJournal.eggHatched; }),
+                incubatorStatus: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournal && s.notificationsJournal.incubatorStatus; }),
+                itemRecycle: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournal && s.notificationsJournal.itemRecycle; }),
+                pokemonTransfer: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournal && s.notificationsJournal.pokemonTransfer; })
+            };
+            var notificationsDesktop = {
+                pokestopUsed: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.pokestopUsed; }),
+                pokemonCapture: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.pokemonCapture; }),
+                pokemonSnipe: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.pokemonSnipe; }),
+                pokemonEvolved: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.pokemonEvolved; }),
+                eggHatched: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.eggHatched; }),
+                incubatorStatus: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.incubatorStatus; }),
+                itemRecycle: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.itemRecycle; }),
+                pokemonTransfer: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.pokemonTransfer; })
+            };
             return {
                 mapProvider: _this.coalesceMap(allSettings, function (s) { return s.mapProvider; }),
                 mapFolllowPlayer: _this.coalesceMap(allSettings, function (s) { return s.mapFolllowPlayer; }),
                 mapClearing: _this.coalesceMap(allSettings, function (s) { return s.mapClearing; }),
+                mapGoogleApiKey: _this.coalesceMap(allSettings, function (s) { return s.mapGoogleApiKey; }),
+                mapOsmApiKey: _this.coalesceMap(allSettings, function (s) { return s.mapOsmApiKey; }),
                 clientAddress: _this.coalesceMap(allSettings, function (s) { return s.clientAddress; }),
                 clientPort: _this.coalesceMap(allSettings, function (s) { return s.clientPort; }),
-                clientUseSSL: _this.coalesceMap(allSettings, function (s) { return s.clientUseSSL; })
+                clientUseSSL: _this.coalesceMap(allSettings, function (s) { return s.clientUseSSL; }),
+                notificationsJournal: notificationsJournal,
+                notificationsDesktop: notificationsDesktop,
+                notificationsJournalClearingAnimation: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournalClearingAnimation; })
             };
         };
         this.coalesce = function (inputs) {
@@ -7342,9 +7458,26 @@ var SettingsService = (function () {
         equal = equal && settings.mapProvider === to.mapProvider;
         equal = equal && settings.mapFolllowPlayer === to.mapFolllowPlayer;
         equal = equal && settings.mapClearing === to.mapClearing;
+        equal = equal && settings.mapGoogleApiKey === to.mapGoogleApiKey;
+        equal = equal && settings.mapOsmApiKey === to.mapOsmApiKey;
         equal = equal && settings.clientAddress === to.clientAddress;
         equal = equal && settings.clientPort === to.clientPort;
         equal = equal && settings.clientUseSSL === to.clientUseSSL;
+        equal = equal && this.notificationSettingsEqual(settings.notificationsJournal, to.notificationsJournal);
+        equal = equal && this.notificationSettingsEqual(settings.notificationsDesktop, to.notificationsDesktop);
+        equal = equal && settings.notificationsJournalClearingAnimation === to.notificationsJournalClearingAnimation;
+        return equal;
+    };
+    SettingsService.prototype.notificationSettingsEqual = function (settings, to) {
+        var equal = true;
+        equal = equal && settings.pokestopUsed === to.pokestopUsed;
+        equal = equal && settings.pokemonCapture === to.pokemonCapture;
+        equal = equal && settings.pokemonSnipe === to.pokemonSnipe;
+        equal = equal && settings.pokemonEvolved === to.pokemonEvolved;
+        equal = equal && settings.eggHatched === to.eggHatched;
+        equal = equal && settings.incubatorStatus === to.incubatorStatus;
+        equal = equal && settings.itemRecycle === to.itemRecycle;
+        equal = equal && settings.pokemonTransfer === to.pokemonTransfer;
         return equal;
     };
     return SettingsService;

@@ -445,7 +445,7 @@
                                 <div class="tab-buttons">
                                     <div class="map-settings selected">Map</div>
                                     <div class="client-settings">Client</div>
-                                    <div class="gui-settings">Gui</div>
+                                    <div class="notification-settings">Notifications</div>
                                     <div class="other-settings">Other</div>
                                 </div>
                                 <div class="tab-pages">
@@ -502,7 +502,7 @@
                                                     <span>Not required</span>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="text" name="settings-gmaps-api-key" value="" style="width: 100%" />
+                                                    <input type="text" name="settings-map-google-api-key" value="" style="width: 100%" />
                                                 </div>
                                             </div>
 
@@ -520,7 +520,7 @@
                                                     <span>Not required</span>
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="text" name="settings-gmaps-api-key" value="" style="width: 100%" />
+                                                    <input type="text" name="settings-map-osm-api-key" value="" style="width: 100%" />
                                                 </div>
                                             </div>
 
@@ -574,7 +574,7 @@
                                         </div>
                                     </div>
 
-                                    <div id="gui-settings">
+                                    <div id="notification-settings">
                                         <div class="setting-topic">
                                             <h6 class="setting-name"> journal </h6>
 
@@ -585,14 +585,14 @@
 
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="checkbox" name="notifications-to-show" value="pokestops" checked>Pokestops<br/>
-                                                    <input type="checkbox" name="notifications-to-show" value="captures" checked>Captures<br/>
-                                                    <input type="checkbox" name="notifications-to-show" value="hatches" checked>Hatches<br/>
-                                                    <input type="checkbox" name="notifications-to-show" value="snipes" checked>Snipes<br/>
-                                                    <input type="checkbox" name="notifications-to-show" value="evolves" checked>Evolves<br/>
-                                                    <input type="checkbox" name="notifications-to-show" value="recycles" checked>Recycles<br/>
-                                                    <input type="checkbox" name="notifications-to-show" value="transfers" checked>Transfers<br/>
-                                                    <input type="checkbox" name="notifications-to-show" value="incubators-status" checked>Incubators Status<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokestop-used" value="pokestop-used" checked>Pokestop<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-capture" value="pokemon-capture" checked>Capture<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-snipe" value="pokemon-snipe" checked>Snipe<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-evolved" value="pokemon-evolved" checked>Evolve<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-egg-hatched" value="egg-hatched" checked>Hatch<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-incubator-status" value="incubator-status" checked>Incubator status<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-item-recycle" value="item-recycle" checked>Recycle<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-transfer" value="pokemon-transfer" checked>Transfer<br/>
                                                 </div>
                                             </div>
 
@@ -603,7 +603,7 @@
 
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <div class="option-toggle active" name="settings-enable-clearall-animation">
+                                                    <div class="option-toggle active" name="settings-notifications-journal-clearing-animation">
                                                         <div class="toggle-circle"></div>
                                                     </div>
                                                 </div>
@@ -741,7 +741,27 @@
     <script type="text/javascript" src="external/jquery-3.1.0.js"></script>
     <script type="text/javascript" src="external/lodash.js"></script>
     <script type="text/javascript" src="external/leaflet.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+    var key = null;
+    var settingsJson = localStorage.getItem("settings");
+    if (settingsJson) {
+        try {
+            var sett = JSON.parse(settingsJson);
+            if (sett.mapGoogleApiKey) {
+                key = sett.mapGoogleApiKey;
+            }
+        }
+        catch (ex) {
+
+        }
+    }
+
+    if (key) {
+        document.write('<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=' + key + '"><\/script>');
+    } else {
+        document.write('<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"><\/script>');
+    }
+</script>
     <script type="text/javascript" src="external/infobubble.js"></script>
     <script type="text/javascript" src="external/jquery.animateNumber.js"></script>
     <script type="text/javascript" src="external/jquery.qtip.min.js"></script>
