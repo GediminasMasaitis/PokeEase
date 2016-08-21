@@ -145,7 +145,7 @@ var GoogleMap = (function () {
             });
             _.each(incomingPokestops, function (stop) {
                 var stopId = stop.Id;
-                var currentEvents = _.map(_this.pokestops, function (ps) { return ps.event; });
+                var currentEvents = _.mapValues(_this.pokestops, function (ps) { return ps.event; });
                 if (!(stopId in currentEvents)) {
                     var marker = _this.createStopMarker(stop);
                     var infoWindow = _this.createStopInfoWindow(stop, marker);
@@ -178,7 +178,7 @@ var GoogleMap = (function () {
                     delete _this.gyms[gymId];
                 }
             });
-            var currentGymEvents = _.map(_this.gyms, function (g) { return g.event; });
+            var currentGymEvents = _.mapValues(_this.gyms, function (g) { return g.event; });
             _.each(incomingGyms, function (g) {
                 var gymId = g.Id;
                 if ((gymId in currentGymEvents) && _this.gyms[gymId].event.OwnedByTeam !== g.OwnedByTeam) {
@@ -188,7 +188,7 @@ var GoogleMap = (function () {
                     delete _this.gyms[gymId].event;
                     delete _this.gyms[gymId];
                 }
-                currentGymEvents = _.map(_this.gyms, function (g) { return g.event; });
+                currentGymEvents = _.mapValues(_this.gyms, function (gym) { return gym.event; });
                 if (!(g.Id in currentGymEvents)) {
                     var marker = _this.createGymMarker(g);
                     var infoWindow = _this.createGymInfoWindow(g, marker);

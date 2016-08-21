@@ -443,7 +443,7 @@ class GoogleMap implements IMap {
         // Check for any markers that need to be added.
         _.each(incomingPokestops, stop => {
             const stopId = stop.Id;
-            const currentEvents = _.map(this.pokestops, ps => ps.event) as IPokeStopEvent[];
+            const currentEvents = _.mapValues(this.pokestops, ps => ps.event);
             if (!(stopId in currentEvents)) {
                 const marker = this.createStopMarker(stop);
                 const infoWindow = this.createStopInfoWindow(stop, marker);
@@ -485,7 +485,7 @@ class GoogleMap implements IMap {
         });
 
         // Check for any markers that need to be added.
-        let currentGymEvents = _.map(this.gyms, g => g.event) as IGymEvent[];
+        let currentGymEvents = _.mapValues(this.gyms, g => g.event);
         _.each(incomingGyms, g => {
             // If the gym ownership has changed, remove it so it can be readded as the new team.
             const gymId = g.Id;
@@ -497,7 +497,7 @@ class GoogleMap implements IMap {
                 delete this.gyms[gymId];
             }
 
-            currentGymEvents = _.map(this.gyms, g => g.event) as IGymEvent[];
+            currentGymEvents = _.mapValues(this.gyms, gym => gym.event);
             if (!(g.Id in currentGymEvents)) {
                 const marker = this.createGymMarker(g);
                 const infoWindow = this.createGymInfoWindow(g, marker);
