@@ -885,6 +885,16 @@ $event-incubator-status-color: #e9e1b5;
     bottom: 0;
     z-index: 1;
     display: none;
+    overflow-y:overlay;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.5);
+    }
 }
 
 /* #pokemon-info {
@@ -929,6 +939,7 @@ $event-incubator-status-color: #e9e1b5;
     line-height: 1.75;
     overflow: hidden;
     animation: SlideIn .3s cubic-bezier(0, 0, 0, 1);
+    margin: 1em;
 
     i.close-button {
         position: absolute;

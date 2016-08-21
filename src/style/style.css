@@ -781,7 +781,13 @@ body {
   right: 0;
   bottom: 0;
   z-index: 1;
-  display: none; }
+  display: none;
+  overflow-y: overlay; }
+  #pokemon-info::-webkit-scrollbar {
+    width: 10px;
+    background: rgba(0, 0, 0, 0.1); }
+  #pokemon-info::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5); }
 
 /* #pokemon-info {
     position: absolute;
@@ -821,7 +827,8 @@ body {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   line-height: 1.75;
   overflow: hidden;
-  animation: SlideIn 0.3s cubic-bezier(0, 0, 0, 1); }
+  animation: SlideIn 0.3s cubic-bezier(0, 0, 0, 1);
+  margin: 1em; }
   #pokemon-content i.close-button {
     position: absolute;
     left: 0;
