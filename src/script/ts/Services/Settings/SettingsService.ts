@@ -1,4 +1,5 @@
-﻿class LocalStorageSettingsService implements ISettingsService {
+﻿class SettingsService implements ISettingsService {
+    public dataStorage: IDataStorage;
 
     public get settings(): ISettings {
         return this.cloneSettings(this.currentSettings);
@@ -7,25 +8,17 @@
     private settingsKey = "settings";
     private subscribers: ((settings: ISettings, previousSettings: ISettings) => void)[];
 
-    constructor() {
+    constructor(dataStorage: IDataStorage) {
+        this.dataStorage = dataStorage;
         this.subscribers = [];
     }
-    
-    public load = (): void => {
-        const settingsJson = localStorage.getItem(this.settingsKey);
-        if (!settingsJson) {
-            this.apply(DefaultSettings.settings);
-            return;
-        } 
-        let loadedSettings: ISettings;
 
-        try {
-            loadedSettings = JSON.parse(settingsJson);
-        } catch (ex) {
+    public load = (): void => {
+        const loadedSettings = this.dataStorage.getData<ISettings>(this.settingsKey);
+        if (loadedSettings === null) {
             this.apply(DefaultSettings.settings);
-            return;
-        } 
-        
+            return
+        }
         this.apply(loadedSettings);
     }
 
@@ -72,8 +65,7 @@
     }
 
     private save = (): void => {
-        const settingsJson = JSON.stringify(this.currentSettings);
-        localStorage.setItem(this.settingsKey, settingsJson);
+        this.dataStorage.setData(this.settingsKey, this.currentSettings);
     }
 
     public subscribe(action: (settings: ISettings, previousSettings: ISettings) => void): void {

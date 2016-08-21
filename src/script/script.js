@@ -7179,6 +7179,28 @@ var BotWSClient = (function () {
     }
     return BotWSClient;
 }());
+var LocalStorageDataStorage = (function () {
+    function LocalStorageDataStorage() {
+        this.setData = function (key, data) {
+            var dataJson = JSON.stringify(data);
+            localStorage.setItem(key, dataJson);
+        };
+        this.getData = function (key) {
+            var dataJson = localStorage.getItem(key);
+            if (!dataJson) {
+                return null;
+            }
+            try {
+                var data = JSON.parse(dataJson);
+                return data;
+            }
+            catch (ex) {
+                return null;
+            }
+        };
+    }
+    return LocalStorageDataStorage;
+}());
 var DefaultSettings = (function () {
     function DefaultSettings() {
     }
@@ -7203,21 +7225,13 @@ var MapProvider;
     MapProvider[MapProvider["GMaps"] = 0] = "GMaps";
     MapProvider[MapProvider["OSM"] = 1] = "OSM";
 })(MapProvider || (MapProvider = {}));
-var LocalStorageSettingsService = (function () {
-    function LocalStorageSettingsService() {
+var SettingsService = (function () {
+    function SettingsService(dataStorage) {
         var _this = this;
         this.settingsKey = "settings";
         this.load = function () {
-            var settingsJson = localStorage.getItem(_this.settingsKey);
-            if (!settingsJson) {
-                _this.apply(DefaultSettings.settings);
-                return;
-            }
-            var loadedSettings;
-            try {
-                loadedSettings = JSON.parse(settingsJson);
-            }
-            catch (ex) {
+            var loadedSettings = _this.dataStorage.getData(_this.settingsKey);
+            if (loadedSettings === null) {
                 _this.apply(DefaultSettings.settings);
                 return;
             }
@@ -7257,26 +7271,26 @@ var LocalStorageSettingsService = (function () {
             _this.save();
         };
         this.save = function () {
-            var settingsJson = JSON.stringify(_this.currentSettings);
-            localStorage.setItem(_this.settingsKey, settingsJson);
+            _this.dataStorage.setData(_this.settingsKey, _this.currentSettings);
         };
+        this.dataStorage = dataStorage;
         this.subscribers = [];
     }
-    Object.defineProperty(LocalStorageSettingsService.prototype, "settings", {
+    Object.defineProperty(SettingsService.prototype, "settings", {
         get: function () {
             return this.cloneSettings(this.currentSettings);
         },
         enumerable: true,
         configurable: true
     });
-    LocalStorageSettingsService.prototype.coalesceMap = function (inputs, map) {
+    SettingsService.prototype.coalesceMap = function (inputs, map) {
         var mapped = _.map(inputs, map);
         return this.coalesce(mapped);
     };
-    LocalStorageSettingsService.prototype.subscribe = function (action) {
+    SettingsService.prototype.subscribe = function (action) {
         this.subscribers.push(action);
     };
-    LocalStorageSettingsService.prototype.settingsEqual = function (settings, to) {
+    SettingsService.prototype.settingsEqual = function (settings, to) {
         var equal = true;
         equal = equal && settings.mapProvider === to.mapProvider;
         equal = equal && settings.mapFolllowPlayer === to.mapFolllowPlayer;
@@ -7286,7 +7300,7 @@ var LocalStorageSettingsService = (function () {
         equal = equal && settings.clientUseSSL === to.clientUseSSL;
         return equal;
     };
-    return LocalStorageSettingsService;
+    return SettingsService;
 }());
 var Language;
 (function (Language) {
@@ -7438,7 +7452,8 @@ var TimeUtils = (function () {
 }());
 $(function () {
     StaticInfo.init();
-    var settingsService = new LocalStorageSettingsService();
+    var dataStorage = new LocalStorageDataStorage();
+    var settingsService = new SettingsService(dataStorage);
     settingsService.load();
     var settings = settingsService.settings;
     var client = new BotWSClient();

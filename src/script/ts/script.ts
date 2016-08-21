@@ -6,7 +6,8 @@
 
 $(() => {
     StaticInfo.init();
-    const settingsService = new LocalStorageSettingsService();
+    const dataStorage = new LocalStorageDataStorage();
+    const settingsService = new SettingsService(dataStorage);
     settingsService.load();
     const settings = settingsService.settings;
     const client = new BotWSClient();
