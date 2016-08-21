@@ -1832,6 +1832,13 @@ $map-popup-width: 250px;
         }
     }
 
+
+    &.iw-pokestop-lure {
+        .iw-status {
+            border-bottom: 2px solid $lure;
+        }
+    }
+
     .iw-gym-defender img {
         height: 16px;
         vertical-align: middle;

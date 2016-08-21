@@ -1521,6 +1521,8 @@ select option {
     filter: alpha(opacity=40); }
   .iw-wrap.iw-pokestop-visited .iw-status {
     background: #9b59b4; }
+  .iw-wrap.iw-pokestop-lure .iw-status {
+    border-bottom: 2px solid #f52d60; }
   .iw-wrap .iw-gym-defender img {
     height: 16px;
     vertical-align: middle;
