@@ -40,7 +40,6 @@
 			    'background-repeat': 'no-repeat',
 			    'width': "40px",
 			    'height': "40px",
-			    /* 'border-radius': '20px', */
 			    'margin': "5px"
 		    })
 
@@ -58,8 +57,8 @@
 	    var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
 
 	    if (point) {
-		    div.style.left = (point.x - 10) + 'px';
-		    div.style.top = (point.y - 20) + 'px';
+		    div.style.left = (point.x - 30) + 'px';
+		    div.style.top = (point.y - 30) + 'px';
 	    }
     }
 

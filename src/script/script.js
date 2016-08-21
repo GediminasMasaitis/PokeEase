@@ -76,8 +76,8 @@ var CaptureMarker = (function (_super) {
         }
         var point = this.getProjection().fromLatLngToDivPixel(this.latlng);
         if (point) {
-            div.style.left = (point.x - 10) + 'px';
-            div.style.top = (point.y - 20) + 'px';
+            div.style.left = (point.x - 30) + 'px';
+            div.style.top = (point.y - 30) + 'px';
         }
     };
     CaptureMarker.prototype.getPosition = function () {
