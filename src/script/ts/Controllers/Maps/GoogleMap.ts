@@ -577,7 +577,8 @@ class GoogleMap implements IMap {
 
         return {
             url: stopImage,
-            scaledSize: new google.maps.Size(50, 50)
+            scaledSize: new google.maps.Size(50, 50),
+            anchor: new google.maps.Point(25, 25)
         };
     }
 
@@ -686,7 +687,8 @@ class GoogleMap implements IMap {
 
         return {
             url: stopImage,
-            scaledSize: new google.maps.Size(50, 50)
+            scaledSize: new google.maps.Size(50, 50),
+            anchor: new google.maps.Point(25, 25)
         };
     }
 

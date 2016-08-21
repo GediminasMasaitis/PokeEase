@@ -664,7 +664,8 @@ var GoogleMap = (function () {
         }
         return {
             url: stopImage,
-            scaledSize: new google.maps.Size(50, 50)
+            scaledSize: new google.maps.Size(50, 50),
+            anchor: new google.maps.Point(25, 25)
         };
     };
     GoogleMap.prototype.createGymMarker = function (gym) {
@@ -704,7 +705,8 @@ var GoogleMap = (function () {
         }
         return {
             url: stopImage,
-            scaledSize: new google.maps.Size(50, 50)
+            scaledSize: new google.maps.Size(50, 50),
+            anchor: new google.maps.Point(25, 25)
         };
     };
     return GoogleMap;
