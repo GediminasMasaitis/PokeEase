@@ -1312,6 +1312,7 @@ var InterfaceHandler = (function () {
                 _this.gyms = [];
             }
             for (var i = 0; i < forts.length; i++) {
+                _this.config.fortCacheService.addFort(forts[i], true);
                 if (forts[i].Type === 1) {
                     var pokeStop = forts[i];
                     pokeStop.Status = PokeStopStatus.Normal;
@@ -1391,6 +1392,7 @@ var InterfaceHandler = (function () {
         var itemsAddedCount = _.sum(_.map(fortUsed.ItemsList, function (item) { return item.Count; }));
         this.currentItemCount += itemsAddedCount;
         this.config.mainMenuController.setItemCount(this.currentItemCount);
+        this.config.fortCacheService.setName(fortUsed.Id, fortUsed.Name);
         var pokeStop = _.find(this.pokeStops, function (ps) { return ps.Id === fortUsed.Id; });
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
@@ -6817,6 +6819,11 @@ var StaticInfo = (function () {
     };
     return StaticInfo;
 }());
+var FortType;
+(function (FortType) {
+    FortType[FortType["Gym"] = 0] = "Gym";
+    FortType[FortType["PokeStop"] = 1] = "PokeStop";
+})(FortType || (FortType = {}));
 var PokeStopStatus;
 (function (PokeStopStatus) {
     PokeStopStatus[PokeStopStatus["Normal"] = 0] = "Normal";
@@ -7201,6 +7208,46 @@ var LocalStorageDataStorage = (function () {
     }
     return LocalStorageDataStorage;
 }());
+var FortCacheService = (function () {
+    function FortCacheService(dataStorage) {
+        var _this = this;
+        this.addFort = function (fort, addName) {
+            var cacheEntry = {
+                Id: fort.Id,
+                Latitude: fort.Latitude,
+                Longitude: fort.Longitude,
+                Name: fort.Name,
+                Type: fort.Type
+            };
+            var previous = _this.cache[cacheEntry.Id];
+            _this.cache[cacheEntry.Id] = cacheEntry;
+            if (previous && previous.Name) {
+                if (addName) {
+                    fort.Name = previous.Name;
+                }
+                cacheEntry.Name = previous.Name;
+            }
+            _this.saveCache();
+        };
+        this.saveCache = function () {
+            _this.dataStorage.setData("fortCache", _this.cache);
+        };
+        this.loadCache = function () {
+            _this.cache = _this.dataStorage.getData("fortCache") || {};
+        };
+        this.setName = function (id, name) {
+            var fort = _this.cache[id];
+            if (fort) {
+                fort.Name = name;
+            }
+            _this.saveCache();
+        };
+        this.getCached = function () { return _this.cache; };
+        this.dataStorage = dataStorage;
+        this.loadCache();
+    }
+    return FortCacheService;
+}());
 var DefaultSettings = (function () {
     function DefaultSettings() {
     }
@@ -7454,6 +7501,7 @@ $(function () {
     StaticInfo.init();
     var dataStorage = new LocalStorageDataStorage();
     var settingsService = new SettingsService(dataStorage);
+    var fortCacheService = new FortCacheService(dataStorage);
     settingsService.load();
     var settings = settingsService.settings;
     var client = new BotWSClient();
@@ -7514,7 +7562,8 @@ $(function () {
         profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap,
-        settingsService: settingsService
+        settingsService: settingsService,
+        fortCacheService: fortCacheService
     });
     client.start({
         eventHandlers: [interfaceHandler],

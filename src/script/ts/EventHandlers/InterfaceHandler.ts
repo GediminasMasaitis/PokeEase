@@ -38,6 +38,7 @@
             this.gyms = [];
         }
         for (let i = 0; i < forts.length; i++) {
+            this.config.fortCacheService.addFort(forts[i], true);
             if (forts[i].Type === 1) {
                 const pokeStop = forts[i] as IPokeStopEvent;
                 pokeStop.Status = PokeStopStatus.Normal;
@@ -77,6 +78,7 @@
         const itemsAddedCount = _.sum(_.map(fortUsed.ItemsList, item => item.Count));
         this.currentItemCount += itemsAddedCount;
         this.config.mainMenuController.setItemCount(this.currentItemCount);
+        this.config.fortCacheService.setName(fortUsed.Id, fortUsed.Name);
         const pokeStop = _.find(this.pokeStops, ps => ps.Id === fortUsed.Id);
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);

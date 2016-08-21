@@ -8,6 +8,7 @@ $(() => {
     StaticInfo.init();
     const dataStorage = new LocalStorageDataStorage();
     const settingsService = new SettingsService(dataStorage);
+    const fortCacheService = new FortCacheService(dataStorage);
     settingsService.load();
     const settings = settingsService.settings;
     const client = new BotWSClient();
@@ -77,7 +78,8 @@ $(() => {
         profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap,
-        settingsService: settingsService
+        settingsService: settingsService,
+        fortCacheService: fortCacheService
     });
 
     client.start({
