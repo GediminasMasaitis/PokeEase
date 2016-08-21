@@ -209,7 +209,7 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
 
     private toggleExtendedInfo = (ev: JQueryEventObject): void => {
         const notificationElement =  $(ev.target).closest(".event");
-        notificationElement.find(".extended-info").slideToggle(300);
+        notificationElement.find(".extended-info").slideToggle(500, "easeOutQuint");
     }
 
     private closeNotification = (ev: JQueryEventObject): void => {
