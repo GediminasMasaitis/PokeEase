@@ -1,8 +1,10 @@
-﻿/// <reference path="../../externalTypings/jquery/jquery.d.ts" />
+﻿//// <reference path="../../../node_modules/typescript/lib/lib.core.es6.d.ts" />
+/// <reference path="../../externalTypings/jquery/jquery.d.ts" />
 /// <reference path="../../externalTypings/lodash/lodash.d.ts" />
 /// <reference path="../../externalTypings/leaflet/leaflet.d.ts" />
 /// <reference path="../../externalTypings/moment/moment.d.ts" />
 /// <reference path="../../externalTypings/googlemaps/google.maps.d.ts" />
+
 
 $(() => {
     StaticInfo.init();
@@ -13,7 +15,7 @@ $(() => {
     const settings = settingsService.settings;
     const client = new BotWSClient();
     const translationController = new TranslationService();
-    const notificationController = new NotificationController({
+    const notificationController = new JournalNotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
         notificationCounter: $("#journal-counter"),

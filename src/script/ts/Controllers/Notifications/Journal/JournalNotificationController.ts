@@ -1,9 +1,9 @@
-class NotificationController implements INotificationController {
-    private config: INotificationControllerConfig;
+class JournalNotificationController implements INotificationController {
+    private config: IJournalNotificationControllerConfig;
     private notifications: INotification[];
     private timeUpdaterInterval: number;
 
-    constructor(config: INotificationControllerConfig) {
+    constructor(config: IJournalNotificationControllerConfig) {
         this.config = config;
         this.notifications = [];
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);

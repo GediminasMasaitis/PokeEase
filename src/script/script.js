@@ -1173,8 +1173,22 @@ var SettingsMenuController = (function () {
     }
     return SettingsMenuController;
 }());
-var NotificationController = (function () {
-    function NotificationController(config) {
+var DesktopNotificationController = (function () {
+    function DesktopNotificationController() {
+    }
+    DesktopNotificationController.prototype.addNotificationPokeStopUsed = function (fortUsed) {
+        var notif = new Notification("test");
+    };
+    DesktopNotificationController.prototype.addNotificationPokemonCapture = function (pokemonCatch, itemsUsedForCapture) { };
+    DesktopNotificationController.prototype.addNotificationPokemonEvolved = function (pokemonEvolve) { };
+    DesktopNotificationController.prototype.addNotificationPokemonTransfer = function (pokemonTransfer) { };
+    DesktopNotificationController.prototype.addNotificationItemRecycle = function (itemRecycle) { };
+    DesktopNotificationController.prototype.addNotificationEggHatched = function (eggHatched) { };
+    DesktopNotificationController.prototype.addNotificationIncubatorStatus = function (incubatorStatus) { };
+    return DesktopNotificationController;
+}());
+var JournalNotificationController = (function () {
+    function JournalNotificationController(config) {
         var _this = this;
         this.clearAll = function (ev) {
             var allNotificationElements = _this.config.container.children(".event").get().reverse();
@@ -1300,7 +1314,7 @@ var NotificationController = (function () {
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
         this.config.clearAllButton.click(this.clearAll);
     }
-    return NotificationController;
+    return JournalNotificationController;
 }());
 var NotificationType;
 (function (NotificationType) {
@@ -7643,7 +7657,7 @@ $(function () {
     var settings = settingsService.settings;
     var client = new BotWSClient();
     var translationController = new TranslationService();
-    var notificationController = new NotificationController({
+    var notificationController = new JournalNotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
         notificationCounter: $("#journal-counter"),
