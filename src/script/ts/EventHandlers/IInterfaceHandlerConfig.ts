@@ -9,4 +9,5 @@
     requestSender: IRequestSender,
     map: IMap;
     settingsService: ISettingsService;
+    fortCacheService: IFortCacheService;
 }
