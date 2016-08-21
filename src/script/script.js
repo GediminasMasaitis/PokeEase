@@ -1281,7 +1281,7 @@ var NotificationController = (function () {
         };
         this.toggleExtendedInfo = function (ev) {
             var notificationElement = $(ev.target).closest(".event");
-            notificationElement.find(".extended-info").slideToggle(300);
+            notificationElement.find(".extended-info").slideToggle(500, "easeOutQuint");
         };
         this.closeNotification = function (ev) {
             var closeButton = $(ev.target);

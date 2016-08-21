@@ -3,13 +3,13 @@ $(document).ready(function () {
 
     // MENU EVENTS
     $("#menu .close-button").click(function() {
-        $("#menu").animate({"left": "-200px"}, 200);
+        $("#menu").animate({"left": "-200px"}, 500, "easeOutQuint");
         $(".open-menu").delay(100).animate({"opacity": "1"}, 200);
     });
 
     $(".open-menu").click(function() {
         $(this).css("opacity", "0");
-        $("#menu").delay(0).animate({"left": "0"}, 200);
+        $("#menu").delay(0).animate({"left": "0"}, 500, "easeOutQuint");
     });
 
     $("#menu .item").click(function() {
@@ -57,13 +57,13 @@ $(document).ready(function () {
     });
 
     $("#journal .close-button").click(function() {
-        $("#journal").animate({"right": "-300px"}, 200);
+        $("#journal").animate({"right": "-300px"}, 500, "easeOutQuint");
         $(".open-journal").delay(100).animate({"opacity": "1"}, 200);
     });
 
     $(".open-journal").click(function() {
         $(this).css("opacity", "0");
-        $("#journal").delay(0).animate({"right": "0"}, 200);
+        $("#journal").delay(0).animate({"right": "0"}, 500, "easeOutQuint");
     });
 
     $("#journal .items .event").click(function() {
@@ -296,11 +296,11 @@ function sendNotification(text, bgColor, textColor, delay, description) {
         $("#notification").append("<div class='description'>"+description+"</div>");
     }
 
-    $("#notification").animate({'top': '25px'}, 500);
+    $("#notification").animate({'top': '25px'}, 500, "easeOutBack");
 
     $("#notification .countdown").animate({'width': '0'}, parseInt(delay), 'linear');
 
-    $("#notification").delay(delay).animate({'top': -($("#notification").outerHeight() + 2)}, 500);
+    $("#notification").delay(delay-500).animate({'top': -($("#notification").outerHeight() + 2)}, 500, "easeInOutQuart");
 
 }
 
