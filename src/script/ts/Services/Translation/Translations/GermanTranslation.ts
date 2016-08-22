@@ -16,6 +16,7 @@
         701: "Himmihbeere"
     };
     public eventTypes = {
+        "example": "beispiel",
         "pokestop": "pokéstop",
         "catch": "gefangen",
         "snipe": "snipe",

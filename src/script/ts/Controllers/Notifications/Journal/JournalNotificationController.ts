@@ -8,6 +8,7 @@ class JournalNotificationController implements INotificationController {
         this.notifications = [];
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
         this.config.clearAllButton.click(this.clearAll);
+        this.config.exampleButton.click(this.exampleClicked);
     }
 
     private clearAll = (ev: JQueryEventObject): void => {
@@ -25,6 +26,10 @@ class JournalNotificationController implements INotificationController {
         this.notifications = [];
     }
 
+    private exampleClicked = (ev: JQueryEventObject): void => {
+        this.addNotificationExample();
+    }
+
     private onUpdateTimerElapsed = () => {
         const currentTime = Date.now();
         _.each(this.notifications, notification => {
@@ -33,6 +38,15 @@ class JournalNotificationController implements INotificationController {
             const timestampElement = notification.element.find(".timestamp");
             timestampElement.text(diffStr + " ago");
         });
+    }
+
+    addNotificationExample() {
+        const html = `<div class="info">Click for more</div>`;
+        const extendedInfoHtml = `This is an example notification.<br/>Extended information about the event will be added here.`;
+        const dummyEvent: IEvent = {
+            Timestamp: Date.now()
+        }
+        this.addNotification(dummyEvent, html, "example", extendedInfoHtml);
     }
 
     public addNotificationPokeStopUsed = (fortUsed: IFortUsedEvent): void => {

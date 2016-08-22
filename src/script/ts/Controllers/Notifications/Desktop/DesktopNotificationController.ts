@@ -1,5 +1,7 @@
 ﻿class DesktopNotificationController implements INotificationController {
-    config: INotificationControllerConfig;
+    public config: INotificationControllerConfig;
+
+    public addNotificationExample() { }
 
     public addNotificationPokeStopUsed(fortUsed: IFortUsedEvent) {}
 

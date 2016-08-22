@@ -16,6 +16,7 @@
     };
 
     public eventTypes = {
+        "example": "example",
         "pokestop": "pokestop",
         "catch": "catch",
         "snipe": "snipe",

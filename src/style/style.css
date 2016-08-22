@@ -359,6 +359,9 @@ body {
 #journal:hover .items:before, #journal:hover .items:after {
   opacity: 0; }
 
+#journal .event.example .category {
+  background: #ff00ff; }
+
 #journal .event.transfer .category {
   background: #1d7157; }
 
@@ -392,6 +395,9 @@ body {
   font-weight: 600;
   letter-spacing: 1px;
   padding: 4px 6px; }
+
+#journal .event.example .event-type {
+  color: #ff00ff; }
 
 #journal .event.transfer .event-type {
   color: #1d7157; }

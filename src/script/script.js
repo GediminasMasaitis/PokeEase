@@ -1176,6 +1176,7 @@ var SettingsMenuController = (function () {
 var DesktopNotificationController = (function () {
     function DesktopNotificationController() {
     }
+    DesktopNotificationController.prototype.addNotificationExample = function () { };
     DesktopNotificationController.prototype.addNotificationPokeStopUsed = function (fortUsed) { };
     DesktopNotificationController.prototype.addNotificationPokemonCapture = function (pokemonCatch, itemsUsedForCapture) { };
     DesktopNotificationController.prototype.addNotificationPokemonEvolved = function (pokemonEvolve) { };
@@ -1201,6 +1202,9 @@ var JournalNotificationController = (function () {
                 delay += 50;
             });
             _this.notifications = [];
+        };
+        this.exampleClicked = function (ev) {
+            _this.addNotificationExample();
         };
         this.onUpdateTimerElapsed = function () {
             var currentTime = Date.now();
@@ -1335,7 +1339,16 @@ var JournalNotificationController = (function () {
         this.notifications = [];
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
         this.config.clearAllButton.click(this.clearAll);
+        this.config.exampleButton.click(this.exampleClicked);
     }
+    JournalNotificationController.prototype.addNotificationExample = function () {
+        var html = "<div class=\"info\">Click for more</div>";
+        var extendedInfoHtml = "This is an example notification.<br/>Extended information about the event will be added here.";
+        var dummyEvent = {
+            Timestamp: Date.now()
+        };
+        this.addNotification(dummyEvent, html, "example", extendedInfoHtml);
+    };
     return JournalNotificationController;
 }());
 var NotificationType;
@@ -7567,6 +7580,7 @@ var EnglishTranslation = (function () {
             701: "Razzberry"
         };
         this.eventTypes = {
+            "example": "example",
             "pokestop": "pokestop",
             "catch": "catch",
             "snipe": "snipe",
@@ -7618,6 +7632,7 @@ var GermanTranslation = (function (_super) {
             701: "Himmihbeere"
         };
         this.eventTypes = {
+            "example": "beispiel",
             "pokestop": "pokéstop",
             "catch": "gefangen",
             "snipe": "snipe",
@@ -7684,6 +7699,7 @@ $(function () {
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
         notificationCounter: $("#journal-counter"),
+        exampleButton: $("#show-notification-journal-example-button"),
         translationController: translationController,
         notificationSettings: settings.notificationsJournal
     });

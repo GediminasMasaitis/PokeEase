@@ -19,6 +19,7 @@ $(() => {
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
         notificationCounter: $("#journal-counter"),
+        exampleButton: $("#show-notification-journal-example-button"),
         translationController: translationController,
         notificationSettings: settings.notificationsJournal
     });
