@@ -2,7 +2,7 @@
     config: INotificationControllerConfig;
     addNotificationExample(): void;
     addNotificationPokeStopUsed(fortUsed: IFortUsedEvent): void;
-    addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent[], itemsUsedForCapture: number[]): void;
+    addNotificationPokemonCapture(pokemonCatches: IPokemonCaptureEvent[], itemsUsedForCapture: number[]): void;
     addNotificationPokemonEvolved(pokemonEvolve: IPokemonEvolveEvent): void;
     addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void;
     addNotificationItemRecycle(itemRecycle: IItemRecycleEvent): void;

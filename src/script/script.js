@@ -1205,7 +1205,103 @@ var DesktopNotificationController = (function () {
                 return;
             }
             _this.addNotification("Example", {
-                body: "This is an example of a desktop notification"
+                body: "This is an example of a desktop notification",
+                icon: ""
+            });
+        };
+        this.addNotificationPokeStopUsed = function (fortUsed) {
+            if (!_this.config.notificationSettings.pokestopUsed) {
+                return;
+            }
+            if (!_this.checkPermissions()) {
+                return;
+            }
+            _this.addNotification("Pokestop", {
+                body: "" + fortUsed.Name,
+                icon: "images/markers/Normal.png"
+            });
+        };
+        this.addNotificationPokemonCapture = function (pokemonCatches, itemsUsedForCapture) {
+            var pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
+            if (!pokemonCatch.IsSnipe && !_this.config.notificationSettings.pokemonCapture) {
+                return;
+            }
+            if (pokemonCatch.IsSnipe && !_this.config.notificationSettings.pokemonSnipe) {
+                return;
+            }
+            if (!_this.checkPermissions()) {
+                return;
+            }
+            var eventType = pokemonCatch.IsSnipe ? "Snipe" : "Catch";
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonCatch.Id];
+            var roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
+            _this.addNotification(eventType, {
+                body: pokemonName + "\nIV: " + roundedPerfection + "\nCP: " + pokemonCatch.Cp,
+                icon: "images/pokemon/" + pokemonCatch.Id + ".png"
+            });
+        };
+        this.addNotificationPokemonEvolved = function (pokemonEvolve) {
+            if (!_this.config.notificationSettings.pokemonEvolved) {
+                return;
+            }
+            if (!_this.checkPermissions()) {
+                return;
+            }
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonEvolve.Id];
+            _this.addNotification("Evolve", {
+                body: "" + pokemonName,
+                icon: "images/pokemon/" + pokemonEvolve.Id + ".png"
+            });
+        };
+        this.addNotificationPokemonTransfer = function (pokemonTransfer) {
+            if (!_this.config.notificationSettings.pokemonTransfer) {
+                return;
+            }
+            if (!_this.checkPermissions()) {
+                return;
+            }
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonTransfer.Id];
+            _this.addNotification("Transfer", {
+                body: "" + pokemonName,
+                icon: "images/pokemon/" + pokemonTransfer.Id + ".png"
+            });
+        };
+        this.addNotificationItemRecycle = function (itemRecycle) {
+            if (!_this.config.notificationSettings.itemRecycle) {
+                return;
+            }
+            if (!_this.checkPermissions()) {
+                return;
+            }
+            _this.addNotification("Recycle", {
+                body: itemRecycle.Count + " items",
+                icon: "images/items/" + itemRecycle.Id + ".png"
+            });
+        };
+        this.addNotificationEggHatched = function (eggHatched) {
+            if (!_this.config.notificationSettings.eggHatched) {
+                return;
+            }
+            if (!_this.checkPermissions()) {
+                return;
+            }
+            var pokemonName = _this.config.translationController.translation.pokemonNames[eggHatched.PokemonId];
+            _this.addNotification("Hatch", {
+                body: "" + pokemonName,
+                icon: "images/pokemon/" + eggHatched.PokemonId + ".png"
+            });
+        };
+        this.addNotificationIncubatorStatus = function (incubatorStatus) {
+            if (!_this.config.notificationSettings.incubatorStatus) {
+                return;
+            }
+            if (!_this.checkPermissions()) {
+                return;
+            }
+            var km = Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining) * 100) / 100;
+            _this.addNotification("Incubator", {
+                body: km + " of " + incubatorStatus.KmToWalk + "km",
+                icon: "images/items/0.png"
             });
         };
         this.addNotification = function (title, options) {
@@ -1215,13 +1311,6 @@ var DesktopNotificationController = (function () {
         this.checkPermissions();
         this.config.exampleButton.click(this.exampleClicked);
     }
-    DesktopNotificationController.prototype.addNotificationPokeStopUsed = function (fortUsed) { };
-    DesktopNotificationController.prototype.addNotificationPokemonCapture = function (pokemonCatch, itemsUsedForCapture) { };
-    DesktopNotificationController.prototype.addNotificationPokemonEvolved = function (pokemonEvolve) { };
-    DesktopNotificationController.prototype.addNotificationPokemonTransfer = function (pokemonTransfer) { };
-    DesktopNotificationController.prototype.addNotificationItemRecycle = function (itemRecycle) { };
-    DesktopNotificationController.prototype.addNotificationEggHatched = function (eggHatched) { };
-    DesktopNotificationController.prototype.addNotificationIncubatorStatus = function (incubatorStatus) { };
     return DesktopNotificationController;
 }());
 var JournalNotificationController = (function () {
