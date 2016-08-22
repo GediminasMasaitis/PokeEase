@@ -73,8 +73,8 @@
         const roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
         this.addNotification(eventType, {
             body: `${pokemonName}
-IV: ${roundedPerfection}
-CP: ${pokemonCatch.Cp}`,
+CP: ${pokemonCatch.Cp}
+IV: ${roundedPerfection}`,
             icon: `images/pokemon/${pokemonCatch.Id}.png`
         });
     }

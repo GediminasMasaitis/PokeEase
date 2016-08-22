@@ -1283,7 +1283,7 @@ var DesktopNotificationController = (function () {
             var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonCatch.Id];
             var roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
             _this.addNotification(eventType, {
-                body: pokemonName + "\nIV: " + roundedPerfection + "\nCP: " + pokemonCatch.Cp,
+                body: pokemonName + "\nCP: " + pokemonCatch.Cp + "\nIV: " + roundedPerfection,
                 icon: "images/pokemon/" + pokemonCatch.Id + ".png"
             });
         };
