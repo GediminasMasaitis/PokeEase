@@ -34,6 +34,13 @@ $(() => {
         notificationSettings: settings.notificationsDesktop
     });
 
+    const toastNotificationController = new ToastNotificationController({
+        toastControler: toastController,
+        exampleButton: $("#show-notification-toast-example-button"),
+        translationController: translationController,
+        notificationSettings: settings.notificationsToast
+    });
+
     const mainMenuController = new MainMenuController({
         requestSender: client,
         mainMenuElement: $("#menu")
@@ -87,7 +94,8 @@ $(() => {
         translationController: translationController,
         notificationControllers: [
             journalNotificationController,
-            desktopNotificationController
+            desktopNotificationController,
+            toastNotificationController
         ],
         mainMenuController: mainMenuController,
         pokemonMenuController: pokemonMenuController,

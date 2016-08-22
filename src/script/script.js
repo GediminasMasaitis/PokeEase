@@ -8004,6 +8004,12 @@ $(function () {
         translationController: translationController,
         notificationSettings: settings.notificationsDesktop
     });
+    var toastNotificationController = new ToastNotificationController({
+        toastControler: toastController,
+        exampleButton: $("#show-notification-toast-example-button"),
+        translationController: translationController,
+        notificationSettings: settings.notificationsToast
+    });
     var mainMenuController = new MainMenuController({
         requestSender: client,
         mainMenuElement: $("#menu")
@@ -8049,7 +8055,8 @@ $(function () {
         translationController: translationController,
         notificationControllers: [
             journalNotificationController,
-            desktopNotificationController
+            desktopNotificationController,
+            toastNotificationController
         ],
         mainMenuController: mainMenuController,
         pokemonMenuController: pokemonMenuController,
