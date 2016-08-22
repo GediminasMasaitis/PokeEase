@@ -1176,9 +1176,7 @@ var SettingsMenuController = (function () {
 var DesktopNotificationController = (function () {
     function DesktopNotificationController() {
     }
-    DesktopNotificationController.prototype.addNotificationPokeStopUsed = function (fortUsed) {
-        var notif = new Notification("test");
-    };
+    DesktopNotificationController.prototype.addNotificationPokeStopUsed = function (fortUsed) { };
     DesktopNotificationController.prototype.addNotificationPokemonCapture = function (pokemonCatch, itemsUsedForCapture) { };
     DesktopNotificationController.prototype.addNotificationPokemonEvolved = function (pokemonEvolve) { };
     DesktopNotificationController.prototype.addNotificationPokemonTransfer = function (pokemonTransfer) { };
@@ -1214,6 +1212,9 @@ var JournalNotificationController = (function () {
             });
         };
         this.addNotificationPokeStopUsed = function (fortUsed) {
+            if (!_this.config.notificationSettings.pokestopUsed) {
+                return;
+            }
             var itemsHtml = "";
             _.each(fortUsed.ItemsList, function (item) {
                 var itemId = StaticInfo.itemIds[item.Name];
@@ -1227,6 +1228,12 @@ var JournalNotificationController = (function () {
         };
         this.addNotificationPokemonCapture = function (pokemonCatches, itemsUsedForCapture) {
             var pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
+            if (!pokemonCatch.IsSnipe && !_this.config.notificationSettings.pokemonCapture) {
+                return;
+            }
+            if (pokemonCatch.IsSnipe && !_this.config.notificationSettings.pokemonSnipe) {
+                return;
+            }
             var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonCatch.Id];
             var roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
             var eventType = pokemonCatch.IsSnipe ? "snipe" : "catch";
@@ -1237,11 +1244,17 @@ var JournalNotificationController = (function () {
             _this.addNotification(pokemonCatch, html, eventType, extendedInfoHtml);
         };
         this.addNotificationPokemonEvolved = function (pokemonEvolve) {
+            if (!_this.config.notificationSettings.pokemonEvolved) {
+                return;
+            }
             var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonEvolve.Id];
             var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + pokemonEvolve.Id + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">+" + pokemonEvolve.Exp + "XP</div>\n                      </div>";
             _this.addNotification(pokemonEvolve, html, "evolve");
         };
         this.addNotificationEggHatched = function (eggHatched) {
+            if (!_this.config.notificationSettings.eggHatched) {
+                return;
+            }
             var pokemonName = _this.config.translationController.translation.pokemonNames[eggHatched.PokemonId];
             var roundedPerfection = Math.round(eggHatched.Perfection * 100) / 100;
             var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + eggHatched.PokemonId + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">CP " + eggHatched.Cp + " | IV " + roundedPerfection + "%</div>\n                      </div>";
@@ -1249,16 +1262,25 @@ var JournalNotificationController = (function () {
             _this.addNotification(eggHatched, html, "egg-hatched", extendedInfoHtml);
         };
         this.addNotificationIncubatorStatus = function (incubatorStatus) {
+            if (!_this.config.notificationSettings.incubatorStatus) {
+                return;
+            }
             var km = Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining) * 100) / 100;
             var html = "<div class=\"image\">\n                          <img src=\"images/items/0.png\"/>\n                      </div>\n                      <div class=\"info\">Egg\n                          <div class=\"stats\">" + km + " of " + incubatorStatus.KmToWalk + "km</div>\n                      </div>";
             _this.addNotification(incubatorStatus, html, "incubator-status");
         };
         this.addNotificationItemRecycle = function (itemRecycle) {
+            if (!_this.config.notificationSettings.itemRecycle) {
+                return;
+            }
             var itemName = _this.config.translationController.translation.itemNames[itemRecycle.Id];
             var html = "<div class=\"info\" title=\"" + itemName + "\">\n                          <div class=\"item\"><img src=\"images/items/" + itemRecycle.Id + ".png\"/>x" + itemRecycle.Count + "</div>\n                          <div class=\"stats\">+" + itemRecycle.Count + " free space</div>\n                      </div>";
             _this.addNotification(itemRecycle, html, "recycle");
         };
         this.addNotificationPokemonTransfer = function (pokemonTransfer) {
+            if (!_this.config.notificationSettings.pokemonTransfer) {
+                return;
+            }
             var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonTransfer.Id];
             var roundedPerfection = Math.round(pokemonTransfer.Perfection * 100) / 100;
             var html = "<div class=\"image\">\n                          <img src=\"images/pokemon/" + pokemonTransfer.Id + ".png\"/>\n                      </div>\n                      <div class=\"info\">\n                          " + pokemonName + "\n                          <div class=\"stats\">CP " + pokemonTransfer.Cp + " | IV " + roundedPerfection + "%</div>\n                      </div>";
@@ -1464,6 +1486,7 @@ var InterfaceHandler = (function () {
         };
         this.onSettingsChanged = function (settings, previousSettings) {
             _this.config.map.config.followPlayer = settings.mapFolllowPlayer;
+            _this.config.notificationController.config.notificationSettings = settings.notificationsJournal;
         };
         this.config = config;
         this.config.settingsService.subscribe(this.onSettingsChanged);
@@ -7661,7 +7684,8 @@ $(function () {
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
         notificationCounter: $("#journal-counter"),
-        translationController: translationController
+        translationController: translationController,
+        notificationSettings: settings.notificationsJournal
     });
     var mainMenuController = new MainMenuController({
         requestSender: client,

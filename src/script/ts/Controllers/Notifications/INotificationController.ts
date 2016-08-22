@@ -1,4 +1,5 @@
 ﻿interface INotificationController {
+    config: INotificationControllerConfig;
     addNotificationPokeStopUsed(fortUsed: IFortUsedEvent);
     addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent[], itemsUsedForCapture: number[]);
     addNotificationPokemonEvolved(pokemonEvolve: IPokemonEvolveEvent);

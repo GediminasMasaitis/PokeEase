@@ -1,4 +1,6 @@
 ﻿class DesktopNotificationController implements INotificationController {
+    config: INotificationControllerConfig;
+
     public addNotificationPokeStopUsed(fortUsed: IFortUsedEvent) {}
 
     public addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent[], itemsUsedForCapture: number[]) {}

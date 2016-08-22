@@ -1,5 +1,5 @@
 class JournalNotificationController implements INotificationController {
-    private config: IJournalNotificationControllerConfig;
+    public config: IJournalNotificationControllerConfig;
     private notifications: INotification[];
     private timeUpdaterInterval: number;
 
@@ -36,6 +36,9 @@ class JournalNotificationController implements INotificationController {
     }
 
     public addNotificationPokeStopUsed = (fortUsed: IFortUsedEvent): void => {
+        if (!this.config.notificationSettings.pokestopUsed) {
+            return;
+        }
         let itemsHtml = "";
         _.each(fortUsed.ItemsList, item => {
             const itemId = StaticInfo.itemIds[item.Name];
@@ -58,10 +61,15 @@ Gems            <span class="xp"> ${fortUsed.Gems} </span><br/>
 
     public addNotificationPokemonCapture = (pokemonCatches: IPokemonCaptureEvent[], itemsUsedForCapture: number[]): void => {
         const pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
+        if (!pokemonCatch.IsSnipe && !this.config.notificationSettings.pokemonCapture) {
+            return;
+        }
+        if (pokemonCatch.IsSnipe && !this.config.notificationSettings.pokemonSnipe) {
+            return;
+        }
         const pokemonName = this.config.translationController.translation.pokemonNames[pokemonCatch.Id];
         const roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
         const eventType = pokemonCatch.IsSnipe ? "snipe" : "catch";
-
         const html = `<div class="image">
                             <img src="images/pokemon/${pokemonCatch.Id}.png"/>
                         </div>
@@ -87,6 +95,9 @@ CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp
     }
 
     public addNotificationPokemonEvolved = (pokemonEvolve: IPokemonEvolveEvent): void => {
+        if (!this.config.notificationSettings.pokemonEvolved) {
+            return;
+        }
         const pokemonName = this.config.translationController.translation.pokemonNames[pokemonEvolve.Id];
 
         const html = `<div class="image">
@@ -101,6 +112,9 @@ CP              <span class="cp"> ${pokemonCatch.Cp} </span>/<span class="max-cp
     }
 
     public addNotificationEggHatched = (eggHatched: IEggHatchedEvent): void => {
+        if (!this.config.notificationSettings.eggHatched) {
+            return;
+        }
         const pokemonName = this.config.translationController.translation.pokemonNames[eggHatched.PokemonId];
         const roundedPerfection = Math.round(eggHatched.Perfection * 100) / 100;
 
@@ -120,6 +134,9 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
     }
 
     public addNotificationIncubatorStatus = (incubatorStatus: IIncubatorStatusEvent): void => {
+        if (!this.config.notificationSettings.incubatorStatus) {
+            return;
+        }
         const km = Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining) * 100) / 100;
 
         const html = `<div class="image">
@@ -133,6 +150,9 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
     }
 
     public addNotificationItemRecycle = (itemRecycle: IItemRecycleEvent): void => {
+        if (!this.config.notificationSettings.itemRecycle) {
+            return;
+        }
         const itemName = this.config.translationController.translation.itemNames[itemRecycle.Id];
 
         const html = `<div class="info" title="${itemName}">
@@ -144,6 +164,9 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
     }
 
     public addNotificationPokemonTransfer = (pokemonTransfer: IPokemonTransferEvent): void => {
+        if (!this.config.notificationSettings.pokemonTransfer) {
+            return;
+        }
         const pokemonName = this.config.translationController.translation.pokemonNames[pokemonTransfer.Id];
         const roundedPerfection = Math.round(pokemonTransfer.Perfection * 100) / 100;
 

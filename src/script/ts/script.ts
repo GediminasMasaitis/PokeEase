@@ -19,7 +19,8 @@ $(() => {
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
         notificationCounter: $("#journal-counter"),
-        translationController: translationController
+        translationController: translationController,
+        notificationSettings: settings.notificationsJournal
     });
 
     const mainMenuController = new MainMenuController({
