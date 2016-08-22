@@ -15,6 +15,9 @@ $(() => {
     const settings = settingsService.settings;
     const client = new BotWSClient();
     const translationController = new TranslationService();
+    const toastController = new ToastController({
+        toastElement: $("#notification")
+    });
     const journalNotificationController = new JournalNotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
