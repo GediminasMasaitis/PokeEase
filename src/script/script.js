@@ -1057,7 +1057,7 @@ var PokemonMenuController = (function () {
         this.config = config;
         this.config.pokemonDetailsElement.find("#confirm-transfer").click(this.transferPokemon);
         this.config.pokemonDetailsElement.find("#confirm-evolve").click(this.evolvePokemon);
-        this.currentOrdering = PokemonOrdering.Iv;
+        this.currentOrdering = PokemonOrdering.Cp;
     }
     return PokemonMenuController;
 }());
@@ -1107,6 +1107,7 @@ var SettingsMenuController = (function () {
             _this.setToggleSetting(_this.settingsElements.clientUseSSL, settings.clientUseSSL);
             _this.setNotificationSettings(_this.settingsElements.notificationsJournal, settings.notificationsJournal);
             _this.setNotificationSettings(_this.settingsElements.notificationsDesktop, settings.notificationsDesktop);
+            _this.setNotificationSettings(_this.settingsElements.notificationsToast, settings.notificationsToast);
             _this.setToggleSetting(_this.settingsElements.notificationsJournalClearingAnimation, settings.notificationsJournalClearingAnimation);
         };
         this.setNotificationSettings = function (elements, settings) {
@@ -1139,6 +1140,7 @@ var SettingsMenuController = (function () {
                 clientUseSSL: _this.settingsElements.clientUseSSL.hasClass("active"),
                 notificationsJournal: _this.getNotificationSettings(_this.settingsElements.notificationsJournal),
                 notificationsDesktop: _this.getNotificationSettings(_this.settingsElements.notificationsDesktop),
+                notificationsToast: _this.getNotificationSettings(_this.settingsElements.notificationsToast),
                 notificationsJournalClearingAnimation: _this.settingsElements.notificationsJournalClearingAnimation.hasClass("active")
             };
             return settings;
@@ -1202,6 +1204,16 @@ var SettingsMenuController = (function () {
                 incubatorStatus: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-incubator-status']"),
                 itemRecycle: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-item-recycle']"),
                 pokemonTransfer: this.config.settingsMenuElement.find("[name='settings-notifications-desktop-pokemon-transfer']")
+            },
+            notificationsToast: {
+                pokestopUsed: this.config.settingsMenuElement.find("[name='settings-notifications-toast-pokestop-used']"),
+                pokemonCapture: this.config.settingsMenuElement.find("[name='settings-notifications-toast-pokemon-capture']"),
+                pokemonSnipe: this.config.settingsMenuElement.find("[name='settings-notifications-toast-pokemon-snipe']"),
+                pokemonEvolved: this.config.settingsMenuElement.find("[name='settings-notifications-toast-pokemon-evolved']"),
+                eggHatched: this.config.settingsMenuElement.find("[name='settings-notifications-toast-egg-hatched']"),
+                incubatorStatus: this.config.settingsMenuElement.find("[name='settings-notifications-toast-incubator-status']"),
+                itemRecycle: this.config.settingsMenuElement.find("[name='settings-notifications-toast-item-recycle']"),
+                pokemonTransfer: this.config.settingsMenuElement.find("[name='settings-notifications-toast-pokemon-transfer']")
             },
             notificationsJournalClearingAnimation: this.config.settingsMenuElement.find("[name='settings-notifications-journal-clearing-animation']")
         };
@@ -1524,6 +1536,80 @@ var NotificationType;
     NotificationType[NotificationType["ItemRecycle"] = 6] = "ItemRecycle";
     NotificationType[NotificationType["PokemonTransfer"] = 7] = "PokemonTransfer";
 })(NotificationType || (NotificationType = {}));
+var ToastNotificationController = (function () {
+    function ToastNotificationController(config) {
+        var _this = this;
+        this.exampleClicked = function (ev) {
+            _this.addNotificationExample();
+        };
+        this.addNotificationExample = function () {
+            _this.addNotification("Example", "This is a toast notification");
+        };
+        this.addNotificationPokeStopUsed = function (fortUsed) {
+            if (!_this.config.notificationSettings.pokestopUsed) {
+                return;
+            }
+            _this.addNotification("Pokestop", fortUsed.Name);
+        };
+        this.addNotificationPokemonCapture = function (pokemonCatches, itemsUsedForCapture) {
+            var pokemonCatch = pokemonCatches[pokemonCatches.length - 1];
+            if (!pokemonCatch.IsSnipe && !_this.config.notificationSettings.pokemonCapture) {
+                return;
+            }
+            if (pokemonCatch.IsSnipe && !_this.config.notificationSettings.pokemonSnipe) {
+                return;
+            }
+            var eventType = pokemonCatch.IsSnipe ? "Snipe" : "Catch";
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonCatch.Id];
+            var roundedPerfection = Math.round(pokemonCatch.Perfection * 100) / 100;
+            _this.addNotification(eventType, pokemonName);
+        };
+        this.addNotificationPokemonEvolved = function (pokemonEvolve) {
+            if (!_this.config.notificationSettings.pokemonEvolved) {
+                return;
+            }
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonEvolve.Id];
+            _this.addNotification("Evolve", pokemonName);
+        };
+        this.addNotificationPokemonTransfer = function (pokemonTransfer) {
+            if (!_this.config.notificationSettings.pokemonTransfer) {
+                return;
+            }
+            var pokemonName = _this.config.translationController.translation.pokemonNames[pokemonTransfer.Id];
+            _this.addNotification("Transfer", pokemonName);
+        };
+        this.addNotificationItemRecycle = function (itemRecycle) {
+            if (!_this.config.notificationSettings.itemRecycle) {
+                return;
+            }
+            _this.addNotification("Recycle", itemRecycle.Count + " items");
+        };
+        this.addNotificationEggHatched = function (eggHatched) {
+            if (!_this.config.notificationSettings.eggHatched) {
+                return;
+            }
+            var pokemonName = _this.config.translationController.translation.pokemonNames[eggHatched.PokemonId];
+            _this.addNotification("Hatch", pokemonName);
+        };
+        this.addNotificationIncubatorStatus = function (incubatorStatus) {
+            if (!_this.config.notificationSettings.incubatorStatus) {
+                return;
+            }
+            var km = Math.round((incubatorStatus.KmToWalk - incubatorStatus.KmRemaining) * 100) / 100;
+            _this.addNotification("Incubator", km + " of " + incubatorStatus.KmToWalk + "km");
+        };
+        this.addNotification = function (title, body, bgColor, textColor, delay) {
+            if (body === void 0) { body = ""; }
+            if (bgColor === void 0) { bgColor = "#2196f3"; }
+            if (textColor === void 0) { textColor = "#ffffff"; }
+            if (delay === void 0) { delay = 2500; }
+            _this.config.toastControler.addToast(title, body, bgColor, textColor, delay);
+        };
+        this.config = config;
+        this.config.exampleButton.click(this.exampleClicked);
+    }
+    return ToastNotificationController;
+}());
 var ProfileInfoController = (function () {
     function ProfileInfoController(config) {
         var _this = this;
@@ -1583,6 +1669,29 @@ var ProfileInfoController = (function () {
         });
     };
     return ProfileInfoController;
+}());
+var ToastController = (function () {
+    function ToastController(config) {
+        var _this = this;
+        this.addToast = function (title, body, bgColor, textColor, delay) {
+            _this.config.toastElement.text(title);
+            _this.config.toastElement.append("<div class='countdown'></div>");
+            _this.config.toastElement.css({
+                "background-color": bgColor,
+                "color": textColor
+            });
+            if (body.length > 0) {
+                _this.config.toastElement.append("<div class='description'>" + body + "</div>");
+            }
+            _this.config.toastElement.animate({ "top": "25px" }, 500, "easeOutBack");
+            var countdownElement = _this.config.toastElement.find(".countdown");
+            countdownElement.animate({ "width": "0" }, delay, "linear");
+            var animateTopTo = -(_this.config.toastElement.outerHeight() + 2);
+            _this.config.toastElement.delay(delay - 500).animate({ "top": animateTopTo }, 500, "easeInOutQuart");
+        };
+        this.config = config;
+    }
+    return ToastController;
 }());
 var InterfaceHandler = (function () {
     function InterfaceHandler(config) {
@@ -7570,6 +7679,16 @@ var DefaultSettings = (function () {
                     itemRecycle: false,
                     pokemonTransfer: false,
                 },
+                notificationsToast: {
+                    pokestopUsed: false,
+                    pokemonCapture: false,
+                    pokemonSnipe: false,
+                    pokemonEvolved: false,
+                    eggHatched: false,
+                    incubatorStatus: false,
+                    itemRecycle: false,
+                    pokemonTransfer: false,
+                },
                 notificationsJournalClearingAnimation: true
             };
         },
@@ -7614,6 +7733,16 @@ var SettingsService = (function () {
                 itemRecycle: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.itemRecycle; }),
                 pokemonTransfer: _this.coalesceMap(allSettings, function (s) { return s.notificationsDesktop && s.notificationsDesktop.pokemonTransfer; })
             };
+            var notificationsToast = {
+                pokestopUsed: _this.coalesceMap(allSettings, function (s) { return s.notificationsToast && s.notificationsToast.pokestopUsed; }),
+                pokemonCapture: _this.coalesceMap(allSettings, function (s) { return s.notificationsToast && s.notificationsToast.pokemonCapture; }),
+                pokemonSnipe: _this.coalesceMap(allSettings, function (s) { return s.notificationsToast && s.notificationsToast.pokemonSnipe; }),
+                pokemonEvolved: _this.coalesceMap(allSettings, function (s) { return s.notificationsToast && s.notificationsToast.pokemonEvolved; }),
+                eggHatched: _this.coalesceMap(allSettings, function (s) { return s.notificationsToast && s.notificationsToast.eggHatched; }),
+                incubatorStatus: _this.coalesceMap(allSettings, function (s) { return s.notificationsToast && s.notificationsToast.incubatorStatus; }),
+                itemRecycle: _this.coalesceMap(allSettings, function (s) { return s.notificationsToast && s.notificationsToast.itemRecycle; }),
+                pokemonTransfer: _this.coalesceMap(allSettings, function (s) { return s.notificationsToast && s.notificationsToast.pokemonTransfer; })
+            };
             return {
                 mapProvider: _this.coalesceMap(allSettings, function (s) { return s.mapProvider; }),
                 mapFolllowPlayer: _this.coalesceMap(allSettings, function (s) { return s.mapFolllowPlayer; }),
@@ -7625,6 +7754,7 @@ var SettingsService = (function () {
                 clientUseSSL: _this.coalesceMap(allSettings, function (s) { return s.clientUseSSL; }),
                 notificationsJournal: notificationsJournal,
                 notificationsDesktop: notificationsDesktop,
+                notificationsToast: notificationsToast,
                 notificationsJournalClearingAnimation: _this.coalesceMap(allSettings, function (s) { return s.notificationsJournalClearingAnimation; })
             };
         };
@@ -7680,6 +7810,7 @@ var SettingsService = (function () {
         equal = equal && settings.clientUseSSL === to.clientUseSSL;
         equal = equal && this.notificationSettingsEqual(settings.notificationsJournal, to.notificationsJournal);
         equal = equal && this.notificationSettingsEqual(settings.notificationsDesktop, to.notificationsDesktop);
+        equal = equal && this.notificationSettingsEqual(settings.notificationsToast, to.notificationsToast);
         equal = equal && settings.notificationsJournalClearingAnimation === to.notificationsJournalClearingAnimation;
         return equal;
     };
@@ -7856,6 +7987,9 @@ $(function () {
     var settings = settingsService.settings;
     var client = new BotWSClient();
     var translationController = new TranslationService();
+    var toastController = new ToastController({
+        toastElement: $("#notification")
+    });
     var journalNotificationController = new JournalNotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),

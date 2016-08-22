@@ -50,6 +50,17 @@
             pokemonTransfer: this.coalesceMap(allSettings, s => s.notificationsDesktop && s.notificationsDesktop.pokemonTransfer)
         };
 
+        const notificationsToast: INotificationSettings = {
+            pokestopUsed: this.coalesceMap(allSettings, s => s.notificationsToast && s.notificationsToast.pokestopUsed),
+            pokemonCapture: this.coalesceMap(allSettings, s => s.notificationsToast && s.notificationsToast.pokemonCapture),
+            pokemonSnipe: this.coalesceMap(allSettings, s => s.notificationsToast && s.notificationsToast.pokemonSnipe),
+            pokemonEvolved: this.coalesceMap(allSettings, s => s.notificationsToast && s.notificationsToast.pokemonEvolved),
+            eggHatched: this.coalesceMap(allSettings, s => s.notificationsToast && s.notificationsToast.eggHatched),
+            incubatorStatus: this.coalesceMap(allSettings, s => s.notificationsToast && s.notificationsToast.incubatorStatus),
+            itemRecycle: this.coalesceMap(allSettings, s => s.notificationsToast && s.notificationsToast.itemRecycle),
+            pokemonTransfer: this.coalesceMap(allSettings, s => s.notificationsToast && s.notificationsToast.pokemonTransfer)
+        };
+
         return {
             mapProvider: this.coalesceMap(allSettings, s => s.mapProvider),
             mapFolllowPlayer: this.coalesceMap(allSettings, s => s.mapFolllowPlayer),
@@ -63,6 +74,7 @@
 
             notificationsJournal: notificationsJournal,
             notificationsDesktop: notificationsDesktop,
+            notificationsToast: notificationsToast,
             notificationsJournalClearingAnimation: this.coalesceMap(allSettings, s => s.notificationsJournalClearingAnimation)
         }
     }
@@ -117,6 +129,7 @@
 
         equal = equal && this.notificationSettingsEqual(settings.notificationsJournal, to.notificationsJournal);
         equal = equal && this.notificationSettingsEqual(settings.notificationsDesktop, to.notificationsDesktop);
+        equal = equal && this.notificationSettingsEqual(settings.notificationsToast, to.notificationsToast);
 
         equal = equal && settings.notificationsJournalClearingAnimation === to.notificationsJournalClearingAnimation;
 

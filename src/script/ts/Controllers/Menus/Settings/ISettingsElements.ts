@@ -11,6 +11,7 @@ interface ISettingsElements {
 
     notificationsJournal: INotificationSettingsElements;
     notificationsDesktop: INotificationSettingsElements;
+    notificationsToast: INotificationSettingsElements;
 
     notificationsJournalClearingAnimation: JQuery;
 }

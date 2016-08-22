@@ -30,6 +30,16 @@
                 itemRecycle: false,
                 pokemonTransfer: false,
             },
+            notificationsToast: {
+                pokestopUsed: false,
+                pokemonCapture: false,
+                pokemonSnipe: false,
+                pokemonEvolved: false,
+                eggHatched: false,
+                incubatorStatus: false,
+                itemRecycle: false,
+                pokemonTransfer: false,
+            },
             notificationsJournalClearingAnimation: true
         }
     }
