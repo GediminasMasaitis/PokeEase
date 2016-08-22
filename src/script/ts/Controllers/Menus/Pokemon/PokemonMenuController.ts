@@ -3,11 +3,13 @@
 
     private pokemonList: IPokemonListEvent;
     private currentPokemon: IPokemonListEntry;
+    private currentOrdering: PokemonOrdering;
 
     constructor(config: IPokemonMenuControllerConfig) {
         this.config = config;
         this.config.pokemonDetailsElement.find("#confirm-transfer").click(this.transferPokemon);
         this.config.pokemonDetailsElement.find("#confirm-evolve").click(this.evolvePokemon);
+        this.currentOrdering = PokemonOrdering.Cp;
     }
 
     public pokemonListRequested = (request: IRequest): void => {
@@ -17,12 +19,39 @@
     public updatePokemonList = (pokemonList: IPokemonListEvent): void => {
         this.config.pokemonMenuElement.find(".pokemon").remove();
         this.pokemonList = pokemonList;
-        for (let i = 0; i < pokemonList.Pokemons.length; i++) {
-            const pokemon = pokemonList.Pokemons[i];
+        this.updatePokemonListInner();
+    }
+
+    private updatePokemonListInner = (): void => {
+        let pokemons: IPokemonListEntry[];
+        switch (this.currentOrdering) {
+            case PokemonOrdering.Date:
+                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.CreationTimeMs).reverse();
+                break;
+            case PokemonOrdering.Cp:
+                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.Cp).reverse();
+                break;
+            case PokemonOrdering.Iv:
+                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.Perfection).reverse();
+                break;
+            case PokemonOrdering.Number:
+                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.PokemonId);
+                break;
+            case PokemonOrdering.Name:
+                pokemons = _.orderBy(this.pokemonList.Pokemons, p => {
+                    const pokemonName = this.config.translationController.translation.pokemonNames[p.PokemonId];
+                    return pokemonName;
+                });
+                break;
+            default:
+                pokemons = this.pokemonList.Pokemons;
+        }
+        for (let i = 0; i < pokemons.length; i++) {
+            const pokemon = pokemons[i];
             const pokemonName = this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
             const roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
             const html =
-`<div class="pokemon">
+                `<div class="pokemon">
     <h1 class="name">${pokemonName}</h1>
     <div class="image-container">
         <img src="images/pokemon/${pokemon.PokemonId}.png"/>

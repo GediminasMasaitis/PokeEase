@@ -970,8 +970,34 @@ var PokemonMenuController = (function () {
         this.updatePokemonList = function (pokemonList) {
             _this.config.pokemonMenuElement.find(".pokemon").remove();
             _this.pokemonList = pokemonList;
-            for (var i = 0; i < pokemonList.Pokemons.length; i++) {
-                var pokemon = pokemonList.Pokemons[i];
+            _this.updatePokemonListInner();
+        };
+        this.updatePokemonListInner = function () {
+            var pokemons;
+            switch (_this.currentOrdering) {
+                case PokemonOrdering.Date:
+                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.CreationTimeMs; }).reverse();
+                    break;
+                case PokemonOrdering.Cp:
+                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.Cp; }).reverse();
+                    break;
+                case PokemonOrdering.Iv:
+                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.Perfection; }).reverse();
+                    break;
+                case PokemonOrdering.Number:
+                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.PokemonId; });
+                    break;
+                case PokemonOrdering.Name:
+                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) {
+                        var pokemonName = _this.config.translationController.translation.pokemonNames[p.PokemonId];
+                        return pokemonName;
+                    });
+                    break;
+                default:
+                    pokemons = _this.pokemonList.Pokemons;
+            }
+            for (var i = 0; i < pokemons.length; i++) {
+                var pokemon = pokemons[i];
                 var pokemonName = _this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
                 var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
                 var html = "<div class=\"pokemon\">\n    <h1 class=\"name\">" + pokemonName + "</h1>\n    <div class=\"image-container\">\n        <img src=\"images/pokemon/" + pokemon.PokemonId + ".png\"/>\n    </div>\n    <h3 class=\"cp\">" + pokemon.Cp + "</h3>\n    <h3 class=\"iv\">" + roundedIv + "</h3>\n</div>";
@@ -1031,9 +1057,18 @@ var PokemonMenuController = (function () {
         this.config = config;
         this.config.pokemonDetailsElement.find("#confirm-transfer").click(this.transferPokemon);
         this.config.pokemonDetailsElement.find("#confirm-evolve").click(this.evolvePokemon);
+        this.currentOrdering = PokemonOrdering.Iv;
     }
     return PokemonMenuController;
 }());
+var PokemonOrdering;
+(function (PokemonOrdering) {
+    PokemonOrdering[PokemonOrdering["Date"] = 0] = "Date";
+    PokemonOrdering[PokemonOrdering["Cp"] = 1] = "Cp";
+    PokemonOrdering[PokemonOrdering["Iv"] = 2] = "Iv";
+    PokemonOrdering[PokemonOrdering["Number"] = 3] = "Number";
+    PokemonOrdering[PokemonOrdering["Name"] = 4] = "Name";
+})(PokemonOrdering || (PokemonOrdering = {}));
 var SettingsMenuController = (function () {
     function SettingsMenuController(config) {
         var _this = this;
