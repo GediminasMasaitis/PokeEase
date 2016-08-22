@@ -1399,6 +1399,13 @@ $event-incubator-status-color: #e9e1b5;
                 .settings-client-connection-string{
                     font-family:Courier New, Courier, monospace
                 }
+
+                .example {
+                    color: $toggle-color;
+                    font-size: 12px;
+                    margin-left: 0.5em;
+                    cursor: pointer;
+                }
             }
 
             & + .setting-part {

@@ -584,14 +584,25 @@
 
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="checkbox" name="settings-notifications-journal-pokestop-used" value="pokestop-used" checked>Pokestop<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-capture" value="pokemon-capture" checked>Capture<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-snipe" value="pokemon-snipe" checked>Snipe<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-evolved" value="pokemon-evolved" checked>Evolve<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-egg-hatched" value="egg-hatched" checked>Hatch<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-incubator-status" value="incubator-status" checked>Incubator status<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-item-recycle" value="item-recycle" checked>Recycle<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-transfer" value="pokemon-transfer" checked>Transfer<br/>
+                                                    <input type="checkbox" name="settings-show-journal-pokestop-used" value="pokestop-used" checked>Pokestop<br/>
+                                                    <input type="checkbox" name="settings-show-journal-pokemon-capture" value="pokemon-capture" checked>Capture<br/>
+                                                    <input type="checkbox" name="settings-show-journal-pokemon-snipe" value="pokemon-snipe" checked>Snipe<br/>
+                                                    <input type="checkbox" name="settings-show-journal-pokemon-evolved" value="pokemon-evolved" checked>Evolve<br/>
+                                                    <input type="checkbox" name="settings-show-journal-egg-hatched" value="egg-hatched" checked>Hatch<br/>
+                                                    <input type="checkbox" name="settings-show-journal-incubator-status" value="incubator-status" checked>Incubator status<br/>
+                                                    <input type="checkbox" name="settings-show-journal-item-recycle" value="item-recycle" checked>Recycle<br/>
+                                                    <input type="checkbox" name="settings-show-journal-pokemon-transfer" value="pokemon-transfer" checked>Transfer<br/>
+                                                </div>
+                                            </div>
+
+                                            <div class="setting-part not-implemented">
+                                                <div class="setting-question">
+                                                    List clearing
+                                                    <div class="not-implemented-error">not implemented</div>
+                                                    <span>How long until old events get removed from the journal. 0 = never</span>
+                                                </div>
+                                                <div class="setting-answer">
+                                                    <input type="number" name="settings-journal-clearing" value="0" /> minutes
                                                 </div>
                                             </div>
 
@@ -607,6 +618,40 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="setting-topic">
+                                            <h6 class="setting-name"> notifications </h6>
+
+                                            <div class="setting-part not-implemented">
+                                                <div class="setting-question">
+                                                    Events to get notification on <div class="not-implemented-error">not implemented</div>
+                                                    <span>You can control on which events you'll get a notification.</span>
+
+                                                </div>
+                                                <div class="setting-answer">
+                                                    <input type="checkbox" name="settings-notifications-journal-pokestop-used" value="pokestop-used">Pokestop<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-capture" value="pokemon-capture">Capture<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-snipe" value="pokemon-snipe">Snipe<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-evolved" value="pokemon-evolved">Evolve<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-egg-hatched" value="egg-hatched">Hatch<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-incubator-status" value="incubator-status">Incubator status<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-item-recycle" value="item-recycle">Recycle<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-transfer" value="pokemon-transfer">Transfer<br/>
+                                                </div>
+                                            </div>
+
+                                            <div class="setting-part not-implemented">
+                                                <div class="setting-question">
+                                                    Notification Type
+                                                    <div class="not-implemented-error">not implemented</div>
+                                                </div>
+                                                <div class="setting-answer">
+                                                    <input type="radio" name="settings-notification-type" value="desktop" /> Desktop <span class="example">show example</span><br/>
+                                                    <input type="radio" name="settings-notification-type" value="desktop" /> Popup <span class="example" onclick='sendNotification("Hello there!", "#2196f3", "#ffffff", "2500", "I am an example!");'>show example</span><br/>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
 

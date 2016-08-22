@@ -1187,6 +1187,11 @@ body {
         margin-right: 0.5em; }
       .content[data-category="settings"] .tab-pages .setting-part .setting-answer .settings-client-connection-string {
         font-family: Courier New, Courier, monospace; }
+      .content[data-category="settings"] .tab-pages .setting-part .setting-answer .example {
+        color: #2196f3;
+        font-size: 12px;
+        margin-left: 0.5em;
+        cursor: pointer; }
     .content[data-category="settings"] .tab-pages .setting-part + .setting-part {
       padding-top: 1em;
       margin-top: 1em;
