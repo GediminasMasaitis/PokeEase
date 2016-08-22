@@ -1174,9 +1174,47 @@ var SettingsMenuController = (function () {
     return SettingsMenuController;
 }());
 var DesktopNotificationController = (function () {
-    function DesktopNotificationController() {
+    function DesktopNotificationController(config) {
+        var _this = this;
+        this.exampleClicked = function (ev) {
+            _this.addNotificationExample();
+        };
+        this.checkPermissions = function () {
+            if (typeof Notification === "undefined") {
+                _this.updateCurrentPermission("unsupported");
+                return false;
+            }
+            _this.updateCurrentPermission(Notification.permission);
+            if (Notification.permission === "granted") {
+                return true;
+            }
+            var promise = Notification.requestPermission();
+            _this.updateCurrentPermission(Notification.permission);
+            promise.then(function (perm) {
+                _this.updateCurrentPermission(perm);
+            }, function (reason) {
+                console.log(reason);
+            });
+            return false;
+        };
+        this.updateCurrentPermission = function (status) {
+            _this.config.permissionElement.text(status);
+        };
+        this.addNotificationExample = function () {
+            if (!_this.checkPermissions()) {
+                return;
+            }
+            _this.addNotification("Example", {
+                body: "This is an example of a desktop notification"
+            });
+        };
+        this.addNotification = function (title, options) {
+            var notification = new Notification(title, options);
+        };
+        this.config = config;
+        this.checkPermissions();
+        this.config.exampleButton.click(this.exampleClicked);
     }
-    DesktopNotificationController.prototype.addNotificationExample = function () { };
     DesktopNotificationController.prototype.addNotificationPokeStopUsed = function (fortUsed) { };
     DesktopNotificationController.prototype.addNotificationPokemonCapture = function (pokemonCatch, itemsUsedForCapture) { };
     DesktopNotificationController.prototype.addNotificationPokemonEvolved = function (pokemonEvolve) { };
@@ -1486,7 +1524,7 @@ var InterfaceHandler = (function () {
             _this.itemsUsedForCapture.push(pokemonCapture.Pokeball);
             if (pokemonCapture.Status === PokemonCatchStatus.Success) {
                 _this.config.map.onPokemonCapture(pokemonCapture);
-                _this.config.notificationController.addNotificationPokemonCapture(_this.previousCaptureAttempts, _this.itemsUsedForCapture);
+                _.each(_this.config.notificationControllers, function (ctrl) { return ctrl.addNotificationPokemonCapture(_this.previousCaptureAttempts, _this.itemsUsedForCapture); });
                 _this.currentExp += pokemonCapture.Exp;
                 _this.config.profileInfoController.addExp(_this.currentExp, pokemonCapture.Exp);
                 var previousStardust = _this.currentStardust;
@@ -1499,7 +1537,6 @@ var InterfaceHandler = (function () {
         };
         this.onSettingsChanged = function (settings, previousSettings) {
             _this.config.map.config.followPlayer = settings.mapFolllowPlayer;
-            _this.config.notificationController.config.notificationSettings = settings.notificationsJournal;
         };
         this.config = config;
         this.config.settingsService.subscribe(this.onSettingsChanged);
@@ -1524,7 +1561,7 @@ var InterfaceHandler = (function () {
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
         this.currentExp += fortUsed.Exp;
-        this.config.notificationController.addNotificationPokeStopUsed(fortUsed);
+        _.each(this.config.notificationControllers, function (ctrl) { return ctrl.addNotificationPokeStopUsed(fortUsed); });
         this.config.profileInfoController.addExp(this.currentExp, fortUsed.Exp);
     };
     InterfaceHandler.prototype.onProfile = function (profile) {
@@ -1545,7 +1582,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onEvolveCount = function (evolveCount) {
     };
     InterfaceHandler.prototype.onPokemonEvolve = function (pokemonEvolve) {
-        this.config.notificationController.addNotificationPokemonEvolved(pokemonEvolve);
+        _.each(this.config.notificationControllers, function (ctrl) { return ctrl.addNotificationPokemonEvolved(pokemonEvolve); });
         this.currentExp += pokemonEvolve.Exp;
         this.config.profileInfoController.addExp(this.currentExp, pokemonEvolve.Exp);
     };
@@ -1561,18 +1598,18 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onWarn = function (warn) {
     };
     InterfaceHandler.prototype.onEggHatched = function (eggHatched) {
-        this.config.notificationController.addNotificationEggHatched(eggHatched);
+        _.each(this.config.notificationControllers, function (ctrl) { return ctrl.addNotificationEggHatched(eggHatched); });
     };
     InterfaceHandler.prototype.onIncubatorStatus = function (incubatorStatus) {
-        this.config.notificationController.addNotificationIncubatorStatus(incubatorStatus);
+        _.each(this.config.notificationControllers, function (ctrl) { return ctrl.addNotificationIncubatorStatus(incubatorStatus); });
     };
     InterfaceHandler.prototype.onItemRecycle = function (itemRecycle) {
-        this.config.notificationController.addNotificationItemRecycle(itemRecycle);
+        _.each(this.config.notificationControllers, function (ctrl) { return ctrl.addNotificationItemRecycle(itemRecycle); });
         this.currentItemCount -= itemRecycle.Count;
         this.config.mainMenuController.setItemCount(this.currentItemCount);
     };
     InterfaceHandler.prototype.onPokemonTransfer = function (pokemonTransfer) {
-        this.config.notificationController.addNotificationPokemonTransfer(pokemonTransfer);
+        _.each(this.config.notificationControllers, function (ctrl) { return ctrl.addNotificationPokemonTransfer(pokemonTransfer); });
         this.currentPokemonCount--;
         this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     };
@@ -7695,13 +7732,19 @@ $(function () {
     var settings = settingsService.settings;
     var client = new BotWSClient();
     var translationController = new TranslationService();
-    var notificationController = new JournalNotificationController({
+    var journalNotificationController = new JournalNotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
         notificationCounter: $("#journal-counter"),
         exampleButton: $("#show-notification-journal-example-button"),
         translationController: translationController,
         notificationSettings: settings.notificationsJournal
+    });
+    var desktopNotificationController = new DesktopNotificationController({
+        permissionElement: $("#notification-desktop-status"),
+        exampleButton: $("#show-notification-desktop-example-button"),
+        translationController: translationController,
+        notificationSettings: settings.notificationsDesktop
     });
     var mainMenuController = new MainMenuController({
         requestSender: client,
@@ -7746,7 +7789,10 @@ $(function () {
     var lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
     var interfaceHandler = new InterfaceHandler({
         translationController: translationController,
-        notificationController: notificationController,
+        notificationControllers: [
+            journalNotificationController,
+            desktopNotificationController
+        ],
         mainMenuController: mainMenuController,
         pokemonMenuController: pokemonMenuController,
         inventoryMenuController: inventoryMenuController,

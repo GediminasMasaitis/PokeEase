@@ -1,11 +1,11 @@
 ﻿interface INotificationController {
     config: INotificationControllerConfig;
-    addNotificationExample();
-    addNotificationPokeStopUsed(fortUsed: IFortUsedEvent);
-    addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent[], itemsUsedForCapture: number[]);
-    addNotificationPokemonEvolved(pokemonEvolve: IPokemonEvolveEvent);
-    addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransferEvent);
-    addNotificationItemRecycle(itemRecycle: IItemRecycleEvent);
-	addNotificationEggHatched(eggHatched: IEggHatchedEvent);
-	addNotificationIncubatorStatus(incubatorStatus: IIncubatorStatusEvent);
+    addNotificationExample(): void;
+    addNotificationPokeStopUsed(fortUsed: IFortUsedEvent): void;
+    addNotificationPokemonCapture(pokemonCatch: IPokemonCaptureEvent[], itemsUsedForCapture: number[]): void;
+    addNotificationPokemonEvolved(pokemonEvolve: IPokemonEvolveEvent): void;
+    addNotificationPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void;
+    addNotificationItemRecycle(itemRecycle: IItemRecycleEvent): void;
+    addNotificationEggHatched(eggHatched: IEggHatchedEvent): void;
+    addNotificationIncubatorStatus(incubatorStatus: IIncubatorStatusEvent): void;
 }

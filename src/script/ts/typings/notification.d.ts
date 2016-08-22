@@ -2,7 +2,7 @@
     new (title: string, options?: NotificationOptions): Notification;
     prototype: Notification;
     permission: string;
-    requestPermission(): any;
+    requestPermission(): Promise<string>;
 }
 
 interface NotificationOptions {

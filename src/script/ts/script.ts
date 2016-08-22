@@ -1,4 +1,4 @@
-﻿//// <reference path="../../../node_modules/typescript/lib/lib.core.es6.d.ts" />
+﻿/// <reference path="../../externaltypings/es6-promise/es6-promise.d.ts" />
 /// <reference path="../../externalTypings/jquery/jquery.d.ts" />
 /// <reference path="../../externalTypings/lodash/lodash.d.ts" />
 /// <reference path="../../externalTypings/leaflet/leaflet.d.ts" />
@@ -15,13 +15,20 @@ $(() => {
     const settings = settingsService.settings;
     const client = new BotWSClient();
     const translationController = new TranslationService();
-    const notificationController = new JournalNotificationController({
+    const journalNotificationController = new JournalNotificationController({
         container: $("#journal .items"),
         clearAllButton: $("#journal .clear-all"),
         notificationCounter: $("#journal-counter"),
         exampleButton: $("#show-notification-journal-example-button"),
         translationController: translationController,
         notificationSettings: settings.notificationsJournal
+    });
+
+    const desktopNotificationController = new DesktopNotificationController({
+        permissionElement: $("#notification-desktop-status"),
+        exampleButton: $("#show-notification-desktop-example-button"),
+        translationController: translationController,
+        notificationSettings: settings.notificationsDesktop
     });
 
     const mainMenuController = new MainMenuController({
@@ -75,7 +82,10 @@ $(() => {
 
     const interfaceHandler = new InterfaceHandler({
         translationController: translationController,
-        notificationController: notificationController,
+        notificationControllers: [
+            journalNotificationController,
+            desktopNotificationController
+        ],
         mainMenuController: mainMenuController,
         pokemonMenuController: pokemonMenuController,
         inventoryMenuController: inventoryMenuController,

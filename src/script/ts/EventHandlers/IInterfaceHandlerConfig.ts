@@ -1,5 +1,5 @@
 ﻿interface IInterfaceHandlerConfig {
-    notificationController: INotificationController;
+    notificationControllers: INotificationController[];
     translationController: ITranslationService;
     mainMenuController: IMainMenuController;
     pokemonMenuController: IPokemonMenuController;

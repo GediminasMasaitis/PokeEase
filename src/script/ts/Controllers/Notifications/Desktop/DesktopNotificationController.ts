@@ -1,7 +1,47 @@
 ﻿class DesktopNotificationController implements INotificationController {
-    public config: INotificationControllerConfig;
+    public config: IDesktopNotificationControllerConfig;
 
-    public addNotificationExample() { }
+    constructor(config: IDesktopNotificationControllerConfig) {
+        this.config = config;
+        this.checkPermissions();
+        this.config.exampleButton.click(this.exampleClicked);
+    }
+
+    private exampleClicked = (ev: JQueryEventObject): void => {
+        this.addNotificationExample();
+    }
+
+    private checkPermissions = (): boolean => {
+        if (typeof Notification === "undefined") {
+            this.updateCurrentPermission("unsupported");
+            return false;
+        }
+        this.updateCurrentPermission(Notification.permission);
+        if (Notification.permission === "granted") {
+            return true;
+        }
+        const promise = Notification.requestPermission();
+        this.updateCurrentPermission(Notification.permission);
+        promise.then(perm => {
+            this.updateCurrentPermission(perm);
+        }, reason => {
+            console.log(reason);
+        });
+        return false;
+    }
+
+    private updateCurrentPermission = (status: string) => {
+        this.config.permissionElement.text(status);
+    }
+
+    public addNotificationExample = (): void => {
+        if (!this.checkPermissions()) {
+            return;
+        }
+        this.addNotification("Example", {
+            body: "This is an example of a desktop notification"
+        });
+    }
 
     public addNotificationPokeStopUsed(fortUsed: IFortUsedEvent) {}
 
@@ -15,5 +55,9 @@
 
     public addNotificationEggHatched(eggHatched: IEggHatchedEvent) {}
 
-    public addNotificationIncubatorStatus(incubatorStatus: IIncubatorStatusEvent) {}
+    public addNotificationIncubatorStatus(incubatorStatus: IIncubatorStatusEvent) { }
+
+    private addNotification = (title: string, options: NotificationOptions) => {
+        const notification = new Notification(title, options);
+    }
 }

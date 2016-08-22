@@ -83,7 +83,7 @@
         pokeStop.Name = fortUsed.Name;
         this.config.map.usePokeStop(fortUsed);
         this.currentExp += fortUsed.Exp;
-        this.config.notificationController.addNotificationPokeStopUsed(fortUsed);
+        _.each(this.config.notificationControllers, ctrl => ctrl.addNotificationPokeStopUsed(fortUsed));
         this.config.profileInfoController.addExp(this.currentExp, fortUsed.Exp);
     }
 
@@ -121,7 +121,7 @@
         this.itemsUsedForCapture.push(pokemonCapture.Pokeball);
         if (pokemonCapture.Status === PokemonCatchStatus.Success) {
             this.config.map.onPokemonCapture(pokemonCapture);
-            this.config.notificationController.addNotificationPokemonCapture(this.previousCaptureAttempts, this.itemsUsedForCapture);
+            _.each(this.config.notificationControllers, ctrl => ctrl.addNotificationPokemonCapture(this.previousCaptureAttempts, this.itemsUsedForCapture));
             this.currentExp += pokemonCapture.Exp;
             this.config.profileInfoController.addExp(this.currentExp, pokemonCapture.Exp);
             const previousStardust = this.currentStardust;
@@ -138,7 +138,7 @@
     }
 
     public onPokemonEvolve(pokemonEvolve: IPokemonEvolveEvent): void {
-        this.config.notificationController.addNotificationPokemonEvolved(pokemonEvolve);
+        _.each(this.config.notificationControllers, ctrl => ctrl.addNotificationPokemonEvolved(pokemonEvolve));
         this.currentExp += pokemonEvolve.Exp;
         this.config.profileInfoController.addExp(this.currentExp, pokemonEvolve.Exp);
     }
@@ -164,21 +164,21 @@
     }
 
     public onEggHatched(eggHatched: IEggHatchedEvent): void {
-        this.config.notificationController.addNotificationEggHatched(eggHatched);
+        _.each(this.config.notificationControllers, ctrl => ctrl.addNotificationEggHatched(eggHatched));
     }
 
     public onIncubatorStatus(incubatorStatus: IIncubatorStatusEvent): void {
-        this.config.notificationController.addNotificationIncubatorStatus(incubatorStatus);
+        _.each(this.config.notificationControllers, ctrl => ctrl.addNotificationIncubatorStatus(incubatorStatus));
     }
 
     public onItemRecycle(itemRecycle: IItemRecycleEvent): void {
-        this.config.notificationController.addNotificationItemRecycle(itemRecycle);
+        _.each(this.config.notificationControllers, ctrl => ctrl.addNotificationItemRecycle(itemRecycle));
         this.currentItemCount -= itemRecycle.Count;
         this.config.mainMenuController.setItemCount(this.currentItemCount);
     }
 
     public onPokemonTransfer(pokemonTransfer: IPokemonTransferEvent): void {
-        this.config.notificationController.addNotificationPokemonTransfer(pokemonTransfer);
+        _.each(this.config.notificationControllers, ctrl => ctrl.addNotificationPokemonTransfer(pokemonTransfer));
         this.currentPokemonCount--;
         this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     }
@@ -243,6 +243,5 @@
 
     public onSettingsChanged = (settings: ISettings, previousSettings: ISettings):void => {
         this.config.map.config.followPlayer = settings.mapFolllowPlayer;
-        this.config.notificationController.config.notificationSettings = settings.notificationsJournal;
     }
 }
