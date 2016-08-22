@@ -1683,9 +1683,9 @@ var ToastController = (function () {
             if (body.length > 0) {
                 _this.config.toastElement.append("<div class='description'>" + body + "</div>");
             }
-            _this.config.toastElement.animate({ "top": "25px" }, 500, "easeOutBack");
+            _this.config.toastElement.finish().animate({ "top": "25px" }, 500, "easeOutBack");
             var countdownElement = _this.config.toastElement.find(".countdown");
-            countdownElement.animate({ "width": "0" }, delay, "linear");
+            countdownElement.finish().animate({ "width": "0" }, delay, "linear");
             var animateTopTo = -(_this.config.toastElement.outerHeight() + 2);
             _this.config.toastElement.delay(delay - 500).animate({ "top": animateTopTo }, 500, "easeInOutQuart");
         };

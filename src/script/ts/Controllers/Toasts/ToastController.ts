@@ -15,9 +15,9 @@
         if (body.length > 0) {
             this.config.toastElement.append(`<div class='description'>${body}</div>`);
         }
-        this.config.toastElement.animate({"top": "25px"}, 500, "easeOutBack");
+        this.config.toastElement.finish().animate({"top": "25px"}, 500, "easeOutBack");
         const countdownElement = this.config.toastElement.find(".countdown");
-        countdownElement.animate({"width": "0"}, delay, "linear");
+        countdownElement.finish().animate({"width": "0"}, delay, "linear");
         const animateTopTo = -(this.config.toastElement.outerHeight() + 2);
         this.config.toastElement.delay(delay-500).animate({"top": animateTopTo}, 500, "easeInOutQuart");
     }
