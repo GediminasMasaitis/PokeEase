@@ -99,6 +99,10 @@
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
 
+        else if (_.includes(type, ".PlayerLevelUpEvent,")) {
+            const levelUpEvent = message as IPlayerLevelUpEvent;
+            _.each(this.config.eventHandlers, eh => eh.onPlayerLevelUp(levelUpEvent));
+        }
 
         else if (_.includes(type, ".UpdatePositionEvent,")) {
             const mapLocation = message as IUpdatePositionEvent;

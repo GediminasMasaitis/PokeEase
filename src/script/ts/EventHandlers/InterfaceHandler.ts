@@ -24,6 +24,10 @@
         this.latestPlayerStats = null;
     }
 
+    public onPlayerLevelUp = (levelUp: IPlayerLevelUpEvent): void => {
+        
+    }
+
     public onUpdatePosition = (location: IUpdatePositionEvent): void => {
         if (!this.currentlySniping) {
             this.config.map.movePlayer(location);

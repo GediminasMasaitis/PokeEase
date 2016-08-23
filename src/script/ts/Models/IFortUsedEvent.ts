@@ -6,7 +6,7 @@ interface IFortUsedEvent extends IUpdatePositionEvent {
     Items: string;
     Name: string;
 
-    ItemsList?: IFortItem[];
+    ItemsList: IFortItem[];
 }
 
 interface IFortItem {

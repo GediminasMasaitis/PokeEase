@@ -1,4 +1,5 @@
 interface IEventHandler {
+    onPlayerLevelUp: (levelUp: IPlayerLevelUpEvent) => void;
     onUpdatePosition: (location: IUpdatePositionEvent) => void;
     onPokeStopList: (forts: IFortEvent[]) => void;
     onFortTarget: (fortTarget: IFortTargetEvent) => void;
