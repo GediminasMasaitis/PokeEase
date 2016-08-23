@@ -9,6 +9,7 @@ class JournalNotificationController implements INotificationController {
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
         this.config.clearAllButton.click(this.clearAll);
         this.config.exampleButton.click(this.exampleClicked);
+        this.config.settingsService.subscribe(this.onSettingsChanged);
     }
 
     private clearAll = (ev: JQueryEventObject): void => {
@@ -260,5 +261,9 @@ CP              <span class="cp"> ${eggHatched.Cp} </span>/<span class="max-cp">
             _.remove(this.notifications, n => n.element.is(element));
             this.config.notificationCounter.text(this.notifications.length);
         });
+    }
+
+    private onSettingsChanged = (settings: ISettings, previousSettings: ISettings): void => {
+        this.config.notificationSettings = settings.notificationsJournal;
     }
 }

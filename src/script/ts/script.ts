@@ -24,21 +24,24 @@ $(() => {
         notificationCounter: $("#journal-counter"),
         exampleButton: $("#show-notification-journal-example-button"),
         translationController: translationController,
-        notificationSettings: settings.notificationsJournal
+        notificationSettings: settings.notificationsJournal,
+        settingsService: settingsService
     });
 
     const desktopNotificationController = new DesktopNotificationController({
         permissionElement: $("#notification-desktop-status"),
         exampleButton: $("#show-notification-desktop-example-button"),
         translationController: translationController,
-        notificationSettings: settings.notificationsDesktop
+        notificationSettings: settings.notificationsDesktop,
+        settingsService: settingsService
     });
 
     const toastNotificationController = new ToastNotificationController({
         toastControler: toastController,
         exampleButton: $("#show-notification-toast-example-button"),
         translationController: translationController,
-        notificationSettings: settings.notificationsToast
+        notificationSettings: settings.notificationsToast,
+        settingsService: settingsService
     });
 
     const mainMenuController = new MainMenuController({

@@ -5,6 +5,7 @@
         this.config = config;
         this.checkPermissions();
         this.config.exampleButton.click(this.exampleClicked);
+        this.config.settingsService.subscribe(this.onSettingsChanged);
     }
 
     private exampleClicked = (ev: JQueryEventObject): void => {
@@ -150,5 +151,9 @@ IV: ${roundedPerfection}`,
 
     private addNotification = (title: string, options: NotificationOptions) => {
         const notification = new Notification(title, options);
+    }
+
+    private onSettingsChanged = (settings: ISettings, previousSettings: ISettings): void => {
+        this.config.notificationSettings = settings.notificationsDesktop;
     }
 }

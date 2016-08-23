@@ -1354,9 +1354,13 @@ var DesktopNotificationController = (function () {
         this.addNotification = function (title, options) {
             var notification = new Notification(title, options);
         };
+        this.onSettingsChanged = function (settings, previousSettings) {
+            _this.config.notificationSettings = settings.notificationsDesktop;
+        };
         this.config = config;
         this.checkPermissions();
         this.config.exampleButton.click(this.exampleClicked);
+        this.config.settingsService.subscribe(this.onSettingsChanged);
     }
     return DesktopNotificationController;
 }());
@@ -1509,11 +1513,15 @@ var JournalNotificationController = (function () {
                 _this.config.notificationCounter.text(_this.notifications.length);
             });
         };
+        this.onSettingsChanged = function (settings, previousSettings) {
+            _this.config.notificationSettings = settings.notificationsJournal;
+        };
         this.config = config;
         this.notifications = [];
         this.timeUpdaterInterval = setInterval(this.onUpdateTimerElapsed, 1000);
         this.config.clearAllButton.click(this.clearAll);
         this.config.exampleButton.click(this.exampleClicked);
+        this.config.settingsService.subscribe(this.onSettingsChanged);
     }
     JournalNotificationController.prototype.addNotificationExample = function () {
         var html = "<div class=\"info\">Click for more</div>";
@@ -1605,8 +1613,12 @@ var ToastNotificationController = (function () {
             if (delay === void 0) { delay = 2500; }
             _this.config.toastControler.addToast(title, body, bgColor, textColor, delay);
         };
+        this.onSettingsChanged = function (settings, previousSettings) {
+            _this.config.notificationSettings = settings.notificationsToast;
+        };
         this.config = config;
         this.config.exampleButton.click(this.exampleClicked);
+        this.config.settingsService.subscribe(this.onSettingsChanged);
     }
     return ToastNotificationController;
 }());
@@ -7996,19 +8008,22 @@ $(function () {
         notificationCounter: $("#journal-counter"),
         exampleButton: $("#show-notification-journal-example-button"),
         translationController: translationController,
-        notificationSettings: settings.notificationsJournal
+        notificationSettings: settings.notificationsJournal,
+        settingsService: settingsService
     });
     var desktopNotificationController = new DesktopNotificationController({
         permissionElement: $("#notification-desktop-status"),
         exampleButton: $("#show-notification-desktop-example-button"),
         translationController: translationController,
-        notificationSettings: settings.notificationsDesktop
+        notificationSettings: settings.notificationsDesktop,
+        settingsService: settingsService
     });
     var toastNotificationController = new ToastNotificationController({
         toastControler: toastController,
         exampleButton: $("#show-notification-toast-example-button"),
         translationController: translationController,
-        notificationSettings: settings.notificationsToast
+        notificationSettings: settings.notificationsToast,
+        settingsService: settingsService
     });
     var mainMenuController = new MainMenuController({
         requestSender: client,

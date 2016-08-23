@@ -4,6 +4,7 @@
     constructor(config: IToastNotificationControllerConfig) {
         this.config = config;
         this.config.exampleButton.click(this.exampleClicked);
+        this.config.settingsService.subscribe(this.onSettingsChanged);
     }
 
     private exampleClicked = (ev: JQueryEventObject): void => {
@@ -76,5 +77,9 @@
 
     private addNotification = (title: string, body: string = "", bgColor: string = "#2196f3", textColor: string = "#ffffff", delay: number = 2500) => {
         this.config.toastControler.addToast(title, body, bgColor, textColor, delay);
+    }
+
+    private onSettingsChanged = (settings: ISettings, previousSettings: ISettings): void => {
+        this.config.notificationSettings = settings.notificationsToast;
     }
 }
