@@ -1,6 +1,6 @@
 ![logo](http://i.imgur.com/rKuTwCM.jpg)
 
-# PokeEase
+# PokeEase [![Ghit.me](https://ghit.me/badge.svg?repo=GediminasMasaitis/PokeEase)](https://ghit.me/repo/GediminasMasaitis/PokeEase)
 The Perfect GUI for Pokemon GO botting -- Work In Progress
 
 <a href="https://discord.gg/Q9T2USY">
