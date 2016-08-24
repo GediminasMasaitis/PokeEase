@@ -33,7 +33,7 @@
                 <div class="iw-detail iw-gym-defender" style="display: none">
                     <span class="iw-detail-header">Defender</span>
                     <span class="iw-detail-value">
-                        <img alt="Defender pokemon" src="#" class="iw-gym-defender-icon"/>
+                        <img alt="Defender pokemon" src="#" class="iw-gym-defender-icon" />
                         <span class="iw-gym-defender-name"></span>
                     </span>
                 </div>
@@ -135,7 +135,30 @@
                             <span> who is it? </span>
                         </div>
                         <div id="content-wrap">
-                            <div class="content" data-category="pokemons"></div>
+                            <div class="content" data-category="pokemons">
+                                <div class="tab-buttons">
+                                    <div class="pokemon-order-date pokemon-order-button" data-order-by="Date">
+                                        Date
+                                        <i class="fa fa-angle-up pokemon-order-chevron" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="pokemon-order-cp pokemon-order-button" data-order-by="Cp">
+                                        CP
+                                        <i class="fa fa-angle-up pokemon-order-chevron" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="pokemon-order-iv pokemon-order-button" data-order-by="Iv">
+                                        IV
+                                        <i class="fa fa-angle-up pokemon-order-chevron" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="pokemon-order-number pokemon-order-button" data-order-by="Number">
+                                        Number
+                                        <i class="fa fa-angle-up pokemon-order-chevron" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="pokemon-order-name pokemon-order-button" data-order-by="Name">
+                                        Name
+                                        <i class="fa fa-angle-up pokemon-order-chevron" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="content" data-category="pokedex">Pokedex</div>
                             <div class="content" data-category="items">
 
@@ -591,14 +614,14 @@
                                                     Events to show
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="checkbox" name="settings-notifications-journal-pokestop-used" value="pokestop-used" checked>Pokestop<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-capture" value="pokemon-capture" checked>Capture<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-snipe" value="pokemon-snipe" checked>Snipe<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-evolved" value="pokemon-evolved" checked>Evolve<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-egg-hatched" value="egg-hatched" checked>Hatch<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-incubator-status" value="incubator-status" checked>Incubator status<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-item-recycle" value="item-recycle" checked>Recycle<br/>
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-transfer" value="pokemon-transfer" checked>Transfer<br/>
+                                                    <input type="checkbox" name="settings-notifications-journal-pokestop-used" value="pokestop-used" checked>Pokestop<br />
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-capture" value="pokemon-capture" checked>Capture<br />
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-snipe" value="pokemon-snipe" checked>Snipe<br />
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-evolved" value="pokemon-evolved" checked>Evolve<br />
+                                                    <input type="checkbox" name="settings-notifications-journal-egg-hatched" value="egg-hatched" checked>Hatch<br />
+                                                    <input type="checkbox" name="settings-notifications-journal-incubator-status" value="incubator-status" checked>Incubator status<br />
+                                                    <input type="checkbox" name="settings-notifications-journal-item-recycle" value="item-recycle" checked>Recycle<br />
+                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-transfer" value="pokemon-transfer" checked>Transfer<br />
                                                 </div>
                                             </div>
 
@@ -653,14 +676,14 @@
                                                     Events to show
                                                 </div>
                                                 <div class="setting-answer">
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokestop-used" value="pokestop-used">Pokestop<br/>
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-capture" value="pokemon-capture">Capture<br/>
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-snipe" value="pokemon-snipe">Snipe<br/>
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-evolved" value="pokemon-evolved">Evolve<br/>
-                                                    <input type="checkbox" name="settings-notifications-desktop-egg-hatched" value="egg-hatched">Hatch<br/>
-                                                    <input type="checkbox" name="settings-notifications-desktop-incubator-status" value="incubator-status">Incubator status<br/>
-                                                    <input type="checkbox" name="settings-notifications-desktop-item-recycle" value="item-recycle">Recycle<br/>
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-transfer" value="pokemon-transfer">Transfer<br/>
+                                                    <input type="checkbox" name="settings-notifications-desktop-pokestop-used" value="pokestop-used">Pokestop<br />
+                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-capture" value="pokemon-capture">Capture<br />
+                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-snipe" value="pokemon-snipe">Snipe<br />
+                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-evolved" value="pokemon-evolved">Evolve<br />
+                                                    <input type="checkbox" name="settings-notifications-desktop-egg-hatched" value="egg-hatched">Hatch<br />
+                                                    <input type="checkbox" name="settings-notifications-desktop-incubator-status" value="incubator-status">Incubator status<br />
+                                                    <input type="checkbox" name="settings-notifications-desktop-item-recycle" value="item-recycle">Recycle<br />
+                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-transfer" value="pokemon-transfer">Transfer<br />
                                                 </div>
                                             </div>
                                         </div>
@@ -826,26 +849,26 @@
     <script type="text/javascript" src="external/lodash.js"></script>
     <script type="text/javascript" src="external/leaflet.js"></script>
     <script>
-    var key = null;
-    var settingsJson = localStorage.getItem("settings");
-    if (settingsJson) {
-        try {
-            var sett = JSON.parse(settingsJson);
-            if (sett.mapGoogleApiKey) {
-                key = sett.mapGoogleApiKey;
+        var key = null;
+        var settingsJson = localStorage.getItem("settings");
+        if (settingsJson) {
+            try {
+                var sett = JSON.parse(settingsJson);
+                if (sett.mapGoogleApiKey) {
+                    key = sett.mapGoogleApiKey;
+                }
+            }
+            catch (ex) {
+
             }
         }
-        catch (ex) {
 
+        if (key) {
+            document.write('<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=' + key + '"><\/script>');
+        } else {
+            document.write('<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"><\/script>');
         }
-    }
-
-    if (key) {
-        document.write('<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=' + key + '"><\/script>');
-    } else {
-        document.write('<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"><\/script>');
-    }
-</script>
+    </script>
     <script type="text/javascript" src="external/infobubble.js"></script>
     <script type="text/javascript" src="external/jquery.animateNumber.js"></script>
     <script type="text/javascript" src="external/jquery.qtip.min.js"></script>

@@ -245,7 +245,7 @@ $(window).ready(function() {
         tabNameHolder = $(this).attr('class').split(' ')[0];
 
         // show the right tab
-        $(".tab-pages > div").each(function() {
+        $(this).closest(".content").find(".tab-pages > div").each(function() {
             $(this).fadeOut(150);
             //console.log($(this).attr('id'));
             //console.log(tabNameHolder);
@@ -255,7 +255,7 @@ $(window).ready(function() {
         });
 
         // remove selected class from current tab
-        $(".tab-buttons > div").each(function() {
+        $(this).closest(".content").find(".tab-buttons > div").each(function () {
             $(this).removeClass('selected');
         });
 

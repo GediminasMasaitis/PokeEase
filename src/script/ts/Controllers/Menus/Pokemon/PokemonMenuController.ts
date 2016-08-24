@@ -4,12 +4,31 @@
     private pokemonList: IPokemonListEvent;
     private currentPokemon: IPokemonListEntry;
     private currentOrdering: PokemonOrdering;
+    private currentReverse: boolean;
 
     constructor(config: IPokemonMenuControllerConfig) {
         this.config = config;
         this.config.pokemonDetailsElement.find("#confirm-transfer").click(this.transferPokemon);
         this.config.pokemonDetailsElement.find("#confirm-evolve").click(this.evolvePokemon);
-        this.currentOrdering = PokemonOrdering.Cp;
+        this.currentOrdering = PokemonOrdering.Date;
+        this.currentReverse = true;
+        this.config.pokemonOrderButtons.click(this.onOrderButtonClicked);
+    }
+
+    private onOrderButtonClicked = (event: JQueryEventObject) => {
+        const button = $(event.target).closest("pokemon-order-button");
+        const orderingStr = button.attr("data-order-by");
+        if (!orderingStr) {
+            return;
+        }
+        const ordering = PokemonOrdering[orderingStr];
+        const previousOrdering = this.currentOrdering;
+        this.currentOrdering = ordering;
+        if (previousOrdering === ordering) {
+            this.currentReverse = !this.currentReverse;
+        } else {
+            this.currentReverse = true;
+        }
     }
 
     public pokemonListRequested = (request: IRequest): void => {
@@ -26,13 +45,13 @@
         let pokemons: IPokemonListEntry[];
         switch (this.currentOrdering) {
             case PokemonOrdering.Date:
-                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.CreationTimeMs).reverse();
+                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.CreationTimeMs);
                 break;
             case PokemonOrdering.Cp:
-                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.Cp).reverse();
+                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.Cp);
                 break;
             case PokemonOrdering.Iv:
-                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.Perfection).reverse();
+                pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.Perfection);
                 break;
             case PokemonOrdering.Number:
                 pokemons = _.orderBy(this.pokemonList.Pokemons, p => p.PokemonId);
@@ -45,6 +64,9 @@
                 break;
             default:
                 pokemons = this.pokemonList.Pokemons;
+        }
+        if (this.currentReverse) {
+            pokemons = pokemons.reverse();
         }
         for (let i = 0; i < pokemons.length; i++) {
             const pokemon = pokemons[i];

@@ -4,4 +4,5 @@
     pokemonMenuElement: JQuery;
     pokemonDetailsElement: JQuery;
     pokemonLoadingSpinner: JQuery;
+    pokemonOrderButtons: JQuery;
 }
