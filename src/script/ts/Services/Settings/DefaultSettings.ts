@@ -4,7 +4,7 @@
             mapProvider: MapProvider.GMaps,
             mapFolllowPlayer: true,
             mapClearing: 0,
-            mapGoogleApiKey: "",
+            mapGoogleApiKey: "AIzaSyA6jYrlom7XqBW8FB_2uw2AJEOWP5fN6pg",
             mapOsmApiKey: "",
 
             clientAddress: "127.0.0.1",
