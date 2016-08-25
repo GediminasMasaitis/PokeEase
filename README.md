@@ -1,7 +1,8 @@
 ![logo](http://i.imgur.com/rKuTwCM.jpg)
 
 # PokeEase
-The Perfect GUI for Pokemon GO botting -- Work In Progress
+The Perfect GUI for Pokemon GO botting -- Work In Progress [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Naramsim/PokeEase/tree/master)
+
 
 <a href="https://discord.gg/Q9T2USY">
   <img src="https://discordapp.com/api/guilds/213010121356214272/widget.png?style=banner2"/>
