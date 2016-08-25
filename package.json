@@ -1,7 +1,10 @@
 {
   "name": "necro-ease",
   "version": "0.0.1",
-  "start": "node ./src/index.js",
+  "start": "http-server ./src -p 5000",
+  "scripts": {
+    "start": "http-server ./src -p 5000"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/GediminasMasaitis/PokeEase.git"

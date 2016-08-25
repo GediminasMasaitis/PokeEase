@@ -1,0 +1,1 @@
+web: http-server ./src -p 5000
