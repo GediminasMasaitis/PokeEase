@@ -1,7 +1,7 @@
 {
   "name": "PokeEase",
-  "description": "A barebones Node.js app using Express 4",
+  "description": "The Perfect GUI for Pokemon GO botting -- Work In Progress",
   "repository": "https://github.com/Naramsim/PokeEase",
   "logo": "https://github.com/Naramsim/PokeEase/blob/master/src/images/favicon.png",
-  "keywords": ["pokemon", "express", "static"]
+  "keywords": ["pokemon", "bot", "pokeease", "visualizer"]
 }
