@@ -986,16 +986,20 @@ var PokemonMenuController = (function () {
             else {
                 chevron.removeClass("descending");
             }
+            _this.updatePokemonListInner();
         };
         this.pokemonListRequested = function (request) {
             _this.config.pokemonLoadingSpinner.show();
         };
         this.updatePokemonList = function (pokemonList) {
-            _this.config.pokemonMenuElement.find(".pokemon").remove();
             _this.pokemonList = pokemonList;
             _this.updatePokemonListInner();
         };
         this.updatePokemonListInner = function () {
+            if (!_this.pokemonList) {
+                return;
+            }
+            _this.config.pokemonMenuElement.find(".pokemon").remove();
             var pokemons;
             switch (_this.currentOrdering) {
                 case PokemonOrdering.Date:

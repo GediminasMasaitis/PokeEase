@@ -35,6 +35,7 @@
         } else {
             chevron.removeClass("descending");
         }
+        this.updatePokemonListInner();
     }
 
     public pokemonListRequested = (request: IRequest): void => {
@@ -42,12 +43,15 @@
     }
 
     public updatePokemonList = (pokemonList: IPokemonListEvent): void => {
-        this.config.pokemonMenuElement.find(".pokemon").remove();
         this.pokemonList = pokemonList;
         this.updatePokemonListInner();
     }
 
     private updatePokemonListInner = (): void => {
+        if (!this.pokemonList) {
+            return;
+        }
+        this.config.pokemonMenuElement.find(".pokemon").remove();
         let pokemons: IPokemonListEntry[];
         switch (this.currentOrdering) {
             case PokemonOrdering.Date:
