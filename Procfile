@@ -1,1 +1,1 @@
-web: http-server ./src -p 5000
+web: http-server ./src -p $PORT
