@@ -54,7 +54,8 @@ $(() => {
         requestSender: client,
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
         pokemonDetailsElement: $("#pokemon-info"),
-        pokemonLoadingSpinner: $(".spinner-overlay")
+        pokemonLoadingSpinner: $(".spinner-overlay"),
+        pokemonOrderButtons: $(".pokemon-order-button")
     });
 
     const inventoryMenuController = new InventoryMenuController({

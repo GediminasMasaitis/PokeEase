@@ -46,6 +46,15 @@ $lure: #f52d60;
   filter: alpha(opacity=$opacity-ie); //IE8
 }
 
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 #menu {
     position: fixed;
     left: -200px;
@@ -1310,6 +1319,7 @@ $event-incubator-status-color: #e9e1b5;
 }
 
 .tab-buttons {
+    @include no-select;
     display: block;
     padding: 1em 0;
 
@@ -1326,12 +1336,22 @@ $event-incubator-status-color: #e9e1b5;
         margin: 0 .5em;
         .pokemon-order-chevron {
             transition: 0.3s cubic-bezier(0.3, 0, 0, 1);
+            @include opacity(0);
         }
         
         &.selected {
             box-shadow: inset 0 -2px $toggle-color;
             color: $toggle-color;
-            pointer-events: none;
+            //pointer-events: none;
+            .pokemon-order-chevron {
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+                display:inline-block;
+                @include opacity(1);
+                &.descending{
+                    transform: rotate(180deg);
+                }
+            }
         }
     }
 }

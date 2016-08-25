@@ -964,6 +964,29 @@ var InventoryMenuController = (function () {
 var PokemonMenuController = (function () {
     function PokemonMenuController(config) {
         var _this = this;
+        this.onOrderButtonClicked = function (event) {
+            var button = $(event.target).closest(".pokemon-order-button");
+            var orderingStr = button.attr("data-order-by");
+            if (!orderingStr) {
+                return;
+            }
+            var ordering = PokemonOrdering[orderingStr];
+            var previousOrdering = _this.currentOrdering;
+            _this.currentOrdering = ordering;
+            if (previousOrdering === ordering) {
+                _this.currentReverse = !_this.currentReverse;
+            }
+            else {
+                _this.currentReverse = true;
+            }
+            var chevron = button.find(".pokemon-order-chevron");
+            if (_this.currentReverse) {
+                chevron.addClass("descending");
+            }
+            else {
+                chevron.removeClass("descending");
+            }
+        };
         this.pokemonListRequested = function (request) {
             _this.config.pokemonLoadingSpinner.show();
         };
@@ -976,13 +999,13 @@ var PokemonMenuController = (function () {
             var pokemons;
             switch (_this.currentOrdering) {
                 case PokemonOrdering.Date:
-                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.CreationTimeMs; }).reverse();
+                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.CreationTimeMs; });
                     break;
                 case PokemonOrdering.Cp:
-                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.Cp; }).reverse();
+                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.Cp; });
                     break;
                 case PokemonOrdering.Iv:
-                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.Perfection; }).reverse();
+                    pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.Perfection; });
                     break;
                 case PokemonOrdering.Number:
                     pokemons = _.orderBy(_this.pokemonList.Pokemons, function (p) { return p.PokemonId; });
@@ -995,6 +1018,9 @@ var PokemonMenuController = (function () {
                     break;
                 default:
                     pokemons = _this.pokemonList.Pokemons;
+            }
+            if (_this.currentReverse) {
+                pokemons = pokemons.reverse();
             }
             for (var i = 0; i < pokemons.length; i++) {
                 var pokemon = pokemons[i];
@@ -1057,7 +1083,9 @@ var PokemonMenuController = (function () {
         this.config = config;
         this.config.pokemonDetailsElement.find("#confirm-transfer").click(this.transferPokemon);
         this.config.pokemonDetailsElement.find("#confirm-evolve").click(this.evolvePokemon);
-        this.currentOrdering = PokemonOrdering.Cp;
+        this.currentOrdering = PokemonOrdering.Date;
+        this.currentReverse = true;
+        this.config.pokemonOrderButtons.click(this.onOrderButtonClicked);
     }
     return PokemonMenuController;
 }());
@@ -1708,6 +1736,8 @@ var ToastController = (function () {
 var InterfaceHandler = (function () {
     function InterfaceHandler(config) {
         var _this = this;
+        this.onPlayerLevelUp = function (levelUp) {
+        };
         this.onUpdatePosition = function (location) {
             if (!_this.currentlySniping) {
                 _this.config.map.movePlayer(location);
@@ -7342,6 +7372,10 @@ var BotWSClient = (function () {
                 _this.profileSent = true;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
             }
+            else if (_.includes(type, ".PlayerLevelUpEvent,")) {
+                var levelUpEvent_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPlayerLevelUp(levelUpEvent_1); });
+            }
             else if (_.includes(type, ".UpdatePositionEvent,")) {
                 var mapLocation_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onUpdatePosition(mapLocation_1); });
@@ -8034,7 +8068,8 @@ $(function () {
         requestSender: client,
         pokemonMenuElement: $('body.live-version .content[data-category="pokemons"]'),
         pokemonDetailsElement: $("#pokemon-info"),
-        pokemonLoadingSpinner: $(".spinner-overlay")
+        pokemonLoadingSpinner: $(".spinner-overlay"),
+        pokemonOrderButtons: $(".pokemon-order-button")
     });
     var inventoryMenuController = new InventoryMenuController({
         translationController: translationController,

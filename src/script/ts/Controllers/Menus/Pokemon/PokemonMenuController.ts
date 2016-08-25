@@ -16,7 +16,7 @@
     }
 
     private onOrderButtonClicked = (event: JQueryEventObject) => {
-        const button = $(event.target).closest("pokemon-order-button");
+        const button = $(event.target).closest(".pokemon-order-button");
         const orderingStr = button.attr("data-order-by");
         if (!orderingStr) {
             return;
@@ -28,6 +28,12 @@
             this.currentReverse = !this.currentReverse;
         } else {
             this.currentReverse = true;
+        }
+        const chevron = button.find(".pokemon-order-chevron");
+        if (this.currentReverse) {
+            chevron.addClass("descending");
+        } else {
+            chevron.removeClass("descending");
         }
     }
 
