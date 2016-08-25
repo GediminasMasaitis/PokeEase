@@ -1,7 +1,6 @@
 {
   "name": "PokeEase",
-  "description": "The Perfect GUI for Pokemon GO botting -- Work In Progress",
+  "description": "The Perfect GUI for Pokemon GO botting Work In Progress",
   "repository": "https://github.com/Naramsim/PokeEase",
-  "logo": "https://github.com/Naramsim/PokeEase/blob/master/src/images/favicon.png",
-  "keywords": ["pokemon", "bot", "pokeease", "visualizer"]
+  "logo": "https://github.com/Naramsim/PokeEase/blob/master/src/images/favicon.png"
 }
