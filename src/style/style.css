@@ -1128,27 +1128,30 @@ body {
   vertical-align: middle;
   display: inline-block; }
 
-.content[data-category="settings"] {
-  padding: 0 !important;
-  padding-bottom: 2em !important; }
-  .content[data-category="settings"] .tab-buttons {
-    display: block;
-    padding: 1em 0; }
-    .content[data-category="settings"] .tab-buttons div {
-      display: inline-block;
-      padding: 1em 2em;
-      box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2);
-      transition: 0.2s;
-      color: rgba(0, 0, 0, 0.4);
-      cursor: pointer;
-      text-transform: uppercase;
-      font-size: 14px;
-      font-weight: 600;
-      margin: 0 .5em; }
-    .content[data-category="settings"] .tab-buttons div.selected {
+.tab-buttons {
+  display: block;
+  padding: 1em 0; }
+  .tab-buttons div {
+    display: inline-block;
+    padding: 1em 2em;
+    box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2);
+    transition: 0.2s;
+    color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 .5em; }
+    .tab-buttons div .pokemon-order-chevron {
+      transition: 0.3s cubic-bezier(0.3, 0, 0, 1); }
+    .tab-buttons div.selected {
       box-shadow: inset 0 -2px #2196f3;
       color: #2196f3;
       pointer-events: none; }
+
+.content[data-category="settings"] {
+  padding: 0 !important;
+  padding-bottom: 2em !important; }
   .content[data-category="settings"] .tab-pages > div {
     text-align: center;
     padding: 1em;
