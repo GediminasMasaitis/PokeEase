@@ -47,11 +47,7 @@
         this.updatePokemonListInner();
     }
 
-    private updatePokemonListInner = (): void => {
-        if (!this.pokemonList) {
-            return;
-        }
-        this.config.pokemonMenuElement.find(".pokemon").remove();
+    private getOrderedPokemons = (): IPokemonListEntry[] => {
         let pokemons: IPokemonListEntry[];
         switch (this.currentOrdering) {
             case PokemonOrdering.Date:
@@ -78,12 +74,21 @@
         if (this.currentReverse) {
             pokemons = pokemons.reverse();
         }
+        return pokemons;
+    }
+
+    private updatePokemonListInner = (): void => {
+        if (!this.pokemonList) {
+            return;
+        }
+        this.config.pokemonMenuElement.find(".pokemon").remove();
+        const pokemons = this.getOrderedPokemons();
         for (let i = 0; i < pokemons.length; i++) {
             const pokemon = pokemons[i];
             const pokemonName = this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
             const roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
             const html =
-                `<div class="pokemon">
+                `<div class="pokemon" data-pokemon-unique-id="${pokemon.Id}">
     <h1 class="name">${pokemonName}</h1>
     <div class="image-container">
         <img src="images/pokemon/${pokemon.PokemonId}.png"/>
@@ -92,7 +97,6 @@
     <h3 class="iv">${roundedIv}</h3>
 </div>`;
             const pokemonElement = $(html);
-            pokemonElement.prop("pokemon-index", i);
             pokemonElement.click(this.pokemonClick);
             this.config.pokemonMenuElement.append(pokemonElement);
         }
@@ -101,8 +105,8 @@
 
     private pokemonClick = (ev: JQueryEventObject) => {
         const pokemonBox = $(ev.target).closest(".pokemon");
-        const pokemonIndex = pokemonBox.prop("pokemon-index") as number;
-        const pokemon = this.pokemonList.Pokemons[pokemonIndex];
+        const pokemonUniqueIdStr = pokemonBox.attr("data-pokemon-unique-id");
+        const pokemon = _.find(this.pokemonList.Pokemons, p => p.Id == pokemonUniqueIdStr);
         this.currentPokemon = pokemon;
         const pokemonName = this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
         const roundedIv = Math.floor(pokemon.Perfection * 100) / 100;

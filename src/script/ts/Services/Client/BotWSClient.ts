@@ -346,20 +346,20 @@
         this.sendRequest(request);
     };
 
-    public sendTransferPokemonRequest = (pokemonId: number): void => {
+    public sendTransferPokemonRequest = (pokemonId: string): void => {
         const request: IRequest = {
              Command: "TransferPokemon",
-             Data: pokemonId.toString(),
+             Data: pokemonId,
              PokemonId: pokemonId
         };
         _.each(this.config.eventHandlers, eh => eh.onSendTransferPokemonRequest(request));
         this.sendRequest(request);
     };
 
-    public sendEvolvePokemonRequest = (pokemonId: number): void => {
+    public sendEvolvePokemonRequest = (pokemonId: string): void => {
         const request: IRequest = {
              Command: "EvolvePokemon",
-             Data: pokemonId.toString(),
+             Data: pokemonId,
              PokemonId: pokemonId
         };
         _.each(this.config.eventHandlers, eh => eh.onSendEvolvePokemonRequest(request));

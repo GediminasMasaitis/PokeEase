@@ -995,11 +995,7 @@ var PokemonMenuController = (function () {
             _this.pokemonList = pokemonList;
             _this.updatePokemonListInner();
         };
-        this.updatePokemonListInner = function () {
-            if (!_this.pokemonList) {
-                return;
-            }
-            _this.config.pokemonMenuElement.find(".pokemon").remove();
+        this.getOrderedPokemons = function () {
             var pokemons;
             switch (_this.currentOrdering) {
                 case PokemonOrdering.Date:
@@ -1026,13 +1022,20 @@ var PokemonMenuController = (function () {
             if (_this.currentReverse) {
                 pokemons = pokemons.reverse();
             }
+            return pokemons;
+        };
+        this.updatePokemonListInner = function () {
+            if (!_this.pokemonList) {
+                return;
+            }
+            _this.config.pokemonMenuElement.find(".pokemon").remove();
+            var pokemons = _this.getOrderedPokemons();
             for (var i = 0; i < pokemons.length; i++) {
                 var pokemon = pokemons[i];
                 var pokemonName = _this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
                 var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
-                var html = "<div class=\"pokemon\">\n    <h1 class=\"name\">" + pokemonName + "</h1>\n    <div class=\"image-container\">\n        <img src=\"images/pokemon/" + pokemon.PokemonId + ".png\"/>\n    </div>\n    <h3 class=\"cp\">" + pokemon.Cp + "</h3>\n    <h3 class=\"iv\">" + roundedIv + "</h3>\n</div>";
+                var html = "<div class=\"pokemon\" data-pokemon-unique-id=\"" + pokemon.Id + "\">\n    <h1 class=\"name\">" + pokemonName + "</h1>\n    <div class=\"image-container\">\n        <img src=\"images/pokemon/" + pokemon.PokemonId + ".png\"/>\n    </div>\n    <h3 class=\"cp\">" + pokemon.Cp + "</h3>\n    <h3 class=\"iv\">" + roundedIv + "</h3>\n</div>";
                 var pokemonElement = $(html);
-                pokemonElement.prop("pokemon-index", i);
                 pokemonElement.click(_this.pokemonClick);
                 _this.config.pokemonMenuElement.append(pokemonElement);
             }
@@ -1040,8 +1043,8 @@ var PokemonMenuController = (function () {
         };
         this.pokemonClick = function (ev) {
             var pokemonBox = $(ev.target).closest(".pokemon");
-            var pokemonIndex = pokemonBox.prop("pokemon-index");
-            var pokemon = _this.pokemonList.Pokemons[pokemonIndex];
+            var pokemonUniqueIdStr = pokemonBox.attr("data-pokemon-unique-id");
+            var pokemon = _.find(_this.pokemonList.Pokemons, function (p) { return p.Id == pokemonUniqueIdStr; });
             _this.currentPokemon = pokemon;
             var pokemonName = _this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
             var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
@@ -7585,7 +7588,7 @@ var BotWSClient = (function () {
         this.sendTransferPokemonRequest = function (pokemonId) {
             var request = {
                 Command: "TransferPokemon",
-                Data: pokemonId.toString(),
+                Data: pokemonId,
                 PokemonId: pokemonId
             };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendTransferPokemonRequest(request); });
@@ -7594,7 +7597,7 @@ var BotWSClient = (function () {
         this.sendEvolvePokemonRequest = function (pokemonId) {
             var request = {
                 Command: "EvolvePokemon",
-                Data: pokemonId.toString(),
+                Data: pokemonId,
                 PokemonId: pokemonId
             };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendEvolvePokemonRequest(request); });

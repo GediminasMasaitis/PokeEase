@@ -4,7 +4,7 @@ interface IPokemonListEvent extends IEvent {
 
 interface IPokemonListEntry {
     PokemonId: number;
-    Id: number;
+    Id: string;
     AdditionalCpMultiplier: number;
     BattlesAttacked: number;
     BattlesDefended: number;
