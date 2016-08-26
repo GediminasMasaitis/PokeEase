@@ -7452,65 +7452,64 @@ var BotWSClient = (function () {
                 var pokemonTransfer_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
             }
-            else if (_.includes(type, ".PokemonListEvent,") || _.includes(type, ".PokemonListResponce,")) {
-                var originalList = void 0;
-                if (_this.currentBotFamily === BotFamily.PMB) {
-                    originalList = message.PokemonList.$values;
-                }
-                else {
-                    originalList = message.Data.$values;
-                }
+            else if (_.includes(type, ".PokemonListEvent,")) {
+                var originalList = message.PokemonList.$values;
                 var pokemonList_1 = {
                     Pokemons: [],
                     Timestamp: timestamp
                 };
                 _.each(originalList, function (val) {
-                    if (_this.currentBotFamily === BotFamily.PMB) {
-                        var pokemon = val.Item1;
-                        pokemon.Perfection = val.Item2;
-                        pokemon.FamilyCandies = val.Item3;
-                        pokemonList_1.Pokemons.push(pokemon);
-                    }
-                    else {
-                        var pokemon = val.Base;
-                        pokemon.Perfection = val.IvPerfection;
-                        pokemonList_1.Pokemons.push(pokemon);
-                    }
+                    var pokemon = val.Item1;
+                    pokemon.Perfection = val.Item2;
+                    pokemon.FamilyCandies = val.Item3;
+                    pokemonList_1.Pokemons.push(pokemon);
                 });
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_1); });
             }
-            else if (_.includes(type, ".EggsListEvent,") || _.includes(type, ".EggListResponce,")) {
-                var eggList_1;
-                if (_this.currentBotFamily === BotFamily.PMB) {
-                    eggList_1 = message;
-                    eggList_1.Incubators = message.Incubators.$values;
-                    eggList_1.UnusedEggs = message.UnusedEggs.$values;
-                }
-                else {
-                    eggList_1 = message.Data;
-                    eggList_1.Incubators = message.Data.Incubators.$values;
-                    eggList_1.UnusedEggs = message.Data.UnusedEggs.$values;
-                }
+            else if (_.includes(type, ".PokemonListResponce,")) {
+                var originalList = message.Data.$values;
+                var pokemonList_2 = {
+                    Pokemons: [],
+                    Timestamp: timestamp
+                };
+                _.each(originalList, function (val) {
+                    var pokemon = val.Base;
+                    pokemon.Perfection = val.IvPerfection;
+                    pokemonList_2.Pokemons.push(pokemon);
+                });
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonList(pokemonList_2); });
+            }
+            else if (_.includes(type, ".EggsListEvent,")) {
+                var eggList_1 = message;
+                eggList_1.Incubators = message.Incubators.$values;
+                eggList_1.UnusedEggs = message.UnusedEggs.$values;
                 eggList_1.Timestamp = timestamp;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_1); });
             }
-            else if (_.includes(type, ".InventoryListEvent,") || _.includes(type, ".ItemListResponce,")) {
-                var originalList = void 0;
-                if (_this.currentBotFamily === BotFamily.PMB) {
-                    originalList = message.Items.$values;
-                }
-                else {
-                    originalList = message.Data.$values;
-                }
+            else if (_.includes(type, ".EggListResponce,")) {
+                var eggList_2 = message.Data;
+                eggList_2.Incubators = message.Data.Incubators.$values;
+                eggList_2.UnusedEggs = message.Data.UnusedEggs.$values;
+                eggList_2.Timestamp = timestamp;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onEggList(eggList_2); });
+            }
+            else if (_.includes(type, ".InventoryListEvent,")) {
                 var inventoryList_1 = {
-                    Items: originalList,
+                    Items: message.Items.$values,
                     Timestamp: timestamp
                 };
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onInventoryList(inventoryList_1); });
             }
+            else if (_.includes(type, ".ItemListResponce,")) {
+                var inventoryList_2 = {
+                    Items: message.Data.$values,
+                    Timestamp: timestamp
+                };
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onInventoryList(inventoryList_2); });
+            }
             else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
                 var originalStats = void 0;
-                if (_this.currentBotFamily === BotFamily.PMB) {
+                if (_.includes(type, ".PlayerStatsEvent,")) {
                     originalStats = message.PlayerStats.$values[0];
                 }
                 else {

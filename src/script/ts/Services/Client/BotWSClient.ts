@@ -195,60 +195,64 @@
         }
 
         //#region Request response events
-        else if (_.includes(type, ".PokemonListEvent,") || _.includes(type, ".PokemonListResponce,")) {
-
-            let originalList: any;
-            if (this.currentBotFamily === BotFamily.PMB) {
-                originalList = message.PokemonList.$values;
-            } else {
-                originalList = message.Data.$values;
-            }
-
+        else if (_.includes(type, ".PokemonListEvent,")) {
+            const originalList = message.PokemonList.$values;
             const pokemonList: IPokemonListEvent = {
                 Pokemons: [],
                 Timestamp: timestamp
             };
-            
             _.each(originalList, val => {
-                if (this.currentBotFamily === BotFamily.PMB) {
                     const pokemon = val.Item1 as IPokemonListEntry;
                     pokemon.Perfection = val.Item2;
                     pokemon.FamilyCandies = val.Item3;
                     pokemonList.Pokemons.push(pokemon);
-                } else {
-                    const pokemon = val.Base as IPokemonListEntry;
-                    pokemon.Perfection = val.IvPerfection;
-                    pokemonList.Pokemons.push(pokemon);
-                }
+            });
+            _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
+        }
+
+        else if (_.includes(type, ".PokemonListResponce,")) {
+            const originalList = message.Data.$values;
+            const pokemonList: IPokemonListEvent = {
+                Pokemons: [],
+                Timestamp: timestamp
+            };
+
+            _.each(originalList, val => {
+                const pokemon = val.Base as IPokemonListEntry;
+                pokemon.Perfection = val.IvPerfection;
+                pokemonList.Pokemons.push(pokemon);
             });
 
             _.each(this.config.eventHandlers, eh => eh.onPokemonList(pokemonList));
         }
 
-        else if (_.includes(type, ".EggsListEvent,") || _.includes(type, ".EggListResponce,")) {
-            let eggList: IEggListEvent;
-            if (this.currentBotFamily === BotFamily.PMB) {
-                eggList = message;
-                eggList.Incubators = message.Incubators.$values;
-                eggList.UnusedEggs = message.UnusedEggs.$values;
-            } else {
-                eggList = message.Data;
-                eggList.Incubators = message.Data.Incubators.$values;
-                eggList.UnusedEggs = message.Data.UnusedEggs.$values;
-            }
+        else if (_.includes(type, ".EggsListEvent,")) {
+            const eggList = message;
+            eggList.Incubators = message.Incubators.$values;
+            eggList.UnusedEggs = message.UnusedEggs.$values;
             eggList.Timestamp = timestamp;
             _.each(this.config.eventHandlers, eh => eh.onEggList(eggList));
         }
 
-        else if (_.includes(type, ".InventoryListEvent,") || _.includes(type, ".ItemListResponce,")) {
-            let originalList: any;
-            if (this.currentBotFamily === BotFamily.PMB) {
-                originalList = message.Items.$values;
-            } else {
-                originalList = message.Data.$values;
-            }
+        else if (_.includes(type, ".EggListResponce,")) {
+            const eggList = message.Data;
+            eggList.Incubators = message.Data.Incubators.$values;
+            eggList.UnusedEggs = message.Data.UnusedEggs.$values;
+            eggList.Timestamp = timestamp;
+            _.each(this.config.eventHandlers, eh => eh.onEggList(eggList));
+        }
+
+        else if (_.includes(type, ".InventoryListEvent,")) {
             const inventoryList: IInventoryListEvent = {
-                Items: originalList,
+                Items: message.Items.$values,
+                Timestamp: timestamp
+            };
+            _.each(this.config.eventHandlers, eh => eh.onInventoryList(inventoryList));
+        }
+
+        else if (_.includes(type, ".ItemListResponce,")) {
+            const inventoryList: IInventoryListEvent = {
+                Items: message.Data.$values,
                 Timestamp: timestamp
             };
             _.each(this.config.eventHandlers, eh => eh.onInventoryList(inventoryList));
@@ -256,7 +260,7 @@
 
         else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
             let originalStats: any;
-            if (this.currentBotFamily === BotFamily.PMB) {
+            if (_.includes(type, ".PlayerStatsEvent,")) {
                 originalStats = message.PlayerStats.$values[0];
             } else {
                 originalStats = message.Data.Stats;
