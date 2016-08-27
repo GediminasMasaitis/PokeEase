@@ -1041,6 +1041,13 @@ $event-incubator-status-color: #e9e1b5;
         margin-bottom: 0.1em;
     }
 
+    h2 {
+        @include opacity(0.8);
+        font-size: 18px;
+        margin: 0;
+        margin-bottom: 0.1em;
+    }
+
     img {
         max-height: 140px;
     }

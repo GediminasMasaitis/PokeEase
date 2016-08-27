@@ -117,6 +117,13 @@
             evolveButton.show();
         }
         this.config.pokemonDetailsElement.find("#pokemon-info-name").text(pokemonName);
+        const nicknameElement = this.config.pokemonDetailsElement.find("#pokemon-info-nickname");
+        if (pokemon.Nickname) {
+            nicknameElement.show();
+            nicknameElement.text(`"${pokemon.Nickname}"`);
+        } else {
+            nicknameElement.hide();
+        }
         this.config.pokemonDetailsElement.find("#pokemon-info-image").attr("src", `images/pokemon/${pokemon.PokemonId}.png`);
         this.config.pokemonDetailsElement.find(".attack").text(pokemon.IndividualAttack);
         this.config.pokemonDetailsElement.find(".defense").text(pokemon.IndividualDefense);

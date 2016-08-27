@@ -1056,6 +1056,14 @@ var PokemonMenuController = (function () {
                 evolveButton.show();
             }
             _this.config.pokemonDetailsElement.find("#pokemon-info-name").text(pokemonName);
+            var nicknameElement = _this.config.pokemonDetailsElement.find("#pokemon-info-nickname");
+            if (pokemon.Nickname) {
+                nicknameElement.show();
+                nicknameElement.text("\"" + pokemon.Nickname + "\"");
+            }
+            else {
+                nicknameElement.hide();
+            }
             _this.config.pokemonDetailsElement.find("#pokemon-info-image").attr("src", "images/pokemon/" + pokemon.PokemonId + ".png");
             _this.config.pokemonDetailsElement.find(".attack").text(pokemon.IndividualAttack);
             _this.config.pokemonDetailsElement.find(".defense").text(pokemon.IndividualDefense);

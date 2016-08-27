@@ -924,6 +924,12 @@ body {
     font-size: 24px;
     margin: 0;
     margin-bottom: 0.1em; }
+  #pokemon-content h2 {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 0.1em; }
   #pokemon-content img {
     max-height: 140px; }
   #pokemon-content *:before {
