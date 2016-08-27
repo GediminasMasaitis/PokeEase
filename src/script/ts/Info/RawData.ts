@@ -155,13 +155,14 @@
         candyToEvolve?: number;
         parentPokemonId?: string;
         rarity?: string;
+    }
 
-        // Custom
-        id?: number;
-        elements?: PokeElement[];
-        availableQuickMoves?: MoveSettings[];
-        availableCinematicMoves?: MoveSettings[];
-        evolvesInto?: PokemonSettings[];
+    export interface ExtendedPokemonSettings extends PokemonSettings {
+        id: number;
+        elements: PokeElement[];
+        availableQuickMoves: MoveSettings[];
+        availableCinematicMoves: MoveSettings[];
+        evolvesInto: PokemonSettings[];
     }
 
     export interface MoveSettings {
@@ -180,12 +181,13 @@
         damageWindowEndMs: number;
         energyDelta: number;
         healScalar?: number;
+    }
 
-        // Custom
-        id?: number;
-        element?: PokeElement;
-        moveType?: MoveType;
-        availableToPokemon?: PokemonSettings[];
+    export interface ExtendedMoveSettings extends MoveSettings {
+        id: number;
+        element: PokeElement;
+        moveType: MoveType;
+        availableToPokemon: PokemonSettings[];
     }
 
     export interface IapItemDisplay {

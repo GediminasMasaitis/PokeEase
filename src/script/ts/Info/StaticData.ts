@@ -3,8 +3,8 @@
     private static dictRawPokemonTypeToEasePokemonType: _.Dictionary<PokeElement>;
     private static dictEasePokemonTypeToRawPokemonType: string[];
 
-    public static pokemonData: RawData.PokemonSettings[];
-    public static moveData: RawData.MoveSettings[];
+    public static pokemonData: RawData.ExtendedPokemonSettings[];
+    public static moveData: RawData.ExtendedMoveSettings[];
 
     public static itemCodes: string[];
     public static itemIds: number[];
@@ -40,7 +40,7 @@
         StaticData.pokemonData = [];
         const pokemonData = _.filter(rawData.itemTemplates, x => x.pokemonSettings);
         for (let i = 0; i < pokemonData.length; i++) {
-            const pokemonSettings = pokemonData[i].pokemonSettings;
+            const pokemonSettings = pokemonData[i].pokemonSettings as RawData.ExtendedPokemonSettings;
             pokemonSettings.id = StaticData.parseId(pokemonData[i].templateId);
             pokemonSettings.elements = [];
             const element1 = StaticData.dictRawPokemonTypeToEasePokemonType[pokemonSettings.type];
@@ -55,7 +55,7 @@
         StaticData.moveData = [];
         const moveData = _.filter(rawData.itemTemplates, x => x.moveSettings);
         for (let i = 0; i < moveData.length; i++) {
-            const moveSettings = moveData[i].moveSettings;
+            const moveSettings = moveData[i].moveSettings as RawData.ExtendedMoveSettings;
             moveSettings.id = StaticData.parseId(moveData[i].templateId);
             moveSettings.element = StaticData.dictRawPokemonTypeToEasePokemonType[moveSettings.pokemonType];
             const availableAsQuickTo = _.filter(StaticData.pokemonData, p => {
