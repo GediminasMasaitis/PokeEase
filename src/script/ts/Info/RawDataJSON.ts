@@ -1,4 +1,4 @@
-﻿const rawData: RawData.RawDataRoot = JSON.parse(`{
+﻿const rawData: RawData.RawDataRoot = {
   "success": true,
   "itemTemplates": [
     {
@@ -36063,4 +36063,4 @@
     }
   ],
   "timestampMs": "1471650700946"
-}`);
+};

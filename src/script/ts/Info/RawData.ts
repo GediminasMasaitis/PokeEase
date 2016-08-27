@@ -19,6 +19,7 @@
         dodgeDurationMs: number;
         minimumPlayerLevel: number;
         swapDurationMs: number;
+        dodgeDamageReductionPercent: number;
     }
 
     export interface EncounterSettings {
@@ -44,7 +45,7 @@
     }
 
     export interface Potion {
-        staAmount: number;
+        staAmount?: number;
         staPercent?: number;
     }
 
@@ -57,7 +58,7 @@
 
     export interface EggIncubator {
         incubatorType: string;
-        uses: number;
+        uses?: number;
         distanceMultiplier: number;
     }
 
@@ -79,12 +80,12 @@
         itemId: string;
         itemType: string;
         category: string;
-        potion: Potion;
-        incense: Incense;
-        eggIncubator: EggIncubator;
-        inventoryUpgrade: InventoryUpgrade;
-        xpBoost: XpBoost;
-        revive: Revive;
+        potion?: Potion;
+        incense?: Incense;
+        eggIncubator?: EggIncubator;
+        inventoryUpgrade?: InventoryUpgrade;
+        xpBoost?: XpBoost;
+        revive?: Revive;
     }
 
     export interface PlayerLevel {
@@ -111,19 +112,19 @@
         diskRadiusM: number;
         cylinderRadiusM: number;
         cylinderHeightM: number;
-        shoulderModeScale: number;
+        shoulderModeScale?: number;
         cylinderGroundM?: number;
     }
 
     export interface Encounter {
-        baseCaptureRate: number;
-        baseFleeRate: number;
+        baseCaptureRate?: number;
+        baseFleeRate?: number;
         collisionRadiusM: number;
         collisionHeightM: number;
         collisionHeadRadiusM: number;
-        movementType: string;
+        movementType?: string;
         movementTimerS: number;
-        jumpTimeS: number;
+        jumpTimeS?: number;
         attackTimerS: number;
     }
 
@@ -144,33 +145,33 @@
         quickMoves: string[];
         cinematicMoves: string[];
         animationTime: number[];
-        evolutionIds: string[];
+        evolutionIds?: string[];
         evolutionPips: number;
         pokedexHeightM: number;
         pokedexWeightKg: number;
         heightStdDev: number;
         weightStdDev: number;
         familyId: string;
-        candyToEvolve: number;
-        parentPokemonId: string;
-        rarity: string;
+        candyToEvolve?: number;
+        parentPokemonId?: string;
+        rarity?: string;
 
         // Custom
-        id: number;
+        id?: number;
         elements?: PokeElement[];
         availableQuickMoves?: MoveSettings[];
         availableCinematicMoves?: MoveSettings[];
-        evolvesInto: PokemonSettings[];
+        evolvesInto?: PokemonSettings[];
     }
 
     export interface MoveSettings {
         movementId: string;
         animationId: number;
         pokemonType: string;
-        power: number;
+        power?: number;
         accuracyChance: number;
-        criticalChance: number;
-        staminaLossScalar: number;
+        criticalChance?: number;
+        staminaLossScalar?: number;
         trainerLevelMin: number;
         trainerLevelMax: number;
         vfxName: string;
@@ -181,18 +182,18 @@
         healScalar?: number;
 
         // Custom
-        id: number;
-        element: PokeElement;
-        moveType: MoveType;
-        availableToPokemon: PokemonSettings[]
+        id?: number;
+        element?: PokeElement;
+        moveType?: MoveType;
+        availableToPokemon?: PokemonSettings[];
     }
 
     export interface IapItemDisplay {
         sku: string;
         category: string;
         sortOrder: number;
-        itemIds: string[];
-        counts: number[];
+        itemIds?: string[];
+        counts?: number[];
     }
 
     export interface Camera2 {
@@ -211,7 +212,7 @@
         distanceMeters: number[];
         heightPercent: number[];
         vertCtrRatio: number[];
-        nextCamera: string;
+        nextCamera?: string;
     }
 
     export interface MoveSequenceSettings {
