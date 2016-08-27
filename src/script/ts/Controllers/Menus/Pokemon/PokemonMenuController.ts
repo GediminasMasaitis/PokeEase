@@ -111,7 +111,7 @@
         const pokemonName = this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
         const roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
         const evolveButton = this.config.pokemonDetailsElement.find("#evolve-pokemon-button");
-        if (StaticInfo.pokemonInfo[pokemon.PokemonId].evolvesInto.length === 0) {
+        if (StaticData.pokemonData[pokemon.PokemonId].evolvesInto.length === 0) {
             evolveButton.hide();
         } else {
             evolveButton.show();
@@ -125,13 +125,13 @@
         this.config.pokemonDetailsElement.find(".poke-cp").text(`${pokemon.Cp}`);
         this.config.pokemonDetailsElement.find(".pkm-candies").text(`${pokemon.FamilyCandies}`);
 
-        const move1Name = StaticInfo.moveInfo[pokemon.Move1] ? StaticInfo.moveInfo[pokemon.Move1].name : "Unknown move";
-        const move2Name = StaticInfo.moveInfo[pokemon.Move2] ? StaticInfo.moveInfo[pokemon.Move2].name : "Unknown move";
-        const pokemonInfo = StaticInfo.pokemonInfo[pokemon.PokemonId];
+        const move1Name = this.config.translationController.translation.moveNames[pokemon.Move1];
+        const move2Name = this.config.translationController.translation.moveNames[pokemon.Move2];
+        const pokemonData = StaticData.pokemonData[pokemon.PokemonId];
         const elementElement = this.config.pokemonDetailsElement.find("#pokemon-type");
         elementElement.html("");
-        for (let i = 0; i < pokemonInfo.elements.length; i++) {
-            const elementStr = PokeElement[pokemonInfo.elements[i]].toLowerCase();
+        for (let i = 0; i < pokemonData.elements.length; i++) {
+            const elementStr = PokeElement[pokemonData.elements[i]].toLowerCase();
             const elementHtml = `<span class="${elementStr}">${elementStr}</span>`;
             const el = $(elementHtml);
             elementElement.append(el);

@@ -679,8 +679,8 @@ class GoogleMap implements IMap {
         const roundedLat = Math.round(gym.Latitude * 10000000) / 10000000;
         const roundedLng = Math.round(gym.Longitude * 10000000) / 10000000;
         const gymExp = parseInt(gym.GymPoints);
-        const gymLevel = StaticInfo.calculateCurrentGymLevel(gymExp);
-        const nextGymLevelRequired = StaticInfo.totalExpForGymLevel[gymLevel + 1];
+        const gymLevel = StaticData.calculateCurrentGymLevel(gymExp);
+        const nextGymLevelRequired = StaticData.totalExpForGymLevel[gymLevel + 1];
 
         wrap.find(".iw-name .iw-detail-header").text("Gym");
         wrap.find(".iw-name .iw-detail-value").text(gymName);

@@ -7,7 +7,7 @@
 
 
 $(() => {
-    StaticInfo.init();
+    StaticData.init(rawData);
     const dataStorage = new LocalStorageDataStorage();
     const settingsService = new SettingsService(dataStorage);
     const fortCacheService = new FortCacheService(dataStorage);

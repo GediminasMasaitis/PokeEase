@@ -1,5 +1,6 @@
 ﻿interface ITranslation {
     pokemonNames: string[];
-    itemNames: {};
-	eventTypes: {};
+    moveNames: string[];
+    itemNames: string[];
+	eventTypes: _.Dictionary<string>;
 }

@@ -105,7 +105,7 @@
         this.currentItemCount--;
         this.config.mainMenuController.setItemCount(this.currentItemCount);
 
-        const berryId = berry.BerryType || StaticInfo.berryIds[0];
+        const berryId = berry.BerryType || StaticData.berryIds[0];
         this.itemsUsedForCapture.push(berryId);
     }
 
@@ -116,7 +116,7 @@
             this.previousCaptureAttempts = [];
             if (this.itemsUsedForCapture.length > 0) {
                 const lastUsed = _.last(this.itemsUsedForCapture);
-                if (StaticInfo.berryIds.indexOf(lastUsed) === -1) {
+                if (StaticData.berryIds.indexOf(lastUsed) === -1) {
                     this.itemsUsedForCapture = [];
                 }
             }

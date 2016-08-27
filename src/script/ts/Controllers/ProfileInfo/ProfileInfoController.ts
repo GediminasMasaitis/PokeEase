@@ -32,9 +32,9 @@
     }
 
     public addExp = (totalExp: number, expAdded?: number): void => {
-        const currentLevel = StaticInfo.calculateCurrentLevel(totalExp);
-        const exp = totalExp - StaticInfo.totalExpForLevel[currentLevel];
-        const expForNextLvl = StaticInfo.expForLevel[currentLevel + 1];
+        const currentLevel = StaticData.calculateCurrentLevel(totalExp);
+        const exp = totalExp - StaticData.totalExpForLevel[currentLevel];
+        const expForNextLvl = StaticData.expForLevel[currentLevel + 1];
         const expPercent = 100 * exp / expForNextLvl;
         this.config.profileInfoElement.find(".profile-lvl").text(` lvl ${currentLevel} `);
         this.animateTo(this.config.profileInfoElement.find(".profile-exp-current"), exp);

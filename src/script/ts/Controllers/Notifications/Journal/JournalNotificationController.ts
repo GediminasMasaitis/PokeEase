@@ -56,7 +56,7 @@ class JournalNotificationController implements INotificationController {
         }
         let itemsHtml = "";
         _.each(fortUsed.ItemsList, item => {
-            const itemId = StaticInfo.itemIds[item.Name];
+            const itemId = StaticData.itemIds[item.Name];
             const itemName = this.config.translationController.translation.itemNames[itemId];
             itemsHtml += `<div class="item" title="${itemName}"><img src="images/items/${itemId}.png"/>x${item.Count}</div>`;
         });
