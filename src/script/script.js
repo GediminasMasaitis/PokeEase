@@ -1053,6 +1053,13 @@ var PokemonMenuController = (function () {
                 evolveButton.hide();
             }
             else {
+                var candiesRequired = StaticData.pokemonData[pokemon.PokemonId].candyToEvolve;
+                if (typeof pokemon.FamilyCandies !== "undefined" && pokemon.FamilyCandies < candiesRequired) {
+                    evolveButton.addClass("disabled");
+                }
+                else {
+                    evolveButton.removeClass("disabled");
+                }
                 evolveButton.show();
             }
             _this.config.pokemonDetailsElement.find("#pokemon-info-name").text(pokemonName);
@@ -1070,7 +1077,7 @@ var PokemonMenuController = (function () {
             _this.config.pokemonDetailsElement.find(".stamina").text(pokemon.IndividualStamina);
             _this.config.pokemonDetailsElement.find(".total-iv").text(roundedIv + "%");
             _this.config.pokemonDetailsElement.find(".poke-cp").text("" + pokemon.Cp);
-            _this.config.pokemonDetailsElement.find(".pkm-candies").text("" + pokemon.FamilyCandies);
+            _this.config.pokemonDetailsElement.find("#pkm-candies-val").text("" + pokemon.FamilyCandies);
             var move1Name = _this.config.translationController.translation.moveNames[pokemon.Move1];
             var move2Name = _this.config.translationController.translation.moveNames[pokemon.Move2];
             var pokemonData = StaticData.pokemonData[pokemon.PokemonId];

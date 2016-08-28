@@ -1106,6 +1106,13 @@ $event-incubator-status-color: #e9e1b5;
             min-width: 82px;
             cursor: pointer;
             outline: 0;
+            transition: 0.3s;
+            &.disabled{
+                background: #d8d8d8;
+                color: rgba(0, 0, 0, 0.6);
+                pointer-events: none;
+                cursor: not-allowed;
+            }
 
             i {
                 display: block;
