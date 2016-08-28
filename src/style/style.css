@@ -838,11 +838,15 @@ body {
   #pokemon-content .pokemon-info-favorite {
     display: inline-block;
     position: absolute;
-    right: 1em;
+    right: -0.4em;
+    top: 0.4em;
     font-size: 28px;
-    text-shadow: 0px 0px 1px #000000; }
+    text-shadow: 0px 0px 1px #222;
+    transition: 0.3s; }
     #pokemon-content .pokemon-info-favorite::before {
       color: yellow; }
+    #pokemon-content .pokemon-info-favorite:hover {
+      text-shadow: 0px 0px 3px #000; }
   #pokemon-content i.close-button {
     position: absolute;
     left: 0;
