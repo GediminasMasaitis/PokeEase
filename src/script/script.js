@@ -1044,7 +1044,7 @@ var PokemonMenuController = (function () {
         this.pokemonClick = function (ev) {
             var pokemonBox = $(ev.target).closest(".pokemon");
             var pokemonUniqueIdStr = pokemonBox.attr("data-pokemon-unique-id");
-            var pokemon = _.find(_this.pokemonList.Pokemons, function (p) { return p.Id == pokemonUniqueIdStr; });
+            var pokemon = _.find(_this.pokemonList.Pokemons, function (p) { return p.Id === pokemonUniqueIdStr; });
             _this.currentPokemon = pokemon;
             var pokemonName = _this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
             var roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
@@ -1054,6 +1054,7 @@ var PokemonMenuController = (function () {
             }
             else {
                 var candiesRequired = StaticData.pokemonData[pokemon.PokemonId].candyToEvolve;
+                evolveButton.find(".button-disabled-reason").text(candiesRequired + " candies required");
                 if (typeof pokemon.FamilyCandies !== "undefined" && pokemon.FamilyCandies < candiesRequired) {
                     evolveButton.addClass("disabled");
                 }
@@ -1070,6 +1071,13 @@ var PokemonMenuController = (function () {
             }
             else {
                 nicknameElement.hide();
+            }
+            var favoriteStar = _this.config.pokemonDetailsElement.find(".pokemon-info-favorite");
+            if (pokemon.Favorite > 0) {
+                favoriteStar.show();
+            }
+            else {
+                favoriteStar.hide();
             }
             _this.config.pokemonDetailsElement.find("#pokemon-info-image").attr("src", "images/pokemon/" + pokemon.PokemonId + ".png");
             _this.config.pokemonDetailsElement.find(".attack").text(pokemon.IndividualAttack);

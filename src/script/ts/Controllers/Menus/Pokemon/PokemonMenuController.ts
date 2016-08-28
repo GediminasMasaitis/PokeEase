@@ -106,7 +106,7 @@
     private pokemonClick = (ev: JQueryEventObject) => {
         const pokemonBox = $(ev.target).closest(".pokemon");
         const pokemonUniqueIdStr = pokemonBox.attr("data-pokemon-unique-id");
-        const pokemon = _.find(this.pokemonList.Pokemons, p => p.Id == pokemonUniqueIdStr);
+        const pokemon = _.find(this.pokemonList.Pokemons, p => p.Id === pokemonUniqueIdStr);
         this.currentPokemon = pokemon;
         const pokemonName = this.config.translationController.translation.pokemonNames[pokemon.PokemonId];
         const roundedIv = Math.floor(pokemon.Perfection * 100) / 100;
@@ -115,6 +115,7 @@
             evolveButton.hide();
         } else {
             const candiesRequired = StaticData.pokemonData[pokemon.PokemonId].candyToEvolve;
+            evolveButton.find(".button-disabled-reason").text(`${candiesRequired} candies required`);
             if (typeof pokemon.FamilyCandies !== "undefined" && pokemon.FamilyCandies < candiesRequired) {
                 evolveButton.addClass("disabled");
             } else {
@@ -129,6 +130,12 @@
             nicknameElement.text(`"${pokemon.Nickname}"`);
         } else {
             nicknameElement.hide();
+        }
+        const favoriteStar = this.config.pokemonDetailsElement.find(".pokemon-info-favorite");
+        if (pokemon.Favorite > 0) {
+            favoriteStar.show();
+        } else {
+            favoriteStar.hide();
         }
         this.config.pokemonDetailsElement.find("#pokemon-info-image").attr("src", `images/pokemon/${pokemon.PokemonId}.png`);
         this.config.pokemonDetailsElement.find(".attack").text(pokemon.IndividualAttack);

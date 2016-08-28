@@ -835,6 +835,14 @@ body {
   overflow: hidden;
   animation: SlideIn 0.3s cubic-bezier(0, 0, 0, 1);
   margin: 1em; }
+  #pokemon-content .pokemon-info-favorite {
+    display: inline-block;
+    position: absolute;
+    right: 1em;
+    font-size: 28px;
+    text-shadow: 0px 0px 1px #000000; }
+    #pokemon-content .pokemon-info-favorite::before {
+      color: yellow; }
   #pokemon-content i.close-button {
     position: absolute;
     left: 0;
@@ -948,6 +956,12 @@ body {
   #pokemon-content .pkm-candies:before {
     content: "Candies"; }
   #pokemon-content .controls {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     margin-top: 2em;
     padding: 2em;
     border-top: 1px solid rgba(0, 0, 0, 0.15);
@@ -981,7 +995,7 @@ body {
       #pokemon-content .controls .pokemon-info-button i:before {
         margin: 0 !important;
         color: white; }
-      #pokemon-content .controls .pokemon-info-button .confirm {
+      #pokemon-content .controls .pokemon-info-button .confirm, #pokemon-content .controls .pokemon-info-button .button-disabled-reason {
         position: absolute;
         font-size: 10px;
         top: -37px;
@@ -990,17 +1004,22 @@ body {
         cursor: auto;
         transform: scaleY(0);
         transform-origin: bottom;
-        transition: 0.2s;
-        background: #232323;
         padding: 0.5em;
         border-radius: 3px; }
-        #pokemon-content .controls .pokemon-info-button .confirm span {
+      #pokemon-content .controls .pokemon-info-button .confirm {
+        transition: 0.2s;
+        background: #232323; }
+        #pokemon-content .controls .pokemon-info-button .confirm #confirm-evolve {
           background: #BADA55;
           color: black;
           border-radius: 10px;
           padding: 3px 6px;
           cursor: pointer; }
+      #pokemon-content .controls .pokemon-info-button .button-disabled-reason {
+        transition: 0.2s; }
       #pokemon-content .controls .pokemon-info-button:not(.disabled):focus .confirm {
+        transform: scaleY(1); }
+      #pokemon-content .controls .pokemon-info-button.disabled:hover .button-disabled-reason {
         transform: scaleY(1); }
 
 .content[data-category="items"] {

@@ -953,6 +953,18 @@ $event-incubator-status-color: #e9e1b5;
     animation: SlideIn .3s cubic-bezier(0, 0, 0, 1);
     margin: 1em;
 
+    .pokemon-info-favorite {
+        display: inline-block;
+        position: absolute;
+        right: -0.4em;
+        top: 0.4em;
+        font-size: 28px;
+        text-shadow: 0px 0px 1px #000000;
+        &::before{
+            color:yellow;
+        }
+    }
+
     i.close-button {
         position: absolute;
         left: 0;
@@ -1083,7 +1095,7 @@ $event-incubator-status-color: #e9e1b5;
 
 
     .controls {
-
+        @include no-select;
         margin-top: 2em;
         padding: 2em;
         border-top: 1px solid rgba(0, 0, 0, 0.15);
@@ -1124,7 +1136,7 @@ $event-incubator-status-color: #e9e1b5;
                 color: white;
             }
 
-            .confirm {
+            %bubble-template{
                 position: absolute;
                 font-size: 10px;
                 top: -37px;
@@ -1133,12 +1145,16 @@ $event-incubator-status-color: #e9e1b5;
                 cursor: auto;
                 transform: scaleY(0);
                 transform-origin: bottom;
-                transition: 0.2s;
-                background: #232323;
                 padding: 0.5em;
                 border-radius: 3px;
+            }
 
-                span {
+            .confirm {
+                @extend %bubble-template;
+                transition: 0.2s;
+                background: #232323;
+
+                #confirm-evolve {
                     background: #BADA55;
                     color: black;
                     border-radius: 10px;
@@ -1147,7 +1163,16 @@ $event-incubator-status-color: #e9e1b5;
                 }
             }
 
+            .button-disabled-reason {
+                @extend %bubble-template;
+                transition: 0.2s;
+            }
+
             &:not(.disabled):focus .confirm {
+                transform: scaleY(1);
+            }
+
+            &.disabled:hover .button-disabled-reason {
                 transform: scaleY(1);
             }
         }
