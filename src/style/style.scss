@@ -1089,7 +1089,7 @@ $event-incubator-status-color: #e9e1b5;
         border-top: 1px solid rgba(0, 0, 0, 0.15);
         padding-bottom: 0;
 
-        div {
+        .pokemon-info-button {
             display: inline-block;
             text-transform: uppercase;
             position: relative;
@@ -1110,7 +1110,6 @@ $event-incubator-status-color: #e9e1b5;
             &.disabled{
                 background: #d8d8d8;
                 color: rgba(0, 0, 0, 0.6);
-                pointer-events: none;
                 cursor: not-allowed;
             }
 
@@ -1147,11 +1146,13 @@ $event-incubator-status-color: #e9e1b5;
                     cursor: pointer;
                 }
             }
+
+            &:not(.disabled):focus .confirm {
+                transform: scaleY(1);
+            }
         }
 
-        div:focus .confirm {
-            transform: scaleY(1);
-        }
+        
     }
 
 

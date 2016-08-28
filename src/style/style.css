@@ -952,7 +952,7 @@ body {
     padding: 2em;
     border-top: 1px solid rgba(0, 0, 0, 0.15);
     padding-bottom: 0; }
-    #pokemon-content .controls div {
+    #pokemon-content .controls .pokemon-info-button {
       display: inline-block;
       text-transform: uppercase;
       position: relative;
@@ -970,19 +970,18 @@ body {
       cursor: pointer;
       outline: 0;
       transition: 0.3s; }
-      #pokemon-content .controls div.disabled {
+      #pokemon-content .controls .pokemon-info-button.disabled {
         background: #d8d8d8;
         color: rgba(0, 0, 0, 0.6);
-        pointer-events: auto;
         cursor: not-allowed; }
-      #pokemon-content .controls div i {
+      #pokemon-content .controls .pokemon-info-button i {
         display: block;
         font-size: 1.5em;
         margin: 0.2em 0; }
-      #pokemon-content .controls div i:before {
+      #pokemon-content .controls .pokemon-info-button i:before {
         margin: 0 !important;
         color: white; }
-      #pokemon-content .controls div .confirm {
+      #pokemon-content .controls .pokemon-info-button .confirm {
         position: absolute;
         font-size: 10px;
         top: -37px;
@@ -995,14 +994,14 @@ body {
         background: #232323;
         padding: 0.5em;
         border-radius: 3px; }
-        #pokemon-content .controls div .confirm span {
+        #pokemon-content .controls .pokemon-info-button .confirm span {
           background: #BADA55;
           color: black;
           border-radius: 10px;
           padding: 3px 6px;
           cursor: pointer; }
-    #pokemon-content .controls div:focus .confirm {
-      transform: scaleY(1); }
+      #pokemon-content .controls .pokemon-info-button:not(.disabled):focus .confirm {
+        transform: scaleY(1); }
 
 .content[data-category="items"] {
   padding: 0 !important;
