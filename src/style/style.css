@@ -1013,7 +1013,7 @@ body {
       #pokemon-content .controls .pokemon-info-button .confirm {
         transition: 0.2s;
         background: #232323; }
-        #pokemon-content .controls .pokemon-info-button .confirm #confirm-evolve {
+        #pokemon-content .controls .pokemon-info-button .confirm .confirm-button {
           background: #BADA55;
           color: black;
           border-radius: 10px;
