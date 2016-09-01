@@ -108,10 +108,14 @@ body {
   background: rgba(0, 0, 0, 0.4);
   cursor: pointer; }
 
-.close-button i, .open-menu i, .open-journal i {
+.close-button i, .open-menu i, .open-journal i, .open-console i {
   line-height: 48px;
   color: white;
   transition: 0.3s; }
+
+#console .close-button i {
+  line-height: inherit;
+  padding: 10px 0; }
 
 #menu .help {
   width: 50px;
@@ -150,7 +154,7 @@ body {
   margin-left: .5em;
   margin-right: 0 !important; }
 
-.open-menu i, .open-journal i {
+.open-menu i, .open-journal i, .open-console i {
   vertical-align: -5%;
   line-height: 1;
   margin-right: .5em; }
@@ -161,6 +165,8 @@ body {
 .help:focus,
 .open-journal:hover,
 .open-journal:focus,
+.open-console:hover,
+.open-console:focus,
 .close-button:hover,
 .close-button:focus {
   background: rgba(0, 0, 0, 0.7) !important; }
@@ -231,6 +237,84 @@ body {
 
 #popup .inner-wrap .content {
   padding: 10px; }
+
+/* console */
+#console {
+  position: fixed;
+  bottom: -300px;
+  height: 300px;
+  width: 100%;
+  color: white;
+  transform: translateZ(0);
+  overflow-y: hidden; }
+
+#console .title {
+  height: 46px;
+  width: 100%;
+  /* background: #34424f; */
+  background: rgba(67, 93, 109, 0.22);
+  text-transform: uppercase;
+  display: table;
+  position: relative; }
+
+#console .title span {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px; }
+
+#console .items {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+  height: 244px;
+  padding: 5px; }
+
+#console .items .event {
+  direction: ltr;
+  margin: 0;
+  /*  background: rgba(32, 41, 49, 0.8); */
+  /*background: rgba(12, 13, 14, 0.2); */
+  background: rgba(0, 0, 0, 0.2);
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  animation: fadeIn .5s 1 ease-out;
+  font-size: 14px; }
+
+#console .close-button {
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+  border-radius: 100%;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 5px;
+  display: table-cell; }
+
+.open-console {
+  transition: 0.3s;
+  position: fixed;
+  bottom: 0px;
+  color: white;
+  right: 0;
+  left: 0;
+  transition: 0.3s;
+  border-radius: 100px;
+  margin: 0 auto 15px auto;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  padding: .75em 1em .9em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  width: 77px; }
 
 /* journal */
 #journal {
@@ -643,7 +727,7 @@ body {
   width: 300px;
   right: 0;
   left: 0;
-  bottom: 10px;
+  top: 30px;
   margin: 0 auto;
   text-align: center;
   display: table;
@@ -651,6 +735,19 @@ body {
   padding: 1.25em .75em;
   border-radius: 5px;
   transition: 0.5s cubic-bezier(0.3, 0, 0, 1); }
+
+.open-profile {
+  position: fixed;
+  width: 50px;
+  right: 0;
+  left: 0;
+  top: 30px;
+  margin: 0 auto;
+  text-align: center;
+  display: table;
+  color: white;
+  transition: 0.5s cubic-bezier(0.3, 0, 0, 1);
+  z-index: 6; }
 
 #profile > div {
   display: table-cell;
@@ -682,7 +779,7 @@ body {
   vertical-align: -10%;
   margin-right: 0.5em; }
 
-#profile > .hide {
+.open-profile > .hide {
   position: absolute;
   top: 0;
   left: 0;
@@ -699,24 +796,24 @@ body {
   width: 36px;
   top: -18px;
   background: #3a4b58;
-  box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.1); }
+  box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.1);
+  height: 16px; }
 
-#profile > .hide:hover {
+.open-profile > .hide:hover {
   box-shadow: inset 0 0 0 18px rgba(255, 255, 255, 0.1); }
 
 #profile.hidden {
   transform: translateY(100%);
-  bottom: 0; }
+  top: -240px; }
 
-#profile.hidden .hide {
+.open-profile.hidden .hide {
   transform: rotate(-180deg);
-  top: -51px;
   /*background: rgba(38, 48, 58, 0.9); */
   background: rgba(18, 22, 27, 0.9);
   border-radius: 100%;
   box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.3); }
 
-#profile.hidden > .hide:hover {
+.open-profile.hidden > .hide:hover {
   box-shadow: inset 0 0 0 18px rgba(0, 0, 0, 0.3); }
 
 .spinner-overlay {

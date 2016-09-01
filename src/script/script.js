@@ -38531,6 +38531,32 @@ var BotWSClient = (function () {
                 playerStats_1.Timestamp = timestamp;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPlayerStats(playerStats_1); });
             }
+            else if (_.includes(type, ".LogEvent,")) {
+                var eventType = "log-event";
+                var $consoleItems = $('#console .items');
+                var html = "<div class=\"event\"><div class=\"item\" style=\"color:" + message.Color + "\">" + message.Message + "</div></div>";
+                var element = $(html);
+                function isAtBottom(container) {
+                    var scrollTop = container.scrollTop();
+                    var innerHeight = container.innerHeight();
+                    var scrollHeight = container[0].scrollHeight;
+                    var atBottom = scrollTop + innerHeight > scrollHeight - 200;
+                    return atBottom;
+                }
+                ;
+                function scrollToBottom(container) {
+                    var animation = {
+                        scrollTop: container.prop("scrollHeight") - container.height()
+                    };
+                    container.finish().animate(animation, 100);
+                }
+                ;
+                var scroll_1 = isAtBottom($consoleItems);
+                $consoleItems.append(element);
+                if (scroll_1) {
+                    scrollToBottom($consoleItems);
+                }
+            }
             else {
                 _.each(_this.config.eventHandlers, function (eh) {
                     if (eh.onUnknownEvent) {

@@ -275,6 +275,34 @@
             _.each(this.config.eventHandlers, eh => eh.onPlayerStats(playerStats));
         }
         
+		else if (_.includes(type, ".LogEvent,")) {
+			const eventType = "log-event";
+			const $consoleItems = $('#console .items');
+			const html = "<div class=\"event\"><div class=\"item\" style=\"color:" + message.Color + "\">" + message.Message + "</div></div>";
+			const element = $(html);
+			
+			function isAtBottom(container: any) : boolean {
+				let scrollTop: number = container.scrollTop();
+				let innerHeight: number = container.innerHeight();
+				let scrollHeight: number = container[0].scrollHeight;
+				let atBottom: boolean = scrollTop + innerHeight > scrollHeight - 200;
+				return atBottom;
+			};
+			
+			function scrollToBottom(container: any) : void {
+				let animation: any = {
+					scrollTop: container.prop("scrollHeight") - container.height()
+				};
+				container.finish().animate(animation, 100);
+			};
+			
+			const scroll = isAtBottom($consoleItems);
+			$consoleItems.append(element);
+			
+			if (scroll) {
+				scrollToBottom($consoleItems);
+			}
+		}
         //#endregion
 
         else {
