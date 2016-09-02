@@ -272,6 +272,14 @@ body {
   height: 244px;
   padding: 5px; }
 
+#console .items::-webkit-scrollbar {
+  width: 10px;
+  background: rgba(0, 0, 0, 0.3); }
+
+#console .items::-webkit-scrollbar-thumb {
+  /* background: rgba(0, 0, 0, 0.5); */
+  background: rgba(97, 128, 160, 0.5); }
+
 #console .items .event {
   direction: ltr;
   margin: 0;
