@@ -812,10 +812,12 @@ body {
 
 #profile.hidden {
   transform: translateY(100%);
+  -webkit-transform: translateY(100%);
   top: -240px; }
 
 .open-profile.hidden .hide {
   transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
   /*background: rgba(38, 48, 58, 0.9); */
   background: rgba(18, 22, 27, 0.9);
   border-radius: 100%;
