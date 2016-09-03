@@ -15,7 +15,7 @@ $(document).ready(function () {
     $("#menu .item").click(function() {
         var PopupTitle = $(this).attr('id');
         $("#popup").stop().fadeIn(300);
-        $("#popup .title span").text($(this).attr('id'));
+        $("#popup .title span").text($(this).attr('title') || $(this).attr('id'));
         $("#popup .title").css('background-color', $(this).css('background-color'));
         $("#popup .content").each(function() {
             $(this).hide();

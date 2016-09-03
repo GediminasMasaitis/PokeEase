@@ -140,6 +140,12 @@ $lure: #f52d60;
     background-image: url("../images/settings.png");
 }
 
+#menu .item#snipes {
+    background-color: #B01E00;
+    background-image: url("../images/target-white.svg");
+    background-size: cover;
+}
+
 #menu .close-button {
     width: 50px;
     height: 50px;
@@ -753,6 +759,76 @@ $event-incubator-status-color: #e9e1b5;
     background: white;
     cursor: pointer;
     transition: 0.3s;
+    position: relative;
+
+    .distance {
+        background-image: url('../images/distance.svg');
+        background-repeat: no-repeat;
+        background-position: 35px;
+    }
+
+    .timer {
+        background-image: url('../images/clock.svg');
+        background-repeat: no-repeat;
+        background-position: 35px;
+    }
+    .snipe-him {
+        position: absolute;
+        top: 33px;
+        left: 33px;
+        display: none;
+        background-image: url('../images/target.svg');
+        background-repeat: no-repeat;
+        width: 120px;
+        height: 120px;
+        background-size: cover;
+        opacity: 0.8;
+    }
+
+    .delete {
+        background-image: url('../images/delete.svg');
+        background-repeat: no-repeat;
+        width: 26px;
+        height: 26px;
+        background-size: cover;
+        display: inline-block;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+    }
+
+    &.targeted {
+        border: solid 1px red;
+
+        .snipe-him {
+            display: none !important;
+        }
+    }
+
+    &.walking-to {
+        border: solid 1px green;
+
+        .snipe-him {
+            display: none !important;
+        }
+
+        .delete {
+            display: none !important;
+        }
+        .distance{
+            display:none;
+        }
+        .animation-walking {
+            display: block !important;
+        }
+    }
+
+    &:hover {
+        .snipe-him {
+            display: inline-block;
+            transition-duration: 1s;
+        }
+    }
 }
 
 .inner-wrap .pokemon.opened {
