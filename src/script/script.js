@@ -38623,7 +38623,7 @@ var BotWSClient = (function () {
             else if (_.includes(type, ".LogEvent,")) {
                 var eventType = "log-event";
                 var $consoleItems = $('#console .items');
-                var html = "<div class=\"event\"><div class=\"item\" style=\"color:" + message.Color + "\">" + message.Message + "</div></div>";
+                var html = "<div class=\"event\"><div class=\"item\" style=\"font-family:monospace; white-space: pre-wrap; color:" + message.Color + "\">" + message.Message + "</div></div>";
                 var element = $(html);
                 function isAtBottom(container) {
                     var scrollTop = container.scrollTop();
