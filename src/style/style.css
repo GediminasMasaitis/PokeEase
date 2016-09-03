@@ -98,6 +98,11 @@ body {
   background-color: #2196f3;
   background-image: url("../images/settings.png"); }
 
+#menu .item#snipes {
+  background-color: #B01E00;
+  background-image: url("../images/target-white.svg");
+  background-size: cover; }
+
 #menu .close-button {
   width: 50px;
   height: 50px;
@@ -571,7 +576,54 @@ body {
   vertical-align: top;
   background: white;
   cursor: pointer;
-  transition: 0.3s; }
+  transition: 0.3s;
+  position: relative; }
+  .inner-wrap .pokemon .distance {
+    background-image: url("../images/distance.svg");
+    background-repeat: no-repeat;
+    background-position: 35px; }
+  .inner-wrap .pokemon .timer {
+    background-image: url("../images/clock.svg");
+    background-repeat: no-repeat;
+    background-position: 35px; }
+  .inner-wrap .pokemon .snipe-him {
+    position: absolute;
+    top: 33px;
+    left: 33px;
+    display: none;
+    background-image: url("../images/target.svg");
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 120px;
+    background-size: cover;
+    opacity: 0.8; }
+  .inner-wrap .pokemon .delete {
+    background-image: url("../images/delete.svg");
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 26px;
+    background-size: cover;
+    display: inline-block;
+    position: absolute;
+    top: -10px;
+    right: -10px; }
+  .inner-wrap .pokemon.targeted {
+    border: solid 1px red; }
+    .inner-wrap .pokemon.targeted .snipe-him {
+      display: none !important; }
+  .inner-wrap .pokemon.walking-to {
+    border: solid 1px green; }
+    .inner-wrap .pokemon.walking-to .snipe-him {
+      display: none !important; }
+    .inner-wrap .pokemon.walking-to .delete {
+      display: none !important; }
+    .inner-wrap .pokemon.walking-to .distance {
+      display: none; }
+    .inner-wrap .pokemon.walking-to .animation-walking {
+      display: block !important; }
+  .inner-wrap .pokemon:hover .snipe-him {
+    display: inline-block;
+    transition-duration: 1s; }
 
 .inner-wrap .pokemon.opened {
   width: calc(100% - 30px); }

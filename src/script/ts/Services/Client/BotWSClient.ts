@@ -258,6 +258,16 @@
             _.each(this.config.eventHandlers, eh => eh.onInventoryList(inventoryList));
         }
 
+		else if (_.includes(type, ".HumanWalkSnipeEvent")) {
+            let snipeEv = message as IHumanWalkSnipeEvent;
+            if (snipeEv.Pokemons) {
+                const snipesList: IHumanWalkSnipeListEvent = {
+                    Pokemons: snipeEv.Pokemons.$values
+                }
+                _.each(this.config.eventHandlers, eh => eh.onHumanSnipeList(snipesList));
+            }
+        }
+		
         else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
             let originalStats: any;
             if (_.includes(type, ".PlayerStatsEvent,")) {
@@ -370,6 +380,37 @@
         console.log("%c>>> OUTGOING:", "color: red", request);
         const requestStr = JSON.stringify(request);
         this.webSocket.send(requestStr);
+    }
+	
+	    public sendHumanSnipPokemonListUpdateRequest = ():void => {
+        const necroRequest: IRequest = { Command: "PokemonSnipeList" };
+        _.each(this.config.eventHandlers, eh => eh.onSendHumanSnipPokemonListUpdateRequest(necroRequest));
+       
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
+            this.sendRequest(necroRequest);
+        }
+    }
+	
+    public sendHumanSnipPokemonRemoveRequest =(pokemonId: string): void => {
+        const request: IRequest = {
+             Command: "RemovePokemon",
+             Data: pokemonId,
+             PokemonId: pokemonId,
+             Id:pokemonId
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendHumanSnipePokemonRemoveRequest(request));
+        this.sendRequest(request);
+    }
+	
+    public sendHumanSnipPokemonSnipeRequest =(pokemonId: string): void => {
+        const request: IRequest = {
+             Command: "SnipePokemon",
+             Data: pokemonId,
+             PokemonId: pokemonId ,
+             Id:pokemonId
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendHumanSnipePokemonRequest(request));
+        this.sendRequest(request);
     }
 
     private parseItemString = (itemStr: string): IFortItem[] => {

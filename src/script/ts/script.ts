@@ -71,6 +71,12 @@ $(() => {
         eggMenuElement: $('body .content[data-category="eggs"]'),
         eggLoadingSpinner: $(".spinner-overlay")
     });
+    const snipesMenuController = new HumanSnipeMenuController({
+        translationController: translationController,
+        requestSender: client,
+        snipeMenuElement: $('body .content[data-category="snipes"]') 
+        //eggLoadingSpinner: $(".spinner-overlay")
+    });
 
     const settingsMenuController = new SettingsMenuController({
         settingsMenuElement: $('body.live-version .content[data-category="settings"]'),
@@ -105,6 +111,7 @@ $(() => {
         pokemonMenuController: pokemonMenuController,
         inventoryMenuController: inventoryMenuController,
         eggMenuController: eggMenuController,
+        snipesMenuController: snipesMenuController,
         profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap,

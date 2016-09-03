@@ -8,6 +8,7 @@
     private previousCaptureAttempts: IPokemonCaptureEvent[];
     private itemsUsedForCapture: number[];
     private currentPokemonCount: number;
+    private currentSnipePokemonCount : number;
     private currentItemCount: number;
     private latestPlayerStats: IPlayerStatsEvent;
 
@@ -225,10 +226,25 @@
         this.config.eggMenuController.eggListRequested(request);
     }
 
+    public onHumanSnipeList(pokemonList: IHumanWalkSnipeListEvent): void {
+        this.config.snipesMenuController.updateSnipePokemonList(pokemonList)
+        let currentSnipePokemonCount = pokemonList.Pokemons.length;
+        this.config.mainMenuController.setSnipePokemonCount(currentSnipePokemonCount);
+    }
+
     public onSendInventoryListRequest(request: IRequest): void {
         this.config.inventoryMenuController.inventoryListRequested(request);
     }
-
+     public onSendHumanSnipePokemonRequest(request: IRequest): void {
+        //this.config.inventoryMenuController.inventoryListRequested(request);
+    }
+    public onSendHumanSnipPokemonListUpdateRequest(request:IRequest) : void {
+    
+    }
+    public onSendHumanSnipePokemonRemoveRequest(request:IRequest) : void {
+        let currentSnipePokemonCount = this.currentSnipePokemonCount -1;
+        this.config.mainMenuController.setSnipePokemonCount(currentSnipePokemonCount);
+    }
     public onSendPlayerStatsRequest(request: IRequest): void {
         
     }
