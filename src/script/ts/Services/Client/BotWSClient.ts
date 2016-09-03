@@ -288,7 +288,7 @@
 		else if (_.includes(type, ".LogEvent,")) {
 			const eventType = "log-event";
 			const $consoleItems = $('#console .items');
-			const html = "<div class=\"event\"><div class=\"item\" style=\"color:" + message.Color + "\">" + message.Message + "</div></div>";
+			const html = "<div class=\"event\"><div class=\"item\" style=\"font-family:monospace; white-space: pre-wrap; color:" + message.Color + "\">" + message.Message + "</div></div>";
 			const element = $(html);
 			
 			function isAtBottom(container: any) : boolean {
