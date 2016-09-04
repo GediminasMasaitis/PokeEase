@@ -2003,6 +2003,9 @@ var InterfaceHandler = (function () {
         this.currentPokemonCount--;
         this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     };
+    InterfaceHandler.prototype.onGetConfig = function (configEvent) {
+        debugger;
+    };
     InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
         this.config.pokemonMenuController.updatePokemonList(pokemonList);
         this.currentPokemonCount = pokemonList.Pokemons.length;
@@ -2029,6 +2032,8 @@ var InterfaceHandler = (function () {
         this.currentExp = playerStats.Experience;
         this.config.profileInfoController.setPlayerStats(playerStats);
         this.latestPlayerStats = playerStats;
+    };
+    InterfaceHandler.prototype.onSendGetConfigRequest = function (request) {
     };
     InterfaceHandler.prototype.onSendPokemonListRequest = function (request) {
         this.config.pokemonMenuController.pokemonListRequested(request);
@@ -38575,6 +38580,10 @@ var BotWSClient = (function () {
                 var pokemonTransfer_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
             }
+            else if (_.includes(type, ".ConfigResponce,")) {
+                var configEvent_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onGetConfig(configEvent_1); });
+            }
             else if (_.includes(type, ".PokemonListEvent,")) {
                 var originalList = message.PokemonList.$values;
                 var pokemonList_1 = {
@@ -38665,7 +38674,7 @@ var BotWSClient = (function () {
         };
         this.sendGetConfigRequest = function () {
             var necroRequest = { Command: "GetConfig" };
-            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(necroRequest); });
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendGetConfigRequest(necroRequest); });
             if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
                 _this.sendRequest(necroRequest);
             }
