@@ -91,10 +91,12 @@
                     </div>
                     <div class="item" id="snipes" title="Snipable Pokemons">
                         <div class="counter">
-                            <span class="current">00</span>
+                            <span class="current">0</span>
                         </div>
                     </div>
                     <div class="item" id="settings">
+                    </div>
+                    <div class="item" id="bot-settings">
                     </div>
 
                     <a href="https://github.com/GediminasMasaitis/PokeEase/wiki" target="_blank">
@@ -487,294 +489,295 @@
                             <div class="content" data-category="snipes"></div>
 
                             <!-- S E T T I N G S -->
-                            <div class="content" data-category="settings">
-                                <div class="tab-buttons">
-                                    <div class="map-settings selected">Map</div>
-                                    <div class="client-settings">Client</div>
-                                    <div class="notification-settings">Notifications</div>
-                                    <div class="other-settings">Other</div>
+                        <div class="content" data-category="settings">
+                        <div class="tab-buttons">
+                            <div class="map-settings selected">Map</div>
+                            <div class="client-settings">Client</div>
+                            <div class="notification-settings">Notifications</div>
+                            <div class="other-settings">Other</div>
+                        </div>
+                        <div class="tab-pages">
+
+
+                        <div id="map-settings" style="display: block;">
+                            <div class="setting-topic">
+                                <h6 class="setting-name"> Map settings </h6>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">Map Service Provider</div>
+                                    <div class="setting-answer">
+                                        <input type="radio" name="settings-map-provider" value="0" id="Gmaps">
+                                        <label for="Gmaps">Google Maps</label>
+                                        <br/>
+                                        <input type="radio" name="settings-map-provider" value="1" id="OSM">
+                                        <label for="OSM">Open Street Map</label> <br/>
+                                    </div>
                                 </div>
-                                <div class="tab-pages">
 
-
-                                    <div id="map-settings" style="display: block;">
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Map settings </h6>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">Map Service Provider</div>
-                                                <div class="setting-answer">
-                                                    <input type="radio" name="settings-map-provider" value="0" id="Gmaps">
-                                                    <label for="Gmaps">Google Maps</label>
-                                                    <br />
-                                                    <input type="radio" name="settings-map-provider" value="1" id="OSM">
-                                                    <label for="OSM">Open Street Map</label> <br />
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Player tracking
-                                                    <span>Whether or not the map should follow the player keeping it centered</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <div class="option-toggle active" name="settings-map-follow-player">
-                                                        <div class="toggle-circle"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part not-implemented">
-                                                <div class="setting-question">
-                                                    Map clearing
-                                                    <div class="not-implemented-error">not implemented</div>
-                                                    <span>How long until old events get removed from the map. 0 = never</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="number" name="settings-map-clearing" value="0" /> minutes
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Google Maps </h6>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    API key
-                                                    <span>Not required</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="text" name="settings-map-google-api-key" value="" style="width: 100%" />
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Open Street Map </h6>
-
-                                            <div class="setting-part not-implemented">
-                                                <div class="setting-question">
-                                                    API key
-                                                    <div class="not-implemented-error">not implemented</div>
-                                                    <span>Not required</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="text" name="settings-map-osm-api-key" value="" style="width: 100%" />
-                                                </div>
-                                            </div>
-
-                                        </div>
-
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Player tracking
+                                        <span>Whether or not the map should follow the player keeping it centered</span>
                                     </div>
-
-
-                                    <div id="client-settings">
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Client settings </h6>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Address
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="text" name="settings-client-address" value="" required />
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Port
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="number" name="settings-client-port" value="0" min="0" max="65535" required />
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Use SSL
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <div class="option-toggle active" name="settings-client-use-ssl">
-                                                        <div class="toggle-circle"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Connection string
-                                                    <span>Preview only</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <span class="settings-client-connection-string"></span>
-                                                </div>
-                                            </div>
+                                    <div class="setting-answer">
+                                        <div class="option-toggle active" name="settings-map-follow-player">
+                                            <div class="toggle-circle"></div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div id="notification-settings">
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Journal notifications </h6>
+                                <div class="setting-part not-implemented">
+                                    <div class="setting-question">
+                                        Map clearing
+                                        <div class="not-implemented-error">not implemented</div>
+                                        <span>How long until old events get removed from the map. 0 = never</span>
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="number" name="settings-map-clearing" value="0"/> minutes
+                                    </div>
+                                </div>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Example
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <span class="example" id="show-notification-journal-example-button">show example</span>
-                                                </div>
-                                            </div>
+                            </div>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Events to show
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="checkbox" name="settings-notifications-journal-pokestop-used" value="pokestop-used" checked>Pokestop<br />
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-capture" value="pokemon-capture" checked>Capture<br />
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-snipe" value="pokemon-snipe" checked>Snipe<br />
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-evolved" value="pokemon-evolved" checked>Evolve<br />
-                                                    <input type="checkbox" name="settings-notifications-journal-egg-hatched" value="egg-hatched" checked>Hatch<br />
-                                                    <input type="checkbox" name="settings-notifications-journal-incubator-status" value="incubator-status" checked>Incubator status<br />
-                                                    <input type="checkbox" name="settings-notifications-journal-item-recycle" value="item-recycle" checked>Recycle<br />
-                                                    <input type="checkbox" name="settings-notifications-journal-pokemon-transfer" value="pokemon-transfer" checked>Transfer<br />
-                                                </div>
-                                            </div>
 
-                                            <div class="setting-part not-implemented">
-                                                <div class="setting-question">
-                                                    List clearing
-                                                    <div class="not-implemented-error">not implemented</div>
-                                                    <span>How long until old events get removed from the journal. 0 = never</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="number" name="settings-notifications-journal-clearing" value="0" /> minutes
-                                                </div>
-                                            </div>
+                            <div class="setting-topic">
+                                <h6 class="setting-name"> Google Maps </h6>
 
-                                            <div class="setting-part not-implemented">
-                                                <div class="setting-question">
-                                                    Enable <b> Clear all </b> button animation <div class="not-implemented-error">not implemented</div>
-                                                    <span>If you disable this, the <b> Clear all </b> button will wipe out notification instantly (without any animation).</span>
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        API key
+                                        <span>Not required</span>
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="text" name="settings-map-google-api-key" value="" style="width: 100%"/>
+                                    </div>
+                                </div>
 
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <div class="option-toggle active" name="settings-notifications-journal-clearing-animation">
-                                                        <div class="toggle-circle"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                            </div>
 
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Desktop notifications </h6>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Permission status
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <span id="notification-desktop-status">unknown</span>
-                                                </div>
-                                            </div>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Example
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <span class="example" id="show-notification-desktop-example-button">show example</span>
-                                                </div>
-                                            </div>
+                            <div class="setting-topic">
+                                <h6 class="setting-name"> Open Street Map </h6>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Events to show
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokestop-used" value="pokestop-used">Pokestop<br />
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-capture" value="pokemon-capture">Capture<br />
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-snipe" value="pokemon-snipe">Snipe<br />
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-evolved" value="pokemon-evolved">Evolve<br />
-                                                    <input type="checkbox" name="settings-notifications-desktop-egg-hatched" value="egg-hatched">Hatch<br />
-                                                    <input type="checkbox" name="settings-notifications-desktop-incubator-status" value="incubator-status">Incubator status<br />
-                                                    <input type="checkbox" name="settings-notifications-desktop-item-recycle" value="item-recycle">Recycle<br />
-                                                    <input type="checkbox" name="settings-notifications-desktop-pokemon-transfer" value="pokemon-transfer">Transfer<br />
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="setting-part not-implemented">
+                                    <div class="setting-question">
+                                        API key
+                                        <div class="not-implemented-error">not implemented</div>
+                                        <span>Not required</span>
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="text" name="settings-map-osm-api-key" value="" style="width: 100%"/>
+                                    </div>
+                                </div>
 
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Toast notifications </h6>
+                            </div>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Example
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <span class="example" id="show-notification-toast-example-button">show example</span>
-                                                </div>
-                                            </div>
+                        </div>
 
-                                            <div class="setting-part">
-                                                <div class="setting-question">
-                                                    Events to show
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="checkbox" name="settings-notifications-toast-pokestop-used" value="pokestop-used">Pokestop<br />
-                                                    <input type="checkbox" name="settings-notifications-toast-pokemon-capture" value="pokemon-capture">Capture<br />
-                                                    <input type="checkbox" name="settings-notifications-toast-pokemon-snipe" value="pokemon-snipe">Snipe<br />
-                                                    <input type="checkbox" name="settings-notifications-toast-pokemon-evolved" value="pokemon-evolved">Evolve<br />
-                                                    <input type="checkbox" name="settings-notifications-toast-egg-hatched" value="egg-hatched">Hatch<br />
-                                                    <input type="checkbox" name="settings-notifications-toast-incubator-status" value="incubator-status">Incubator status<br />
-                                                    <input type="checkbox" name="settings-notifications-toast-item-recycle" value="item-recycle">Recycle<br />
-                                                    <input type="checkbox" name="settings-notifications-toast-pokemon-transfer" value="pokemon-transfer">Transfer<br />
-                                                </div>
-                                            </div>
+
+                        <div id="client-settings">
+                            <div class="setting-topic">
+                                <h6 class="setting-name"> Client settings </h6>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Address
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="text" name="settings-client-address" value="" required/>
+                                    </div>
+                                </div>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Port
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="number" name="settings-client-port" value="0" min="0" max="65535" required/>
+                                    </div>
+                                </div>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Use SSL
+                                    </div>
+                                    <div class="setting-answer">
+                                        <div class="option-toggle active" name="settings-client-use-ssl">
+                                            <div class="toggle-circle"></div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div id="other-settings">
-                                        <div class="setting-topic">
-                                            <h6 class="setting-name"> Foo </h6>
-                                            <div class="setting-part not-implemented">
-                                                <div class="setting-question">
-                                                    Your hobby
-                                                    <span>What u do in yer free time?</span>
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <select>
-                                                        <option> Sleeping </option>
-                                                        <option> Eating </option>
-                                                        <option> Drinking </option>
-                                                        <option> Coding </option>
-                                                        <option> Catching Pokemens </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="setting-part not-implemented">
-                                                <div class="setting-question">
-                                                    Lorem ipsum
-                                                </div>
-                                                <div class="setting-answer">
-                                                    <input type="checkbox" name="map-type" value="OSM"> 1-5 <br />
-                                                    <input type="checkbox" name="map-type" value="Gmaps" checked> 5-11
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Connection string
+                                        <span>Preview only</span>
                                     </div>
-
-
+                                    <div class="setting-answer">
+                                        <span class="settings-client-connection-string"></span>
+                                    </div>
                                 </div>
                             </div>
-                            
+                        </div>
+
+                        <div id="notification-settings">
+                            <div class="setting-topic">
+                                <h6 class="setting-name"> Journal notifications </h6>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Example
+                                    </div>
+                                    <div class="setting-answer">
+                                        <span class="example" id="show-notification-journal-example-button">show example</span>
+                                    </div>
+                                </div>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Events to show
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="checkbox" name="settings-notifications-journal-pokestop-used" value="pokestop-used" checked>Pokestop<br/>
+                                        <input type="checkbox" name="settings-notifications-journal-pokemon-capture" value="pokemon-capture" checked>Capture<br/>
+                                        <input type="checkbox" name="settings-notifications-journal-pokemon-snipe" value="pokemon-snipe" checked>Snipe<br/>
+                                        <input type="checkbox" name="settings-notifications-journal-pokemon-evolved" value="pokemon-evolved" checked>Evolve<br/>
+                                        <input type="checkbox" name="settings-notifications-journal-egg-hatched" value="egg-hatched" checked>Hatch<br/>
+                                        <input type="checkbox" name="settings-notifications-journal-incubator-status" value="incubator-status" checked>Incubator status<br/>
+                                        <input type="checkbox" name="settings-notifications-journal-item-recycle" value="item-recycle" checked>Recycle<br/>
+                                        <input type="checkbox" name="settings-notifications-journal-pokemon-transfer" value="pokemon-transfer" checked>Transfer<br/>
+                                    </div>
+                                </div>
+
+                                <div class="setting-part not-implemented">
+                                    <div class="setting-question">
+                                        List clearing
+                                        <div class="not-implemented-error">not implemented</div>
+                                        <span>How long until old events get removed from the journal. 0 = never</span>
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="number" name="settings-notifications-journal-clearing" value="0"/> minutes
+                                    </div>
+                                </div>
+
+                                <div class="setting-part not-implemented">
+                                    <div class="setting-question">
+                                        Enable <b> Clear all </b> button animation
+                                        <div class="not-implemented-error">not implemented</div>
+                                        <span>If you disable this, the <b> Clear all </b> button will wipe out notification instantly (without any animation).</span>
+
+                                    </div>
+                                    <div class="setting-answer">
+                                        <div class="option-toggle active" name="settings-notifications-journal-clearing-animation">
+                                            <div class="toggle-circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-topic">
+                                <h6 class="setting-name"> Desktop notifications </h6>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Permission status
+                                    </div>
+                                    <div class="setting-answer">
+                                        <span id="notification-desktop-status">unknown</span>
+                                    </div>
+                                </div>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Example
+                                    </div>
+                                    <div class="setting-answer">
+                                        <span class="example" id="show-notification-desktop-example-button">show example</span>
+                                    </div>
+                                </div>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Events to show
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="checkbox" name="settings-notifications-desktop-pokestop-used" value="pokestop-used">Pokestop<br/>
+                                        <input type="checkbox" name="settings-notifications-desktop-pokemon-capture" value="pokemon-capture">Capture<br/>
+                                        <input type="checkbox" name="settings-notifications-desktop-pokemon-snipe" value="pokemon-snipe">Snipe<br/>
+                                        <input type="checkbox" name="settings-notifications-desktop-pokemon-evolved" value="pokemon-evolved">Evolve<br/>
+                                        <input type="checkbox" name="settings-notifications-desktop-egg-hatched" value="egg-hatched">Hatch<br/>
+                                        <input type="checkbox" name="settings-notifications-desktop-incubator-status" value="incubator-status">Incubator status<br/>
+                                        <input type="checkbox" name="settings-notifications-desktop-item-recycle" value="item-recycle">Recycle<br/>
+                                        <input type="checkbox" name="settings-notifications-desktop-pokemon-transfer" value="pokemon-transfer">Transfer<br/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="setting-topic">
+                                <h6 class="setting-name"> Toast notifications </h6>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Example
+                                    </div>
+                                    <div class="setting-answer">
+                                        <span class="example" id="show-notification-toast-example-button">show example</span>
+                                    </div>
+                                </div>
+
+                                <div class="setting-part">
+                                    <div class="setting-question">
+                                        Events to show
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="checkbox" name="settings-notifications-toast-pokestop-used" value="pokestop-used">Pokestop<br/>
+                                        <input type="checkbox" name="settings-notifications-toast-pokemon-capture" value="pokemon-capture">Capture<br/>
+                                        <input type="checkbox" name="settings-notifications-toast-pokemon-snipe" value="pokemon-snipe">Snipe<br/>
+                                        <input type="checkbox" name="settings-notifications-toast-pokemon-evolved" value="pokemon-evolved">Evolve<br/>
+                                        <input type="checkbox" name="settings-notifications-toast-egg-hatched" value="egg-hatched">Hatch<br/>
+                                        <input type="checkbox" name="settings-notifications-toast-incubator-status" value="incubator-status">Incubator status<br/>
+                                        <input type="checkbox" name="settings-notifications-toast-item-recycle" value="item-recycle">Recycle<br/>
+                                        <input type="checkbox" name="settings-notifications-toast-pokemon-transfer" value="pokemon-transfer">Transfer<br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="other-settings">
+                            <div class="setting-topic">
+                                <h6 class="setting-name"> Foo </h6>
+                                <div class="setting-part not-implemented">
+                                    <div class="setting-question">
+                                        Your hobby
+                                        <span>What u do in yer free time?</span>
+                                    </div>
+                                    <div class="setting-answer">
+                                        <select>
+                                            <option> Sleeping </option>
+                                            <option> Eating </option>
+                                            <option> Drinking </option>
+                                            <option> Coding </option>
+                                            <option> Catching Pokemens </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="setting-part not-implemented">
+                                    <div class="setting-question">
+                                        Lorem ipsum
+                                    </div>
+                                    <div class="setting-answer">
+                                        <input type="checkbox" name="map-type" value="OSM"> 1-5 <br/>
+                                        <input type="checkbox" name="map-type" value="Gmaps" checked> 5-11
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        </div>
+                        </div>
+                            <div class="content" data-category="bot-config"></div>
                         </div>
 
                         <div id="settings-buttons" class="disabled">
@@ -907,6 +910,7 @@
     <script type="text/javascript" src="external/circle-progress.js"></script>
     <script type="text/javascript" src="external/jquery.easing.1.3.js"></script>
     <script type="text/javascript" src="external/jquery.easing.compatibility.js"></script>
+    <script type="text/javascript" src="external/jsoneditor.js"></script>
     <script type="text/javascript" src="script/interface-scripts.js"></script>
     <script type="text/javascript" src="script/script.js"></script>
 </body>

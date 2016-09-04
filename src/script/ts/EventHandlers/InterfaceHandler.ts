@@ -102,6 +102,7 @@
         this.config.requestSender.sendGetConfigRequest();
         this.config.requestSender.sendPlayerStatsRequest();
         this.config.requestSender.sendGetPokemonSettingsRequest();
+        this.config.requestSender.sendPokemonSnipeListUpdateRequest();
         this.config.requestSender.sendInventoryListRequest();
         this.config.requestSender.sendPokemonListRequest();
         this.config.requestSender.sendEggsListRequest();
@@ -194,7 +195,7 @@
     }
 
     public onGetConfig(configEvent: IConfigEvent): void {
-
+        
     }
 
     public onPokemonList(pokemonList: IPokemonListEvent): void {
@@ -240,9 +241,10 @@
     }
 
     public onHumanSnipeList(pokemonList: IHumanWalkSnipeListEvent): void {
-        this.config.snipesMenuController.updateSnipePokemonList(pokemonList)
-        let currentSnipePokemonCount = pokemonList.Pokemons.length;
+        this.config.snipesMenuController.updateSnipePokemonList(pokemonList);
+        const currentSnipePokemonCount = pokemonList.Pokemons.length;
         this.config.mainMenuController.setSnipePokemonCount(currentSnipePokemonCount);
+        this.config.mainMenuController.showSnipesMenu();
     }
 
     public onSendInventoryListRequest(request: IRequest): void {

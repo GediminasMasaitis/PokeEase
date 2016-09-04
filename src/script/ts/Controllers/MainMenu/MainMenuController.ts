@@ -24,8 +24,8 @@
         this.config.requestSender.sendEggsListRequest();
     }
 
-     private onSnipeMenuClick = (ev: JQueryEventObject): void => {
-        this.config.requestSender.sendHumanSnipPokemonListUpdateRequest();
+    private onSnipeMenuClick = (ev: JQueryEventObject): void => {
+        this.config.requestSender.sendPokemonSnipeListUpdateRequest();
     }
 
     public updateProfileData = (profile: IProfileEvent): void => {
@@ -47,5 +47,10 @@
 
     public setEggCount = (eggCount: number): void => {
         this.config.mainMenuElement.find("#eggs .current").text(eggCount);
+    }
+
+    public showSnipesMenu = (): void => {
+        const snipesMenu = this.config.mainMenuElement.find("#snipes");
+        snipesMenu.show();
     }
 }

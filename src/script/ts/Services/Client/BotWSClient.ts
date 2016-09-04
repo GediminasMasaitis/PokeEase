@@ -385,8 +385,8 @@
         const requestStr = JSON.stringify(request);
         this.webSocket.send(requestStr);
     }
-	
-	    public sendHumanSnipPokemonListUpdateRequest = ():void => {
+
+    public sendPokemonSnipeListUpdateRequest = ():void => {
         const necroRequest: IRequest = { Command: "PokemonSnipeList" };
         _.each(this.config.eventHandlers, eh => eh.onSendHumanSnipPokemonListUpdateRequest(necroRequest));
        

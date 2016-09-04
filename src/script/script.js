@@ -49,7 +49,7 @@ var MainMenuController = (function () {
             _this.config.requestSender.sendEggsListRequest();
         };
         this.onSnipeMenuClick = function (ev) {
-            _this.config.requestSender.sendHumanSnipPokemonListUpdateRequest();
+            _this.config.requestSender.sendPokemonSnipeListUpdateRequest();
         };
         this.updateProfileData = function (profile) {
             _this.config.mainMenuElement.find("#pokemons .total").text(profile.PlayerData.MaxPokemonStorage);
@@ -66,6 +66,10 @@ var MainMenuController = (function () {
         };
         this.setEggCount = function (eggCount) {
             _this.config.mainMenuElement.find("#eggs .current").text(eggCount);
+        };
+        this.showSnipesMenu = function () {
+            var snipesMenu = _this.config.mainMenuElement.find("#snipes");
+            snipesMenu.show();
         };
         this.config = config;
         this.config.mainMenuElement.find("#pokemons").click(this.onPokemonMenuClick);
@@ -917,6 +921,14 @@ var MapProvider;
     MapProvider[MapProvider["GMaps"] = 0] = "GMaps";
     MapProvider[MapProvider["OSM"] = 1] = "OSM";
 })(MapProvider || (MapProvider = {}));
+var BotConfigMenuController = (function () {
+    function BotConfigMenuController(config) {
+        this.setBotConfig = function (botConfigs) {
+        };
+        this.config = config;
+    }
+    return BotConfigMenuController;
+}());
 var EggMenuController = (function () {
     function EggMenuController(config) {
         var _this = this;
@@ -1959,6 +1971,7 @@ var InterfaceHandler = (function () {
         this.config.requestSender.sendGetConfigRequest();
         this.config.requestSender.sendPlayerStatsRequest();
         this.config.requestSender.sendGetPokemonSettingsRequest();
+        this.config.requestSender.sendPokemonSnipeListUpdateRequest();
         this.config.requestSender.sendInventoryListRequest();
         this.config.requestSender.sendPokemonListRequest();
         this.config.requestSender.sendEggsListRequest();
@@ -2004,7 +2017,6 @@ var InterfaceHandler = (function () {
         this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     };
     InterfaceHandler.prototype.onGetConfig = function (configEvent) {
-        debugger;
     };
     InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
         this.config.pokemonMenuController.updatePokemonList(pokemonList);
@@ -2045,6 +2057,7 @@ var InterfaceHandler = (function () {
         this.config.snipesMenuController.updateSnipePokemonList(pokemonList);
         var currentSnipePokemonCount = pokemonList.Pokemons.length;
         this.config.mainMenuController.setSnipePokemonCount(currentSnipePokemonCount);
+        this.config.mainMenuController.showSnipesMenu();
     };
     InterfaceHandler.prototype.onSendInventoryListRequest = function (request) {
         this.config.inventoryMenuController.inventoryListRequested(request);
@@ -38753,7 +38766,7 @@ var BotWSClient = (function () {
             var requestStr = JSON.stringify(request);
             _this.webSocket.send(requestStr);
         };
-        this.sendHumanSnipPokemonListUpdateRequest = function () {
+        this.sendPokemonSnipeListUpdateRequest = function () {
             var necroRequest = { Command: "PokemonSnipeList" };
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendHumanSnipPokemonListUpdateRequest(necroRequest); });
             if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
@@ -39451,6 +39464,9 @@ $(function () {
         settingsService: settingsService
     });
     settingsMenuController.setSettings(settings);
+    var botConfigMenuController = new BotConfigMenuController({
+        botSettingsMenuElement: $('body .content[data-category="bot-config"]'),
+    });
     var profileInfoController = new ProfileInfoController({
         hideUsername: false,
         profileInfoElement: $("#profile")
@@ -39478,6 +39494,7 @@ $(function () {
         inventoryMenuController: inventoryMenuController,
         eggMenuController: eggMenuController,
         snipesMenuController: snipesMenuController,
+        botConfigMenuController: botConfigMenuController,
         profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap,

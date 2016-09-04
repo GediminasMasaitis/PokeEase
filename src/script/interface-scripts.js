@@ -13,18 +13,22 @@ $(document).ready(function () {
     });
 
     $("#menu .item").click(function() {
-        var PopupTitle = $(this).attr('id');
+        var popupTitle = $(this).attr('id');
+        if (popupTitle === "settings") {
+            $("#settings-buttons").show();
+        } else {
+            $("#settings-buttons").hide();
+        }
         $("#popup").stop().fadeIn(300);
         $("#popup .title span").text($(this).attr('title') || $(this).attr('id'));
         $("#popup .title").css('background-color', $(this).css('background-color'));
         $("#popup .content").each(function() {
             $(this).hide();
-            if ($(this).attr('data-category') == PopupTitle) {
+            var currentCategory = $(this).attr('data-category');
+            if (currentCategory === popupTitle) {
                 $(this).show();
-                $("#settings-buttons").show();
-            } else {
-                $("#settings-buttons").hide();
             }
+            
         });
     });
 

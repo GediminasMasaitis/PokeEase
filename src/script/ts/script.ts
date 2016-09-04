@@ -4,6 +4,7 @@
 /// <reference path="../../externalTypings/leaflet/leaflet.d.ts" />
 /// <reference path="../../externalTypings/moment/moment.d.ts" />
 /// <reference path="../../externalTypings/googlemaps/google.maps.d.ts" />
+/// <reference path="../../externaltypings/jsoneditor/json-editor.d.ts" />
 
 
 $(() => {
@@ -85,6 +86,10 @@ $(() => {
     });
     settingsMenuController.setSettings(settings);
 
+    const botConfigMenuController = new BotConfigMenuController({
+        botSettingsMenuElement: $('body .content[data-category="bot-config"]'),
+    });
+
     const profileInfoController = new ProfileInfoController({
         hideUsername: false,
         profileInfoElement: $("#profile")
@@ -116,6 +121,7 @@ $(() => {
         inventoryMenuController: inventoryMenuController,
         eggMenuController: eggMenuController,
         snipesMenuController: snipesMenuController,
+        botConfigMenuController: botConfigMenuController,
         profileInfoController: profileInfoController,
         requestSender: client,
         map: lMap,
