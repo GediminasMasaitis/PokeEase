@@ -100,6 +100,10 @@ $(() => {
     const useGoogleMap = settings.mapProvider === MapProvider.GMaps;
     const lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
 
+    const consoleController = new ConsoleController({
+        consoleElement: $("#console")
+    });
+
     const interfaceHandler = new InterfaceHandler({
         translationController: translationController,
         notificationControllers: [
@@ -116,7 +120,8 @@ $(() => {
         requestSender: client,
         map: lMap,
         settingsService: settingsService,
-        fortCacheService: fortCacheService
+        fortCacheService: fortCacheService,
+        consoleController: consoleController
     });
 
     client.start({

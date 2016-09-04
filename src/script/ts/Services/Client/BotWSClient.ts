@@ -99,6 +99,11 @@
             _.each(this.config.eventHandlers, eh => eh.onProfile(profile));
         }
 
+        else if (_.includes(type, ".LogEvent,")) {
+            const logEvent = message as ILogEvent;
+            _.each(this.config.eventHandlers, eh => eh.onLog(logEvent));
+        }
+
         else if (_.includes(type, ".PlayerLevelUpEvent,")) {
             const levelUpEvent = message as IPlayerLevelUpEvent;
             _.each(this.config.eventHandlers, eh => eh.onPlayerLevelUp(levelUpEvent));
@@ -284,35 +289,7 @@
             playerStats.Timestamp = timestamp;
             _.each(this.config.eventHandlers, eh => eh.onPlayerStats(playerStats));
         }
-        
-		else if (_.includes(type, ".LogEvent,")) {
-			const eventType = "log-event";
-			const $consoleItems = $('#console .items');
-			const html = "<div class=\"event\"><div class=\"item\" style=\"font-family:monospace; white-space: pre-wrap; color:" + message.Color + "\">" + message.Message + "</div></div>";
-			const element = $(html);
-			
-			function isAtBottom(container: any) : boolean {
-				let scrollTop: number = container.scrollTop();
-				let innerHeight: number = container.innerHeight();
-				let scrollHeight: number = container[0].scrollHeight;
-				let atBottom: boolean = scrollTop + innerHeight > scrollHeight - 200;
-				return atBottom;
-			};
-			
-			function scrollToBottom(container: any) : void {
-				let animation: any = {
-					scrollTop: container.prop("scrollHeight") - container.height()
-				};
-				container.finish().animate(animation, 100);
-			};
-			
-			const scroll = isAtBottom($consoleItems);
-			$consoleItems.append(element);
-			
-			if (scroll) {
-				scrollToBottom($consoleItems);
-			}
-		}
+       
         //#endregion
 
         else {
@@ -324,9 +301,6 @@
         }
         
     }
-
-
-
 
     public sendPokemonListRequest = (): void => {
         const pmbRequest: IRequest = { Command: "PokemonList" };

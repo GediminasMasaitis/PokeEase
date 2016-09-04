@@ -11,4 +11,5 @@
     map: IMap;
     settingsService: ISettingsService;
     fortCacheService: IFortCacheService;
+    consoleController: IConsoleController;
 }

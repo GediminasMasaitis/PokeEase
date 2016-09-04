@@ -25,6 +25,10 @@
         this.latestPlayerStats = null;
     }
 
+    public onLog(logEvent: ILogEvent): void {
+        this.config.consoleController.log(logEvent);
+    }
+
     public onPlayerLevelUp = (levelUp: IPlayerLevelUpEvent): void => {
         
     }

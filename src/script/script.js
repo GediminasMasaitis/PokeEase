@@ -3,6 +3,36 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var ConsoleController = (function () {
+    function ConsoleController(config) {
+        var _this = this;
+        this.log = function (logEvent) {
+            var items = _this.config.consoleElement.find(".items");
+            var html = "<div class=\"event\">\n    <div class=\"item\" style=\"font-family:monospace; white-space: pre-wrap; color:" + logEvent.Color + "\">\n        " + logEvent.Message + "\n    </div>\n</div>";
+            var element = $(html);
+            var scroll = _this.isAtBottom(items);
+            items.append(element);
+            if (scroll) {
+                _this.scrollToBottom(items);
+            }
+        };
+        this.isAtBottom = function (container) {
+            var scrollTop = container.scrollTop();
+            var innerHeight = container.innerHeight();
+            var scrollHeight = container[0].scrollHeight;
+            var atBottom = scrollTop + innerHeight > scrollHeight - 200;
+            return atBottom;
+        };
+        this.config = config;
+    }
+    ConsoleController.prototype.scrollToBottom = function (container) {
+        container.finish().animate({
+            scrollTop: container.prop("scrollHeight") - container.height()
+        }, 100);
+    };
+    ;
+    return ConsoleController;
+}());
 var MainMenuController = (function () {
     function MainMenuController(config) {
         var _this = this;
@@ -1908,6 +1938,9 @@ var InterfaceHandler = (function () {
         this.currentItemCount = 0;
         this.latestPlayerStats = null;
     }
+    InterfaceHandler.prototype.onLog = function (logEvent) {
+        this.config.consoleController.log(logEvent);
+    };
     InterfaceHandler.prototype.onFortTarget = function (fortTarget) {
         this.config.map.targetFort(fortTarget);
     };
@@ -38464,6 +38497,10 @@ var BotWSClient = (function () {
                 _this.profileSent = true;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onProfile(profile_1); });
             }
+            else if (_.includes(type, ".LogEvent,")) {
+                var logEvent_1 = message;
+                _.each(_this.config.eventHandlers, function (eh) { return eh.onLog(logEvent_1); });
+            }
             else if (_.includes(type, ".PlayerLevelUpEvent,")) {
                 var levelUpEvent_1 = message;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPlayerLevelUp(levelUpEvent_1); });
@@ -38619,32 +38656,6 @@ var BotWSClient = (function () {
                 playerStats_1.PokemonCaughtByType = originalStats.PokemonCaughtByType.$values;
                 playerStats_1.Timestamp = timestamp;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPlayerStats(playerStats_1); });
-            }
-            else if (_.includes(type, ".LogEvent,")) {
-                var eventType = "log-event";
-                var $consoleItems = $('#console .items');
-                var html = "<div class=\"event\"><div class=\"item\" style=\"font-family:monospace; white-space: pre-wrap; color:" + message.Color + "\">" + message.Message + "</div></div>";
-                var element = $(html);
-                function isAtBottom(container) {
-                    var scrollTop = container.scrollTop();
-                    var innerHeight = container.innerHeight();
-                    var scrollHeight = container[0].scrollHeight;
-                    var atBottom = scrollTop + innerHeight > scrollHeight - 200;
-                    return atBottom;
-                }
-                ;
-                function scrollToBottom(container) {
-                    var animation = {
-                        scrollTop: container.prop("scrollHeight") - container.height()
-                    };
-                    container.finish().animate(animation, 100);
-                }
-                ;
-                var scroll_1 = isAtBottom($consoleItems);
-                $consoleItems.append(element);
-                if (scroll_1) {
-                    scrollToBottom($consoleItems);
-                }
             }
             else {
                 _.each(_this.config.eventHandlers, function (eh) {
@@ -39438,6 +39449,9 @@ $(function () {
     };
     var useGoogleMap = settings.mapProvider === MapProvider.GMaps;
     var lMap = useGoogleMap ? new GoogleMap(mapConfig) : new LeafletMap(mapConfig);
+    var consoleController = new ConsoleController({
+        consoleElement: $("#console")
+    });
     var interfaceHandler = new InterfaceHandler({
         translationController: translationController,
         notificationControllers: [
@@ -39454,7 +39468,8 @@ $(function () {
         requestSender: client,
         map: lMap,
         settingsService: settingsService,
-        fortCacheService: fortCacheService
+        fortCacheService: fortCacheService,
+        consoleController: consoleController
     });
     client.start({
         eventHandlers: [interfaceHandler],

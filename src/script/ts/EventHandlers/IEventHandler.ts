@@ -1,4 +1,5 @@
 interface IEventHandler {
+    onLog: (logEvent: ILogEvent) => void;
     onPlayerLevelUp: (levelUp: IPlayerLevelUpEvent) => void;
     onUpdatePosition: (location: IUpdatePositionEvent) => void;
     onPokeStopList: (forts: IFortEvent[]) => void;

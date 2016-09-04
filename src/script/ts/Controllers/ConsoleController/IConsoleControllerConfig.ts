@@ -1,0 +1,3 @@
+﻿interface IConsoleControllerConfig {
+    consoleElement: JQuery;
+}
