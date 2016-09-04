@@ -923,7 +923,19 @@ var MapProvider;
 })(MapProvider || (MapProvider = {}));
 var BotConfigMenuController = (function () {
     function BotConfigMenuController(config) {
+        var _this = this;
         this.setBotConfig = function (botConfigs) {
+            _this.config.botSettingsMenuElement.text("");
+            var html = "<div id=\"bot-config-content\"></div>";
+            var element = $(html);
+            _this.config.botSettingsMenuElement.append(element);
+            var htmlElement = element.get(0);
+            var schema = JSON.parse(botConfigs.ConfigSchemaJson);
+            var editor = new JSONEditor(htmlElement, {
+                schema: schema
+            });
+            var value = JSON.parse(botConfigs.ConfigJson);
+            editor.setValue(value);
         };
         this.config = config;
     }
@@ -2017,6 +2029,7 @@ var InterfaceHandler = (function () {
         this.config.mainMenuController.setPokemonCount(this.currentPokemonCount);
     };
     InterfaceHandler.prototype.onGetConfig = function (configEvent) {
+        this.config.botConfigMenuController.setBotConfig(configEvent);
     };
     InterfaceHandler.prototype.onPokemonList = function (pokemonList) {
         this.config.pokemonMenuController.updatePokemonList(pokemonList);
@@ -38594,7 +38607,7 @@ var BotWSClient = (function () {
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onPokemonTransfer(pokemonTransfer_1); });
             }
             else if (_.includes(type, ".ConfigResponce,")) {
-                var configEvent_1 = message;
+                var configEvent_1 = message.Data;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onGetConfig(configEvent_1); });
             }
             else if (_.includes(type, ".PokemonListEvent,")) {

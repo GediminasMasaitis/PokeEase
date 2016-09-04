@@ -202,7 +202,8 @@
         //#region Request response events
 
         else if (_.includes(type, ".ConfigResponce,")) {
-            const configEvent = message as IConfigEvent;
+            const configEvent = message.Data as IConfigEvent;
+            configEvent.Timestamp = timestamp;
             _.each(this.config.eventHandlers, eh => eh.onGetConfig(configEvent));
         }
 

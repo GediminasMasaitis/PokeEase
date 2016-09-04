@@ -195,7 +195,7 @@
     }
 
     public onGetConfig(configEvent: IConfigEvent): void {
-        
+        this.config.botConfigMenuController.setBotConfig(configEvent);
     }
 
     public onPokemonList(pokemonList: IPokemonListEvent): void {
