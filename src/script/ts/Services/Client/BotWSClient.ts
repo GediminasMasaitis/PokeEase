@@ -393,7 +393,7 @@
         }
     }
 	
-    public sendHumanSnipPokemonRemoveRequest =(pokemonId: string): void => {
+    public sendHumanSnipePokemonRemoveRequest = (pokemonId: string): void => {
         const request: IRequest = {
              Command: "RemovePokemon",
              Data: pokemonId,
@@ -404,7 +404,7 @@
         this.sendRequest(request);
     }
 	
-    public sendHumanSnipPokemonSnipeRequest =(pokemonId: string): void => {
+    public sendHumanSnipePokemonSnipeRequest = (pokemonId: string): void => {
         const request: IRequest = {
              Command: "SnipePokemon",
              Data: pokemonId,

@@ -1323,7 +1323,7 @@ var HumanSnipeMenuController = (function () {
                 return;
             }
             _this.config.snipeMenuElement.find(".pokemon").remove();
-            var pokemons = _this.getOrderedPokemons();
+            var pokemons = _this.pokemonList;
             for (var i = 0; i < pokemons.length; i++) {
                 var pokemon = pokemons[i];
                 var pokemonName = _this.config.translationController.translation.pokemonNames[pokemon.Id];
@@ -1331,32 +1331,29 @@ var HumanSnipeMenuController = (function () {
                 var expired = Math.round((new Date(pokemon.ExpiredTime).valueOf() - (new Date()).valueOf()) / 1000);
                 var estimate = Math.round(pokemon.EstimatedTime);
                 var className = pokemon.IsCatching ? "walking-to" : (pokemon.Setting.Priority == 0 ? "targeted" : "");
-                var loading = pokemon.IsCatching ? "<div id=\"fountainTextG\"><div id=\"fountainTextG_1\" class=\"fountainTextG\">W</div><div id=\"fountainTextG_2\" class=\"fountainTextG\">a</div><div id=\"fountainTextG_3\" class=\"fountainTextG\">l</div><div id=\"fountainTextG_4\" class=\"fountainTextG\">k</div><div id=\"fountainTextG_5\" class=\"fountainTextG\">i</div><div id=\"fountainTextG_6\" class=\"fountainTextG\">n</div><div id=\"fountainTextG_7\" class=\"fountainTextG\">g</div></div> " : "";
+                var loading = pokemon.IsCatching ?
+                    "<div id=\"fountainTextG\">\n<div id=\"fountainTextG_1\" class=\"fountainTextG\">W</div>\n<div id=\"fountainTextG_2\" class=\"fountainTextG\">a</div>\n<div id=\"fountainTextG_3\" class=\"fountainTextG\">l</div>\n<div id=\"fountainTextG_4\" class=\"fountainTextG\">k</div>\n<div id=\"fountainTextG_5\" class=\"fountainTextG\">i</div>\n<div id=\"fountainTextG_6\" class=\"fountainTextG\">n</div>\n<div id=\"fountainTextG_7\" class=\"fountainTextG\">g</div>\n</div> " : "";
                 var html = "<div class=\"pokemon " + className + "\" data-pokemon-unique-id=\"" + pokemon.UniqueId + "\">\n                    <a class=\"delete \" data-uniqueId=\"" + pokemon.UniqueId + "\" title=\"Remove this Pokemon\"></a>\n                    <h1 class=\"name\">" + pokemonName + "</h1>\n                    <div class=\"image-container\">\n                        <img src=\"images/pokemon/" + pokemon.Id + ".png\" alt=\"" + pokemonName + "\" title=\"" + pokemonName + "\"/>\n                    </div>\n                     " + loading + "\n                    <h3 class=\"distance\">" + distance + "m</h3>\n                    <h3 class=\"timer\">" + estimate + "/" + expired + "</h3>\n                    <a class=\"snipe-him\" data-uniqueId=\"" + pokemon.UniqueId + "\" title=\"Snipe this Pokemon\"></a>\n                </div>";
                 var pokemonElement = $(html);
-                pokemonElement.find('.snipe-him').click(_this.onSetAsTarget);
-                pokemonElement.find('.delete').click(_this.onRemoveSnipe);
+                pokemonElement.find(".snipe-him").click(_this.onSetAsTarget);
+                pokemonElement.find(".delete").click(_this.onRemoveSnipe);
                 _this.config.snipeMenuElement.append(pokemonElement);
             }
         };
         this.onSetAsTarget = function (ev) {
-            var uniqueId = $(ev.target).attr('data-uniqueId');
-            _this.config.requestSender.sendHumanSnipPokemonSnipeRequest(uniqueId);
+            var uniqueId = $(ev.target).attr("data-uniqueId");
+            _this.config.requestSender.sendHumanSnipePokemonSnipeRequest(uniqueId);
         };
         this.onRemoveSnipe = function (ev) {
-            var uniqueId = $(ev.target).attr('data-uniqueId');
-            $(ev.target).closest('.pokemon').fadeOut(500);
-            _this.config.requestSender.sendHumanSnipPokemonRemoveRequest(uniqueId);
+            var uniqueId = $(ev.target).attr("data-uniqueId");
+            $(ev.target).closest(".pokemon").fadeOut(500);
+            _this.config.requestSender.sendHumanSnipePokemonRemoveRequest(uniqueId);
         };
         this.pokemonListRequested = function (request) {
         };
         this.updateSnipePokemonList = function (pokemonList) {
             _this.pokemonList = pokemonList.Pokemons;
             _this.updatePokemonListInner();
-        };
-        this.getOrderedPokemons = function () {
-            var pokemons;
-            return _this.pokemonList;
         };
         this.config = config;
     }
@@ -38746,7 +38743,7 @@ var BotWSClient = (function () {
                 _this.sendRequest(necroRequest);
             }
         };
-        this.sendHumanSnipPokemonRemoveRequest = function (pokemonId) {
+        this.sendHumanSnipePokemonRemoveRequest = function (pokemonId) {
             var request = {
                 Command: "RemovePokemon",
                 Data: pokemonId,
@@ -38756,7 +38753,7 @@ var BotWSClient = (function () {
             _.each(_this.config.eventHandlers, function (eh) { return eh.onSendHumanSnipePokemonRemoveRequest(request); });
             _this.sendRequest(request);
         };
-        this.sendHumanSnipPokemonSnipeRequest = function (pokemonId) {
+        this.sendHumanSnipePokemonSnipeRequest = function (pokemonId) {
             var request = {
                 Command: "SnipePokemon",
                 Data: pokemonId,
