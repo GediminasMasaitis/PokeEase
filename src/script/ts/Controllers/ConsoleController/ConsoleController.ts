@@ -9,9 +9,7 @@
         const items = this.config.consoleElement.find(".items");
         const html = 
 `<div class="event">
-    <div class="item" style="font-family:monospace; white-space: pre-wrap; color:${logEvent.Color}">
-        ${logEvent.Message}
-    </div>
+    <div class="item" style="font-family:monospace; white-space: pre-wrap; color:${logEvent.Color}">${logEvent.Message}</div>
 </div>`;
         const element = $(html);
         const scroll = this.isAtBottom(items);

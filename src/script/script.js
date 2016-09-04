@@ -8,7 +8,7 @@ var ConsoleController = (function () {
         var _this = this;
         this.log = function (logEvent) {
             var items = _this.config.consoleElement.find(".items");
-            var html = "<div class=\"event\">\n    <div class=\"item\" style=\"font-family:monospace; white-space: pre-wrap; color:" + logEvent.Color + "\">\n        " + logEvent.Message + "\n    </div>\n</div>";
+            var html = "<div class=\"event\">\n    <div class=\"item\" style=\"font-family:monospace; white-space: pre-wrap; color:" + logEvent.Color + "\">" + logEvent.Message + "</div>\n</div>";
             var element = $(html);
             var scroll = _this.isAtBottom(items);
             items.append(element);
