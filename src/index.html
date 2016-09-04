@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <link href="external/leaflet.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" type="text/css" href="style/animation.css">
     <link rel="stylesheet" type="text/css" href="external/jquery.qtip.min.css">
     <meta charset="utf-8" />
     <link rel="icon" sizes="16x16" href="images/favicon.png">
@@ -88,6 +89,11 @@
                             <span class="current">0</span>/<span class="total">9</span>
                         </div>
                     </div>
+                    <div class="item" id="snipes" title="Snipable Pokemons">
+                        <div class="counter">
+                            <span class="current">00</span>
+                        </div>
+                    </div>
                     <div class="item" id="settings">
                     </div>
 
@@ -124,6 +130,21 @@
                     </div>
                     Clear All
                 </span>
+            </div>
+        </div>
+		
+		<div class="open-console">
+            <i class="fa fa-angle-up fa-lg"></i>
+            Console
+        </div>
+        <div id="console" class="menu">
+            <div class="title">
+                <span>console</span>
+                <div class="close-button">
+                    <i class="fa fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="items">
             </div>
         </div>
 
@@ -752,7 +773,7 @@
 
                                 </div>
                             </div>
-
+                            <div class="content" data-category="snipes"></div>
                         </div>
 
                         <div id="settings-buttons" class="disabled">
@@ -811,8 +832,10 @@
             </div>
             <div class="overlay"></div>
         </div>
+		<div class="open-profile">
+			<i class="fa fa-angle-up hide"></i>
+		</div>
         <div id="profile" class="menu">
-            <i class="fa fa-angle-down hide"></i>
             <div class="user-info">
                 <h1 class="profile-username">
                     <i class="fa fa-circle-o-notch fa-spin"></i>
@@ -845,6 +868,7 @@
                     <span class="profile-pokecoin"><i class="fa fa-circle-o-notch fa-spin"></i></span>
                 </div>
             </div>
+			
         </div>
         <div id="notification">
             <i class="fa fa-circle-o-notch fa-spin"></i>

@@ -4,6 +4,7 @@
     mainMenuController: IMainMenuController;
     pokemonMenuController: IPokemonMenuController;
     inventoryMenuController: IInventoryMenuController;
+    snipesMenuController: IHumanSnipeMenuController;
     eggMenuController: IEggMenuController;
     profileInfoController: IProfileInfoController;
     requestSender: IRequestSender,

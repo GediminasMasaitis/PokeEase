@@ -23,7 +23,7 @@ interface IEventHandler {
     onEggList: (eggList: IEggListEvent) => void;
     onInventoryList: (inventoryList: IInventoryListEvent) => void;
     onPlayerStats: (playerStats: IPlayerStatsEvent) => void;
-
+    onHumanSnipeList: (pokemonList: IHumanWalkSnipeListEvent) => void;
     onSendPokemonListRequest: (request: IRequest) => void;
     onSendEggsListRequest: (request: IRequest) => void;
     onSendInventoryListRequest: (request: IRequest) => void;
@@ -31,6 +31,8 @@ interface IEventHandler {
     onSendGetPokemonSettingsRequest: (request: IRequest) => void;
     onSendTransferPokemonRequest: (request: IRequest) => void;
     onSendEvolvePokemonRequest: (request: IRequest) => void;
-
+    onSendHumanSnipePokemonRequest: (request: IRequest) => void;
+    onSendHumanSnipPokemonListUpdateRequest: (request:IRequest) => void;
+    onSendHumanSnipePokemonRemoveRequest : (request:IRequest) => void;
     onUnknownEvent?: (message: any) => void;
 }

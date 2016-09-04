@@ -258,6 +258,16 @@
             _.each(this.config.eventHandlers, eh => eh.onInventoryList(inventoryList));
         }
 
+		else if (_.includes(type, ".HumanWalkSnipeEvent")) {
+            let snipeEv = message as IHumanWalkSnipeEvent;
+            if (snipeEv.Pokemons) {
+                const snipesList: IHumanWalkSnipeListEvent = {
+                    Pokemons: snipeEv.Pokemons.$values
+                }
+                _.each(this.config.eventHandlers, eh => eh.onHumanSnipeList(snipesList));
+            }
+        }
+		
         else if (_.includes(type, ".PlayerStatsEvent,") || _.includes(type, ".TrainerProfileResponce,")) {
             let originalStats: any;
             if (_.includes(type, ".PlayerStatsEvent,")) {
@@ -275,6 +285,34 @@
             _.each(this.config.eventHandlers, eh => eh.onPlayerStats(playerStats));
         }
         
+		else if (_.includes(type, ".LogEvent,")) {
+			const eventType = "log-event";
+			const $consoleItems = $('#console .items');
+			const html = "<div class=\"event\"><div class=\"item\" style=\"font-family:monospace; white-space: pre-wrap; color:" + message.Color + "\">" + message.Message + "</div></div>";
+			const element = $(html);
+			
+			function isAtBottom(container: any) : boolean {
+				let scrollTop: number = container.scrollTop();
+				let innerHeight: number = container.innerHeight();
+				let scrollHeight: number = container[0].scrollHeight;
+				let atBottom: boolean = scrollTop + innerHeight > scrollHeight - 200;
+				return atBottom;
+			};
+			
+			function scrollToBottom(container: any) : void {
+				let animation: any = {
+					scrollTop: container.prop("scrollHeight") - container.height()
+				};
+				container.finish().animate(animation, 100);
+			};
+			
+			const scroll = isAtBottom($consoleItems);
+			$consoleItems.append(element);
+			
+			if (scroll) {
+				scrollToBottom($consoleItems);
+			}
+		}
         //#endregion
 
         else {
@@ -370,6 +408,37 @@
         console.log("%c>>> OUTGOING:", "color: red", request);
         const requestStr = JSON.stringify(request);
         this.webSocket.send(requestStr);
+    }
+	
+	    public sendHumanSnipPokemonListUpdateRequest = ():void => {
+        const necroRequest: IRequest = { Command: "PokemonSnipeList" };
+        _.each(this.config.eventHandlers, eh => eh.onSendHumanSnipPokemonListUpdateRequest(necroRequest));
+       
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
+            this.sendRequest(necroRequest);
+        }
+    }
+	
+    public sendHumanSnipPokemonRemoveRequest =(pokemonId: string): void => {
+        const request: IRequest = {
+             Command: "RemovePokemon",
+             Data: pokemonId,
+             PokemonId: pokemonId,
+             Id:pokemonId
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendHumanSnipePokemonRemoveRequest(request));
+        this.sendRequest(request);
+    }
+	
+    public sendHumanSnipPokemonSnipeRequest =(pokemonId: string): void => {
+        const request: IRequest = {
+             Command: "SnipePokemon",
+             Data: pokemonId,
+             PokemonId: pokemonId ,
+             Id:pokemonId
+        };
+        _.each(this.config.eventHandlers, eh => eh.onSendHumanSnipePokemonRequest(request));
+        this.sendRequest(request);
     }
 
     private parseItemString = (itemStr: string): IFortItem[] => {

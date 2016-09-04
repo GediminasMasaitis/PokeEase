@@ -18,10 +18,27 @@ module.exports = function (grunt) {
                     'src/style/style.css': 'src/style/style.scss'
                 }
             }
-        }
+        },
+        watch: {
+            sass: {
+                files: ['**/*.scss'],
+                tasks: ['sass'],
+                options: {
+                spawn: false,
+                },
+            },
+            ts: {
+                 files: ['**/*.ts','**/**/*.ts','**/**/**/*.ts','**/**/**/**/*.ts'],
+                    tasks: ['ts'],
+                    options: {
+                    spawn: false,
+                },
+            }
+        },
     });
 
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-sass');
-    grunt.registerTask('default', ['ts', 'sass']);
+    grunt.registerTask('default', ['ts', 'sass','watch']);
 };

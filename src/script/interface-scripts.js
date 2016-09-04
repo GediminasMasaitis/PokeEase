@@ -15,7 +15,7 @@ $(document).ready(function () {
     $("#menu .item").click(function() {
         var PopupTitle = $(this).attr('id');
         $("#popup").stop().fadeIn(300);
-        $("#popup .title span").text($(this).attr('id'));
+        $("#popup .title span").text($(this).attr('title') || $(this).attr('id'));
         $("#popup .title").css('background-color', $(this).css('background-color'));
         $("#popup .content").each(function() {
             $(this).hide();
@@ -68,6 +68,17 @@ $(document).ready(function () {
 
     $("#journal .items .event").click(function() {
         $(this).find('.extended-info').stop().slideToggle(300);
+    });
+	
+	// CONSOLE EVENTS
+    $("#console .close-button").click(function() {
+        $("#console").animate({"bottom": "-300px"}, 500, "easeOutQuint");
+        $(".open-console").delay(100).animate({"opacity": "1"}, 200);
+    });
+
+    $(".open-console").click(function() {
+        $(this).css("opacity", "0");
+        $("#console").delay(0).animate({"bottom": "0"}, 500, "easeOutQuint");
     });
 
     resizeItemContainer();
@@ -134,7 +145,10 @@ $(document).ready(function () {
     $("#journal .items").animate({ scrollTop: $("#journal .items").prop("scrollHeight") - $("#journal .items").height() }, 0);
 
     // HIDE PROFILE MENU
-    $("#profile .hide").click(function() {$("#profile").toggleClass('hidden');});
+    $(".open-profile .hide").click(function() {
+		$("#profile").toggleClass('hidden');
+		$(".open-profile").toggleClass('hidden')
+	});
 
 });
 
