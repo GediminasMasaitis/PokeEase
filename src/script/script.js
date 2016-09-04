@@ -932,10 +932,11 @@ var BotConfigMenuController = (function () {
             var htmlElement = element.get(0);
             var schema = JSON.parse(botConfigs.ConfigSchemaJson);
             var editor = new JSONEditor(htmlElement, {
-                schema: schema
+                schema: schema,
             });
             var value = JSON.parse(botConfigs.ConfigJson);
-            editor.setValue(value);
+            editor.setMode("form");
+            editor.set(value);
         };
         this.config = config;
     }
@@ -38608,6 +38609,7 @@ var BotWSClient = (function () {
             }
             else if (_.includes(type, ".ConfigResponce,")) {
                 var configEvent_1 = message.Data;
+                configEvent_1.Timestamp = timestamp;
                 _.each(_this.config.eventHandlers, function (eh) { return eh.onGetConfig(configEvent_1); });
             }
             else if (_.includes(type, ".PokemonListEvent,")) {

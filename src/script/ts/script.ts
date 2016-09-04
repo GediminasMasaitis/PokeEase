@@ -4,7 +4,7 @@
 /// <reference path="../../externalTypings/leaflet/leaflet.d.ts" />
 /// <reference path="../../externalTypings/moment/moment.d.ts" />
 /// <reference path="../../externalTypings/googlemaps/google.maps.d.ts" />
-/// <reference path="../../externaltypings/jsoneditor/json-editor.d.ts" />
+/// <reference path="../../externaltypings/jsoneditoronline/jsoneditoronline.d.ts" />
 
 
 $(() => {

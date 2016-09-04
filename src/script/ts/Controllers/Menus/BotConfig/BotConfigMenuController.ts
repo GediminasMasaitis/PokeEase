@@ -12,11 +12,11 @@ class BotConfigMenuController implements IBotConfigMenuController {
         this.config.botSettingsMenuElement.append(element);
         const htmlElement = element.get(0);
         const schema = JSON.parse(botConfigs.ConfigSchemaJson);
-        const editor = new JSONEditor(htmlElement,
-        {
-            schema: schema
+        const editor = new JSONEditor(htmlElement, {
+            schema: schema,
         });
         const value = JSON.parse(botConfigs.ConfigJson);
-        editor.setValue(value);
+        editor.setMode("form");
+        editor.set(value);
     }
 }

@@ -246,6 +246,8 @@ body {
 
 #popup .inner-wrap .content {
   padding: 10px; }
+  #popup .inner-wrap .content.bot-config-content {
+    padding: 0; }
 
 /* console */
 #console {
