@@ -94,14 +94,18 @@ body {
   background-color: #9b59b6;
   background-image: url("../images/eggs.png"); }
 
-#menu .item#settings {
-  background-color: #2196f3;
-  background-image: url("../images/settings.png"); }
-
 #menu .item#snipes {
   background-color: #B01E00;
   background-image: url("../images/target-white.svg");
   background-size: cover; }
+
+#menu .item#settings {
+  background-color: #2196f3;
+  background-image: url("../images/settings.png"); }
+
+#menu .item#bot-config {
+  background-color: #064475;
+  background-image: url("../images/settings.png"); }
 
 #menu .close-button {
   width: 50px;

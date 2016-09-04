@@ -135,15 +135,20 @@ $lure: #f52d60;
     background-image: url("../images/eggs.png");
 }
 
+#menu .item#snipes {
+    background-color: #B01E00;
+    background-image: url("../images/target-white.svg");
+    background-size: cover;
+}
+
 #menu .item#settings {
     background-color: $toggle-color;
     background-image: url("../images/settings.png");
 }
 
-#menu .item#snipes {
-    background-color: #B01E00;
-    background-image: url("../images/target-white.svg");
-    background-size: cover;
+#menu .item#bot-config {
+    background-color: darken($toggle-color, 30%);
+    background-image: url("../images/settings.png");
 }
 
 #menu .close-button {
