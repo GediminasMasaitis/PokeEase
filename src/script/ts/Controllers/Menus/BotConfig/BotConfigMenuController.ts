@@ -6,16 +6,37 @@ class BotConfigMenuController implements IBotConfigMenuController {
     }
 
     public setBotConfig = (botConfigs: IConfigEvent): void => {
-        this.config.botSettingsMenuElement.text("");
-        const html = `<div id="bot-config-content"></div>`;
-        const element = $(html);
-        this.config.botSettingsMenuElement.append(element);
-        const htmlElement = element.get(0);
-        const schema = JSON.parse(botConfigs.ConfigSchemaJson);
+
+        const commonSchema = {
+            id: "BotSettings",
+            title: "BotSettings",
+            description: "Bot settings",
+            type: "object",
+            properties: {
+                AuthSettings: JSON.parse(botConfigs.AuthSchemaJson),
+                GlobalSettings: JSON.parse(botConfigs.ConfigSchemaJson)
+            }
+        }
+
+        const commonSettings = {
+            AuthSettings: JSON.parse(botConfigs.AuthJson),
+            GlobalSettings: JSON.parse(botConfigs.ConfigJson)
+        }
+        console.log(commonSchema);
+        console.log(commonSettings);
+        this.setEditor(commonSchema, commonSettings, this.config.botSettingsMenuElement);
+    }
+
+    private setEditor = (schema: Object, value: Object, element: JQuery): void => {
+        element.text("");
+        const html = `<div class="bot-config-editor"></div>`;
+        const innerElement = $(html);
+        element.append(innerElement);
+        const htmlElement = innerElement.get(0);
         const editor = new JSONEditor(htmlElement, {
             schema: schema,
+            modes: ["form", "code"]
         });
-        const value = JSON.parse(botConfigs.ConfigJson);
         editor.setMode("form");
         editor.set(value);
     }

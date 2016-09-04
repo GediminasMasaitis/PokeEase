@@ -9,6 +9,7 @@ interface JSONEditorOptions {
 	change?: () => void;
 	history?: boolean;
     mode?: "tree" | "view" | "form" | "code" | "text";
+    modes?: string[];
 	name?: string;
     search?: boolean;
     schema: Object;

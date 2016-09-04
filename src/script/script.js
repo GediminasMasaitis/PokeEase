@@ -925,16 +925,34 @@ var BotConfigMenuController = (function () {
     function BotConfigMenuController(config) {
         var _this = this;
         this.setBotConfig = function (botConfigs) {
-            _this.config.botSettingsMenuElement.text("");
-            var html = "<div id=\"bot-config-content\"></div>";
-            var element = $(html);
-            _this.config.botSettingsMenuElement.append(element);
-            var htmlElement = element.get(0);
-            var schema = JSON.parse(botConfigs.ConfigSchemaJson);
+            var commonSchema = {
+                id: "BotSettings",
+                title: "BotSettings",
+                description: "Bot settings",
+                type: "object",
+                properties: {
+                    AuthSettings: JSON.parse(botConfigs.AuthSchemaJson),
+                    GlobalSettings: JSON.parse(botConfigs.ConfigSchemaJson)
+                }
+            };
+            var commonSettings = {
+                AuthSettings: JSON.parse(botConfigs.AuthJson),
+                GlobalSettings: JSON.parse(botConfigs.ConfigJson)
+            };
+            console.log(commonSchema);
+            console.log(commonSettings);
+            _this.setEditor(commonSchema, commonSettings, _this.config.botSettingsMenuElement);
+        };
+        this.setEditor = function (schema, value, element) {
+            element.text("");
+            var html = "<div class=\"bot-config-editor\"></div>";
+            var innerElement = $(html);
+            element.append(innerElement);
+            var htmlElement = innerElement.get(0);
             var editor = new JSONEditor(htmlElement, {
                 schema: schema,
+                modes: ["form", "code"]
             });
-            var value = JSON.parse(botConfigs.ConfigJson);
             editor.setMode("form");
             editor.set(value);
         };
