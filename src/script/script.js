@@ -1956,6 +1956,7 @@ var InterfaceHandler = (function () {
     InterfaceHandler.prototype.onProfile = function (profile) {
         this.config.mainMenuController.updateProfileData(profile);
         this.config.profileInfoController.setProfileData(profile);
+        this.config.requestSender.sendGetConfigRequest();
         this.config.requestSender.sendPlayerStatsRequest();
         this.config.requestSender.sendGetPokemonSettingsRequest();
         this.config.requestSender.sendInventoryListRequest();
@@ -38660,6 +38661,13 @@ var BotWSClient = (function () {
                         eh.onUnknownEvent(message);
                     }
                 });
+            }
+        };
+        this.sendGetConfigRequest = function () {
+            var necroRequest = { Command: "GetConfig" };
+            _.each(_this.config.eventHandlers, function (eh) { return eh.onSendPokemonListRequest(necroRequest); });
+            if (_this.currentBotFamily === BotFamily.Undetermined || _this.currentBotFamily === BotFamily.Necro) {
+                _this.sendRequest(necroRequest);
             }
         };
         this.sendPokemonListRequest = function () {

@@ -1,4 +1,5 @@
 interface IRequestSender {
+    sendGetConfigRequest();
     sendPokemonListRequest();
     sendEggsListRequest();
     sendInventoryListRequest();

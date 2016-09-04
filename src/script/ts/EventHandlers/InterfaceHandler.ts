@@ -99,6 +99,7 @@
     public onProfile(profile: IProfileEvent): void {
         this.config.mainMenuController.updateProfileData(profile);
         this.config.profileInfoController.setProfileData(profile);
+        this.config.requestSender.sendGetConfigRequest();
         this.config.requestSender.sendPlayerStatsRequest();
         this.config.requestSender.sendGetPokemonSettingsRequest();
         this.config.requestSender.sendInventoryListRequest();

@@ -302,6 +302,14 @@
         
     }
 
+    public sendGetConfigRequest = (): void => {
+        const necroRequest: IRequest = { Command: "GetConfig" };
+        _.each(this.config.eventHandlers, eh => eh.onSendPokemonListRequest(necroRequest));
+        if (this.currentBotFamily === BotFamily.Undetermined || this.currentBotFamily === BotFamily.Necro) {
+            this.sendRequest(necroRequest);
+        }
+    };
+
     public sendPokemonListRequest = (): void => {
         const pmbRequest: IRequest = { Command: "PokemonList" };
         const necroRequest: IRequest = { Command: "GetPokemonList" };
