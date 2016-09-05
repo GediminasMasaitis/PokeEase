@@ -24,10 +24,10 @@ class BotConfigMenuController implements IBotConfigMenuController {
         }
         console.log(commonSchema);
         console.log(commonSettings);
-        this.setEditor(commonSchema, commonSettings, this.config.botSettingsMenuElement);
+        this.setEditor(commonSchema, commonSettings, "Bot settings", this.config.botSettingsMenuElement);
     }
 
-    private setEditor = (schema: Object, value: Object, element: JQuery): void => {
+    private setEditor = (schema: Object, value: Object, name: string, element: JQuery): void => {
         element.text("");
         const html = `<div class="bot-config-editor"></div>`;
         const innerElement = $(html);
@@ -35,9 +35,11 @@ class BotConfigMenuController implements IBotConfigMenuController {
         const htmlElement = innerElement.get(0);
         const editor = new JSONEditor(htmlElement, {
             schema: schema,
-            modes: ["form", "code"]
+            modes: ["form", "code"],
+            name: name
         });
         editor.setMode("form");
         editor.set(value);
+        editor.setName(name);
     }
 }

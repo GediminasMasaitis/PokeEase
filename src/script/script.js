@@ -941,9 +941,9 @@ var BotConfigMenuController = (function () {
             };
             console.log(commonSchema);
             console.log(commonSettings);
-            _this.setEditor(commonSchema, commonSettings, _this.config.botSettingsMenuElement);
+            _this.setEditor(commonSchema, commonSettings, "Bot settings", _this.config.botSettingsMenuElement);
         };
-        this.setEditor = function (schema, value, element) {
+        this.setEditor = function (schema, value, name, element) {
             element.text("");
             var html = "<div class=\"bot-config-editor\"></div>";
             var innerElement = $(html);
@@ -951,10 +951,12 @@ var BotConfigMenuController = (function () {
             var htmlElement = innerElement.get(0);
             var editor = new JSONEditor(htmlElement, {
                 schema: schema,
-                modes: ["form", "code"]
+                modes: ["form", "code"],
+                name: name
             });
             editor.setMode("form");
             editor.set(value);
+            editor.setName(name);
         };
         this.config = config;
     }
