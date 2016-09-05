@@ -28,10 +28,10 @@ module.exports = function (grunt) {
                         css: 'data-inlined="true"'
                     },
                     uglify: true,
-                    cssmin: true
+                    cssmin: true,
                 },
                 src: "src/index.html",
-                dest: "dist/index.html"
+                dest: "src/PokeEase.html"
             }
         },
 
