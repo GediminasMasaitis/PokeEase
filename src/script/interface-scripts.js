@@ -103,45 +103,6 @@ $(document).ready(function () {
         /* $(this).parent(".event").animate({opacity: "0", "min-height": "0"}); */
     });
 
-	$('#journal .event').qtip({
-		content: {
-			/*title: function(event, api) {
-				return $(this).find('.info').contents().get(0).nodeValue.trim();
-			},*/
-			text: function(event, api) {
-				var tooltip = $('<div/>');
-				var image = $('<img/>', {
-					src: $(this).find('img').attr('src'),
-					style: 'width: 50px; float: left;'
-				})
-				$(tooltip).append(image);
-				$(tooltip).append('<br/>');
-				var title = $('<h3/>', {
-					text: $(this).find('.info').contents().get(0).nodeValue.trim(),
-					style: 'display: inline-block;'
-				})
-				$(tooltip).append(title);
-				$(tooltip).append('<br/>');
-				var stats = $('<span/>', {
-					text: $(this).find('.stats').text(),
-					style: 'display: inline-block;'
-				});
-				$(tooltip).append(stats);
-				return tooltip;
-			}
-		},
-		position: {
-			my: 'right center',
-			at: 'center left',
-			adjust: {
-				x: -18
-			}
-		},
-		style: {
-			classes: 'qtip-tipsy qtip-shadow qtip-rounded'
-		}
-	});
-
     // FIX A PROBLEM WE HAD WITH DISPLAY:TABLE AND ANIMATING
     // $("#journal .event").wrapInner('<div class="item-container"></div>');
 
