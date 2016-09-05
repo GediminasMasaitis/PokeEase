@@ -260,3 +260,5 @@ typings/
 .tscache
 /src/script/script.js
 /src/script/script.js.map
+/src/style/style.css
+/src/style/style.css.map
