@@ -256,7 +256,7 @@ paket-files/
 .tmp/
 
 node_modules/
-typings/
+/typings/
 .tscache
 /src/script/script.js
 /src/script/script.js.map
