@@ -247,7 +247,7 @@ paket-files/
 
 # FAKE - F# Make
 .fake/
-
+ 
 # JetBrains Rider
 .idea/
 *.sln.iml
@@ -258,3 +258,5 @@ paket-files/
 node_modules/
 typings/
 .tscache
+/src/script/script.js
+/src/script/script.js.map
