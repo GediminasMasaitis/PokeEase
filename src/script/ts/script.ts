@@ -1,11 +1,4 @@
-﻿/// <reference path="../../externaltypings/es6-promise/es6-promise.d.ts" />
-/// <reference path="../../externalTypings/jquery/jquery.d.ts" />
-/// <reference path="../../externalTypings/lodash/lodash.d.ts" />
-/// <reference path="../../externalTypings/leaflet/leaflet.d.ts" />
-/// <reference path="../../externalTypings/moment/moment.d.ts" />
-/// <reference path="../../externalTypings/googlemaps/google.maps.d.ts" />
-/// <reference path="../../externaltypings/jsoneditoronline/jsoneditoronline.d.ts" />
-
+﻿/// <reference path="../../../typings/index.d.ts"/>
 
 $(() => {
     StaticData.init(rawData);

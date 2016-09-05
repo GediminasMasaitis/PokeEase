@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON("package.json"),
 
         ts: {
             default: {
@@ -15,21 +15,37 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'src/style/style.css': 'src/style/style.scss'
+                    'src/style/style.css': "src/style/style.scss"
                 }
             }
         },
+        
+        inline: {
+            dist: {
+                options: {
+                    inlineTagAttributes: {
+                        js: 'data-inlined="true"',
+                        css: 'data-inlined="true"'
+                    },
+                    uglify: true,
+                    cssmin: true
+                },
+                src: "src/index.html",
+                dest: "dist/index.html"
+            }
+        },
+
         watch: {
             sass: {
-                files: ['**/*.scss'],
-                tasks: ['sass'],
+                files: ["**/*.scss"],
+                tasks: ["sass"],
                 options: {
                 spawn: false,
                 },
             },
             ts: {
-                 files: ['**/*.ts','**/**/*.ts','**/**/**/*.ts','**/**/**/**/*.ts'],
-                    tasks: ['ts'],
+                 files: ["**/*.ts","**/**/*.ts","**/**/**/*.ts","**/**/**/**/*.ts"],
+                    tasks: ["ts"],
                     options: {
                     spawn: false,
                 },
@@ -37,8 +53,11 @@ module.exports = function (grunt) {
         },
     });
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-ts');
-    grunt.loadNpmTasks('grunt-sass');
-    grunt.registerTask('default', ['ts', 'sass','watch']);
+    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-ts");
+    grunt.loadNpmTasks("grunt-sass");
+    grunt.loadNpmTasks("grunt-inline");
+    grunt.registerTask("build", ["ts", "sass"]);
+    grunt.registerTask("dist", ["build", "inline"]);
+    grunt.registerTask("default", ["build", "watch"]);
 };

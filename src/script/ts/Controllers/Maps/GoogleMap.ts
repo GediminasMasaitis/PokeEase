@@ -560,25 +560,26 @@ class GoogleMap implements IMap {
         const template = this.config.infoWindowTemplate.clone();
         const wrap = template.find(".iw-wrap");
         const status = wrap.find(".iw-status");
-        const icon = wrap.find(".iw-icon");
+        const icons = wrap.find(".iw-icon");
+        icons.hide();
         wrap.addClass("iw-pokestop");
         switch (pstop.Status) {
             case PokeStopStatus.Normal:
-                icon.attr("src", "images/gui/pokestop.png");
+                icons.find(".iw-icon-pokestop").show();
                 status.text("ready");
                 break;
             case PokeStopStatus.Visited:
-                icon.attr("src", "images/gui/visited-pokestop.png");
+                icons.find(".iw-icon-visited-pokestop").show();
                 status.text("visited");
                 wrap.addClass("iw-pokestop-visited");
                 break;
             case PokeStopStatus.Lure:
-                icon.attr("src", "images/gui/lured-pokestop.png");
+                icons.find(".iw-icon-lured-pokestop").show();
                 status.text("ready");
                 wrap.addClass("iw-pokestop-lure");
                 break;
             case PokeStopStatus.VisitedLure:
-                icon.attr("src", "images/gui/lured-visited-pokestop.png");
+                icons.find(".iw-icon-lured-visited-pokestop").show();
                 status.text("visited");
                 wrap.addClass("iw-pokestop-visited");
                 wrap.addClass("iw-pokestop-lure");
@@ -646,33 +647,33 @@ class GoogleMap implements IMap {
         const wrap = template.find(".iw-wrap");
         const status = wrap.find(".iw-status");
         const icon = wrap.find(".iw-icon");
-        const emblem = wrap.find(".iw-gym-team-emblem");
-        emblem.show();
+        const emblems = wrap.find(".iw-gym-team-emblem");
+        emblems.hide();
         wrap.addClass("iw-gym");
         switch (gym.OwnedByTeam) {
             case PlayerTeam.Neutral:
                 status.text("neutral");
                 icon.attr("src", "images/gui/unoccupied-icon.png");
-                emblem.attr("src", "images/gui/unoccupied.png");
+                emblems.find("..iw-gym-team-emblem-unoccupied").show();
                 wrap.addClass("iw-gym-neutral");
                 break;
             case PlayerTeam.Instinct:
                 status.text("instinct");
                 wrap.addClass("iw-gym-instinct");
                 icon.attr("src", "images/gui/instinct-icon.png");
-                emblem.attr("src", "images/gui/instinct.png");
+                emblems.find("..iw-gym-team-emblem-instinct").show();
                 break;
             case PlayerTeam.Mystic:
                 status.text("mystic");
                 wrap.addClass("iw-gym-mystic");
                 icon.attr("src", "images/gui/mystic-icon.png");
-                emblem.attr("src", "images/gui/mystic.png");
+                emblems.find("..iw-gym-team-emblem-mystic").show();
                 break;
             case PlayerTeam.Valor:
                 status.text("valor");
                 wrap.addClass("iw-gym-valor");
                 icon.attr("src", "images/gui/valor-icon.png");
-                emblem.attr("src", "images/gui/valor.png");
+                emblems.find("..iw-gym-team-emblem-valor").show();
                 break;
         }
 
