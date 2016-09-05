@@ -35,7 +35,7 @@ class BotConfigMenuController implements IBotConfigMenuController {
         const htmlElement = innerElement.get(0);
         const editor = new JSONEditor(htmlElement, {
             schema: schema,
-            modes: ["form", "code"],
+            modes: ["tree", "form", "code"],
             name: name
         });
         editor.setMode("form");

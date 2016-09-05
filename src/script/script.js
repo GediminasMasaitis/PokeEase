@@ -951,7 +951,7 @@ var BotConfigMenuController = (function () {
             var htmlElement = innerElement.get(0);
             var editor = new JSONEditor(htmlElement, {
                 schema: schema,
-                modes: ["form", "code"],
+                modes: ["tree", "form", "code"],
                 name: name
             });
             editor.setMode("form");
