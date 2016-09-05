@@ -247,7 +247,8 @@ body {
 #popup .inner-wrap .content {
   padding: 10px; }
   #popup .inner-wrap .content.bot-config-popup {
-    padding: 0px; }
+    padding: 0px;
+    text-align: left; }
 
 /* console */
 #console {
