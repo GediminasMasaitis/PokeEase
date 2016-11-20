@@ -841,7 +841,7 @@ $event-incubator-status-color: #e9e1b5;
 }
 
 .inner-wrap .pokemon.opened {
-    width: calc(100% - 30px);
+    width: 90%;
 }
 
 .inner-wrap .pokemon:hover, .inner-wrap .pokemon:focus {
@@ -892,7 +892,7 @@ $event-incubator-status-color: #e9e1b5;
     content: "%";
 }
 
-#content-wrap {overflow-y: scroll; height: calc(100% - 36px); position: relative; transition: 0.3s;}
+#content-wrap {overflow-y: scroll; height: 90%; position: relative; transition: 0.3s;}
 
 #popup .inner-wrap .content[data-category="pokemons"] {
     margin: .5em 0;
@@ -1037,7 +1037,7 @@ $event-incubator-status-color: #e9e1b5;
     left: 0;
     display: none;
     top: 36px;
-    height: calc(100% - 36px) !important;
+    height: 90% !important;
     bottom: 0;
     z-index: 1;
 
