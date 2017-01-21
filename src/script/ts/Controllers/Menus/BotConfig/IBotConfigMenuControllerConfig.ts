@@ -1,3 +1,0 @@
-﻿interface IBotConfigMenuControllerConfig {
-    botSettingsMenuElement: JQuery;
-}

@@ -1,3 +1,0 @@
-interface IToastControllerConfig {
-    toastElement: JQuery;
-}

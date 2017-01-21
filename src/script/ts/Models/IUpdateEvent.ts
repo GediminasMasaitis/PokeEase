@@ -1,3 +1,0 @@
-interface IUpdateEvent extends IMessageEvent {
-    
-}
