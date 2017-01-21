@@ -256,3 +256,5 @@ paket-files/
 .cr/
 /PoGo.NecroBot.GUI.Electron/plugins
 /PoGo.NecroBot.GUI.Electron/platforms
+/platforms
+/plugins

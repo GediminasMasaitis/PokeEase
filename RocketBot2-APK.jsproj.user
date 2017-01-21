@@ -4,4 +4,8 @@
     <DebuggerFlavor>AndroidEmulator</DebuggerFlavor>
     <AndroidEmulatorID>AndroidEmulator;Émulateur Google Android</AndroidEmulatorID>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
+    <DebuggerFlavor>AndroidEmulator</DebuggerFlavor>
+    <AndroidEmulatorID>AndroidEmulator;Émulateur Google Android</AndroidEmulatorID>
+  </PropertyGroup>
 </Project>
