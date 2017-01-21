@@ -3,6 +3,7 @@
 ################################################################################
 
 /node_modules
-/bin/Android/Debug
+/bin
 /plugins
-/.vs/RocketBot2/v14
+/.vs
+/platforms
