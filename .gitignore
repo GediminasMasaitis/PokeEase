@@ -247,18 +247,14 @@ paket-files/
 
 # FAKE - F# Make
 .fake/
- 
+
 # JetBrains Rider
 .idea/
 *.sln.iml
 
-# Grunt usually preprocesses files such as coffeescript, compass... inside the .tmp directory
-.tmp/
-
-node_modules/
-/typings/
-.tscache
-/src/script/script.js
-/src/script/script.js.map
-/src/style/style.css
-/src/style/style.css.map
+# CodeRush
+.cr/
+/PoGo.NecroBot.GUI.Electron/plugins
+/PoGo.NecroBot.GUI.Electron/platforms
+/platforms
+/plugins
